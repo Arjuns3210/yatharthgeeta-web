@@ -37,25 +37,22 @@ class BookCategoryController extends Controller
     {
         if ($request->ajax()) {
             try {
-                $query = BookCategory::with('bookCategoryTranslations')->select('*')->orderBy('updated_at','desc');
+                $query = BookCategory::leftJoin('book_category_translations', function ($join) {
+                                        $join->on("book_category_translations.book_category_id", '=', "book_categories.id");
+                                        $join->where('book_category_translations.locale', \App::getLocale());
+                                     })
+                                     ->select('book_categories.*')
+                                     ->orderBy('updated_at','desc');
                 return DataTables::of($query)
                     ->filter(function ($query) use ($request) {
                         if (isset($request['search']['search_category_name']) && !is_null($request['search']['search_category_name'])) {
-                            $query->where('name', 'like', "%" . $request['search']['search_category_name'] . "%");
+                            $query->where('book_category_translations.name', 'like', "%" . $request['search']['search_category_name'] . "%");
                         }
                         $query->get()->toArray();
                     })
-                    ->editColumn('category_name_en', function ($event) {
-                        $Key_index = array_search('en', array_column((array) $event->translations, 'locale'));
+                    ->editColumn('category_name_'.\App::getLocale(), function ($event) {
+                        $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
                         return $event['translations'][$Key_index]['name'];
-                    })
-                    ->editColumn('category_name_hi', function ($event) {
-                        foreach ($event->translations as $value) {
-                            if($value['locale'] == 'hi') {
-                                $Key_index = $value['name'];
-                            }
-                        }
-                        return $Key_index;
                     })
                     ->editColumn('action', function ($event) {
                         $books_category_view = checkPermission('books_category_view');
@@ -73,7 +70,7 @@ class BookCategoryController extends Controller
                         return $actions;
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['category_name_en', 'category_name_hi', 'action'])->setRowId('id')->make(true);
+                    ->rawColumns(['category_name_'.\App::getLocale(), 'action'])->setRowId('id')->make(true);
             } catch (\Exception $e) {
                 \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                 return response([

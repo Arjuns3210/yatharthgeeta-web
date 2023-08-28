@@ -38,8 +38,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
-                                                    <th id="category_name_en" data-orderable="false" data-searchable="false">Category Name (English)</th>
-                                                    <th id="category_name_hi" data-orderable="false" data-searchable="false">Category Name (Hindi)</th>
+                                                    <th id="category_name_{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Category Name ({{\App::getLocale()}})</th>
                                                     @if($data['books_category_status'] || $data['books_category_edit'] || $data['books_category_view'] || $data['books_category_delete'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
                                                     @endif
