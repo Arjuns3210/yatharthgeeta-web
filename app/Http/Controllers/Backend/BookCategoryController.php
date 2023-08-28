@@ -61,10 +61,10 @@ class BookCategoryController extends Controller
                         $books_category_delete = checkPermission('books_category_delete');
                         $actions = '<span style="white-space:nowrap;">';
                         if ($books_category_view) {
-                            $actions .= '<a href="category_view/' . $event['id'] . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View Category Details" title="View"><i class="fa fa-eye"></i></a>';
+                            $actions .= '<a href="books_category/view/' . $event['id'] . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View Category Details" title="View"><i class="fa fa-eye"></i></a>';
                         }
                         if ($books_category_edit) {
-                            $actions .= ' <a href="category_edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
+                            $actions .= ' <a href="books_category/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
                         }
                         $actions .= '</span>';
                         return $actions;
@@ -121,7 +121,8 @@ class BookCategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $data['category'] = BookCategory::find($id)->toArray();
+        return view('backend/books_category/view',$data);
     }
 
     /**
@@ -132,7 +133,15 @@ class BookCategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['category'] = BookCategory::find($id)->toArray();
+        foreach($data['category']['translations'] as $trans) {
+            $translated_keys = array_keys(BookCategory::TRANSLATED_BLOCK);
+            foreach ($translated_keys as $value) {
+                $data['category'][$value.'_'.$trans['locale']] = $trans[$value];
+            }
+        }
+        $data['translated_block'] = BookCategory::TRANSLATED_BLOCK;
+        return view('backend/books_category/edit',$data);
     }
 
     /**
@@ -142,9 +151,24 @@ class BookCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $data = BookCategory::find($_GET['id']);
+        $input=$request->all();
+        if ($data) 
+        {
+            $translated_keys = array_keys(BookCategory::TRANSLATED_BLOCK);
+            foreach ($translated_keys as $value) 
+            {
+                $input[$value] = (array) json_decode($input[$value]);
+            }
+            $category = Utils::flipTranslationArray($input, $translated_keys);
+            $data->update($category);
+        } else {
+            errorMessage('Book Category Not Found', []);
+
+        }
+        successMessage('Data Saved successfully', []);
     }
 
     /**
