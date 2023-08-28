@@ -48,11 +48,16 @@ class BookCategoryController extends Controller
                         if (isset($request['search']['search_category_name']) && !is_null($request['search']['search_category_name'])) {
                             $query->where('book_category_translations.name', 'like', "%" . $request['search']['search_category_name'] . "%");
                         }
+                        if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
+                            $query->where('book_categories.status', $request['search']['search_status']);
+                        }
                         $query->get()->toArray();
                     })
                     ->editColumn('category_name_'.\App::getLocale(), function ($event) {
                         $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
                         return $event['translations'][$Key_index]['name'];
+                    })->editColumn('status', function ($event) {
+                        return $event->status == 1 ?'Active' : 'Inactive';
                     })
                     ->editColumn('action', function ($event) {
                         $books_category_view = checkPermission('books_category_view');
@@ -70,7 +75,7 @@ class BookCategoryController extends Controller
                         return $actions;
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['category_name_'.\App::getLocale(), 'action'])->setRowId('id')->make(true);
+                    ->rawColumns(['category_name_'.\App::getLocale(), 'status', 'action'])->setRowId('id')->make(true);
             } catch (\Exception $e) {
                 \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                 return response([
