@@ -126,6 +126,22 @@
                             </ul>
                         </li>
                         @endif
+                        @if(session('data')['role_id'] == 1  ||
+                            in_array('role', $permission_array) ||
+                            in_array('staff', $permission_array)
+                           )
+                        <li class="has-sub nav-item">
+                            <a href="javascript:;" class="dropdown-parent"><i class="icon-user-following"></i><span data-i18n="" class="menu-title">Staff Management</span></a>
+                            <ul class="menu-content">
+                                <li class="{{ $lastParam ==  'roles' ? 'active' : '' }}">
+                                    <a href="roles" class="menu-item"><i class="fa fa-circle fs_i"></i>Manage Roles</a>
+                                </li>
+                                <li class="{{ $lastParam ==  'staff' ? 'active' : '' }}">
+                                    <a href="staff" class="menu-item"><i class="fa fa-circle fs_i"></i>Manage Staff</a>
+                                </li>
+                            </ul>
+                        </li>
+                        @endif
                         <li class="nav-item {{ $lastParam ==  'logout' ? 'active' : ''  }}">
                             <a href="logout"><i class="fa fa-power-off"></i><span class="menu-title" >Logout</span></a>
                         </li>
