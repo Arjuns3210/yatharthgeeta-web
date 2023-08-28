@@ -30,6 +30,22 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('books_category/update', 'BookCategoryController@update');
 	Route::get('books_category/view/{id}', 'BookCategoryController@show');
 
+	//staff
+	Route::get('staff', 'StaffController@index');
+	Route::post('staff_data', 'StaffController@fetch')->name('staff_data');
+	Route::get('staff_add', 'StaffController@add');
+	Route::post('save_staff', 'StaffController@store');
+	Route::get('staff_edit/{id}', 'StaffController@edit');
+	Route::post('staff_update', 'StaffController@update');
+	Route::post('publish_staff', 'StaffController@updateStatus');
+	Route::get('staff_view/{id}', 'StaffController@view');
+
+	//manage role
+	Route::get('roles', 'RoleController@roles');
+	Route::post('role_data', 'RoleController@roleData')->name('role_data');
+	Route::get('role_permission/{id}', 'RoleController@assignRolePermission');
+	Route::post('publish_permission', 'RoleController@publishPermission');
+
 	// Logout
 	Route::get('/logout', function () {
 		session()->forget('data');
