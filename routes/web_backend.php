@@ -46,6 +46,12 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::get('role_permission/{id}', 'RoleController@assignRolePermission');
 	Route::post('publish_permission', 'RoleController@publishPermission');
 
+    //language
+    Route::get('language', 'LanguageController@index');
+    Route::post('language/fetch', 'LanguageController@fetch');
+    Route::get('language/view/{id}', 'LanguageController@view');
+    Route::post('language/publish', 'LanguageController@updateStatus');
+
 	// Logout
 	Route::get('/logout', function () {
 		session()->forget('data');
