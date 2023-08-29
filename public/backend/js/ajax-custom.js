@@ -300,7 +300,7 @@ function submitForm(form_id, form_method, errorOverlay = '') {
         });
     } else {
         var ih = $('.border-danger').last().closest('.tab-pane').attr('id');
-        $('#'+ih+'-tab').click(); 
+        $('a[href="#'+ih+'"]').click();
     }
 }
 
