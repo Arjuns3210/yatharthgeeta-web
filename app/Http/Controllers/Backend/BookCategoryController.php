@@ -48,11 +48,16 @@ class BookCategoryController extends Controller
                         if (isset($request['search']['search_category_name']) && !is_null($request['search']['search_category_name'])) {
                             $query->where('book_category_translations.name', 'like', "%" . $request['search']['search_category_name'] . "%");
                         }
+                        if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
+                            $query->where('book_categories.status', $request['search']['search_status']);
+                        }
                         $query->get()->toArray();
                     })
                     ->editColumn('category_name_'.\App::getLocale(), function ($event) {
                         $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
                         return $event['translations'][$Key_index]['name'];
+                    })->editColumn('status', function ($event) {
+                        return $event->status == 1 ?'Active' : 'Inactive';
                     })
                     ->editColumn('action', function ($event) {
                         $books_category_view = checkPermission('books_category_view');
@@ -61,16 +66,16 @@ class BookCategoryController extends Controller
                         $books_category_delete = checkPermission('books_category_delete');
                         $actions = '<span style="white-space:nowrap;">';
                         if ($books_category_view) {
-                            $actions .= '<a href="category_view/' . $event['id'] . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View Category Details" title="View"><i class="fa fa-eye"></i></a>';
+                            $actions .= '<a href="books_category/view/' . $event['id'] . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View Category Details" title="View"><i class="fa fa-eye"></i></a>';
                         }
                         if ($books_category_edit) {
-                            $actions .= ' <a href="category_edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
+                            $actions .= ' <a href="books_category/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
                         }
                         $actions .= '</span>';
                         return $actions;
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['category_name_'.\App::getLocale(), 'action'])->setRowId('id')->make(true);
+                    ->rawColumns(['category_name_'.\App::getLocale(), 'status', 'action'])->setRowId('id')->make(true);
             } catch (\Exception $e) {
                 \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                 return response([
@@ -121,7 +126,8 @@ class BookCategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $data['category'] = BookCategory::find($id)->toArray();
+        return view('backend/books_category/view',$data);
     }
 
     /**
@@ -132,7 +138,15 @@ class BookCategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['category'] = BookCategory::find($id)->toArray();
+        foreach($data['category']['translations'] as $trans) {
+            $translated_keys = array_keys(BookCategory::TRANSLATED_BLOCK);
+            foreach ($translated_keys as $value) {
+                $data['category'][$value.'_'.$trans['locale']] = $trans[$value];
+            }
+        }
+        $data['translated_block'] = BookCategory::TRANSLATED_BLOCK;
+        return view('backend/books_category/edit',$data);
     }
 
     /**
@@ -142,9 +156,21 @@ class BookCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $data = BookCategory::find($_GET['id']);
+        $input=$request->all();
+        if (!$data) {
+            errorMessage('Book Category Not Found', []);
+        }
+        $translated_keys = array_keys(BookCategory::TRANSLATED_BLOCK);
+        foreach ($translated_keys as $value) 
+        {
+            $input[$value] = (array) json_decode($input[$value]);
+        }
+        $category = Utils::flipTranslationArray($input, $translated_keys);
+        $data->update($category);
+        successMessage('Data Saved successfully', []);
     }
 
     /**

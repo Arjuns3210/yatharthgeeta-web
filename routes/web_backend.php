@@ -26,6 +26,9 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::get('books_category/add', 'BookCategoryController@create');
 	Route::post('books_category/fetch', 'BookCategoryController@fetch');
 	Route::post('books_category/save', 'BookCategoryController@store');
+	Route::get('books_category/edit/{id}', 'BookCategoryController@edit');
+	Route::post('books_category/update', 'BookCategoryController@update');
+	Route::get('books_category/view/{id}', 'BookCategoryController@show');
 
 	//staff
 	Route::get('staff', 'StaffController@index');

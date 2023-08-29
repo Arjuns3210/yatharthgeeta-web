@@ -29,6 +29,14 @@
                                             <input class="form-control mb-3" type="text" id="search_category_name" name="search_category_name">
                                         </div>
                                         <div class="col-md-4">
+                                            <label>Status</label>
+                                            <select class="form-control mb-3" type="text" id="search_status" name="search_status">
+                                                <option value="">All</option>
+                                                <option value="1">Active</option>
+                                                <option value="0">Inactive</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
                                             <label>&nbsp;</label><br/>
                                             <input class="btn btn-md btn-primary px-3 py-1 mb-3" id="clear-form-data" type="reset" value="Clear Search">
                                         </div>
@@ -39,6 +47,7 @@
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
                                                     <th id="category_name_{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Category Name ({{\App::getLocale()}})</th>
+                                                    <th id="status" data-orderable="false" data-searchable="false">Status</th>
                                                     @if($data['books_category_status'] || $data['books_category_edit'] || $data['books_category_view'] || $data['books_category_delete'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
                                                     @endif
