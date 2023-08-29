@@ -21,6 +21,11 @@ Route::group(['middleware' => ['customAuth']], function () {
 	// Dashboard
 	Route::get('dashboard', 'DashboardController@index');
 
+	//Ashram
+	Route::get('ashram', 'AshramController@index');
+	Route::post('ashram/fetch', 'AshramController@fetch');
+	Route::get('ashram/view/{id}', 'AshramController@show');
+
 	// Category
 	Route::get('books_category', 'BookCategoryController@index');
 	Route::get('books_category/add', 'BookCategoryController@create');
@@ -37,14 +42,14 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('staff/save', 'StaffController@store');
 	Route::get('staff/edit/{id}', 'StaffController@edit');
 	Route::post('staff/update', 'StaffController@update');
-	Route::post('publish_staff', 'StaffController@updateStatus');
+	Route::post('publish/staff', 'StaffController@updateStatus');
 	Route::get('staff/view/{id}', 'StaffController@view');
 
 	//manage role
 	Route::get('roles', 'RoleController@roles');
-	Route::post('role_data', 'RoleController@roleData')->name('role_data');
+	Route::post('role/fetch', 'RoleController@roleData')->name('role/fetch');
 	Route::get('role_permission/{id}', 'RoleController@assignRolePermission');
-	Route::post('publish_permission', 'RoleController@publishPermission');
+	Route::post('publish/permission', 'RoleController@publishPermission');
 
 	// Logout
 	Route::get('/logout', function () {
