@@ -17,7 +17,7 @@
                                             <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                                 <button class="btn btn-sm btn-outline-danger px-3 py-1 mr-2" id="listing-filter-toggle"><i class="fa fa-filter"></i> Filter</button>
                                                 @if($data['staff_add'])
-                                                    <a href="staff_add" class="btn btn-sm btn-outline-primary px-3 py-1 src_data"><i class="fa fa-plus"></i> Add Staff</a>
+                                                    <a href="staff/add" class="btn btn-sm btn-outline-primary px-3 py-1 src_data"><i class="fa fa-plus"></i> Add Staff</a>
                                                 @endif
                                             </div>
                                         </div>
@@ -54,7 +54,7 @@
                                             </div>
                                         </div>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered table-striped datatable" id="dataTable" width="100%" cellspacing="0" data-url="staff_data">
+                                            <table class="table table-bordered table-striped datatable" id="dataTable" width="100%" cellspacing="0" data-url="staff/fetch">
                                                 <thead>
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>

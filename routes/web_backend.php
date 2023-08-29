@@ -29,13 +29,13 @@ Route::group(['middleware' => ['customAuth']], function () {
 
 	//staff
 	Route::get('staff', 'StaffController@index');
-	Route::post('staff_data', 'StaffController@fetch')->name('staff_data');
-	Route::get('staff_add', 'StaffController@add');
-	Route::post('save_staff', 'StaffController@store');
-	Route::get('staff_edit/{id}', 'StaffController@edit');
-	Route::post('staff_update', 'StaffController@update');
+	Route::post('staff/fetch', 'StaffController@fetch')->name('staff_fetch');
+	Route::get('staff/add', 'StaffController@add');
+	Route::post('staff/save', 'StaffController@store');
+	Route::get('staff/edit/{id}', 'StaffController@edit');
+	Route::post('staff/update', 'StaffController@update');
 	Route::post('publish_staff', 'StaffController@updateStatus');
-	Route::get('staff_view/{id}', 'StaffController@view');
+	Route::get('staff/view/{id}', 'StaffController@view');
 
 	//manage role
 	Route::get('roles', 'RoleController@roles');

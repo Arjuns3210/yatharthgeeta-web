@@ -83,10 +83,10 @@ class StaffController extends Controller
                         $actions = '<span style="white-space:nowrap;">';
 
                         if ($staff_view) {
-                            $actions .= '<a href="staff_view/' . $event->id . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View Staff Details" title="View"><i class="fa fa-eye"></i></a>';
+                            $actions .= '<a href="staff/view/' . $event->id . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View Staff Details" title="View"><i class="fa fa-eye"></i></a>';
                         }
                         if ($staff_edit) {
-                            $actions .= ' <a href="staff_edit/' . $event->id . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
+                            $actions .= ' <a href="staff/edit/' . $event->id . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
                         }
                         if ($staff_status) {
                             if ($event->status == '1') {
@@ -116,7 +116,7 @@ class StaffController extends Controller
     public function add() {
         $data['role'] = Role::all();
 
-        return view('backend/staff/staff_add',["data"=>$data]);
+        return view('backend/staff/add',["data"=>$data]);
     }
 
     /**
@@ -156,7 +156,7 @@ class StaffController extends Controller
     {
         $data['data'] = Admin::with('role')->where('id',$id)->first();
 
-        return view('backend/staff/staff_view', $data);
+        return view('backend/staff/view', $data);
     }
 
     /**
@@ -170,7 +170,7 @@ class StaffController extends Controller
         $data['data'] = Admin::find($id);
         $data['roles'] = Role::all();
 
-        return view('backend/staff/staff_edit', ["data" => $data]);
+        return view('backend/staff/edit', ["data" => $data]);
     }
 
     /**
