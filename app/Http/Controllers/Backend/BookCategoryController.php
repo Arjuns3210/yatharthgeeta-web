@@ -160,19 +160,16 @@ class BookCategoryController extends Controller
     {
         $data = BookCategory::find($_GET['id']);
         $input=$request->all();
-        if ($data) 
-        {
-            $translated_keys = array_keys(BookCategory::TRANSLATED_BLOCK);
-            foreach ($translated_keys as $value) 
-            {
-                $input[$value] = (array) json_decode($input[$value]);
-            }
-            $category = Utils::flipTranslationArray($input, $translated_keys);
-            $data->update($category);
-        } else {
+        if (!$data) {
             errorMessage('Book Category Not Found', []);
-
         }
+        $translated_keys = array_keys(BookCategory::TRANSLATED_BLOCK);
+        foreach ($translated_keys as $value) 
+        {
+            $input[$value] = (array) json_decode($input[$value]);
+        }
+        $category = Utils::flipTranslationArray($input, $translated_keys);
+        $data->update($category);
         successMessage('Data Saved successfully', []);
     }
 
