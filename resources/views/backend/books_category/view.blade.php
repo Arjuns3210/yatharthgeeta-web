@@ -7,9 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    @if(isset($books_category_view))
-                                        <h5 class="pt-2">View Category</h5>
-                                    @endif
+                                    <h5 class="pt-2">View Category</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
