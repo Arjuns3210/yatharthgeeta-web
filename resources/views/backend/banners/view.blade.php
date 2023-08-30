@@ -14,7 +14,7 @@
                                         </tr>
                                         <tr>
                                             <td><strong>Cover</strong></td>
-                                            <td><img src="{{$media->getFullUrl() ?? ''}}" alt=""></td>
+                                            <td><img src="{{$media->getFullUrl() ?? ''}}" width="200px" alt=""></td>
                                         </tr>
                                         <tr>
                                             <td><strong>Sequence</strong></td>
@@ -22,7 +22,7 @@
                                         </tr>
                                         <tr>
                                             <td><strong>Status</strong></td>
-                                            <td>{{$banners->status ?? ''}}</td>
+                                            <td>{{$banners->status==1 ? 'Enable':'Disable'}}</td>
                                         </tr>
                                     </table>
                                 </div>

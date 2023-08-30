@@ -37,6 +37,8 @@ Route::group(['middleware' => ['customAuth']], function () {
     Route::post('banners/save', 'BannerController@store');
     Route::post('banners/publish', 'BannerController@updateStatus');
     Route::get('banners/view/{id}', 'BannerController@view');
+	Route::get('banners/edit/{id}', 'BannerController@edit');
+	Route::post('banners/update', 'BannerController@update');
 
 	//staff
 	Route::get('staff', 'StaffController@index');

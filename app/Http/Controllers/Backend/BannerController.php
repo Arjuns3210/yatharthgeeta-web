@@ -33,8 +33,11 @@ class BannerController extends Controller
                 $query = Banner::orderBy('updated_at','desc');
                 return DataTables::of($query)
                     ->filter(function ($query) use ($request) {
-                        if (isset($request['search']['search_category_name']) && !is_null($request['search']['search_category_name'])) {
-                            $query->where('book_category_translations.name', 'like', "%" . $request['search']['search_category_name'] . "%");
+                        if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
+                            $query->where('status', 'like', "%" . $request['search']['search_status'] . "%");
+                        }
+                        if (isset($request['search']['search_title']) && !is_null($request['search']['search_title'])) {
+                            $query->where('title', 'like', "%" . $request['search']['search_title'] . "%");
                         }
                         $query->get()->toArray();
                     })
@@ -49,7 +52,7 @@ class BannerController extends Controller
                         $banners_delete = checkPermission('banners_delete');
                         $actions = '<span style="white-space:nowrap;">';
                         if ($banners_view) {
-                            $actions .= '<a href="banners/view/' . $event['id'] . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View Category Details" title="View"><i class="fa fa-eye"></i></a>';
+                            $actions .= '<a href="banners/view/' . $event['id'] . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View Banner Details" title="View"><i class="fa fa-eye"></i></a>';
                         }
                         if ($banners_edit) {
                             $actions .= ' <a href="banners/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
@@ -150,7 +153,9 @@ class BannerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['banners'] = Banner::find($id);
+        $data['media'] =$data['banners']->getMedia(Banner::COVER)[0];
+        return view('backend/banners/edit')->with($data);
     }
 
     /**
@@ -160,9 +165,17 @@ class BannerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $data = Banner::find($_GET['id']);
+        $input=$request->all();
+        if (!$data) {
+            errorMessage('Banner Not Found', []);
+        }
+        $category = Utils::flipTranslationArray($input);
+        $data->update($category);
+        storeMedia($data, $input['cover'], Banner::COVER);
+        successMessage('Data Saved successfully', []);
     }
 
     /**

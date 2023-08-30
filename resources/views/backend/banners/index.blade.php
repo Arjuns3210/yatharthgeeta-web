@@ -26,14 +26,14 @@
                                     <div class="row mb-2" id="listing-filter-data" style="display: none;">
                                         <div class="col-md-4">
                                             <label>Title</label>
-                                            <input class="form-control mb-3" type="text" id="search_category_name" name="search_category_name">
+                                            <input class="form-control mb-3" type="text" id="search_title" name="search_title">
                                         </div>
                                         <div class="col-md-4">
                                             <label>Status</label>
                                             <select class="form-control mb-3" type="text" id="search_status" name="search_status">
                                                 <option value="">All</option>
-                                                <option value="1">Active</option>
-                                                <option value="0">Inactive</option>
+                                                <option value="1">Enable</option>
+                                                <option value="0">Disable</option>
                                             </select>
                                         </div>
                                         <div class="col-md-4">
