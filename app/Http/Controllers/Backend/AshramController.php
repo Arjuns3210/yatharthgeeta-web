@@ -110,7 +110,7 @@ class AshramController extends Controller
     public function show($id)
     {
         $data['ashram'] = Ashram::find($id);
-        $data['media'] = $data['ashram']->getMedia(Ashram::IMAGE)[0];
+        $data['media'] = $data['ashram']->getMedia(Ashram::IMAGE)[0]; // need to make dynamic index to replace image
         return view('backend/ashram/view',$data);
     }
 
