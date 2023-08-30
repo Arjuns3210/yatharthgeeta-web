@@ -74,3 +74,13 @@ if (!function_exists('checkPermission')) {
         }
     }
 }
+
+if (! function_exists('storeMedia')) {
+
+    function storeMedia($model, $file, $collectionName)
+    {
+        $model->addMedia($file)->toMediaCollection($collectionName,
+            config('app.media_disc'));
+    }
+
+}

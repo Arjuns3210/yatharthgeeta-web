@@ -45,6 +45,15 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('role_data', 'RoleController@roleData')->name('role_data');
 	Route::get('role_permission/{id}', 'RoleController@assignRolePermission');
 	Route::post('publish_permission', 'RoleController@publishPermission');
+	
+	//quotes
+	Route::get('quotes', 'QuoteController@index');
+	Route::post('quotes/fetch', 'QuoteController@fetch');
+	Route::get('quotes/add', 'QuoteController@create');
+	Route::post('quotes/save', 'QuoteController@store');
+	Route::get('quotes/view/{id}', 'QuoteController@show');
+	Route::get('quotes/edit/{id}', 'QuoteController@edit');
+	Route::post('quotes/update', 'QuoteController@update');
 
 	// Logout
 	Route::get('/logout', function () {
