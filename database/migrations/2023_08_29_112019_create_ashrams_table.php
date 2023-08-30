@@ -17,8 +17,10 @@ class CreateAshramsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('title');
+            $table->longText('image');
             $table->longText('description');
-            $table->string('contact');
+            $table->string('phone');
+            $table->string('email');
             $table->string('location');
             $table->enum('status', [1, 0])->default(1);
             $table->integer('created_by')->default(0);

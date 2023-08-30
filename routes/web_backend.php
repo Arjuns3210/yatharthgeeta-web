@@ -23,8 +23,12 @@ Route::group(['middleware' => ['customAuth']], function () {
 
 	//Ashram
 	Route::get('ashram', 'AshramController@index');
+	Route::get('ashram/add', 'AshramController@create');
+	Route::get('ashram/edit/{id}', 'AshramController@edit');
+	Route::post('ashram/update', 'AshramController@update');
 	Route::post('ashram/fetch', 'AshramController@fetch');
 	Route::get('ashram/view/{id}', 'AshramController@show');
+	Route::post('ashram/save', 'AshramController@store');
 
 	// Category
 	Route::get('books_category', 'BookCategoryController@index');

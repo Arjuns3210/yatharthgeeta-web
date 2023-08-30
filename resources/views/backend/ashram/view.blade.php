@@ -23,19 +23,23 @@
                                                 <table class="table table-striped table-bordered">
                                                     <tr>
                                                         <td><strong>Name</strong></td>
-                                                        <td>{{$ashram['name']}}</td>
+                                                        <td>{{$ashram->name}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Title</strong></td>
-                                                        <td>{{$ashram['title']}}</td>
+                                                        <td>{{$ashram->title}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Location</strong></td>
-                                                        <td>{{$ashram['location']}}</td>
+                                                        <td>{{$ashram->location}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Contact</strong></td>
-                                                        <td>{{$ashram['contact']}}</td>
+                                                        <td>{{$ashram->phone}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Image</strong></td>
+                                                        <td><img src="{{$media->getFullUrl() ?? ''}}"  width="200px" alt=""></td>
                                                     </tr>
                                                 </table>
                                             </div>

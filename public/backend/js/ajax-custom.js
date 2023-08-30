@@ -304,8 +304,6 @@ function submitForm(form_id, form_method, errorOverlay = '') {
     }
 }
 
-
-
 function submitModalForm(form_id, form_method, errorOverlay = '') {
     var form = $('#' + form_id);
     var formdata = false;
@@ -469,7 +467,6 @@ $(document).on('click', '.delimg', function (event) {
     });
 });
 
-
 $(document).on('click', '.delete-data', function (event) {
     var ib = $(this).attr('data-id');
     var url = $(this).attr('data-url');
@@ -601,3 +598,43 @@ function validateNumberInput(input) {
         input.value = '';
     }
 }
+
+function filterNonNumeric(input) {
+    var regex = /^\d+$/;
+    var inputValue = input.value.trim();
+    
+    if (!regex.test(inputValue)) {
+        input.value = inputValue.replace(/\D/g, '');
+    }
+}
+
+function validateNameInput(input) {
+    var regex = /^[A-Za-z\s]+$/;
+    var inputValue = input.value.trim();
+    
+    if (!regex.test(inputValue)) {
+        input.value = inputValue.replace(/[^A-Za-z\s]/g, '');
+    }
+}
+
+function handleFileInputChange(id) {
+    var fileInput = document.getElementById(id);
+    var file = fileInput.files[0];
+
+    if (file) {
+        var allowedExtensions = [".jpg", ".jpeg", ".png"];
+        var fileExtension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+
+        if (!allowedExtensions.includes(fileExtension)) {
+            $.activeitNoty({
+                type: 'danger',
+                icon: 'fa fa-minus',
+                message: 'Please select a JPG or PNG file.' ,
+                container: 'floating',
+                timer: 3000
+            });
+            fileInput.value = "";
+        }
+    }
+}
+

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
 use App\Models\Ashram;
+use App\Utils\Utils;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class AshramController extends Controller
 {
@@ -81,7 +83,7 @@ class AshramController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend/ashram/add');
     }
 
     /**
@@ -92,7 +94,11 @@ class AshramController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $saveArray = Utils::flipTranslationArray($input);
+        $data = Ashram::create($saveArray);
+        storeMedia($data, $input['image'], Ashram::IMAGE);
+        successMessage('Data Saved successfully', []);
     }
 
     /**
@@ -103,7 +109,8 @@ class AshramController extends Controller
      */
     public function show($id)
     {
-        $data['ashram'] = Ashram::find($id)->toArray();
+        $data['ashram'] = Ashram::find($id);
+        $data['media'] = $data['ashram']->getMedia(Ashram::IMAGE)[0];
         return view('backend/ashram/view',$data);
     }
 
@@ -113,9 +120,10 @@ class AshramController extends Controller
      * @param  \App\Models\Ashram  $ashram
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ashram $ashram)
+    public function edit($id)
     {
-        //
+        $data['ashram'] = Ashram::find($id);
+        return view('backend/ashram/edit',$data);
     }
 
     /**
@@ -127,7 +135,15 @@ class AshramController extends Controller
      */
     public function update(Request $request, Ashram $ashram)
     {
-        //
+        $data = Ashram::find($_GET['id']);
+        $input = $request->all();
+        if (!$data) {
+            errorMessage('Ashram Not Found', []);
+        }
+        $ashram = Utils::flipTranslationArray($input);
+        $data->update($ashram);
+        storeMedia($data, $input['image'], Ashram::IMAGE);
+        successMessage('Data Updated successfully', []);
     }
 
     /**
