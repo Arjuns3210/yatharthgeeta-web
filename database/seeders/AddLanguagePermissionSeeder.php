@@ -38,6 +38,13 @@ class AddLanguagePermissionSeeder extends Seeder
 	            'description' => '',
 	            'status' => '1'
 	        ],
+            [
+	            'name' => 'Delete',
+	            'codename' => 'language_delete',
+	            'parent_status' => $result->id,
+	            'description' => '',
+	            'status' => '1'
+	        ]
         ];
 
         foreach ($permissions as $permission) {

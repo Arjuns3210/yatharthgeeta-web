@@ -15,6 +15,7 @@ class LanguageController extends Controller
     {
         $data['language_view'] = checkPermission('language_view');
         $data['language_status'] = checkPermission('language_status');
+        $data['language_delete'] = checkPermission('language_delete');
         return view('backend/language/index',['data' => $data]);
     }
 
@@ -36,10 +37,14 @@ class LanguageController extends Controller
                     })
                     ->editColumn('action', function ($event) {
                         $language_view = checkPermission('language_view');
+                        $language_delete = checkPermission('language_delete');
                         $language_status = checkPermission('language_status');
                         $actions = '<span style="white-space:nowrap;">';
                         if ($language_view) {
                             $actions .= '<a href="language/view/' . $event->id . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View Language" title="View Language"><i class="fa fa-eye"></i></a>';
+                        }
+                        if ($language_delete) {
+                            $actions .= ' <a data-option="" data-url="language/delete/' . $event->id . '" class="btn btn-danger btn-sm delete-data" title="delete"><i class="fa fa-trash"></i></a>';
                         }
                         if ($language_status) {
                             if ($event->status == '1') {
@@ -87,5 +92,12 @@ class LanguageController extends Controller
         } catch (\Exception $e) {
             errorMessage(trans('auth.something_went_wrong'));
         }
+    }
+
+    public function destroy($id)
+    {
+        $data = Language::find($id);
+        $data->delete();
+        successMessage('Data Deleted Successfully',[]);
     }
 }
