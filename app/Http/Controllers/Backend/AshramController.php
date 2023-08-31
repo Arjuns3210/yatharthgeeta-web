@@ -95,8 +95,8 @@ class AshramController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $saveArray = Utils::flipTranslationArray($input);
-        $data = Ashram::create($saveArray);
+
+        $data = Ashram::create($input);
         storeMedia($data, $input['image'], Ashram::IMAGE);
         successMessage('Data Saved successfully', []);
     }
@@ -140,9 +140,12 @@ class AshramController extends Controller
         if (!$data) {
             errorMessage('Ashram Not Found', []);
         }
-        $ashram = Utils::flipTranslationArray($input);
-        $data->update($ashram);
-        storeMedia($data, $input['image'], Ashram::IMAGE);
+        $data->update($input);
+
+        if(!empty($input['image'])){
+            $data->clearMediaCollection(Ashram::IMAGE);
+            storeMedia($data, $input['image'], Ashram::IMAGE);
+        }
         successMessage('Data Updated successfully', []);
     }
 
