@@ -122,8 +122,7 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $saveArray = Utils::flipTranslationArray($input);
-        $data = Banner::create($saveArray);
+        $data = Banner::create($input);
         storeMedia($data, $input['cover'], Banner::COVER);
         successMessage('Data Saved successfully', []);
 
@@ -172,9 +171,11 @@ class BannerController extends Controller
         if (!$data) {
             errorMessage('Banner Not Found', []);
         }
-        $category = Utils::flipTranslationArray($input);
-        $data->update($category);
-        storeMedia($data, $input['cover'], Banner::COVER);
+        $data->update($input);
+        if(!empty($input['cover'])){
+            $data->clearMediaCollection(Banner::COVER);
+            storeMedia($data, $input['cover'], Banner::COVER);
+        }
         successMessage('Data Saved successfully', []);
     }
 
