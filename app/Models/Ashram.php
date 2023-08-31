@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Ashram extends Model implements HasMedia
 {
-    use HasFactory,InteractsWithMedia;
+    use HasFactory,SoftDeletes,InteractsWithMedia;
     protected $fillable = [
         'name',
         'title',
@@ -46,5 +47,12 @@ class Ashram extends Model implements HasMedia
     ];
 
     const IMAGE= 'image';
+    
+    public const TRANSLATED_BLOCK = [
+        'name' => 'input',
+        'title' => 'input',
+        'subtitle' => 'textarea',
+        'description' => 'textarea'
+    ];
 
 }

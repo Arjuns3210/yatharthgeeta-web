@@ -83,7 +83,9 @@ class AshramController extends Controller
      */
     public function create()
     {
-        return view('backend/ashram/add');
+        $data['translated_block'] = Ashram::TRANSLATED_BLOCK;
+
+        return view('backend/ashram/add',$data);
     }
 
     /**
