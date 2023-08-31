@@ -18,6 +18,8 @@ class CreateBannersTable extends Migration
             $table->string('title');
             $table->longText('cover');
             $table->integer('sequence')->unique();
+            $table->integer('lang_id')->unsigned()->nullable();
+            $table->enum('visible_in_app', [1, 0])->default(1);
             $table->enum('status', [1, 0])->default(1);
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
