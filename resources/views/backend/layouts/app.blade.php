@@ -130,7 +130,7 @@
                                     <a href="language" class="menu-item"><i class="fa fa-list-alt"></i>Language</a>
                                 </li>
                                 <li class="{{ $lastParam ==  'banners' ? 'active' : '' }}">
-                                    <a href="banners" class="menu-item"><i class="fa fa-list-alt"></i>Banners</a>
+                                    <a href="banners" class="menu-item"><i class="fa fa-picture-o" aria-hidden="true"></i>Banners</a>
                                 </li>
 								<li class="{{ $lastParam ==  'quotes' ? 'active' : '' }}">
                                     <a href="quotes" class="menu-item"><i class="fa fa-list-alt"></i>Quotes</a>

@@ -29,6 +29,10 @@
                                             <input class="form-control mb-3" type="text" id="search_title" name="search_title">
                                         </div>
                                         <div class="col-md-4">
+                                            <label>Sequence</label>
+                                            <input class="form-control mb-3" type="text" id="search_sequence" name="search_sequence">
+                                        </div>
+                                        <div class="col-md-4">
                                             <label>Status</label>
                                             <select class="form-control mb-3" type="text" id="search_status" name="search_status">
                                                 <option value="">All</option>
@@ -47,6 +51,7 @@
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
                                                     <th id="title" data-orderable="false" data-searchable="false">Title</th>
+                                                    <th id="sequence" data-orderable="false" data-searchable="false">Sequence</th>
                                                     @if($data['banners_status'] || $data['banners_edit'] || $data['banners_view'] || $data['banners_delete'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
                                                     @endif
