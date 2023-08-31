@@ -58,6 +58,8 @@ return [
     
     'media_disc' => env('MEDIA_DISK', 'public'),
 
+    'media_disc' => env('MEDIA_DISK', 'public'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

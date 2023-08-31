@@ -39,6 +39,16 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('books_category/update', 'BookCategoryController@update');
 	Route::get('books_category/view/{id}', 'BookCategoryController@show');
 
+    //Banner
+    Route::get('banners', 'BannerController@index');
+    Route::post('banners/fetch', 'BannerController@fetch');
+    Route::get('banners/add', 'BannerController@create');
+    Route::post('banners/save', 'BannerController@store');
+    Route::post('banners/publish', 'BannerController@updateStatus');
+    Route::get('banners/view/{id}', 'BannerController@view');
+	Route::get('banners/edit/{id}', 'BannerController@edit');
+	Route::post('banners/update', 'BannerController@update');
+
 	//staff
 	Route::get('staff', 'StaffController@index');
 	Route::post('staff/fetch', 'StaffController@fetch')->name('staff_fetch');
