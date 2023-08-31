@@ -18,7 +18,10 @@ class CreateLanguagesTable extends Migration
             $table->string('language_name');
             $table->string('language_code');
             $table->enum('status', [1, 0])->default(1);
+            $table->integer('created_by')->unsigned()->nullable();
+            $table->integer('updated_by')->unsigned()->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

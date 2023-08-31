@@ -18,6 +18,7 @@ class RevertLanguagePermissionSeeder extends Seeder
         	'language',
         	'language_view',
         	'language_status',
+            'language_delete',
         ];
         $permissionData = Permission::whereIn('codename', $permissions)->pluck('id');
         foreach ($permissionData as $permission) {
