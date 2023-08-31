@@ -28,12 +28,12 @@
                         				<input class="form-control required" type="text" id="description" name="description"><br/>
                         			</div>
                                     <div class="col-sm-6">
-                                        <label>Quote Image<span class="text-danger">*</span></label>
+                                        <label>Quote Image (200*200)<span class="text-danger">*</span></label>
                                         <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="image" name="image"><br/>
                                     </div>
                         			<div class="col-sm-6">
                         				<label>Sequence<span class="text-danger">*</span></label>
-                        				<input class="form-control required" type="text" id="sequence" name="sequence"><br/>
+                        				<input class="form-control required" type="text" id="sequence" name="sequence" oninput="filterNonNumeric(this)"><br/>
                         			</div>
                         		</div>
                         		<hr>

@@ -45,8 +45,7 @@ class QuoteController extends Controller
     public function store(Request $request)
     {
 		$input = $request->all();
-        $saveArray = Utils::flipTranslationArray($input);
-        $data = Quote::create($saveArray);
+        $data = Quote::create($input);
         storeMedia($data, $input['image'], Quote::IMAGE);
         successMessage('Data Saved successfully', []);
     }
@@ -91,9 +90,11 @@ class QuoteController extends Controller
         if (!$data) {
             errorMessage('Quote Not Found', []);
         }
-        $quote = Utils::flipTranslationArray($input);
-        $data->update($quote);
-        storeMedia($data, $input['cover'], Quote::COVER);
+        $data->update($input);
+        if(!empty($input['image'])){
+            $data->clearMediaCollection(Quote::IMAGE);
+            storeMedia($data, $input['image'], Quote::IMAGE);
+        }
         successMessage('Data Saved successfully', []);
     }
 

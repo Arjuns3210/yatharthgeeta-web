@@ -27,7 +27,7 @@ class Quote extends Model implements HasMedia
         'description'=>'string',
         'image'=>'string',
 		'sequence'=>'integer'
-        
+
     ];
 
     public static $rules = [
@@ -38,6 +38,6 @@ class Quote extends Model implements HasMedia
     ];
 
     const IMAGE= 'image';
-	
-	
+
+
 }
