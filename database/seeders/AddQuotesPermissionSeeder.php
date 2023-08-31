@@ -44,7 +44,13 @@ class AddQuotesPermissionSeeder extends Seeder
 	            'description' => '',
 	            'status' => '1'
 	        ],
-	        
+            [
+	            'name' => 'Status',
+	            'codename' => 'quotes_status',
+	            'parent_status' => $result->id,
+	            'description' => '',
+	            'status' => '1'
+	        ],
         ];
 
         foreach ($permissions as $permission) {

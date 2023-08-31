@@ -27,7 +27,7 @@
                                         <div class="col-md-4">
                                             <label>Quote Text</label>
                                             <input class="form-control mb-3" type="text" id="text" name="text">
-                                        </div>                                        
+                                        </div>
                                         <div class="col-md-4">
                                             <label>&nbsp;</label><br/>
                                             <input class="btn btn-md btn-primary px-3 py-1 mb-3" id="clear-form-data" type="reset" value="Clear Search">
@@ -39,7 +39,7 @@
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
                                                     <th id="text" data-orderable="false" data-searchable="false">Quote Text</th>
-                                                    @if($data['quotes_edit'] || $data['quotes_view'])
+                                                    @if($data['quotes_edit'] || $data['quotes_view'] || $data['quotes_status'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
                                                     @endif
                                                 </tr>

@@ -19,6 +19,7 @@ class RevertQuotesPermissionSeeder extends Seeder
         	'quotes_add',
         	'quotes_edit',
         	'quotes_view',
+            'quotes_status'
         ];
         $permissionData = Permission::whereIn('codename', $permissions)->pluck('id');
         foreach ($permissionData as $permission) {

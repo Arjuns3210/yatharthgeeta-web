@@ -21,6 +21,7 @@ class QuoteController extends Controller
         $data['quotes_add'] = checkPermission('quotes_add');
         $data['quotes_edit'] = checkPermission('quotes_edit');
         $data['quotes_view'] = checkPermission('quotes_view');
+        $data['quotes_status'] = checkPermission('quotes_status');
         return view('backend/quotes/index',["data"=>$data]);
     }
 
@@ -40,7 +41,7 @@ class QuoteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    
+
     public function store(Request $request)
     {
 		$input = $request->all();
@@ -49,7 +50,7 @@ class QuoteController extends Controller
         storeMedia($data, $input['image'], Quote::IMAGE);
         successMessage('Data Saved successfully', []);
     }
-    
+
 
     /**
      * Display the specified resource.
@@ -106,7 +107,7 @@ class QuoteController extends Controller
     {
         //
     }
-	
+
 	public function fetch(Request $request)
     {
         if ($request->ajax()) {
@@ -126,6 +127,7 @@ class QuoteController extends Controller
                         $quotes_view = checkPermission('quotes_view');
                         $quotes_add = checkPermission('quotes_add');
                         $quotes_edit = checkPermission('quotes_edit');
+                        $quotes_status = checkPermission('quotes_status');
                         $actions = '<span style="white-space:nowrap;">';
                         if ($quotes_view) {
                             $actions .= '<a href="quotes/view/' . $event['id'] . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View Category Details" title="View"><i class="fa fa-eye"></i></a>';
@@ -133,7 +135,14 @@ class QuoteController extends Controller
                         if ($quotes_edit) {
                             $actions .= ' <a href="quotes/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
                         }
-                        
+                        if ($quotes_status) {
+                            if ($event->status == '1') {
+                                $actions .= ' <input type="checkbox" data-url="quotes/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery" checked>';
+                            } else {
+                                $actions .= ' <input type="checkbox" data-url="quotes/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery">';
+                            }
+                        }
+
                         $actions .= '</span>';
                         return $actions;
                     })
@@ -149,6 +158,24 @@ class QuoteController extends Controller
                     'error'           => 'Something went wrong',
                 ]);
             }
+        }
+    }
+
+    public function updateStatus(Request $request)
+    {
+        try {
+            $msg_data = array();
+            $quotes = Quote::find($request->id);
+            $quotes->status = $request->status;
+            $quotes->save();
+            if ($request->status == 1) {
+                successMessage('Enable', $msg_data);
+            } else {
+                successMessage('Disable', $msg_data);
+            }
+            errorMessage('Quotes not found', []);
+        } catch (\Exception $e) {
+            errorMessage(trans('auth.something_went_wrong'));
         }
     }
 }
