@@ -25,34 +25,35 @@ class Ashram extends Model implements HasMedia
      *
      * @var array
      */
-    protected $casts = [
-        'id' => 'integer',
-        'name'=>'string',
-        'title'=>'string',
-        'description'=>'string',
-        'image'=>'string',
-        'phone'=>'string',
-        'email'=>'string',
-        'location' => 'string'
-    ];
+    // protected $casts = [
+    //     'id' => 'integer',
+    //     'name'=>'string',
+    //     'title'=>'string',
+    //     'description'=>'string',
+    //     'image'=>'string',
+    //     'phone'=>'string',
+    //     'email'=>'string',
+    //     'location' => 'string'
+    // ];
 
-    public static $rules = [
-        'name.*' => 'string|required',
-        'title.*' => 'string|required',
-        'description' => 'required',
-        'phone.*' => 'string|required',
-        'email.*' => 'string|required',
-        'location.*' => 'string|required',
-        'image.*' => 'longText|required',
-    ];
+    // public static $rules = [
+    //     'name.*' => 'string|required',
+    //     'title.*' => 'string|required',
+    //     'description' => 'required',
+    //     'phone.*' => 'string|required',
+    //     'email.*' => 'string|required',
+    //     'location.*' => 'string|required',
+    //     'image.*' => 'longText|required',
+    // ];
 
     const IMAGE= 'image';
     
     public const TRANSLATED_BLOCK = [
         'name' => 'input',
-        'title' => 'input',
-        'subtitle' => 'textarea',
-        'description' => 'textarea'
+        'short description' => 'input',
+        'long description' => 'textarea',
+        'allowed in location' => 'textarea',
+        'not allowed in location' => 'textarea',
     ];
 
 }

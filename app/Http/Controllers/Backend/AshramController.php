@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
 use App\Models\Ashram;
+use App\Models\Location;
+use App\Models\LocationTranslation;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -83,9 +85,9 @@ class AshramController extends Controller
      */
     public function create()
     {
-        $data['translated_block'] = Ashram::TRANSLATED_BLOCK;
+        $data['translated_block'] = Location::TRANSLATED_BLOCK;
 
-        return view('backend/ashram/add',$data);
+        return view('backend/ashram/add1',$data);
     }
 
     /**
@@ -98,8 +100,17 @@ class AshramController extends Controller
     {
         $input = $request->all();
 
-        $data = Ashram::create($input);
-        storeMedia($data, $input['image'], Ashram::IMAGE);
+        $translated_keys = array_keys(Location::TRANSLATED_BLOCK);
+        foreach ($translated_keys as $value) {
+            $input[$value] = (array) json_decode($input[$value]);
+        }
+        $saveArray = Utils::flipTranslationArray($input, $translated_keys);
+        // echo "<pre>";
+        // print_r($saveArray);
+        // echo "</pre>";
+        // die("Debug");
+        $data = Location::create($input);
+        // storeMedia($data, $input['image'], Location::IMAGE);
         successMessage('Data Saved successfully', []);
     }
 

@@ -264,6 +264,7 @@ function submitForm(form_id, form_method, errorOverlay = '') {
             contentType: false,
             processData: false,
             success: function (data) {
+                console.log(data);
                 var response = JSON.parse(data);
                 if (response['success'] == 0) {
                     if (errorOverlay) {

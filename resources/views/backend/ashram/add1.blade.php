@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Add Category</h5>
+                                    <h5 class="pt-2">Add Ashram</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -15,7 +15,7 @@
                             </div>
                         </div>
                     	<div class="card-body">
-                    		<form id="addBooksCategoryForm" method="post" action="books_category/save">
+                    		<form id="saveAshram" method="post" action="ashram/save">
                     			@csrf
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -31,16 +31,57 @@
                                         </ul>
                                         <div class="tab-content">
                                             <div id="data_details" class="tab-pane fade in active show">
-                                                <div class="col-sm-6">
-                                                    <label>Category Status<span class="text-danger">*</span></label>
-                                                    <select class="form-control" id="status" name="status">
-                                                        <option value="1">Active</option>
-                                                        <option value="0">Inactive</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <label>Image<span class="text-danger">*</span></label>
-                                                    <input class="form-control required" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')"><br/>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <label>Ashram Status<span class="text-danger">*</span></label>
+                                                        <select class="form-control" id="status" name="status">
+                                                            <option value="1">Active</option>
+                                                            <option value="0">Inactive</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Image<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Email<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="email" name="email"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Contact (add More no by comma)<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="phone" name="phone"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Location<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="location" name="location"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Latitude<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="latitude" name="latitude" oninput="filterNonNumeric(this)"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Longitude<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="longitude" name="longitude" oninput="filterNonNumeric(this)"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Goolge Address<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="google_address" name="google_address"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Working Hours :<span class="text-danger">*</span></label>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+
+                                                                <div class="custom-switch custom-control-inline mb-1 mb-xl-0">
+                                                                    <label class="custom-control-label mr-1" for="sunday">
+                                                                        <span>Sunday</span>
+                                                                    </label>
+                                                                    <input type="checkbox" class="custom-control-input" id="sunday" name="sunday">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -50,7 +91,7 @@
                                                         <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                             <?php if($translated_block_fields_value == 'input') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}}</label>
+                                                                    <label>{{formatName($translated_block_fields_key)}}</label>
                                                                     <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">
                                                                 </div>
                                                             <?php } ?>
@@ -60,7 +101,7 @@
                                                         <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                             <?php if($translated_block_fields_value == 'textarea') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}}</label>
+                                                                    <label>{{formatName($translated_block_fields_key)}}</label>
                                                                     <textarea class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}"></textarea>
                                                                 </div>
                                                             <?php } ?>
@@ -75,7 +116,7 @@
                         		<div class="row">
                         			<div class="col-sm-12">
                         				<div class="pull-right">
-                        					<button type="button" class="btn btn-success" onclick="submitForm('addBooksCategoryForm','post')">Submit</button>
+                        					<button type="button" class="btn btn-success" onclick="submitForm('saveAshram','post')">Submit</button>
                                             <a href="{{URL::previous()}}" class="btn btn-sm btn-danger px-3 py-1"> Cancel</a>
                         				</div>
                         			</div>

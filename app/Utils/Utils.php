@@ -5,6 +5,14 @@ class Utils
 	public static function flipTranslationArray(array $inputArray, array $fieldNamesToFlip = null)
     {
         foreach ($inputArray as $fieldName => $translations) {
+            $fieldName = strpos($fieldName, '-')? formatName($fieldName,true) : $fieldName; 
+            // if(strpos($fieldName, '-')){
+
+            // echo "<pre>";
+            // print_r($fieldName);
+            // echo "</pre>";
+            // die("12313");
+            // }
             if ((empty($fieldNamesToFlip) || in_array($fieldName, $fieldNamesToFlip)) && is_array($translations)) {
                 foreach ($translations as $lang => $translatedValue) {
                     if (isset($inputArray[$lang])) {
