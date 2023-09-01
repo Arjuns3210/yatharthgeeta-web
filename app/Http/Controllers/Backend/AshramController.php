@@ -109,8 +109,8 @@ class AshramController extends Controller
         // print_r($saveArray);
         // echo "</pre>";
         // die("Debug");
-        $data = Location::create($input);
-        // storeMedia($data, $input['image'], Location::IMAGE);
+        $data = Location::create($saveArray);
+        storeMedia($data, $input['image'], Location::IMAGE);
         successMessage('Data Saved successfully', []);
     }
 

@@ -10,6 +10,7 @@ class locationTranslation extends Model
     use HasFactory;
 
     public $fillable = [
+        'name',
         'location_id',
         'locale',
         'short_description',
