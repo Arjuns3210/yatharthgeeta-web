@@ -155,6 +155,9 @@
                             </ul>
                         </li>
                         @endif
+                        <li class="nav-item">
+                            <a href="general_settings"><i class="icon-user-following"></i><span data-i18n="" class="menu-title">General Settings</span></a>
+                        </li>
                         <li class="nav-item {{ $lastParam ==  'logout' ? 'active' : ''  }}">
                             <a href="logout"><i class="fa fa-power-off"></i><span class="menu-title" >Logout</span></a>
                         </li>

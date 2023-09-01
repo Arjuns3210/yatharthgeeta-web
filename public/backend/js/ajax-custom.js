@@ -355,7 +355,7 @@ function submitModalForm(form_id, form_method, errorOverlay = '') {
     });
 }
 
-//FOR CkEditor data pass to server - added by sagar - START 
+//FOR CkEditor data pass to server - added by sagar - START
 function submitEditor(form_id) {
     var content = theEditor.getData();
     var form = $('#' + form_id);
@@ -397,7 +397,7 @@ function submitEditor(form_id) {
     });
 }
 
-//FOR CkEditor data pass to server - added by sagar - END 
+//FOR CkEditor data pass to server - added by sagar - END
 $(document).on('click', '#addStock', function (event) {
     var trlen = $('#batchTbl tbody tr').length;
     if (trlen == 0) {
@@ -602,7 +602,7 @@ function validateNumberInput(input) {
 function filterNonNumeric(input) {
     var regex = /^\d+$/;
     var inputValue = input.value.trim();
-    
+
     if (!regex.test(inputValue)) {
         input.value = inputValue.replace(/\D/g, '');
     }
@@ -611,7 +611,7 @@ function filterNonNumeric(input) {
 function validateNameInput(input) {
     var regex = /^[A-Za-z\s]+$/;
     var inputValue = input.value.trim();
-    
+
     if (!regex.test(inputValue)) {
         input.value = inputValue.replace(/[^A-Za-z\s]/g, '');
     }

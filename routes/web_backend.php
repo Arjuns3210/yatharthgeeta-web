@@ -81,6 +81,11 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('quotes/update', 'QuoteController@update');
     Route::post('quotes/publish', 'QuoteController@updateStatus');
 
+    //general settings
+    Route::get('general_settings', 'GeneralSettingController@index');
+    Route::post('updateSettingInfo', 'GeneralSettingController@updateSetting');
+
+
 	// Logout
 	Route::get('/logout', function () {
 		session()->forget('data');
