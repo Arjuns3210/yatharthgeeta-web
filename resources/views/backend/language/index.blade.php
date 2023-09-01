@@ -36,6 +36,7 @@
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
                                                     <th id="language_name" data-orderable="false" data-searchable="false">Language Name</th>
+                                                    <th id="language_code" data-orderable="false" data-searchable="false">Language Code</th>
                                                     @if($data['language_status'] || $data['language_view'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
                                                     @endif
