@@ -126,6 +126,9 @@
                                 <li class="{{ $lastParam ==  'banners' ? 'active' : '' }}">
                                     <a href="banners" class="menu-item"><i class="fa fa-picture-o" aria-hidden="true"></i>Banners</a>
                                 </li>
+                                <li class="{{ $lastParam ==  'videos' ? 'active' : '' }}">
+                                    <a href="videos" class="menu-item"><i class="fa fa-video-camera" aria-hidden="true"></i>Videos</a>
+                                </li>
                             </ul>
                         </li>
                         @endif

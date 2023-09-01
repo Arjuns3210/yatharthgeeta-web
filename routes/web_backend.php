@@ -41,6 +41,11 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('banners/update', 'BannerController@update');
     Route::get('banners/delete/{id}', 'BannerController@destroy');
 
+    //Video
+    Route::get('videos', 'VideoController@index');
+    Route::post('videos/fetch', 'VideoController@fetch');
+    Route::get('videos/add', 'VideoController@create');
+
 	//staff
 	Route::get('staff', 'StaffController@index');
 	Route::post('staff/fetch', 'StaffController@fetch')->name('staff_fetch');

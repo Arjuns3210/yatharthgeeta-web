@@ -97,6 +97,7 @@ class BookCategoryController extends Controller
     public function create()
     {
         $data['translated_block'] = BookCategory::TRANSLATED_BLOCK;
+
         return view('backend/books_category/add', $data);
     }
 
@@ -164,7 +165,7 @@ class BookCategoryController extends Controller
             errorMessage('Book Category Not Found', []);
         }
         $translated_keys = array_keys(BookCategory::TRANSLATED_BLOCK);
-        foreach ($translated_keys as $value) 
+        foreach ($translated_keys as $value)
         {
             $input[$value] = (array) json_decode($input[$value]);
         }
