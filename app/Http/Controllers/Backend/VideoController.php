@@ -128,7 +128,8 @@ class VideoController extends Controller
      */
     public function create()
     {
-        return view('backend/videos/add');
+        $data['translated_block'] = Video::TRANSLATED_BLOCK;
+        return view('backend/videos/add',$data);
     }
 
     /**

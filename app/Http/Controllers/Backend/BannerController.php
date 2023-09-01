@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Video;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
 use App\Models\Banner;
@@ -118,6 +119,7 @@ class BannerController extends Controller
      */
     public function create()
     {
+
         return view('backend/banners/add');
     }
 
