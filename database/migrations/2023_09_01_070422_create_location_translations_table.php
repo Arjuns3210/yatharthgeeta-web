@@ -16,6 +16,7 @@ class CreateLocationTranslationsTable extends Migration
         Schema::create('location_translations', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('location_id');
+            $table->string('name');
             $table->string('locale');
             $table->string('short_description')->nullable();
             $table->string('long_description')->nullable();

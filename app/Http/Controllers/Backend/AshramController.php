@@ -31,7 +31,12 @@ class AshramController extends Controller
     {
         if ($request->ajax()) {
             try {
-                $query = Ashram::orderBy('updated_at','desc');
+                $query = Location::leftJoin('LocationTranslation', function ($join) {
+                                        $join->on("location_translations.location_id", '=', "location.id");
+                                        $join->where('location_translations.locale', \App::getLocale());
+                                     })
+                                     ->select('location.*')
+                                     ->orderBy('updated_at','desc');;
                 return DataTables::of($query)
                     ->filter(function ($query) use ($request) {
                         if (isset($request['search']['search_name']) && !is_null($request['search']['search_name'])) {
@@ -47,6 +52,10 @@ class AshramController extends Controller
                     })
                     ->editColumn('name', function ($event) {
                         return $event['name'];
+                    })->editColumn('short_description', function ($event) {
+                        return $event['short_description'];
+                    })->editColumn('location', function ($event) {
+                        return $event['location'];
                     })
                     ->editColumn('action', function ($event) {
                         $ashram_edit = checkPermission('ashram_edit');
@@ -64,7 +73,7 @@ class AshramController extends Controller
                         return $actions;
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['category_name_'.\App::getLocale(), 'status', 'action'])->setRowId('id')->make(true);
+                    ->rawColumns(['name'.\App::getLocale(), 'short_description','location','status', 'action'])->setRowId('id')->make(true);
             } catch (\Exception $e) {
                 \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                 return response([
