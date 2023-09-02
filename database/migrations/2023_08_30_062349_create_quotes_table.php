@@ -18,7 +18,7 @@ class CreateQuotesTable extends Migration
 			$table->string('text');
 			$table->string('description');
 			$table->longText('image');
-			$table->integer('sequence')->unique();
+			$table->integer('sequence');
             $table->enum('status', [1, 0])->default(1);
 			$table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
