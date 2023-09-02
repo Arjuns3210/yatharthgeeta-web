@@ -83,7 +83,7 @@
                         		<div class="row">
                         			<div class="col-sm-12">
                         				<div class="pull-right">
-                        					<button type="button" class="btn btn-success" onclick="submitForm('addBooksCategoryForm','post')">Submit</button>
+                        					<button type="button" class="btn btn-success" onclick="submitForm('saveVideo','post')">Submit</button>
                                             <a href="{{URL::previous()}}" class="btn btn-sm btn-danger px-3 py-1"> Cancel</a>
                         				</div>
                         			</div>

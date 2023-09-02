@@ -21,7 +21,6 @@ class VideoController extends Controller
         $data['videos_edit'] = checkPermission('videos_edit');
         $data['videos_status'] = checkPermission('videos_status');
         $data['videos_delete'] = checkPermission('videos_delete');
-        $data['translated_block'] = Video::TRANSLATED_BLOCK;
         return view('backend/videos/index',["data"=>$data]);
     }
 
@@ -141,7 +140,12 @@ class VideoController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $data = Video::create($input);
+        $translated_keys = array_keys(Video::TRANSLATED_BLOCK);
+        foreach ($translated_keys as $value) {
+            $input[$value] = (array) json_decode($input[$value]);
+        }
+        $saveArray = Utils::flipTranslationArray($input, $translated_keys);
+        $data = BookCategory::create($saveArray);
         storeMedia($data, $input['cover_image'], Video::COVER_IMAGE);
         successMessage('Data Saved successfully', []);
     }
