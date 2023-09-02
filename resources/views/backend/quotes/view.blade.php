@@ -8,10 +8,10 @@
                             <div class="col-12">
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-striped">
-                                        <tr>
-                                            <td><strong>Quote Text</strong></td>
-                                            <td>{{$quotes->text ?? ''}}</td>
-                                        </tr>
+										<tr>
+                                            <td><strong>Shlok</strong></td>
+                                            <td>{{$quotes->shlok ?? ''}}</td>
+                                        </tr>                                    
                                         <tr>
                                             <td><strong>Quote Image</strong></td>
                                             <td><img src="{{$media->getFullUrl() ?? ''}}" width="200px" alt=""></td>
@@ -21,8 +21,8 @@
                                             <td>{{$quotes->sequence ?? ''}}</td>
                                         </tr>
                                         <tr>
-                                            <td><strong>Quote Description</strong></td>
-                                            <td>{{$quotes->description ?? ''}}</td>
+                                            <td><strong>Share Allowance</strong></td>
+                                            <td>{{$quotes->share_allowance ?? ''}}</td>
                                         </tr>
                                     </table>
                                 </div>

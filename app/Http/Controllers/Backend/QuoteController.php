@@ -45,6 +45,7 @@ class QuoteController extends Controller
     public function store(Request $request)
     {
 		$input = $request->all();
+		$input['shlok'] = json_encode($request->input('shlok'));
         $data = Quote::create($input);
         storeMedia($data, $input['image'], Quote::IMAGE);
         successMessage('Data Saved successfully', []);
@@ -117,8 +118,8 @@ class QuoteController extends Controller
                 $query = Quote::orderBy('updated_at','desc');
                 return DataTables::of($query)
                     ->filter(function ($query) use ($request) {
-                        if (isset($request['search']['text']) && !is_null($request['search']['text'])) {
-                            $query->where('text', 'like', "%" . $request['search']['text'] . "%");
+                        if (isset($request['search']['share_allowance']) && !is_null($request['search']['share_allowance'])) {
+                            $query->where('share_allowance', 'like', "%" . $request['search']['share_allowance'] . "%");
                         }
                         if (isset($request['search']['sequence']) && !is_null($request['search']['sequence'])) {
                             $query->where('sequence', 'like', "%" . $request['search']['sequence'] . "%");

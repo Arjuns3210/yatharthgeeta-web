@@ -18,23 +18,29 @@
                     	<div class="card-body">
                     		<form id="saveQuote" method="post" action="quotes/save">
                     			@csrf
-                        		<div class="row">
-                        			<div class="col-sm-6">
-                        				<label>Quote Text<span class="text-danger">*</span></label>
-                        				<input class="form-control required" type="text" id="text" name="text" oninput="validateNameInput(this)"><br/>
-                        			</div>
-									<div class="col-sm-6">
-                        				<label>Quote Description<span class="text-danger">*</span></label>
-                        				<input class="form-control required" type="text" id="description" name="description"><br/>
-                        			</div>
+                        		<div class="row">               
                                     <div class="col-sm-6">
                                         <label>Quote Image (200*200)<span class="text-danger">*</span></label>
                                         <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="image" name="image" onchange="handleFileInputChange('image')"><br/>
                                     </div>
-                        			<div class="col-sm-6">
+									<div class="tab-pane fade in active show">
+										<label>Shlok<span class="text-danger">*</span></label>
+										<select class="form-control" id="shlok" name="shlok">
+											<option value="A">A</option>
+											<option value="B">B</option>
+										</select>
+                                    </div> 
+									<div class="col-sm-6">
                         				<label>Sequence<span class="text-danger">*</span></label>
-                        				<input class="form-control required" type="text" id="sequence" name="sequence" oninput="filterNonNumeric(this)"><br/>
+                        				<input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)"><br/>
                         			</div>
+									<div class="tab-pane fade in active show">
+										<label>Share Allowance<span class="text-danger">*</span></label>
+										<select class="form-control" id="share_allowance" name="share_allowance">
+											<option value="yes">Yes</option>
+											<option value="no">No</option>
+										</select>
+                                    </div> 	
                         		</div>
                         		<hr>
                         		<div class="row">
