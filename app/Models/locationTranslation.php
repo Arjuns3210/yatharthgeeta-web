@@ -13,10 +13,10 @@ class locationTranslation extends Model
         'name',
         'location_id',
         'locale',
-        'short_description',
-        'long_description',
-        'allowed_in_location',
-        'not_allowed_in_location'
+        'title',
+        'description',
+        'do',
+        'dont'
     ];
 
 

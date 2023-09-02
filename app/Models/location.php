@@ -42,19 +42,21 @@ class location extends Model implements HasMedia
      */
     protected $casts = [
         'id' => 'integer',
-        'status' => 'boolean'
+        'status' => 'boolean',
+        'phone' => 'json'
+
     ];
 
-    public $translatedAttributes = ['name', 'short_description', 'long_description', 'allowed_in_location','not_allowed_in_location'];
+    public $translatedAttributes = ['name', 'title', 'description', 'do','dont'];
 
     const IMAGE= 'image';
     
     public const TRANSLATED_BLOCK = [
         'name' => 'input',
-        'short-description' => 'input',
-        'long-description' => 'textarea',
-        'allowed-in-location' => 'textarea',
-        'not-allowed-in-location' => 'textarea',
+        'title' => 'input',
+        'description' => 'textarea',
+        'do' => 'textarea',
+        'dont' => 'textarea',
     ];
     public function locationTranslations()
     {

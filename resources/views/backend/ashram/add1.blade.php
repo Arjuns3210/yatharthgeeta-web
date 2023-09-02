@@ -49,7 +49,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Contact (add More no by comma)<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="phone" name="phone"><br/>
+                                                        <input class="form-control required" type="text" id="phone[]" name="phone[]"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Location<span class="text-danger">*</span></label>
@@ -67,7 +67,7 @@
                                                         <label>Goolge Address<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="google_address" name="google_address"><br/>
                                                     </div>
-                                                    <div class="col-sm-6">
+                                                    <!-- <div class="col-sm-6">
                                                         <label>Working Hours :<span class="text-danger">*</span></label>
                                                         <div class="row">
                                                             <div class="col-sm-6">
@@ -81,7 +81,7 @@
                                                             </div>
                                                         </div>
 
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </div>
 

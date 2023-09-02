@@ -18,10 +18,10 @@ class CreateLocationTranslationsTable extends Migration
             $table->unsignedInteger('location_id');
             $table->string('name');
             $table->string('locale');
-            $table->string('short_description')->nullable();
-            $table->string('long_description')->nullable();
-            $table->text('allowed_in_location')->nullable();
-            $table->text('not_allowed_in_location')->nullable();
+            $table->string('title')->nullable();
+            $table->string('description')->nullable();
+            $table->text('do')->nullable();
+            $table->text('dont')->nullable();
             $table->enum('status', [1, 0])->default(1);
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();

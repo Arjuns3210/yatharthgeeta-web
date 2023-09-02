@@ -31,12 +31,7 @@ class AshramController extends Controller
     {
         if ($request->ajax()) {
             try {
-                $query = Location::leftJoin('LocationTranslation', function ($join) {
-                                        $join->on("location_translations.location_id", '=', "location.id");
-                                        $join->where('location_translations.locale', \App::getLocale());
-                                     })
-                                     ->select('location.*')
-                                     ->orderBy('updated_at','desc');;
+                $query = Location::orderBy('updated_at','desc');
                 return DataTables::of($query)
                     ->filter(function ($query) use ($request) {
                         if (isset($request['search']['search_name']) && !is_null($request['search']['search_name'])) {
@@ -51,9 +46,11 @@ class AshramController extends Controller
                         $query->get()->toArray();
                     })
                     ->editColumn('name', function ($event) {
-                        return $event['name'];
-                    })->editColumn('short_description', function ($event) {
-                        return $event['short_description'];
+                        $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
+                        return $event['translations'][$Key_index]['name'];
+                    })->editColumn('phone', function ($event) {
+                        return $event['phone'];
+                        // return $event['short_description'];
                     })->editColumn('location', function ($event) {
                         return $event['location'];
                     })
@@ -108,7 +105,8 @@ class AshramController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-
+        $input['phone']=json_encode($input['phone']);
+// print_r($input);exit;
         $translated_keys = array_keys(Location::TRANSLATED_BLOCK);
         foreach ($translated_keys as $value) {
             $input[$value] = (array) json_decode($input[$value]);
@@ -131,8 +129,8 @@ class AshramController extends Controller
      */
     public function show($id)
     {
-        $data['ashram'] = Ashram::find($id);
-        $data['media'] = $data['ashram']->getMedia(Ashram::IMAGE)[0]; // need to make dynamic index to replace image
+        $data['ashram'] = Location::find($id);
+        $data['media'] = $data['ashram']->getMedia(Location::IMAGE)[0];
         return view('backend/ashram/view',$data);
     }
 
@@ -144,7 +142,16 @@ class AshramController extends Controller
      */
     public function edit($id)
     {
-        $data['ashram'] = Ashram::find($id);
+        $data['ashram'] = Location::find($id)->toArray();
+        // print_r($data);exit;
+        foreach($data['ashram']['translations'] as $trans) {
+            $translated_keys = array_keys(Location::TRANSLATED_BLOCK);
+            foreach ($translated_keys as $value) {
+                $data['ashram'][$value.'_'.$trans['locale']] = $trans[$value];
+            }
+        }
+        $data['translated_block'] = Location::TRANSLATED_BLOCK;
+        $data['media'] =$data['ashram']->getMedia(Location::IMAGE)[0];
         return view('backend/ashram/edit',$data);
     }
 
@@ -155,18 +162,23 @@ class AshramController extends Controller
      * @param  \App\Models\Ashram  $ashram
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ashram $ashram)
+    public function update(Request $request)
     {
-        $data = Ashram::find($_GET['id']);
-        $input = $request->all();
+        $data = Location::find($_GET['id']);
+        $input=$request->all();
         if (!$data) {
             errorMessage('Ashram Not Found', []);
         }
-        $data->update($input);
-
+        $translated_keys = array_keys(Location::TRANSLATED_BLOCK);
+        foreach ($translated_keys as $value) 
+        {
+            $input[$value] = (array) json_decode($input[$value]);
+        }
+        $ashram = Utils::flipTranslationArray($input, $translated_keys);
+        $data->update($ashram);
         if(!empty($input['image'])){
-            $data->clearMediaCollection(Ashram::IMAGE);
-            storeMedia($data, $input['image'], Ashram::IMAGE);
+            $data->clearMediaCollection(Location::IMAGE);
+            storeMedia($data, $input['image'], Location::IMAGE);
         }
         successMessage('Data Updated successfully', []);
     }
