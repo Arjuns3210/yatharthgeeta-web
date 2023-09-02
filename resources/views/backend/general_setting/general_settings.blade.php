@@ -77,31 +77,31 @@
                                                                         <div class="col-12 form-group">
                                                                             <label for="system_email">System E-mail</label>
                                                                             <div class="controls">
-                                                                                <input type="email" id="system_email" name="system_email" class="form-control" placeholder="E-mail" value="{{$data['system_email']}}" required>
+                                                                                <input type="email" id="system_email" name="system_email" class="form-control required" placeholder="E-mail" value="{{$data['system_email']}}">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-12 form-group">
                                                                             <label for="system_contact_no">System Contact No</label>
                                                                             <div class="controls">
-                                                                                <input type="text" id="system_contact_no" name="system_contact_no" class="form-control" placeholder="Contact No" value="{{$data['system_contact_no']}}" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46' required>
+                                                                                <input type="text" id="system_contact_no" name="system_contact_no" class="form-control required" placeholder="Contact No" value="{{$data['system_contact_no']}}" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46'>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-12 form-group">
                                                                             <label for="meta_title">Meta Title</label>
                                                                             <div class="controls">
-                                                                                <input type="text" id="meta_title" name="meta_title"  value="{{$data['meta_title']}}" class="form-control"  placeholder="" aria-invalid="false">
+                                                                                <input type="text" id="meta_title" name="meta_title"  value="{{$data['meta_title']}}" class="form-control required"  placeholder="" aria-invalid="false">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-12 form-group">
                                                                             <label for="meta_keywords">Meta Keywords</label>
                                                                             <div class="controls">
-                                                                                <input type="text" id="meta_keywords" name="meta_keywords" value="{{$data['meta_keywords']}}" class="form-control" placeholder="" aria-invalid="false">
+                                                                                <input type="text" id="meta_keywords" name="meta_keywords" value="{{$data['meta_keywords']}}" class="form-control required" placeholder="" aria-invalid="false">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-12 form-group">
                                                                             <label for="meta_description">Meta Description</label>
                                                                             <div class="controls">
-                                                                                <input type="text" id="meta_description" name="meta_description" value="{{$data['meta_description']}}" class="form-control" placeholder="" aria-invalid="false">
+                                                                                <input type="text" id="meta_description" name="meta_description" value="{{$data['meta_description']}}" class="form-control required" placeholder="" aria-invalid="false">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">
@@ -122,7 +122,7 @@
                                                                             <textarea class="ckeditor form-control" id="about_us_editor" name="about_us"> {{$data['about_us']}}</textarea>
                                                                         </div>
                                                                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">
-                                                                            <button type="button" class="btn btn-success mr-sm-2 mb-1" onclick="submitEditor('aboutusForm')">Save Changes</button>
+                                                                            <button type="button" class="btn btn-success mr-sm-2 mb-1 " onclick="submitEditor('aboutusForm')">Save Changes</button>
                                                                             {{-- <button type="reset" class="btn btn-danger mb-1">Cancel</button> --}}
                                                                         </div>
                                                                     </div>
@@ -135,19 +135,19 @@
                                                                         <div class="col-12 form-group">
                                                                             <label for="contact_email">Email</label>
                                                                             <div class="controls">
-                                                                                <input type="email" id="contact_email" name="contact_email"  value="{{$data['contact_email']}}" class="form-control"  placeholder="" aria-invalid="false" >
+                                                                                <input type="email" id="contact_email" name="contact_email"  value="{{$data['contact_email']}}" class="form-control required"  placeholder="" aria-invalid="false" >
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-12 form-group">
                                                                             <label for="contact_phone">Phone</label>
                                                                             <div class="controls">
-                                                                                <input type="text" id="contact_phone" name="contact_phone"  value="{{$data['contact_phone']}}" class="form-control"  placeholder="" aria-invalid="false" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46'>
+                                                                                <input type="text" id="contact_phone" name="contact_phone"  value="{{$data['contact_phone']}}" class="form-control required"  placeholder="" aria-invalid="false" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46'>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-12 form-group">
                                                                             <label for="contact_address">Address</label>
                                                                             <div class="controls">
-                                                                                <input type="text" id="contact_address" name="contact_address"  value="{{$data['contact_address']}}" class="form-control"  placeholder="" aria-invalid="false" >
+                                                                                <input type="text" id="contact_address" name="contact_address"  value="{{$data['contact_address']}}" class="form-control required"  placeholder="" aria-invalid="false" >
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">
@@ -164,8 +164,8 @@
                                                                             <label>Terms and Condition</label>
                                                                             <textarea class="ckeditor form-control" id="terms_condition_editor" name="terms_condition">{{$data['terms_and_condition']}}</textarea>
                                                                         </div>
-                                                                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">
-                                                                            <button type="button" class="btn btn-success mr-sm-2 mb-1" onclick="submitEditor('tncForm')">Save Changes</button>
+                                                                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end ">
+                                                                            <button type="button" class="btn btn-success mr-sm-2 mb-1 " onclick="submitEditor('tncForm')">Save Changes</button>
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -194,15 +194,15 @@
                                                                     <div class="row">
                                                                         <div class="col-12 form-group">
                                                                             <label for="facebook">Facebook</label>
-                                                                            <input id="facebook" type="text" name="fb_link" class="form-control" placeholder="Add link" value="{{$data['fb_link']}}">
+                                                                            <input id="facebook" type="text" name="fb_link" class="form-control required" placeholder="Add link" value="{{$data['fb_link']}}">
                                                                         </div>
                                                                         <div class="col-12 form-group">
                                                                             <label for="instagram">Instagram</label>
-                                                                            <input id="instagram" type="text" name="insta_link" class="form-control" placeholder="Add link" value="{{$data['insta_link']}}">
+                                                                            <input id="instagram" type="text" name="insta_link" class="form-control required" placeholder="Add link" value="{{$data['insta_link']}}">
                                                                         </div>
                                                                         <div class="col-12 form-group">
                                                                             <label for="twitter">Twitter</label>
-                                                                            <input id="twitter" type="text" name="twitter_link" class="form-control" placeholder="Add link" value="{{$data['twitter_link']}}">
+                                                                            <input id="twitter" type="text" name="twitter_link" class="form-control required" placeholder="Add link" value="{{$data['twitter_link']}}">
                                                                         </div>
                                                                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">
                                                                             <button type="button" class="btn btn-success mr-sm-2 mb-1" onclick="submitForm('socialLinkForm','post')">Save Changes</button>
@@ -220,13 +220,13 @@
                                                                         <div class="col-12 form-group">
                                                                             <label for="android_url">Android</label>
                                                                             <div class="controls">
-                                                                                <input type="text" id="android_url" name="android_url" class="form-control" placeholder="" value="{{$data['android_url']}}" required>
+                                                                                <input type="text" id="android_url" name="android_url" class="form-control required" placeholder="" value="{{$data['android_url']}}" required>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-12 form-group">
                                                                             <label for="ios_url">IOS</label>
                                                                             <div class="controls">
-                                                                                <input type="text" id="ios_url" name="ios_url"  class="form-control" placeholder="" aria-invalid="false" value="{{$data['ios_url']}}">
+                                                                                <input type="text" id="ios_url" name="ios_url"  class="form-control required" placeholder="" aria-invalid="false" value="{{$data['ios_url']}}">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">
@@ -245,13 +245,13 @@
                                                                         <div class="col-12 form-group">
                                                                             <label for="android_version">Android (Format-> ["va1","val2","val3"])</label>
                                                                             <div class="controls">
-                                                                                <input type="text" id="android_version" name="android_version" class="form-control" placeholder="" value="{{$data['android_version']}}" required>
+                                                                                <input type="text" id="android_version" name="android_version" class="form-control required" placeholder="" value="{{$data['android_version']}}" required>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-12 form-group">
                                                                             <label for="ios_version">IOS (Format-> ["va1","val2","val3"])</label>
                                                                             <div class="controls">
-                                                                                <input type="text" id="ios_version" name="ios_version"  class="form-control" placeholder="" aria-invalid="false" value="{{$data['ios_version']}}">
+                                                                                <input type="text" id="ios_version" name="ios_version"  class="form-control required" placeholder="" aria-invalid="false" value="{{$data['ios_version']}}">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">

@@ -370,7 +370,7 @@ function submitEditor(form_id) {
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         data: form.serialize() + '&editiorData=' + content,
         success: function (data) {
-            // console.log(data);
+            //console.log(data);
             var response = JSON.parse(data);
             if (response['success'] == 0) {
                 $.activeitNoty({
@@ -388,11 +388,7 @@ function submitEditor(form_id) {
                     container: 'floating',
                     timer: 3000
                 });
-
-            }
-            setTimeout(function () {
-                location.reload();
-            }, 2000);
+            }            
         }
     });
 }

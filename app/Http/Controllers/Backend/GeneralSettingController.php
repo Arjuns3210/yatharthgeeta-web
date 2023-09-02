@@ -25,7 +25,7 @@ class GeneralSettingController extends Controller
         $msg_data = array();
         $msg = "Data Saved Successfully";
         if (isset($param) && !empty($param)) {
-            try {
+            try {				
                 switch ($param) {
                     case 'general':
                         GeneralSetting::where("type", 'system_email')->update(["value" => $request->system_email]);
@@ -36,12 +36,21 @@ class GeneralSettingController extends Controller
                         GeneralSetting::where("type", 'meta_description')->update(["value" => $request->meta_description]);
                         break;
                     case 'aboutus':
+						if (empty($request->editiorData)) {
+							errorMessage('AboutUs cannot be empty', $msg_data);
+						}
                         GeneralSetting::where("type", 'about_us')->update(["value" => $request->editiorData]);
                         break;
                     case 'tnc':
+						if (empty($request->editiorData)) {
+							errorMessage('Terms and Condition cannot be empty', $msg_data);
+						}
                         GeneralSetting::where("type", 'terms_and_condition')->update(["value" => $request->editiorData]);
                         break;
                     case 'privacy':
+						if (empty($request->editiorData)) {
+							errorMessage('Privacy cannot be empty', $msg_data);
+						}
                         GeneralSetting::where("type", 'privacy_policy')->update(["value" => $request->editiorData]);
                         break;
                     case 'social':
@@ -59,13 +68,13 @@ class GeneralSettingController extends Controller
                         break;
                     default:
                         throw new \Exception("Invalid Paramter passed");
-                }
+                }				
                 successMessage($msg, $msg_data);
                 //return redirect('webadmin/generalSetting');
-                ///return redirect()->back()->withErrors(array("msg"=>$msg));
+                //return redirect()->back()->withErrors(array("msg"=>$msg));
             } catch (\Exception $e) {
                 \Log::error("General Setting Submit. Error: " . $e->getMessage());
-                errorMessage('Something Went Wrong', $msg_data);
+                errorMessage('Something Went Wrong', $msg_data);	
             }
         } else {
             errorMessage('Something Went Wrong', $msg_data);
