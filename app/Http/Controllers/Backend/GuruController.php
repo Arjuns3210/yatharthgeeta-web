@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
 use App\Models\Guru;
 use App\Models\GuruTranslation;
+use App\Models\Location;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -91,7 +92,7 @@ class GuruController extends Controller
     public function create()
     {
         $data['translated_block'] = Guru::TRANSLATED_BLOCK;
-
+        $data['ashram'] = Location::where('status','1')->get()->toArray();
         return view('backend/guru/add',$data);
     }
 

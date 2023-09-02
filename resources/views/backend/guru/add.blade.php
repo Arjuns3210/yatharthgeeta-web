@@ -40,6 +40,15 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
+                                                        <label>Ashram<span class="text-danger">*</span></label>
+                                                        <select class="form-control" id="location_id" name="location_id">
+                                                            <option value="" selected>Select</option>
+                                                            @foreach($ashram as $key=> $ashram)
+                                                                <option value="{{$ashram['id']}}">{{$ashram['translations'][$key]['name']}}</option>
+                                                            @endforeach
+                                                        </select><br>
+                                                    </div>
+                                                    <div class="col-sm-6">
                                                         <label>Image<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')"><br/>
                                                     </div>
