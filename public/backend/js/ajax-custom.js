@@ -638,3 +638,11 @@ function handleFileInputChange(id) {
     }
 }
 
+function onlyNumericNegative(input) {
+    var regex = /^-?\d*\.?$/;
+    var inputValue = input.value.trim();
+    if (!regex.test(inputValue)) {
+        input.value = inputValue.replace(/\D/g, '');
+    }
+}
+
