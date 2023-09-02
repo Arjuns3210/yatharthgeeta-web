@@ -49,7 +49,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Contact (add More no by comma)<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="phone[]" name="phone[]"><br/>
+                                                        <input class="form-control required" type="text" id="phone" name="phone"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Location<span class="text-danger">*</span></label>

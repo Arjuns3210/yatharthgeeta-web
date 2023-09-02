@@ -34,11 +34,20 @@
                                                         <td><strong>Description</strong></td>
                                                         <td>{{ $data['description'] }}</td>
                                                     </tr>
+                                                    @endforeach
+                                                    @php
+                                                    $phone_array = json_decode($ashram['phone']);
+                                                    @endphp
                                                     <tr>
                                                         <td><strong>Contact No</strong></td>
-                                                        <td>{{ $data['phone'] }}</td>
+                                                        <td>
+                                                            <ul>
+                                                                @foreach ($phone_array as $phone)
+                                                                    <li> {{ $phone }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </td>
                                                     </tr>
-                                                    @endforeach
                                                     <tr>
                                                         <td><strong>Ashram Image </strong></td>
                                                         <td><img src="{{$media->getFullUrl() ?? ''}}" width="200px" height="200px" alt=""></td>

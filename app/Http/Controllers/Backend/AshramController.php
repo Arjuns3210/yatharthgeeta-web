@@ -32,13 +32,18 @@ class AshramController extends Controller
         if ($request->ajax()) {
             try {
                 $query = Location::orderBy('updated_at','desc');
+                // print_r($query->get()->toArray());exit;
                 return DataTables::of($query)
                     ->filter(function ($query) use ($request) {
                         if (isset($request['search']['search_name']) && !is_null($request['search']['search_name'])) {
-                            $query->where('name', 'like', "%" . $request['search']['search_name'] . "%");
+                            $query->whereHas('translations', function ($translationQuery) use ($request) {
+                                $translationQuery->where('locale','en')->where('name', 'like', "%" . $request['search']['search_name'] . "%");
+                            });
                         }
                         if (isset($request['search']['search_title']) && !is_null($request['search']['search_title'])) {
-                            $query->where('title', 'like', "%" . $request['search']['search_title'] . "%");
+                            $query->whereHas('translations', function ($translationQuery) use ($request) {
+                                $translationQuery->where('locale','en')->where('title', 'like', "%" . $request['search']['search_title'] . "%");
+                            });
                         }
                         if (isset($request['search']['search_location']) && !is_null($request['search']['search_location'])) {
                             $query->where('location', 'like', "%" . $request['search']['search_location'] . "%");
@@ -48,9 +53,9 @@ class AshramController extends Controller
                     ->editColumn('name', function ($event) {
                         $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
                         return $event['translations'][$Key_index]['name'];
-                    })->editColumn('phone', function ($event) {
-                        return $event['phone'];
-                        // return $event['short_description'];
+                    })->editColumn('title', function ($event) {
+                        $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
+                        return $event['translations'][$Key_index]['title'];
                     })->editColumn('location', function ($event) {
                         return $event['location'];
                     })
@@ -105,17 +110,15 @@ class AshramController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $input['phone']=json_encode($input['phone']);
-// print_r($input);exit;
+        if ($input['phone']) {
+            $phone_array = explode(',', $input['phone']);
+            $input['phone'] = json_encode($phone_array);
+        }
         $translated_keys = array_keys(Location::TRANSLATED_BLOCK);
         foreach ($translated_keys as $value) {
             $input[$value] = (array) json_decode($input[$value]);
         }
         $saveArray = Utils::flipTranslationArray($input, $translated_keys);
-        // echo "<pre>";
-        // print_r($saveArray);
-        // echo "</pre>";
-        // die("Debug");
         $data = Location::create($saveArray);
         storeMedia($data, $input['image'], Location::IMAGE);
         successMessage('Data Saved successfully', []);
@@ -142,8 +145,7 @@ class AshramController extends Controller
      */
     public function edit($id)
     {
-        $data['ashram'] = Location::find($id)->toArray();
-        // print_r($data);exit;
+        $data['ashram'] = Location::find($id);
         foreach($data['ashram']['translations'] as $trans) {
             $translated_keys = array_keys(Location::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
@@ -166,6 +168,10 @@ class AshramController extends Controller
     {
         $data = Location::find($_GET['id']);
         $input=$request->all();
+        if ($input['phone']) {
+            $phone_array = explode(',', $input['phone']);
+            $input['phone'] = json_encode($phone_array);
+        }
         if (!$data) {
             errorMessage('Ashram Not Found', []);
         }

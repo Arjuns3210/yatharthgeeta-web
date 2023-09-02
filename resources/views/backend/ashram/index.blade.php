@@ -48,7 +48,7 @@
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
                                                     <th id="name" data-orderable="false" data-searchable="false">Name</th>
-                                                    <th id="phone" data-orderable="false" data-searchable="false">Contact No</th>
+                                                    <th id="title" data-orderable="false" data-searchable="false">Title</th>
                                                     <th id="location" data-orderable="false" data-searchable="false">Location</th>
                                                     @if($data['ashram_edit'] || $data['ashram_view'] || $data['ashram_status'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>

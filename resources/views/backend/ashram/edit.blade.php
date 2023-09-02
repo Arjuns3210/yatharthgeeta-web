@@ -40,12 +40,15 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Image<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')" value="{{$ashram['image']}}"><br/>
+                                                        <label>Image</label>
+                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')" value="{{$ashram['image']}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Email<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="email" name="email" value="{{$ashram['email']}}"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="100px" alt="" id="image">
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Contact (add More no by comma)<span class="text-danger">*</span></label>
