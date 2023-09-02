@@ -25,6 +25,8 @@ class CustomPathGenerator implements PathGenerator
                 return str_replace('{PARENT_DIR}', Ashram::IMAGE, $path);
 			case Quote::IMAGE;
                 return str_replace('{PARENT_DIR}', Quote::IMAGE, $path);
+            case Guru::IMAGE;
+                return str_replace('{PARENT_DIR}', Guru::IMAGE, $path);
             case 'default';
                 return '';
         }
