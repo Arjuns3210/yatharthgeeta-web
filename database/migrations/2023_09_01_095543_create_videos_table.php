@@ -15,7 +15,7 @@ class CreateVideosTable extends Migration
     {
         Schema::create('videos', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignId('language_id')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('language_id')->onUpdate('cascade')->onDelete('cascade')->nullable();
             $table->longText('cover_image');
             $table->integer('views')->unsigned()->nullable();
             $table->integer('sequence');

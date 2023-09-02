@@ -32,24 +32,27 @@
                                         <div class="tab-content">
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
+                                                <div class="col-sm-6">
+                                                    <label>Video Status<span class="text-danger">*</span></label>
+                                                    <select class="form-control" id="status" name="status">
+                                                        <option value="1">Active</option>
+                                                        <option value="0">Inactive</option>
+                                                    </select>
+                                                    </div>
                                                     <div class="col-sm-6">
-                                                        <label>Duration<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="time" id="title" name="title" oninput="validateNameInput(this)"><br/>
+                                                        <label>Duration (In Min)</label>
+                                                        <input class="form-control" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Cover Image<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="cover" name="cover" onchange="handleFileInputChange('cover')"><br/>
+                                                        <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="cover_image" name="cover_image" onchange="handleFileInputChange('cover')"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="sequence" name="sequence" oninput="filterNonNumeric(this)"><br/>
-                                                    </div>
+                                                    </div>                                                    
                                                 </div>
-                                                <label>Video Status<span class="text-danger">*</span></label>
-                                                <select class="form-control" id="status" name="status">
-                                                    <option value="1">Active</option>
-                                                    <option value="0">Inactive</option>
-                                                </select>
+                                                
                                             </div>
 
                                             <?php foreach (config('translatable.locales') as $translated_data_tabs) { ?>

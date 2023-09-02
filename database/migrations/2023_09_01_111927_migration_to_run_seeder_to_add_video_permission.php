@@ -27,7 +27,7 @@ class MigrationToRunSeederToAddVideoPermission extends Migration
     public function down()
     {
         Artisan::call('db:seed', [
-            '--class' => 'AddVideoPermissionSeeder',
+            '--class' => 'RevertVideoPermissionSeeder',
             '--force' => true
         ]);
     }
