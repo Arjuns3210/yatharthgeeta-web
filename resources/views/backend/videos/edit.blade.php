@@ -15,7 +15,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form id="editVideoForm" method="post" action="videos/update?id={{$video['id']}}">
+                            <form id="editVideoForm" method="post" action="videos/update?id={{$videos['id']}}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -35,24 +35,24 @@
                                                     <div class="col-sm-6">
                                                         <label>Video Status<span class="text-danger">*</span></label>
                                                         <select class="form-control" id="status" name="status">
-                                                            <option value="1" <?php echo $video['status'] == 1 ? 'selected' : '' ?>>Active</option>
-                                                            <option value="0" <?php echo $video['status'] == 0 ? 'selected' : '' ?>>Inactive</option>
+                                                            <option value="1" <?php echo $videos['status'] == 1 ? 'selected' : '' ?>>Active</option>
+                                                            <option value="0" <?php echo $videos['status'] == 0 ? 'selected' : '' ?>>Inactive</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Cover Image<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('cover_image')" value="{{$video['cover_image']}}"><br/>
+                                                        <label>Cover Image</label>
+                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('cover_image')" value="{{$videos['cover_image']}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                     <img src="{{$media->getFullUrl() ?? ''}}" width="200px" height="200px" alt="">
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Duration (In Min)</label>
-                                                        <input class="form-control" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)" value="{{$video['duration']}}"><br/>
+                                                        <input class="form-control" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)" value="{{$videos->duration}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="filterNonNumeric(this)" value="{{$video['sequence']}}"><br/>
+                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="filterNonNumeric(this)" value="{{$videos->sequence}}"><br/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -66,7 +66,7 @@
                                                             <?php if($translated_block_fields_value == 'input') { ?>
                                                                 <div class="col-md-6 mb-3">
                                                                     <label>{{$translated_block_fields_key}}</label>
-                                                                    <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" value="{{$video[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}">
+                                                                    <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" value="{{$videos[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}">
                                                                 </div>
                                                             <?php 
                                                         } ?>
@@ -77,7 +77,7 @@
                                                             <?php if($translated_block_fields_value == 'textarea') { ?>
                                                                 <div class="col-md-6 mb-3">
                                                                     <label>{{$translated_block_fields_key}}</label>
-                                                                    <textarea class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">{{$video[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}</textarea>
+                                                                    <textarea class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">{{$videos[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}</textarea>
                                                                 </div>
                                                             <?php } ?>
                                                         <?php } ?>

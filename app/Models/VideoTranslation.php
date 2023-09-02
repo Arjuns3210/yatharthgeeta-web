@@ -20,7 +20,7 @@ class VideoTranslation extends Model
     ];
     public function Video()
     {
-        return $this->belongsTo(App\Models\Video::class);
+        return $this->belongsTo(\App\Models\Video::class);
     }
 }
 

@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\backend;
-
 use App\Http\Controllers\Controller;
 use App\Models\Video;
 use App\Models\VideoTraslation;
@@ -33,16 +32,15 @@ class VideoController extends Controller
             if ($request->ajax()) {    
                 try {    
                     $query = Video::orderBy('updated_at','desc');    
-                    // print_r($query->get()->toArray());exit;    
                     return DataTables::of($query)
                         ->filter(function ($query) use ($request) {
-                            if (isset($request['search']['search_title']) && !is_null($request['search']['search_title'])) {    
-                                $query->whereHas('translations', function ($translationQuery) use ($request) {    
-                                    $translationQuery->where('locale','en')->where('title', 'like', "%" . $request['search']['search_title'] . "%");    
+                            if (isset($request['search']['search_title']) && !is_null($request['search']['search_title'])) {
+                                $query->whereHas('translations', function ($translationQuery) use ($request) {
+                                    $translationQuery->where('locale','en')->where('title', 'like', "%" . $request['search']['search_title'] . "%");
                                 });
                             } 
                             if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
-                                query->where('status', 'like', "%" . $request['search']['search_status'] . "%");
+                                $query->where('status', 'like', "%" . $request['search']['search_status'] . "%");
                             }
                             if (isset($request['search']['search_sequence']) && !is_null($request['search']['search_sequence'])) {
                                 $query->where('sequence', 'like', "%" . $request['search']['search_sequence'] . "%");
@@ -72,7 +70,7 @@ class VideoController extends Controller
                             return $actions;   
                         })    
                         ->addIndexColumn()    
-                        ->rawColumns(['title'.\App::getLocale(),'sequence', 'status', 'action'])->setRowId('id')->make(true);    
+                        ->rawColumns(['title'.\App::getLocale(),'sequence', 'action'])->setRowId('id')->make(true);    
                 } catch (\Exception $e) {    
                     \Log::error("Something Went Wrong. Error: " . $e->getMessage());    
                     return response([    
@@ -158,7 +156,7 @@ class VideoController extends Controller
      */
     public function edit($id)
     {
-        $data['videos'] = Video::find($id)->toArray();
+        $data['videos'] = Video::find($id);
         foreach($data['videos']['translations'] as $trans) {
             $translated_keys = array_keys(Video::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {

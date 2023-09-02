@@ -41,11 +41,11 @@
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Duration</strong></td>
-                                                        <td>{{ $data['duration'] }}</td>
+                                                        <td>{{ $videos['duration'] }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Sequence</strong></td>
-                                                        <td>{{ $data['sequence'] }}</td>
+                                                        <td>{{ $videos->sequence ?? ''}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Status</strong></td>

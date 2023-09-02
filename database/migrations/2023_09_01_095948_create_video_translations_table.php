@@ -18,7 +18,6 @@ class CreateVideoTranslationsTable extends Migration
             $table->foreignId('video_id')->onUpdate('cascade')->onDelete('cascade');
             $table->string('locale')->index();
             $table->string('title');
-            $table->integer('duration')->nullable();
             $table->string('description');
             $table->string('link');
             $table->foreignId('author_id')->onUpdate('cascade')->onDelete('cascade')->nullable();

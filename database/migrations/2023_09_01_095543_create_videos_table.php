@@ -18,6 +18,7 @@ class CreateVideosTable extends Migration
             $table->foreignId('language_id')->onUpdate('cascade')->onDelete('cascade')->nullable();
             $table->longText('cover_image');
             $table->integer('views')->unsigned()->nullable();
+            $table->integer('duration');
             $table->integer('sequence');
             $table->enum('status', [1, 0])->default(1);
             $table->integer('created_by')->default(0);

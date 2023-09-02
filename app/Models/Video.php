@@ -20,6 +20,7 @@ class Video extends Model implements HasMedia
     public $fillable = [
         'cover_image',
         'views',
+        'duration',
         'status',
         'sequence'
 
@@ -38,6 +39,6 @@ class Video extends Model implements HasMedia
 
     public function VideoTranslations()
     {
-        return $this->hasMany(App\Models\VideoTranslation::class);
+        return $this->hasMany(\App\Models\VideoTranslation::class);
     }
 }
