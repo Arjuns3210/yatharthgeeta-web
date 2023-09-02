@@ -356,7 +356,7 @@ function submitModalForm(form_id, form_method, errorOverlay = '') {
     });
 }
 
-//FOR CkEditor data pass to server - added by sagar - START 
+//FOR CkEditor data pass to server - added by sagar - START
 function submitEditor(form_id) {
     var content = theEditor.getData();
     var form = $('#' + form_id);
@@ -371,7 +371,7 @@ function submitEditor(form_id) {
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         data: form.serialize() + '&editiorData=' + content,
         success: function (data) {
-            // console.log(data);
+            //console.log(data);
             var response = JSON.parse(data);
             if (response['success'] == 0) {
                 $.activeitNoty({
@@ -389,16 +389,12 @@ function submitEditor(form_id) {
                     container: 'floating',
                     timer: 3000
                 });
-
-            }
-            setTimeout(function () {
-                location.reload();
-            }, 2000);
+            }            
         }
     });
 }
 
-//FOR CkEditor data pass to server - added by sagar - END 
+//FOR CkEditor data pass to server - added by sagar - END
 $(document).on('click', '#addStock', function (event) {
     var trlen = $('#batchTbl tbody tr').length;
     if (trlen == 0) {
@@ -603,7 +599,7 @@ function validateNumberInput(input) {
 function filterNonNumeric(input) {
     var regex = /^\d+$/;
     var inputValue = input.value.trim();
-    
+
     if (!regex.test(inputValue)) {
         input.value = inputValue.replace(/\D/g, '');
     }
@@ -612,7 +608,7 @@ function filterNonNumeric(input) {
 function validateNameInput(input) {
     var regex = /^[A-Za-z\s]+$/;
     var inputValue = input.value.trim();
-    
+
     if (!regex.test(inputValue)) {
         input.value = inputValue.replace(/[^A-Za-z\s]/g, '');
     }
@@ -636,6 +632,14 @@ function handleFileInputChange(id) {
             });
             fileInput.value = "";
         }
+    }
+}
+
+function onlyNumericNegative(input) {
+    var regex = /^-?\d*\.?$/;
+    var inputValue = input.value.trim();
+    if (!regex.test(inputValue)) {
+        input.value = inputValue.replace(/\D/g, '');
     }
 }
 
