@@ -123,6 +123,9 @@
                                 <li class="{{ $lastParam ==  'books_category' ? 'active' : '' }}">
                                     <a href="books_category" class="menu-item"><i class="fa fa-list-alt"></i>Books Category</a>
                                 </li>
+                                <li class="{{ $lastParam ==  'audios' ? 'active' : '' }}">
+                                    <a href="audios" class="menu-item"><i class="fa fa-list-alt"></i>Audio</a>
+                                </li>
                                 <li class="{{ $lastParam ==  'banners' ? 'active' : '' }}">
                                     <a href="banners" class="menu-item"><i class="fa fa-list-alt"></i>Banners</a>
                                 </li>

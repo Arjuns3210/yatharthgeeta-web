@@ -29,6 +29,17 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::get('books_category/edit/{id}', 'BookCategoryController@edit');
 	Route::post('books_category/update', 'BookCategoryController@update');
 	Route::get('books_category/view/{id}', 'BookCategoryController@show');
+    
+    //audio
+    Route::get('audios', 'AudioController@index');
+    Route::get('audio/add', 'AudioController@create');
+    Route::get('prepare_episode_item/{number}', 'AudioController@prepareEpisodeItem');
+    Route::post('audio/fetch', 'AudioController@fetch');
+    Route::post('audio/save', 'AudioController@store');
+    Route::get('audio/edit/{id}', 'AudioController@edit');
+    Route::post('audio/update', 'AudioController@update');
+    Route::get('audio/view/{id}', 'AudioController@show');
+    Route::get('add_episodes/{id}', 'AudioController@addEpisodes');
 
     //Banner
     Route::get('banners', 'BannerController@index');

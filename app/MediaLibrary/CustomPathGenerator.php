@@ -3,6 +3,7 @@
 namespace App\MediaLibrary;
 
 
+use App\Models\Audio;
 use App\Models\Banner;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\PathGenerator\PathGenerator;
@@ -19,6 +20,12 @@ class CustomPathGenerator implements PathGenerator
         switch ($media->collection_name) {
             case Banner::COVER;
                 return str_replace('{PARENT_DIR}', Banner::COVER, $path);
+            case Audio::AUDIO_FILE;
+                return str_replace('{PARENT_DIR}', Audio::AUDIO_FILE, $path);
+            case Audio::AUDIO_COVER_IMAGE;
+                return str_replace('{PARENT_DIR}', Audio::AUDIO_COVER_IMAGE, $path);
+            case Audio::AUDIO_SRT_FILE;
+                return str_replace('{PARENT_DIR}', Audio::AUDIO_SRT_FILE, $path);
             case 'default';
                 return '';
         }
