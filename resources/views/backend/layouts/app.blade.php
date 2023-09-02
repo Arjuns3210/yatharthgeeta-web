@@ -135,6 +135,9 @@
 								<li class="{{ $lastParam ==  'quotes' ? 'active' : '' }}">
                                     <a href="quotes" class="menu-item"><i class="fa fa-list-alt"></i>Quotes</a>
                                 </li>
+                                <li class="{{ $lastParam ==  'videos' ? 'active' : '' }}">
+                                    <a href="videos" class="menu-item"><i class="fa fa-video-camera" aria-hidden="true"></i>Videos</a>
+                                </li>
                             </ul>
                         </li>
 

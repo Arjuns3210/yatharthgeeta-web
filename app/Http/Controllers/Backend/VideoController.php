@@ -4,13 +4,10 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Video;
-use App\Utils\Utils;
 use Illuminate\Http\Request;
-use App\Models\Banner;
 use Yajra\DataTables\DataTables;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class BannerController extends Controller
+class VideoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,19 +16,24 @@ class BannerController extends Controller
      */
     public function index()
     {
-        $data['banners_view'] = checkPermission('banners_view');
-        $data['banners_add'] = checkPermission('banners_add');
-        $data['banners_edit'] = checkPermission('banners_edit');
-        $data['banners_status'] = checkPermission('banners_status');
-        $data['banners_delete'] = checkPermission('banners_delete');
-        return view('backend/banners/index',["data"=>$data]);
+        $data['videos_view'] = checkPermission('videos_view');
+        $data['videos_add'] = checkPermission('videos_add');
+        $data['videos_edit'] = checkPermission('videos_edit');
+        $data['videos_status'] = checkPermission('videos_status');
+        $data['videos_delete'] = checkPermission('videos_delete');
+        return view('backend/videos/index',["data"=>$data]);
     }
 
     public function fetch(Request $request)
     {
         if ($request->ajax()) {
             try {
-                $query = Banner::orderBy('updated_at','desc');
+                $query = Video::leftJoin('video_translations', function ($join) {
+                    $join->on("video_translations.video_id", '=', "videos.id");
+                    $join->where('video_translations.locale', \App::getLocale());
+                 })
+                 ->select('videos.*')
+                 ->orderBy('updated_at','desc');
                 return DataTables::of($query)
                     ->filter(function ($query) use ($request) {
                         if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
@@ -46,40 +48,44 @@ class BannerController extends Controller
                         }
                         $query->get()->toArray();
                     })
-                    ->editColumn('title',function ($event) {
+                    ->editColumn('title'.\App::getLocale(), function ($event) {
+                        $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
+                        return $event['translations'][$Key_index]['title'];
+
+                    })->editColumn('title',function ($event) {
                         return $event['title'];
                     })
                     ->editColumn('sequence',function ($event) {
                         return $event['sequence'];
                     })
                     ->editColumn('action', function ($event) {
-                        $banners_view = checkPermission('banners_view');
-                        $banners_add = checkPermission('banners_add');
-                        $banners_edit = checkPermission('banners_edit');
-                        $banners_status = checkPermission('banners_status');
-                        $banners_delete = checkPermission('banners_delete');
+                        $videos_view = checkPermission('videos_view');
+                        $videos_add = checkPermission('videos_add');
+                        $videos_edit = checkPermission('videos_edit');
+                        $videos_status = checkPermission('videos_status');
+                        $videos_delete = checkPermission('videos_delete');
                         $actions = '<span style="white-space:nowrap;">';
-                        if ($banners_view) {
-                            $actions .= '<a href="banners/view/' . $event['id'] . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View Banner Details" title="View"><i class="fa fa-eye"></i></a>';
+                        if ($videos_view) {
+                            $actions .= '<a href="videos/view/' . $event['id'] . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View Video Details" title="View"><i class="fa fa-eye"></i></a>';
                         }
-                        if ($banners_edit) {
-                            $actions .= ' <a href="banners/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
+                        if ($videos_edit) {
+                            $actions .= ' <a href="videos/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
                         }
-                        if ($banners_delete) {
-                            $actions .= ' <a data-option="" data-url="banners/delete/' . $event->id . '" class="btn btn-danger btn-sm delete-data" title="delete"><i class="fa fa-trash"></i></a>';
+                        if ($videos_delete) {
+                            $actions .= ' <a data-option="" data-url="videos/delete/' . $event->id . '" class="btn btn-danger btn-sm delete-data" title="delete"><i class="fa fa-trash"></i></a>';
                         }
-                        if ($banners_status) {
+                        if ($videos_status) {
                             if ($event->status == '1') {
-                                $actions .= ' <input type="checkbox" data-url="banners/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery" checked>';
+                                $actions .= ' <input type="checkbox" data-url="videos/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery" checked>';
                             } else {
-                                $actions .= ' <input type="checkbox" data-url="banners/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery">';
+                                $actions .= ' <input type="checkbox" data-url="videos/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery">';
                             }
                         }
                         $actions .= '</span>';
                         return $actions;
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['title','sequence','action'])->setRowId('id')->make(true);
+                    ->rawColumns(['title'.\App::getLocale(),'sequence','action'])->setRowId('id')->make(true);
             } catch (\Exception $e) {
                 \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                 return response([
@@ -93,11 +99,13 @@ class BannerController extends Controller
         }
     }
 
+    //Update Status
+
     public function updateStatus(Request $request)
     {
         try {
             $msg_data = array();
-            $language = Banner::find($request->id);
+            $language = Video::find($request->id);
             $language->status = $request->status;
             $language->save();
             if ($request->status == 1) {
@@ -119,11 +127,9 @@ class BannerController extends Controller
      */
     public function create()
     {
-
-        return view('backend/banners/add');
+        $data['translated_block'] = Video::TRANSLATED_BLOCK;
+        return view('backend/videos/add',$data);
     }
-
-
 
     /**
      * Store a newly created resource in storage.
@@ -134,74 +140,58 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $data = Banner::create($input);
-        storeMedia($data, $input['cover'], Banner::COVER);
+        $translated_keys = array_keys(Video::TRANSLATED_BLOCK);
+        foreach ($translated_keys as $value) {
+            $input[$value] = (array) json_decode($input[$value]);
+        }
+        $saveArray = Utils::flipTranslationArray($input, $translated_keys);
+        $data = BookCategory::create($saveArray);
+        storeMedia($data, $input['cover_image'], Video::COVER_IMAGE);
         successMessage('Data Saved successfully', []);
-
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Video  $video
      * @return \Illuminate\Http\Response
      */
-    public function view($id)
+    public function show(Video $video)
     {
-        $data['banners'] = Banner::find($id);
-
-        $data['media'] = $data['banners']->getMedia(Banner::COVER)[0];
-
-
-        return view('backend/banners/view')->with($data);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Video  $video
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Video $video)
     {
-        $data['banners'] = Banner::find($id);
-        $data['media'] =$data['banners']->getMedia(Banner::COVER)[0];
-        return view('backend/banners/edit')->with($data);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Video  $video
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, Video $video)
     {
-        $data = Banner::find($_GET['id']);
-        $input=$request->all();
-        if (!$data) {
-            errorMessage('Banner Not Found', []);
-        }
-        $data->update($input);
-        if(!empty($input['cover'])){
-            $data->clearMediaCollection(Banner::COVER);
-            storeMedia($data, $input['cover'], Banner::COVER);
-        }
-        successMessage('Data Saved successfully', []);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Video  $video
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Video $video)
     {
-        $data= Banner::find($id);
-        $data->delete();
-        successMessage('Data Deleted successfully', []);
-
+        //
     }
 }
