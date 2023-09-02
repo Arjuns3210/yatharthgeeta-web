@@ -21,7 +21,7 @@
                         		<div class="row">
                         			<div class="col-sm-6">
                         				<label>Quote Text<span class="text-danger">*</span></label>
-                        				<input class="form-control required" type="text" id="text" name="text"><br/>
+                        				<input class="form-control required" type="text" id="text" name="text" oninput="validateNameInput(this)"><br/>
                         			</div>
 									<div class="col-sm-6">
                         				<label>Quote Description<span class="text-danger">*</span></label>
@@ -29,7 +29,7 @@
                         			</div>
                                     <div class="col-sm-6">
                                         <label>Quote Image (200*200)<span class="text-danger">*</span></label>
-                                        <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="image" name="image"><br/>
+                                        <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="image" name="image" onchange="handleFileInputChange('image')"><br/>
                                     </div>
                         			<div class="col-sm-6">
                         				<label>Sequence<span class="text-danger">*</span></label>

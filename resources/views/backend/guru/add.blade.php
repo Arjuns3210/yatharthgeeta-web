@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Add Ashram</h5>
+                                    <h5 class="pt-2">Add Guru</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -15,7 +15,7 @@
                             </div>
                         </div>
                     	<div class="card-body">
-                    		<form id="saveAshram" method="post" action="ashram/save">
+                    		<form id="saveGuru" method="post" action="guru/save">
                     			@csrf
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -33,55 +33,25 @@
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
                                                     <div class="col-sm-6">
-                                                        <label>Ashram Status<span class="text-danger">*</span></label>
+                                                        <label>Guru Status<span class="text-danger">*</span></label>
                                                         <select class="form-control" id="status" name="status">
                                                             <option value="1">Active</option>
                                                             <option value="0">Inactive</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
+                                                        <label>Ashram<span class="text-danger">*</span></label>
+                                                        <select class="form-control" id="location_id" name="location_id">
+                                                            <option value="" selected>Select</option>
+                                                            @foreach($ashram as $key=> $ashram)
+                                                                <option value="{{$ashram['id']}}">{{$ashram['translations'][$key]['name']}}</option>
+                                                            @endforeach
+                                                        </select><br>
+                                                    </div>
+                                                    <div class="col-sm-6">
                                                         <label>Image<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')"><br/>
                                                     </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Email<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="email" name="email"><br/>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Contact (add More no by comma)<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="phone" name="phone"><br/>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Location<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="location" name="location"><br/>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Latitude<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="latitude" name="latitude" oninput="filterNonNumeric(this)"><br/>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Longitude<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="longitude" name="longitude" oninput="filterNonNumeric(this)"><br/>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Goolge Address<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="google_address" name="google_address"><br/>
-                                                    </div>
-                                                    <!-- <div class="col-sm-6">
-                                                        <label>Working Hours :<span class="text-danger">*</span></label>
-                                                        <div class="row">
-                                                            <div class="col-sm-6">
-
-                                                                <div class="custom-switch custom-control-inline mb-1 mb-xl-0">
-                                                                    <label class="custom-control-label mr-1" for="sunday">
-                                                                        <span>Sunday</span>
-                                                                    </label>
-                                                                    <input type="checkbox" class="custom-control-input" id="sunday" name="sunday">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div> -->
                                                 </div>
                                             </div>
 
@@ -116,7 +86,7 @@
                         		<div class="row">
                         			<div class="col-sm-12">
                         				<div class="pull-right">
-                        					<button type="button" class="btn btn-success" onclick="submitForm('saveAshram','post')">Submit</button>
+                        					<button type="button" class="btn btn-success" onclick="submitForm('saveGuru','post')">Submit</button>
                                             <a href="{{URL::previous()}}" class="btn btn-sm btn-danger px-3 py-1"> Cancel</a>
                         				</div>
                         			</div>

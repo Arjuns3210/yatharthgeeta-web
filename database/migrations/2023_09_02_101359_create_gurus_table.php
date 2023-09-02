@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuotesTable extends Migration
+class CreateGurusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,18 @@ class CreateQuotesTable extends Migration
      */
     public function up()
     {
-        Schema::create('quotes', function (Blueprint $table) {
+        Schema::create('gurus', function (Blueprint $table) {
             $table->increments('id');
-			$table->string('text');
-			$table->string('description');
-			$table->longText('image');
-			$table->integer('sequence');
-            $table->enum('status', [1, 0])->default(1);
-			$table->integer('created_by')->unsigned()->nullable();
+            $table->string('image');
+            $table->integer('location_id')->default(0);
+            $table->boolean('visible_on_app')->nullable();
+            $table->enum('status', [0, 1])->default(1);
+            $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->foreign('created_by')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
-			$table->softDeletes();
+            $table->softDeletes();
         });
     }
 
@@ -36,6 +35,6 @@ class CreateQuotesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quotes');
+        Schema::dropIfExists('gurus');
     }
 }

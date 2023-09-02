@@ -28,6 +28,8 @@ class CustomPathGenerator implements PathGenerator
                 return str_replace('{PARENT_DIR}', Quote::IMAGE, $path);
             case Video::COVER_IMAGE;
                 return str_replace('{PARENT_DIR}', Video::COVER_IMAGE, $path);
+            case Guru::IMAGE;
+                return str_replace('{PARENT_DIR}', Guru::IMAGE, $path);
             case 'default';
                 return '';
         }

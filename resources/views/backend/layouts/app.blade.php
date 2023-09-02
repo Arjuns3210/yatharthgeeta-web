@@ -126,14 +126,18 @@
                                 <li class="{{ $lastParam ==  'ashram' ? 'active' : '' }}">
                                     <a href="ashram" class="menu-item"><i class="fa fa-building-o" aria-hidden="true"></i>Ashram</a>
                                 </li>
+                                <li class="{{ $lastParam ==  'guru' ? 'active' : '' }}">
+                                    <a href="guru" class="menu-item"><i class="fa fa-user-o" aria-hidden="true"></i>Guru's</a>
+                                </li>
                                 <li class="{{ $lastParam ==  'language' ? 'active' : '' }}">
-                                    <a href="language" class="menu-item"><i class="fa fa-list-alt"></i>Language</a>
+                                    <a href="language" class="menu-item"><i class="fa fa-language" aria-hidden="true"></i>Language</a>
                                 </li>
                                 <li class="{{ $lastParam ==  'banners' ? 'active' : '' }}">
                                     <a href="banners" class="menu-item"><i class="fa fa-picture-o" aria-hidden="true"></i>Banners</a>
                                 </li>
 								<li class="{{ $lastParam ==  'quotes' ? 'active' : '' }}">
-                                    <a href="quotes" class="menu-item"><i class="fa fa-list-alt"></i>Quotes</a>
+                                    <a href="quotes" class="menu-item"><i class="fa fa-quote-left" aria-hidden="true"></i>
+                                        Quotes</a>
                                 </li>
                                 <li class="{{ $lastParam ==  'videos' ? 'active' : '' }}">
                                     <a href="videos" class="menu-item"><i class="fa fa-video-camera" aria-hidden="true"></i>Videos</a>

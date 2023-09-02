@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
-use App\Models\Ashram;
+use App\Models\Guru;
+use App\Models\GuruTranslation;
 use App\Models\Location;
-use App\Models\LocationTranslation;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class AshramController extends Controller
+class GuruController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,19 +19,19 @@ class AshramController extends Controller
      */
     public function index()
     {
-        $data['ashram_add'] = checkPermission('ashram_add');
-        $data['ashram_edit'] = checkPermission('ashram_edit');
-        $data['ashram_view'] = checkPermission('ashram_view');
-        $data['ashram_status'] = checkPermission('ashram_status');
-        $data['ashram_delete'] = checkPermission('ashram_delete');
-        return view('backend/ashram/index',['data' =>$data]);
+        $data['guru_add'] = checkPermission('guru_add');
+        $data['guru_edit'] = checkPermission('guru_edit');
+        $data['guru_view'] = checkPermission('guru_view');
+        $data['guru_status'] = checkPermission('guru_status');
+        $data['guru_delete'] = checkPermission('guru_delete');
+        return view('backend/guru/index',['data' =>$data]);
     }
 
     public function fetch(Request $request)
     {
         if ($request->ajax()) {
             try {
-                $query = Location::orderBy('updated_at','desc');
+                $query = Guru::orderBy('updated_at','desc');
                 // print_r($query->get()->toArray());exit;
                 return DataTables::of($query)
                     ->filter(function ($query) use ($request) {
@@ -45,9 +45,6 @@ class AshramController extends Controller
                                 $translationQuery->where('locale','en')->where('title', 'like', "%" . $request['search']['search_title'] . "%");
                             });
                         }
-                        if (isset($request['search']['search_location']) && !is_null($request['search']['search_location'])) {
-                            $query->where('location', 'like', "%" . $request['search']['search_location'] . "%");
-                        }
                         $query->get()->toArray();
                     })
                     ->editColumn('name', function ($event) {
@@ -56,20 +53,18 @@ class AshramController extends Controller
                     })->editColumn('title', function ($event) {
                         $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
                         return $event['translations'][$Key_index]['title'];
-                    })->editColumn('location', function ($event) {
-                        return $event['location'];
                     })
                     ->editColumn('action', function ($event) {
-                        $ashram_edit = checkPermission('ashram_edit');
-                        $ashram_view = checkPermission('ashram_view');
-                        $ashram_status = checkPermission('ashram_status');
-                        $ashram_delete = checkPermission('ashram_delete');
+                        $guru_edit = checkPermission('guru_edit');
+                        $guru_view = checkPermission('guru_view');
+                        $guru_status = checkPermission('guru_status');
+                        $guru_delete = checkPermission('guru_delete');
                         $actions = '<span style="white-space:nowrap;">';
-                        if ($ashram_view) {
-                            $actions .= '<a href="ashram/view/' . $event['id'] . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View Ashram Details" title="View"><i class="fa fa-eye"></i></a>';
+                        if ($guru_view) {
+                            $actions .= '<a href="guru/view/' . $event['id'] . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View guru Details" title="View"><i class="fa fa-eye"></i></a>';
                         }
-                        if ($ashram_edit) {
-                            $actions .= ' <a href="ashram/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
+                        if ($guru_edit) {
+                            $actions .= ' <a href="guru/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
                         }
                         $actions .= '</span>';
                         return $actions;
@@ -96,9 +91,9 @@ class AshramController extends Controller
      */
     public function create()
     {
-        $data['translated_block'] = Location::TRANSLATED_BLOCK;
-
-        return view('backend/ashram/add1',$data);
+        $data['translated_block'] = Guru::TRANSLATED_BLOCK;
+        $data['ashram'] = Location::where('status','1')->get()->toArray();
+        return view('backend/guru/add',$data);
     }
 
     /**
@@ -110,81 +105,73 @@ class AshramController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        if ($input['phone']) {
-            $phone_array = explode(',', $input['phone']);
-            $input['phone'] = json_encode($phone_array);
-        }
-        $translated_keys = array_keys(Location::TRANSLATED_BLOCK);
+        $translated_keys = array_keys(Guru::TRANSLATED_BLOCK);
         foreach ($translated_keys as $value) {
             $input[$value] = (array) json_decode($input[$value]);
         }
         $saveArray = Utils::flipTranslationArray($input, $translated_keys);
-        $data = Location::create($saveArray);
-        storeMedia($data, $input['image'], Location::IMAGE);
+        $data = Guru::create($saveArray);
+        storeMedia($data, $input['image'], Guru::IMAGE);
         successMessage('Data Saved successfully', []);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Ashram  $ashram
+     * @param  \App\Models\guru  $guru
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $data['ashram'] = Location::find($id);
-        $data['media'] = $data['ashram']->getMedia(Location::IMAGE)[0];
-        return view('backend/ashram/view',$data);
+        $data['guru'] = Guru::find($id);
+        $data['media'] = $data['guru']->getMedia(Guru::IMAGE)[0];
+        return view('backend/guru/view',$data);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Ashram  $ashram
+     * @param  \App\Models\guru  $guru
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $data['ashram'] = Location::find($id);
-        foreach($data['ashram']['translations'] as $trans) {
-            $translated_keys = array_keys(Location::TRANSLATED_BLOCK);
+        $data['guru'] = Guru::find($id);
+        foreach($data['guru']['translations'] as $trans) {
+            $translated_keys = array_keys(Guru::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
-                $data['ashram'][$value.'_'.$trans['locale']] = $trans[$value];
+                $data['guru'][$value.'_'.$trans['locale']] = $trans[$value];
             }
         }
-        $data['translated_block'] = Location::TRANSLATED_BLOCK;
-        $data['media'] =$data['ashram']->getMedia(Location::IMAGE)[0];
-        return view('backend/ashram/edit',$data);
+        $data['translated_block'] = Guru::TRANSLATED_BLOCK;
+        $data['media'] =$data['guru']->getMedia(Guru::IMAGE)[0];
+        return view('backend/guru/edit',$data);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Ashram  $ashram
+     * @param  \App\Models\guru  $guru
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
-        $data = Location::find($_GET['id']);
+        $data = Guru::find($_GET['id']);
         $input=$request->all();
-        if ($input['phone']) {
-            $phone_array = explode(',', $input['phone']);
-            $input['phone'] = json_encode($phone_array);
-        }
         if (!$data) {
-            errorMessage('Ashram Not Found', []);
+            errorMessage('guru Not Found', []);
         }
-        $translated_keys = array_keys(Location::TRANSLATED_BLOCK);
+        $translated_keys = array_keys(Guru::TRANSLATED_BLOCK);
         foreach ($translated_keys as $value) 
         {
             $input[$value] = (array) json_decode($input[$value]);
         }
-        $ashram = Utils::flipTranslationArray($input, $translated_keys);
-        $data->update($ashram);
+        $guru = Utils::flipTranslationArray($input, $translated_keys);
+        $data->update($guru);
         if(!empty($input['image'])){
-            $data->clearMediaCollection(Location::IMAGE);
-            storeMedia($data, $input['image'], Location::IMAGE);
+            $data->clearMediaCollection(Guru::IMAGE);
+            storeMedia($data, $input['image'], Guru::IMAGE);
         }
         successMessage('Data Updated successfully', []);
     }
@@ -192,10 +179,10 @@ class AshramController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Ashram  $ashram
+     * @param  \App\Models\guru  $guru
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ashram $ashram)
+    public function destroy(guru $guru)
     {
         //
     }

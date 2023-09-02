@@ -21,15 +21,20 @@
                         		<div class="row">
                                     <div class="col-sm-6">
                                         <label>Quotes Text<span class="text-danger">*</span></label>
-                                        <input class="form-control required" type="text" id="text" name="text" value="{{$quotes->text}}"><br/>
+                                        <input class="form-control required" type="text" id="text" name="text" value="{{$quotes->text}}" oninput="validateNameInput(this)"><br/>
                                     </div>
                                     <div class="col-sm-6">
-                                        <label>Quote Image<span class="text-danger">*</span></label>
-                                        <input class="form-control required" type="file" id="image" name="image" value="{{$quotes->image}}"><br/>
+                                        <label>Quote Image (200*200)<span class="text-danger">*</span></label>
+                                        <input class="form-control required" type="file" id="image" name="image" value="{{$quotes->image}}" accept=".jpg,.jpeg,.png" onchange="handleFileInputChange('image')"><br/>
                                     </div>
                                     <div class="col-sm-6">
                                         <label>Sequence<span class="text-danger">*</span></label>
                                         <input class="form-control required" type="text" id="sequence" name="sequence" value="{{$quotes->sequence}}" oninput="filterNonNumeric(this)"><br/>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col-sm-6">
+                                            <img src="{{$media->getFullUrl()}}" width="200px" alt="">
+                                        </div>
                                     </div>
 									<div class="col-sm-6">
                                         <label>Quote Description<span class="text-danger">*</span></label>

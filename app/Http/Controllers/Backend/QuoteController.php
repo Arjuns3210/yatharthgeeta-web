@@ -73,6 +73,7 @@ class QuoteController extends Controller
     public function edit($id)
     {
         $data['quotes'] = Quote::find($id);
+        $data['media']= $data['quotes']->getMedia( Quote::IMAGE)[0];
 		return view('backend/quotes/edit')->with($data);
     }
 
@@ -116,13 +117,19 @@ class QuoteController extends Controller
                 $query = Quote::orderBy('updated_at','desc');
                 return DataTables::of($query)
                     ->filter(function ($query) use ($request) {
-                        if (isset($request['search']['search_category_name']) && !is_null($request['search']['search_category_name'])) {
-                            $query->where('book_category_translations.name', 'like', "%" . $request['search']['search_category_name'] . "%");
+                        if (isset($request['search']['text']) && !is_null($request['search']['text'])) {
+                            $query->where('text', 'like', "%" . $request['search']['text'] . "%");
+                        }
+                        if (isset($request['search']['sequence']) && !is_null($request['search']['sequence'])) {
+                            $query->where('sequence', 'like', "%" . $request['search']['sequence'] . "%");
                         }
                         $query->get()->toArray();
                     })
                     ->editColumn('text',function ($event) {
                         return $event['text'];
+                    })
+                    ->editColumn('sequence',function ($event) {
+                        return $event['sequence'];
                     })
                     ->editColumn('action', function ($event) {
                         $quotes_view = checkPermission('quotes_view');
@@ -131,7 +138,7 @@ class QuoteController extends Controller
                         $quotes_status = checkPermission('quotes_status');
                         $actions = '<span style="white-space:nowrap;">';
                         if ($quotes_view) {
-                            $actions .= '<a href="quotes/view/' . $event['id'] . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View Category Details" title="View"><i class="fa fa-eye"></i></a>';
+                            $actions .= '<a href="quotes/view/' . $event['id'] . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View Quote Details" title="View"><i class="fa fa-eye"></i></a>';
                         }
                         if ($quotes_edit) {
                             $actions .= ' <a href="quotes/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
@@ -148,7 +155,7 @@ class QuoteController extends Controller
                         return $actions;
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['text','action'])->setRowId('id')->make(true);
+                    ->rawColumns(['text','sequence','action'])->setRowId('id')->make(true);
             } catch (\Exception $e) {
                 \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                 return response([

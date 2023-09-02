@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Astrotomic\Translatable\Translatable;
 
 
-class location extends Model implements HasMedia
+class Guru extends Model implements HasMedia
 {
     use SoftDeletes;
     use HasFactory;
@@ -17,15 +18,7 @@ class location extends Model implements HasMedia
     use InteractsWithMedia;
 
     public $fillable = [
-        'type',
-        'phone',
-        'email',
         'image',
-        'days',
-        'location',
-        'latitude',
-        'longitude',
-        'google_address',
         'visible_on_app',
     ];
 
@@ -43,11 +36,10 @@ class location extends Model implements HasMedia
     protected $casts = [
         'id' => 'integer',
         'status' => 'boolean',
-        'phone' => 'json'
 
     ];
 
-    public $translatedAttributes = ['name', 'title', 'description', 'do','dont'];
+    public $translatedAttributes = ['name', 'title', 'description'];
 
     const IMAGE= 'image';
     
@@ -55,11 +47,9 @@ class location extends Model implements HasMedia
         'name' => 'input',
         'title' => 'input',
         'description' => 'textarea',
-        'do' => 'textarea',
-        'dont' => 'textarea',
     ];
-    public function locationTranslations()
+    public function guruTranslations()
     {
-        return $this->hasMany(\App\Models\LocationTranslation::class);
+        return $this->hasMany(\App\Models\GuruTranslation::class);
     }
 }
