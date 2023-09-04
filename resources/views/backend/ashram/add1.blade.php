@@ -64,7 +64,7 @@
                                                         <input class="form-control required" type="text" id="google_address" name="google_address"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Image<span class="text-danger">*</span></label>
+                                                        <label>Image <span class="text-danger">*</span></label>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                         <input class="form-control required" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')"><br/>
                                                     </div>
