@@ -44,15 +44,19 @@
                                                         <input class="form-control" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Cover Image<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="cover_image" name="cover_image" onchange="handleFileInputChange('cover_image')"><br/>
+                                                        <label>Cover Image (200 X 200, Only .jpg, .jpeg, .png)<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" accept=".jpg,.jpeg,.png" placeholder ="" type="file" id="cover_image" name="cover_image" onchange="handleFileInputChange('cover_image')"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="filterNonNumeric(this)"><br/>
-                                                    </div>                                                    
+                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Link<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="link" name="link"><br/>
+                                                    </div>
                                                 </div>
-                                                
+
                                             </div>
 
                                             <?php foreach (config('translatable.locales') as $translated_data_tabs) { ?>

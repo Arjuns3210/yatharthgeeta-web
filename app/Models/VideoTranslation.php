@@ -11,8 +11,6 @@ class VideoTranslation extends Model
     public $fillable = [
         'video_id',
         'title',
-        'duration',
-        'link',
         'description',
         'narrator_id',
         'status'

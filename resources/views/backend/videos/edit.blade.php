@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Edit Video Details</h5>
+                                    <h5 class="pt-2">Edit Video Details :  {{$videos->title}}</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -40,19 +40,23 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Cover Image</label>
-                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('cover_image')" value="{{$videos['cover_image']}}"><br/>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                    <img src="{{$media->getFullUrl() ?? ''}}" width="200px" height="200px" alt="">
-                                                    </div>
-                                                    <div class="col-sm-6">
                                                         <label>Duration (In Min)</label>
                                                         <input class="form-control" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)" value="{{$videos->duration}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
+                                                        <label>Cover Image</label>
+                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('cover_image')" value="{{$videos['cover_image']}}"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="filterNonNumeric(this)" value="{{$videos->sequence}}"><br/>
+                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)" value="{{$videos->sequence}}"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="100px" alt="">
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Link<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="link" name="link" value="{{$videos->link}}"><br/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -68,7 +72,7 @@
                                                                     <label>{{$translated_block_fields_key}}</label>
                                                                     <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" value="{{$videos[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}">
                                                                 </div>
-                                                            <?php 
+                                                            <?php
                                                         } ?>
                                                         <?php } ?>
                                                     </div>

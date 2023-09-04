@@ -30,10 +30,6 @@
                                                         <td><strong>Description</strong></td>
                                                         <td>{{ $data['description'] }}</td>
                                                     </tr>
-                                                    <tr>
-                                                        <td><strong>Link</strong></td>
-                                                        <td>{{ $data['link'] }}</td>
-                                                    </tr>
                                                     @endforeach
                                                     <tr>
                                                         <td><strong>Cover Image </strong></td>
@@ -45,7 +41,11 @@
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Sequence</strong></td>
-                                                        <td>{{ $videos->sequence ?? ''}}</td>
+                                                        <td>{{ $videos['sequence']}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Link</strong></td>
+                                                        <td>{{ $videos['link'] }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Status</strong></td>
