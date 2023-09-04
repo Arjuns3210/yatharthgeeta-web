@@ -44,12 +44,20 @@
                                                         <input class="form-control " type="file" accept=".jpg, .jpeg, .png" name="cover_image">
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
-                                                        <label>Audio File (MP3)<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="file" accept=".mp3, .wav"  name="audio_file">
+                                                        <label>Audio File (MP3)<span class="text-danger file-label">*</span></label>
+                                                        <input class="form-control file-input required" type="file" accept=".mp3, .wav"  name="audio_file">
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
-                                                        <label>Srt for lyrics</label>
-                                                        <input class="form-control " type="file" accept=".srt" name="srt_file">
+                                                        <label>Srt for lyrics<span class="text-danger file-label">*</span></label>
+                                                        <input class="form-control required file-input" type="file" accept=".srt" name="srt_file">
+                                                    </div>
+                                                    <div class="col-md-6 mb-2">
+                                                        <label>Duration (In Minute)<span style="color:#ff0000">*</span></label>
+                                                        <input class="form-control required" type="number" id="duration" name="duration">
+                                                    </div>
+                                                    <div class="col-md-6 mb-2">
+                                                        <label>Sequence<span style="color:#ff0000">*</span></label>
+                                                        <input class="form-control required" type="number" id="sequence" name="sequence">
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Language<span class="text-danger">*</span></label>
@@ -64,14 +72,6 @@
                                                         <select class="form-control select2" id="people_also_read_ids" name="people_also_read_ids[]" multiple>
 
                                                         </select>
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label>Duration<span style="color:#ff0000">*</span></label>
-                                                        <input class="form-control required" type="text" id="duration" name="duration">
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label>Sequence<span style="color:#ff0000">*</span></label>
-                                                        <input class="form-control required" type="text" id="sequence" name="sequence">
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Author<span class="text-danger">*</span></label>
@@ -123,9 +123,11 @@
         $(document).ready(function() {
             $('#has_episodes').change(function() {
                 if ($(this).val() == '1') {
-                    $('.episodes-details-div').removeClass('d-none');
+                    $('.file-label').text('');
+                    $('.file-input').removeClass('required');
                 } else {
-                    $('.episodes-details-div').addClass('d-none');
+                    $('.file-label').text('*');
+                    $('.file-input').addClass('required');
                 }
             });
 

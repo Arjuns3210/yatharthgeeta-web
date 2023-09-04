@@ -16,7 +16,7 @@
                                             </div>
                                             <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                                 <button class="btn btn-sm btn-outline-danger px-3 py-1 mr-2" id="listing-filter-toggle"><i class="fa fa-filter"></i> Filter</button>
-                                                @if($data['audio_add'])
+                                                @if($data['audios_add'])
                                                     <a href="audio/add" class="btn btn-sm btn-outline-primary px-3 py-1 src_data"><i class="fa fa-plus"></i> Add Audio</a>
                                                 @endif
                                             </div>
@@ -47,8 +47,9 @@
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
                                                     <th id="title{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Audio Title ({{\App::getLocale()}})</th>
+                                                    <th id="duration" data-orderable="false" data-searchable="false">Duration (In Minute)</th>
                                                     <th id="status" data-orderable="false" data-searchable="false">Status</th>
-                                                    @if($data['audio_status'] || $data['audio_edit'] || $data['audio_view'] || $data['audio_delete'])
+                                                    @if($data['audios_status'] || $data['audios_edit'] || $data['audios_view'] || $data['audios_delete'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
                                                     @endif
                                                 </tr>

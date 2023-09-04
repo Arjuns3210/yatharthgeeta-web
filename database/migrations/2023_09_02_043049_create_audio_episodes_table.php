@@ -19,7 +19,9 @@ class CreateAudioEpisodesTable extends Migration
             $table->foreign('audio_id')->references('id')
                 ->on('audios')->onDelete('cascade')->onUpdate('cascade');
             $table->string('duration')->nullable();
-            $table->string('sequence')->nullable();
+            $table->integer('sequence')->nullable();
+            $table->string('file_name')->nullable();
+            $table->string('srt_file_name')->nullable();
 
             $table->enum('status', [1, 0])->default(1);
             $table->integer('created_by')->default(0);

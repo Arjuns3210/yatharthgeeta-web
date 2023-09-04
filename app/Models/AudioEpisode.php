@@ -6,17 +6,21 @@ use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class AudioEpisode extends Model
+class AudioEpisode extends Model implements HasMedia
 {
     use SoftDeletes;
     use HasFactory;
-    use Translatable;
+    use Translatable,InteractsWithMedia;
 
     public $fillable = [
         'audio_id',
         'duration',
         'sequence',
+        'file_name',
+        'srt_file_name',
         'status',
         'created_by',
         'updated_by',
@@ -27,6 +31,9 @@ class AudioEpisode extends Model
     protected $hidden = [
         'deleted_at'
     ];
+
+    const EPISODE_AUDIO_FILE = 'audio_file';
+    const EPISODE_AUDIO_SRT_FILE = 'audio_srt_file';
 
     /**
      * The attributes that should be casted to native types.

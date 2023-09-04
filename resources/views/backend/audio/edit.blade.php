@@ -52,6 +52,14 @@
                                                         <label>Srt for lyrics</label>
                                                         <input class="form-control " type="file" accept=".srt" name="srt_file">
                                                     </div>
+                                                    <div class="col-md-6 mb-2">
+                                                        <label>Duration (In Minute)<span style="color:#ff0000">*</span></label>
+                                                        <input class="form-control required" type="number" id="duration" name="duration" value="{{$audio['duration']}}">
+                                                    </div>
+                                                    <div class="col-md-6 mb-2">
+                                                        <label>Sequence<span style="color:#ff0000">*</span></label>
+                                                        <input class="form-control required" type="number" id="sequence" name="sequence" value="{{$audio['sequence']}}">
+                                                    </div>
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Language<span class="text-danger">*</span></label>
                                                         <select class="form-control select2" id="language_id" name="language_id">
@@ -61,18 +69,10 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
-                                                        <label>People Also Read<span class="text-danger">*</span></label>
+                                                        <label>People Also Read</label>
                                                         <select class="form-control select2" id="people_also_read_ids" name="people_also_read_ids[]" multiple>
 
                                                         </select>
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label>Duration<span style="color:#ff0000">*</span></label>
-                                                        <input class="form-control required" type="text" id="duration" name="duration" value="{{$audio['sequence']}}">
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <label>Sequence<span style="color:#ff0000">*</span></label>
-                                                        <input class="form-control required" type="text" id="sequence" name="sequence" value="{{$audio['sequence']}}">
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Author<span class="text-danger">*</span></label>

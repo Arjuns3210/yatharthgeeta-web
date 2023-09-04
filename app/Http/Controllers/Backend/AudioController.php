@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddAudioRequest;
+use App\Http\Requests\UpdateAudioRequest;
 use App\Models\Audio;
-use App\Models\AudioCategory;
 use App\Models\AudioEpisode;
-use App\Models\AudioTranslation;
-use App\Models\Episode;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -27,11 +26,11 @@ class AudioController extends Controller
      */
     public function index()
     {
-        $data['audio_add'] = checkPermission('audio_add');
-        $data['audio_edit'] = checkPermission('audio_edit');
-        $data['audio_view'] = checkPermission('audio_view');
-        $data['audio_status'] = checkPermission('audio_status');
-        $data['audio_delete'] = checkPermission('audio_delete');
+        $data['audios_add'] = checkPermission('audios_add');
+        $data['audios_edit'] = checkPermission('audios_edit');
+        $data['audios_view'] = checkPermission('audios_view');
+        $data['audios_status'] = checkPermission('audios_status');
+        $data['audios_delete'] = checkPermission('audios_delete');
         
         return view('backend/audio/index',["data"=>$data]);
     }
@@ -39,7 +38,7 @@ class AudioController extends Controller
     /**
      * Fetch a listing of the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @return \Illuminate\Http\Response
      */
     public function fetch(Request $request)
@@ -63,7 +62,11 @@ class AudioController extends Controller
                     ->editColumn('title'.\App::getLocale(), function ($event) {
                         $key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
                         return $event->translations[$key_index]->title ?? '';
-                    })->editColumn('status', function ($event) {
+                    })
+                    ->editColumn('duration', function ($event) {
+                        return $event->duration ??'';
+                    })
+                    ->editColumn('status', function ($event) {
                         return $event->status == 1 ?'Active' : 'Inactive';
                     })
                     ->editColumn('action', function ($event) {
@@ -73,9 +76,9 @@ class AudioController extends Controller
                         $audio_category_delete = checkPermission('audio_category_delete');
                         $actions = '<span style="white-space:nowrap;">';
                         if ($audio_category_view) {
-                            $actions .= '<a href="audio_category/view/' . $event['id'] . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View Category Details" title="View"><i class="fa fa-eye"></i></a>';
+                            $actions .= '<a href="audio/view/' . $event['id'] . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View Category Details" title="View"><i class="fa fa-eye"></i></a>';
                         }
-                        if ($audio_category_view) {
+                        if ($audio_category_view && $event['has_episodes'] == 1) {
                             $actions .= ' <a href="add_episodes/' . $event->id . '" class="btn btn-info btn-sm src_data" title="Manage Episode"><i class="fa fa-archive"></i></a>';
                         }
                         if ($audio_category_edit) {
@@ -85,7 +88,7 @@ class AudioController extends Controller
                         return $actions;
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['title'.\App::getLocale(), 'status', 'action'])->setRowId('id')->make(true);
+                    ->rawColumns(['title'.\App::getLocale(),'duration', 'status', 'action'])->setRowId('id')->make(true);
             } catch (\Exception $e) {
                 \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                 return response([
@@ -117,15 +120,15 @@ class AudioController extends Controller
 
         return \Illuminate\Support\Facades\Response::json($returnValue);
     }
-    
+
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  AddAudioRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddAudioRequest $request)
     {
         try {
             DB::beginTransaction();
@@ -173,15 +176,19 @@ class AudioController extends Controller
             $audio = Audio::create($audioData);
 
             //store audio file
-            if (! empty($input['audio_file'])) {
+            $audioFileName = null;
+            $episodeTitle = $audio->translations()->first()->title ?? '';
+            if (! empty($input['audio_file']) && $audio) {
                 storeMedia($audio, $input['audio_file'], AUDIO::AUDIO_FILE);
+                $audioFileName = $episodeTitle.'_en_'.$audio->id;
+                $audio->update(['file_name' => $audioFileName]);
             }
             //store audio cover image
-            if (! empty($input['cover_image'])) {
+            if (! empty($input['cover_image']) && $audio) {
                 storeMedia($audio, $input['cover_image'], AUDIO::AUDIO_COVER_IMAGE);
             }
             //store srt file
-            if (! empty($input['srt_file'])) {
+            if (! empty($input['srt_file']) && $audio) {
                 storeMedia($audio, $input['srt_file'], AUDIO::AUDIO_SRT_FILE);
             }
             
@@ -200,12 +207,15 @@ class AudioController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|\Illuminate\Http\Response
      */
     public function show($id)
     {
-        $data['category'] = AudioCategory::find($id)->toArray();
-        return view('backend/audio_category/view',$data);
+        $data['audio'] = Audio::with('translations')->findOrFail($id);
+        $data['audioFile'] = $data['audio']->getMedia(Audio::AUDIO_FILE)->first()?? '';
+        $data['audioCoverImage'] = $data['audio']->getMedia(Audio::AUDIO_COVER_IMAGE)->first()?? '';
+        
+        return view('backend/audio/view')->with($data);
     }
 
     /**
@@ -231,11 +241,10 @@ class AudioController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  UpdateAudioRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UpdateAudioRequest $request)
     {
         try {
             DB::beginTransaction();
@@ -287,14 +296,17 @@ class AudioController extends Controller
 
             //store audio file
             if (! empty($input['audio_file'])) {
+                $audio->clearMediaCollection(AUDIO::AUDIO_FILE);
                 storeMedia($audio, $input['audio_file'], AUDIO::AUDIO_FILE);
             }
             //store audio cover image
             if (! empty($input['cover_image'])) {
+                $audio->clearMediaCollection(AUDIO::AUDIO_COVER_IMAGE);
                 storeMedia($audio, $input['cover_image'], AUDIO::AUDIO_COVER_IMAGE);
             }
             //store srt file
             if (! empty($input['srt_file'])) {
+                $audio->clearMediaCollection(AUDIO::AUDIO_SRT_FILE);
                 storeMedia($audio, $input['srt_file'], AUDIO::AUDIO_SRT_FILE);
             }
 
@@ -318,13 +330,63 @@ class AudioController extends Controller
     {
         //
     }
-    
-    
+
+    /**
+     * @param $id
+     *
+     * Add Audio Episode form
+     * @return Application|Factory|View|string
+     */
     public function addEpisodes($id)
     {
+        $data['audio'] = Audio::with('translations')->find($id);
+        if ($data['audio']) {
+            $data['audioTitle'] = $data['audio']->translations()->first();
+            $data['translated_block'] = AudioEpisode::TRANSLATED_BLOCK;
+            $data['audioEpisodes'] = AudioEpisode::with('translations')->where('id',$data['audio']->id)->get();
+            
+            return view('backend/audio/add_episodes', $data);
+        }
 
-        $data['translated_block'] = AudioEpisode::TRANSLATED_BLOCK;
+        return '';
+    }
 
-        return view('backend/audio/add_episodes',$data);
+    /**
+     * @param  Request  $request
+     *
+     * save Audio Episode Form
+     */
+    public function saveEpisodes(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $input = $request->all();
+            $translated_keys = array_keys(AudioEpisode::TRANSLATED_BLOCK);
+            foreach ($translated_keys as $value) {
+                $input[$value] = (array) json_decode($input[$value]);
+            }
+            $saveArray = Utils::flipTranslationArray($input, $translated_keys);
+            $audioEpisode = AudioEpisode::create($saveArray);
+            $episodeTitle = $audioEpisode->translations()->first()->title ?? '';
+            $audioFileName = null;
+            //store audio file
+            if (! empty($input['audio_file']) && $audioEpisode) {
+                storeMedia($audioEpisode, $input['audio_file'], AudioEpisode::EPISODE_AUDIO_FILE);
+                $audioFileName = $episodeTitle.'_en_'.$audioEpisode->id;
+                $audioEpisode->update(['file_name' => $audioFileName]);
+            }
+            //store srt file
+            if (! empty($input['srt_file']) && $audioEpisode) {
+                storeMedia($audioEpisode, $input['srt_file'], AudioEpisode::EPISODE_AUDIO_SRT_FILE);
+            }
+            DB::commit();
+
+            successMessage('Data Saved successfully', []);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("Something Went Wrong. Error: ".$e->getMessage());
+
+            errorMessage($e->getMessage());
+        }
     }
 }

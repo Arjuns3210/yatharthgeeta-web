@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">View Audio Category</h5>
+                                    <h5 class="pt-2">View Audio : {{$audio->translations[0]->title ?? ''}}</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -21,22 +21,54 @@
                                         <div class="col-12">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-bordered">
-                                                    @foreach($category['translations'] as $key => $data)
+                                                    <tr>
+                                                        <td><strong>Has Episodes</strong></td>
+                                                        <td>{{ ($audio->has_episodes == 1) ? 'Yes' : 'No' }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Duration (In Minute)</strong></td>
+                                                        <td>{{ ($audio->duration == 1) ? 'Yes' : 'No' }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Sequence</strong></td>
+                                                        <td>{{ $audio->sequence }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Audio File</strong></td>
+                                                        <td>
+                                                            @php
+                                                                $allowedMimeTypes = [
+                                                                'audio/mpeg', // MP3
+                                                                'audio/ogg',  // Ogg
+                                                                'audio/wav',  // WAV
+                                                            ];
+                                                            @endphp
+                                                            @if (in_array($audioFile->mime_type, $allowedMimeTypes))
+                                                            <audio id="audioPlayer" controls>
+                                                                <source src="{{$audioFile->getFullUrl() ?? ''}}" type="audio/mpeg">
+                                                                Your browser does not support the audio element.
+                                                            </audio>
+                                                            @else 
+                                                           -
+                                                           @endif
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Cover Image</strong></td>
+                                                        @if(!empty($audioCoverImage))
+                                                            <td><img src="{{$audioCoverImage->getFullUrl() ?? ''}}" alt="" width="50px"></td>
+                                                        @else
+                                                            <td></td>
+                                                        @endif
+                                                    </tr>
+                                                    @foreach($audio->translations as $key => $data)
                                                         <tr>
-                                                            <td><strong>Name ({{ ucfirst($data['locale']) }})</strong></td>
-                                                            <td>{{ $data['name'] }}</td>
+                                                            <td><strong>Title ({{ ucfirst($data->locale) }})</strong></td>
+                                                            <td>{{ $data->title ?? '' }}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td><strong>Title</strong></td>
-                                                            <td>{{ $data['title'] }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><strong>Subtitle</strong></td>
-                                                            <td>{{ $data['subtitle'] }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><strong>Description</strong></td>
-                                                            <td>{{ $data['description'] }}</td>
+                                                            <td><strong>Description ({{ ucfirst($data->locale) }})</strong></td>
+                                                            <td>{{ $data->description ?? '' }}</td>
                                                         </tr>
                                                     @endforeach
                                                 </table>

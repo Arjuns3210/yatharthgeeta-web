@@ -24,7 +24,7 @@ class CreateAudiosTable extends Migration
             $table->string('duration')->nullable();
             $table->integer('language_id')->unsigned()->nullable();
             $table->integer('author_id')->unsigned()->nullable();
-            $table->string('sequence')->nullable();
+            $table->integer('sequence')->nullable();
             $table->integer('narrator_id')->unsigned()->nullable();
             $table->integer('views')->default(0);
 

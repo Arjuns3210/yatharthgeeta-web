@@ -40,6 +40,7 @@ Route::group(['middleware' => ['customAuth']], function () {
     Route::post('audio/update', 'AudioController@update');
     Route::get('audio/view/{id}', 'AudioController@show');
     Route::get('add_episodes/{id}', 'AudioController@addEpisodes');
+    Route::post('save_episodes', 'AudioController@saveEpisodes');
 
     //Banner
     Route::get('banners', 'BannerController@index');
