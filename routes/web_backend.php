@@ -40,6 +40,18 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('publish_staff', 'StaffController@updateStatus');
 	Route::get('staff/view/{id}', 'StaffController@view');
 
+	//Home Collecton
+	Route::get('home_collection', 'HomeCollectionController@index');
+
+
+	Route::post('home_collection/fetch', 'HomeCollectionController@fetch');
+	Route::get('home_collection/add', 'HomeCollectionController@add');
+	Route::post('home_collection/save', 'HomeCollectionController@store');
+	Route::get('home_collection/edit/{id}', 'HomeCollectionController@edit');
+	Route::post('home_collection/update', 'HomeCollectionController@update');
+	Route::post('publish_staff', 'HomeCollectionController@updateStatus');
+	Route::get('home_collection/view/{id}', 'HomeCollectionController@view');
+
 	//manage role
 	Route::get('roles', 'RoleController@roles');
 	Route::post('role_data', 'RoleController@roleData')->name('role_data');

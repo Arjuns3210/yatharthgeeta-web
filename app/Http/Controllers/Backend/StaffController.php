@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\adminservices\CreateStaffRequest;
-use App\Http\Requests\adminservices\UpdateStaffRequest;
+use App\Http\Requests\CreateStaffRequest;
+use App\Http\Requests\UpdateStaffRequest;
 use App\Models\Admin;
 use App\Models\Collection;
 use App\Models\Country;

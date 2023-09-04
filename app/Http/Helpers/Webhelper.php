@@ -56,6 +56,21 @@ if (!function_exists('generateRandomOTP')) {
     }
 }
 
+if (!function_exists('displayStatus')) {
+    function displayStatus($displayValue = "")
+    {
+        $returnArray = array(
+            '1' => 'Active',
+            '0' => 'In-Active'
+        );
+        if (!empty($displayValue)) {
+            $returnArray = $returnArray[$displayValue];
+        }
+
+        return $returnArray;
+    }
+}
+
 if (!function_exists('checkPermission')) {
     function checkPermission($name)
     {
