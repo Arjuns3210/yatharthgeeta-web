@@ -19,6 +19,7 @@ class CreateVideosTable extends Migration
             $table->longText('cover_image');
             $table->integer('views')->unsigned()->nullable();
             $table->integer('duration');
+            $table->string('link');
             $table->integer('sequence');
             $table->enum('status', [1, 0])->default(1);
             $table->integer('created_by')->default(0);

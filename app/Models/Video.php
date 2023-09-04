@@ -21,18 +21,18 @@ class Video extends Model implements HasMedia
         'cover_image',
         'views',
         'duration',
+        'link',
         'status',
         'sequence'
 
     ];
 
-    public $translatedAttributes = ['title', 'link', 'description'];
+    public $translatedAttributes = ['title', 'description'];
 
     public const TRANSLATED_BLOCK = [
 	    'title' => 'input',
-        'link'=>'input',
 	    'description' => 'textarea'
-        
+
 	];
 
     const COVER_IMAGE= 'cover_image';

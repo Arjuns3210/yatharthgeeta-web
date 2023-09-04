@@ -32,16 +32,13 @@
                                         <div class="tab-content">
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
-                                                <div class="col-sm-6">
-                                                    <label>Video Status<span class="text-danger">*</span></label>
-                                                    <select class="form-control" id="status" name="status">
-                                                        <option value="1">Active</option>
-                                                        <option value="0">Inactive</option>
-                                                    </select>
-                                                    </div>
                                                     <div class="col-sm-6">
                                                         <label>Duration (In Min)</label>
                                                         <input class="form-control" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Link<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="link" name="link"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Cover Image<span class="text-danger">*</span></label>
@@ -50,10 +47,10 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="filterNonNumeric(this)"><br/>
-                                                    </div>                                                    
+                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)"><br/>
+                                                    </div>
                                                 </div>
-                                                
+
                                             </div>
 
                                             <?php foreach (config('translatable.locales') as $translated_data_tabs) { ?>
@@ -73,7 +70,7 @@
                                                             <?php if($translated_block_fields_value == 'textarea') { ?>
                                                                 <div class="col-md-6 mb-3">
                                                                     <label>{{$translated_block_fields_key}}</label>
-                                                                    <textarea class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}"></textarea>
+                                                                    <textarea class="translation_block form-control required" rows="5" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}"></textarea>
                                                                 </div>
                                                             <?php } ?>
                                                         <?php } ?>
