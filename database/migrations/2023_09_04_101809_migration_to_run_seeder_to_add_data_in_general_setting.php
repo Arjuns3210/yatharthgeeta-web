@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class MigrationToRunSeederToAddGeneralSettingPermission extends Migration
+class MigrationToRunSeederToAddDataInGeneralSetting extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class MigrationToRunSeederToAddGeneralSettingPermission extends Migration
     public function up()
     {
         Artisan::call('db:seed', [
-            '--class' => 'GeneralSettingsSeeder',
+            '--class' => 'GeneralSettingsDataSeeder',
             '--force' => true
         ]);
     }

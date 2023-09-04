@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Permission;
 
-class RevertGuruPermissionSeeder extends Seeder
+class RevertArtistPermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,12 +15,12 @@ class RevertGuruPermissionSeeder extends Seeder
     public function run()
     {
         $permissions = [
-            'guru',
-            'guru_add',
-            'guru_edit',
-            'guru_view',
-            'guru_status',
-            'guru_delete'
+            'artist',
+            'artist_add',
+            'artist_edit',
+            'artist_view',
+            'artist_status',
+            'artist_delete'
         ];
         $permissionData = Permission::whereIn('codename', $permissions)->pluck('id');
         foreach ($permissionData as $permission) {

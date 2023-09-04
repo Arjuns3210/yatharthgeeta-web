@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Permission;
 
-class AddGuruPermissionSeeder extends Seeder
+class AddArtistPermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,8 +15,8 @@ class AddGuruPermissionSeeder extends Seeder
     public function run()
     {
         $parent_permission = [
-            'name' => 'Guru',
-            'codename' => 'guru',
+            'name' => 'Artist',
+            'codename' => 'artist',
             'parent_status' => 'parent',
             'description' => '',
             'status' => '1'
@@ -26,35 +26,35 @@ class AddGuruPermissionSeeder extends Seeder
         $permissions = [
             [
                 'name' => 'Add',
-                'codename' => 'guru_add',
+                'codename' => 'artist_add',
                 'parent_status' => $result->id,
                 'description' => '',
                 'status' => '1'
             ],
             [
                 'name' => 'Edit',
-                'codename' => 'guru_edit',
+                'codename' => 'artist_edit',
                 'parent_status' => $result->id,
                 'description' => '',
                 'status' => '1'
             ],
             [
                 'name' => 'View',
-                'codename' => 'guru_view',
+                'codename' => 'artist_view',
                 'parent_status' => $result->id,
                 'description' => '',
                 'status' => '1'
             ],
             [
                 'name' => 'Status',
-                'codename' => 'guru_status',
+                'codename' => 'artist_status',
                 'parent_status' => $result->id,
                 'description' => '',
                 'status' => '1'
             ],
             [
                 'name' => 'Delete',
-                'codename' => 'guru_delete',
+                'codename' => 'artist_delete',
                 'parent_status' => $result->id,
                 'description' => '',
                 'status' => '1'

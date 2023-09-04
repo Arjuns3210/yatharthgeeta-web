@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
-use App\Models\Guru;
-use App\Models\GuruTranslation;
+use App\Models\Artist;
+use App\Models\ArtistTranslation;
 use App\Models\Location;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class GuruController extends Controller
+class ArtistController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,19 +19,19 @@ class GuruController extends Controller
      */
     public function index()
     {
-        $data['guru_add'] = checkPermission('guru_add');
-        $data['guru_edit'] = checkPermission('guru_edit');
-        $data['guru_view'] = checkPermission('guru_view');
-        $data['guru_status'] = checkPermission('guru_status');
-        $data['guru_delete'] = checkPermission('guru_delete');
-        return view('backend/guru/index',['data' =>$data]);
+        $data['artist_add'] = checkPermission('artist_add');
+        $data['artist_edit'] = checkPermission('artist_edit');
+        $data['artist_view'] = checkPermission('artist_view');
+        $data['artist_status'] = checkPermission('artist_status');
+        $data['artist_delete'] = checkPermission('artist_delete');
+        return view('backend/artist/index',['data' =>$data]);
     }
 
     public function fetch(Request $request)
     {
         if ($request->ajax()) {
             try {
-                $query = Guru::orderBy('updated_at','desc');
+                $query = Artist::orderBy('updated_at','desc');
                 // print_r($query->get()->toArray());exit;
                 return DataTables::of($query)
                     ->filter(function ($query) use ($request) {
@@ -55,16 +55,16 @@ class GuruController extends Controller
                         return $event['translations'][$Key_index]['title'];
                     })
                     ->editColumn('action', function ($event) {
-                        $guru_edit = checkPermission('guru_edit');
-                        $guru_view = checkPermission('guru_view');
-                        $guru_status = checkPermission('guru_status');
-                        $guru_delete = checkPermission('guru_delete');
+                        $artist_edit = checkPermission('artist_edit');
+                        $artist_view = checkPermission('artist_view');
+                        $artist_status = checkPermission('artist_status');
+                        $artist_delete = checkPermission('artist_delete');
                         $actions = '<span style="white-space:nowrap;">';
-                        if ($guru_view) {
-                            $actions .= '<a href="guru/view/' . $event['id'] . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View guru Details" title="View"><i class="fa fa-eye"></i></a>';
+                        if ($artist_view) {
+                            $actions .= '<a href="artist/view/' . $event['id'] . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View artist Details" title="View"><i class="fa fa-eye"></i></a>';
                         }
-                        if ($guru_edit) {
-                            $actions .= ' <a href="guru/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
+                        if ($artist_edit) {
+                            $actions .= ' <a href="artist/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
                         }
                         $actions .= '</span>';
                         return $actions;
@@ -91,9 +91,9 @@ class GuruController extends Controller
      */
     public function create()
     {
-        $data['translated_block'] = Guru::TRANSLATED_BLOCK;
+        $data['translated_block'] = Artist::TRANSLATED_BLOCK;
         $data['ashram'] = Location::where('status','1')->get()->toArray();
-        return view('backend/guru/add',$data);
+        return view('backend/artist/add',$data);
     }
 
     /**
@@ -105,73 +105,73 @@ class GuruController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $translated_keys = array_keys(Guru::TRANSLATED_BLOCK);
+        $translated_keys = array_keys(Artist::TRANSLATED_BLOCK);
         foreach ($translated_keys as $value) {
             $input[$value] = (array) json_decode($input[$value]);
         }
         $saveArray = Utils::flipTranslationArray($input, $translated_keys);
-        $data = Guru::create($saveArray);
-        storeMedia($data, $input['image'], Guru::IMAGE);
+        $data = Artist::create($saveArray);
+        storeMedia($data, $input['image'], Artist::IMAGE);
         successMessage('Data Saved successfully', []);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\guru  $guru
+     * @param  \App\Models\artist  $artist
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $data['guru'] = Guru::find($id);
-        $data['media'] = $data['guru']->getMedia(Guru::IMAGE)[0];
-        return view('backend/guru/view',$data);
+        $data['artist'] = Artist::find($id);
+        $data['media'] = $data['artist']->getMedia(Artist::IMAGE)[0];
+        return view('backend/artist/view',$data);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\guru  $guru
+     * @param  \App\Models\artist  $artist
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $data['guru'] = Guru::find($id);
-        foreach($data['guru']['translations'] as $trans) {
-            $translated_keys = array_keys(Guru::TRANSLATED_BLOCK);
+        $data['artist'] = Artist::find($id);
+        foreach($data['artist']['translations'] as $trans) {
+            $translated_keys = array_keys(Artist::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
-                $data['guru'][$value.'_'.$trans['locale']] = $trans[$value];
+                $data['artist'][$value.'_'.$trans['locale']] = $trans[$value];
             }
         }
-        $data['translated_block'] = Guru::TRANSLATED_BLOCK;
-        $data['media'] =$data['guru']->getMedia(Guru::IMAGE)[0];
-        return view('backend/guru/edit',$data);
+        $data['translated_block'] = Artist::TRANSLATED_BLOCK;
+        $data['media'] =$data['artist']->getMedia(Artist::IMAGE)[0];
+        return view('backend/artist/edit',$data);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\guru  $guru
+     * @param  \App\Models\artist  $artist
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
-        $data = Guru::find($_GET['id']);
+        $data = Artist::find($_GET['id']);
         $input=$request->all();
         if (!$data) {
-            errorMessage('guru Not Found', []);
+            errorMessage('artist Not Found', []);
         }
-        $translated_keys = array_keys(Guru::TRANSLATED_BLOCK);
+        $translated_keys = array_keys(Artist::TRANSLATED_BLOCK);
         foreach ($translated_keys as $value) 
         {
             $input[$value] = (array) json_decode($input[$value]);
         }
-        $guru = Utils::flipTranslationArray($input, $translated_keys);
-        $data->update($guru);
+        $artist = Utils::flipTranslationArray($input, $translated_keys);
+        $data->update($artist);
         if(!empty($input['image'])){
-            $data->clearMediaCollection(Guru::IMAGE);
-            storeMedia($data, $input['image'], Guru::IMAGE);
+            $data->clearMediaCollection(Artist::IMAGE);
+            storeMedia($data, $input['image'], Artist::IMAGE);
         }
         successMessage('Data Updated successfully', []);
     }
@@ -179,10 +179,10 @@ class GuruController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\guru  $guru
+     * @param  \App\Models\artist  $artist
      * @return \Illuminate\Http\Response
      */
-    public function destroy(guru $guru)
+    public function destroy(artist $artist)
     {
         //
     }

@@ -10,7 +10,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Astrotomic\Translatable\Translatable;
 
 
-class Guru extends Model implements HasMedia
+class Artist extends Model implements HasMedia
 {
     use SoftDeletes;
     use HasFactory;
@@ -48,8 +48,8 @@ class Guru extends Model implements HasMedia
         'title' => 'input',
         'description' => 'textarea',
     ];
-    public function guruTranslations()
+    public function artistTranslations()
     {
-        return $this->hasMany(\App\Models\GuruTranslation::class);
+        return $this->hasMany(\App\Models\ArtistTranslation::class);
     }
 }

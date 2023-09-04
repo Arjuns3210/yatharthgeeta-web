@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGuruTranslationsTable extends Migration
+class CreateArtistTranslationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateGuruTranslationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('guru_translations', function (Blueprint $table) {
+        Schema::create('artist_translations', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('guru_id');
+            $table->unsignedInteger('artist_id');
             $table->string('name');
             $table->string('locale');
             $table->string('title')->nullable();
@@ -27,7 +27,7 @@ class CreateGuruTranslationsTable extends Migration
             $table->foreign('updated_by')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('guru_id')->references('id')->on('gurus')->onDelete('cascade');
+            $table->foreign('artist_id')->references('id')->on('artists')->onDelete('cascade');
         });
     }
 
@@ -38,6 +38,6 @@ class CreateGuruTranslationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('guru_translations');
+        Schema::dropIfExists('artist_translations');
     }
 }

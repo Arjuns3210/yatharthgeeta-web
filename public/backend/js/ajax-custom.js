@@ -577,12 +577,12 @@ function getProductDetails(product) {
     });
 }
 
-$(window).keydown(function(event){
-    if(event.keyCode == 13) {
-      event.preventDefault();
-      $('#'+event.target.id).closest('form').find('button').click();
-    }
-});
+// $(window).keydown(function(event){
+//     if(event.keyCode == 13) {
+//       event.preventDefault();
+//       $('#'+event.target.id).closest('form').find('button').click();
+//     }
+// });
 
 
 // For validate number  input

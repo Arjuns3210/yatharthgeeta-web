@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GuruTranslation extends Model
+class ArtistTranslation extends Model
 {
     use HasFactory;
 
     public $fillable = [
         'name',
-        'guru_id',
+        'artist_id',
         'locale',
         'title',
         'description',
@@ -20,6 +20,6 @@ class GuruTranslation extends Model
 
     public function guru()
     {
-        return $this->belongsTo(App\Models\Guru::class);
+        return $this->belongsTo(App\Models\Artist::class);
     }
 }
