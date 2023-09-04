@@ -14,7 +14,7 @@ class MigrationToRunSeederToAddGuruPermission extends Migration
     public function up()
     {
         Artisan::call('db:seed', [
-            '--class' => 'AddGuruPermissionSeeder',
+            '--class' => 'AddArtistPermissionSeeder',
             '--force' => true
         ]);
     }
@@ -27,7 +27,7 @@ class MigrationToRunSeederToAddGuruPermission extends Migration
     public function down()
     {
         Artisan::call('db:seed', [
-            '--class' => 'RevertGuruPermissionSeeder',
+            '--class' => 'RevertArtistPermissionSeeder',
             '--force' => true
         ]);
     }
