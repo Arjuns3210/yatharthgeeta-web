@@ -41,6 +41,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Cover Image</label>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                         <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('cover_image')" value="{{$videos['cover_image']}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">

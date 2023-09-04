@@ -29,13 +29,14 @@
                                                     <div class="mb-3">
                                                         <input type="password" class="form-control mb-2" placeholder="Password" required="" name="password">
                                                     </div>
-                                                    <div class="row mb-4">
-                                                        <div class="col-12">
-                                                            <div class="pull-right">
-                                                                <small><a class="text-danger">Forgot Password?</a></small>
-                                                            </div>
+                                                    <div class="d-sm-flex justify-content-between mb-3 font-small-2">
+                                                            <div class="remember-me mb-2 mb-sm-0"></div>
+                                                            @if(Route::has('password.request'))
+                                                                <a class="underline text-sm text-gray-600 hover:text-gray-900" href={{ route('password.request') }}>
+                                                                    {{ ('Forgot your password?') }}
+                                                                </a>
+                                                            @endif
                                                         </div>
-                                                    </div>
                                                     <div class="row">
                                                         <div class="col-sm-12">
                                                             <button class="col-12 btn btn-danger">Login</button>

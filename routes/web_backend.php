@@ -16,10 +16,27 @@ use Illuminate\Support\Facades\Route;
 // Login
 Route::get('/', 'LoginController@index');
 Route::post('login', 'LoginController@login');
+Route::get('/forgot-password', 'LoginController@forgotPassword')->name('password.request');
+Route::post('/forgot-password', 'LoginController@forgotPasswordStore')->name('password.email');
+Route::get('/reset-password/{token}/{email}', 'LoginController@passwordReset')->name('password.reset')->middleware('signed');
+Route::post('/reset-password', 'LoginController@passwordUpdate')->name('password.update');
+
+Route::get('/password_expired', 'AdminController@passwordExpired');
+Route::post('/force_reset_password', 'AdminController@resetExpiredPassword');
 
 Route::group(['middleware' => ['customAuth']], function () {
 	// Dashboard
 	Route::get('dashboard', 'DashboardController@index');
+	Route::get('dashboard/test', 'DashboardController@index_phpinfo');
+
+	//profile
+	Route::get('/profile', 'AdminController@profile');
+	Route::post('/updateProfile', 'AdminController@updateProfile');
+
+	//change password
+	Route::get('/updatePassword', 'AdminController@updatePassword');
+	Route::post('/resetPassword', 'AdminController@resetPassword');
+
 
 	//Ashram
 	Route::get('ashram', 'AshramController@index');
@@ -83,6 +100,18 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('staff/update', 'StaffController@update');
 	Route::post('publish/staff', 'StaffController@updateStatus');
 	Route::get('staff/view/{id}', 'StaffController@view');
+
+	//Home Collecton
+	Route::get('home_collection', 'HomeCollectionController@index');
+
+
+	Route::post('home_collection/fetch', 'HomeCollectionController@fetch');
+	Route::get('home_collection/add', 'HomeCollectionController@add');
+	Route::post('home_collection/save', 'HomeCollectionController@store');
+	Route::get('home_collection/edit/{id}', 'HomeCollectionController@edit');
+	Route::post('home_collection/update', 'HomeCollectionController@update');
+	Route::post('publish_staff', 'HomeCollectionController@updateStatus');
+	Route::get('home_collection/view/{id}', 'HomeCollectionController@view');
 
 	//manage role
 	Route::get('roles', 'RoleController@roles');
