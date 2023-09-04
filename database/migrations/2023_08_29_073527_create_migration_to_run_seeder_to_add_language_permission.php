@@ -27,7 +27,7 @@ class CreateMigrationToRunSeederToAddLanguagePermission extends Migration
     public function down()
     {
         Artisan::call('db:seed', [
-            '--class' => 'AddLanguagePermissionSeeder',
+            '--class' => 'RevertLanguagePermissionSeeder',
             '--force' => true
         ]);
     }

@@ -16,6 +16,8 @@ class RevertLanguagePermissionSeeder extends Seeder
     {
         $permissions = [
         	'language',
+            'language_add',
+            'language_edit',
         	'language_view',
         	'language_status',
             'language_delete',

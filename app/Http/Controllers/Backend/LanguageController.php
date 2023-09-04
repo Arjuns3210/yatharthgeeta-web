@@ -14,6 +14,8 @@ class LanguageController extends Controller
     public function index()
     {
         $data['language_view'] = checkPermission('language_view');
+        $data['language_add'] = checkPermission('language_add');
+        $data['language_edit'] = checkPermission('language_edit');
         $data['language_status'] = checkPermission('language_status');
         $data['language_delete'] = checkPermission('language_delete');
         return view('backend/language/index',['data' => $data]);
@@ -30,18 +32,26 @@ class LanguageController extends Controller
                         if (isset($request['search']['language_name']) && !is_null($request['search']['language_name'])) {
                             $query->where('language_name', 'like', "%" . $request['search']['language_name'] . "%");
                         }
+                        if (isset($request['search']['language_code']) && !is_null($request['search']['language_code'])) {
+                            $query->where('language_code', 'like', "%" . $request['search']['language_code'] . "%");
+                        }
                         $query->get()->toArray();
                     })
                     ->editColumn('language_name', function ($event) {
                         return $event->language_name;
                     })
                     ->editColumn('action', function ($event) {
+                        $language_add = checkPermission('language_add');
                         $language_view = checkPermission('language_view');
+                        $language_edit = checkPermission('language_edit');
                         $language_delete = checkPermission('language_delete');
                         $language_status = checkPermission('language_status');
                         $actions = '<span style="white-space:nowrap;">';
                         if ($language_view) {
                             $actions .= '<a href="language/view/' . $event->id . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View Language" title="View Language"><i class="fa fa-eye"></i></a>';
+                        }
+                        if ($language_edit) {
+                            $actions .= ' <a href="language/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
                         }
                         if ($language_delete) {
                             $actions .= ' <a data-option="" data-url="language/delete/' . $event->id . '" class="btn btn-danger btn-sm delete-data" title="delete"><i class="fa fa-trash"></i></a>';
@@ -92,6 +102,38 @@ class LanguageController extends Controller
         } catch (\Exception $e) {
             errorMessage(trans('auth.something_went_wrong'));
         }
+    }
+    public function add(Request $request)
+    {
+        return view('backend/language/add');
+    }
+
+    public function store(Request $request)
+    {
+		$input = $request->all();
+        $data = Language::create($input);
+        successMessage('Data Saved successfully', []);
+    }
+
+    public function edit($id)
+    {
+        $data['data'] = Language::find($id);
+		return view('backend/language/edit',$data);
+    }
+
+    public function update(Request $request)
+    {
+        $data = Language::find($_GET['id']);
+        $input=$request->all();
+        if (!$data) {
+            errorMessage('Language Not Found', []);
+        }
+        $data->update($input);
+        if(!empty($input['image'])){
+            $data->clearMediaCollection(Language::IMAGE);
+            storeMedia($data, $input['image'], Language::IMAGE);
+        }
+        successMessage('Data Saved successfully', []);
     }
 
     public function destroy($id)

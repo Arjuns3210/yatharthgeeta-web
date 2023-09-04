@@ -10,4 +10,24 @@ class Language extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    protected $fillable = [
+        'language_name',
+        'language_code',
+    ];
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'language_name' => 'string',
+        'language_code'=>'string'
+    ];
+
+    public static $rules = [
+        'language_name' => 'string|required',
+        'language_code' => 'string|required'
+    ];
+
+
 }

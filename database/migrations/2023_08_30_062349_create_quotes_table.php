@@ -15,17 +15,12 @@ class CreateQuotesTable extends Migration
     {
         Schema::create('quotes', function (Blueprint $table) {
             $table->increments('id');
-			//$table->string('text');
-			//$table->string('description');
-			$table->longText('image');
-			$table->integer('sequence')->unique();
+			$table->integer('sequence');
 			$table->enum('share_allowance', ['yes', 'no'])->default('yes');
-			$table->json('shlok');
+			$table->string('shlok');
             $table->enum('status', [1, 0])->default(1);
-			$table->integer('created_by')->unsigned()->nullable();
-            $table->integer('updated_by')->unsigned()->nullable();
-            $table->foreign('created_by')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('updated_by')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
+			$table->integer('created_by')->default(0);
+            $table->integer('updated_by')->default(0);
             $table->timestamps();
 			$table->softDeletes();
         });

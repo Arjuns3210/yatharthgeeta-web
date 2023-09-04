@@ -89,6 +89,10 @@ Route::group(['middleware' => ['customAuth']], function () {
     Route::post('language/fetch', 'LanguageController@fetch');
     Route::get('language/view/{id}', 'LanguageController@view');
     Route::post('language/publish', 'LanguageController@updateStatus');
+    Route::get('language/add', 'LanguageController@add');
+    Route::post('language/save', 'LanguageController@store');
+    Route::get('language/edit/{id}', 'LanguageController@edit');
+    Route::post('language/update', 'LanguageController@update');
     Route::get('language/delete/{id}', 'LanguageController@destroy');
 
 	//quotes
