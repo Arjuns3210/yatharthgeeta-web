@@ -66,6 +66,16 @@ class VideoController extends Controller
                             if ($videos_edit) {
                                 $actions .= ' <a href="videos/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
                             }
+                            if ($videos_delete) {
+                                $actions .= ' <a data-option="" data-url="videos/delete/' . $event->id . '" class="btn btn-danger btn-sm delete-data" title="delete"><i class="fa fa-trash"></i></a>';
+                            }
+                            if ($videos_status) {
+                                if ($event->status == '1') {
+                                    $actions .= ' <input type="checkbox" data-url="videos/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery" checked>';
+                                } else {
+                                    $actions .= ' <input type="checkbox" data-url="videos/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery">';
+                                }
+                            }
                             $actions .= '</span>';
                             return $actions;
                         })
@@ -202,8 +212,10 @@ class VideoController extends Controller
      * @param  \App\Models\Video  $video
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Video $video)
+    public function destroy($id)
     {
-        //
+        $data= Video::find($id);
+        $data->delete();
+        successMessage('Data Deleted successfully', []);
     }
 }

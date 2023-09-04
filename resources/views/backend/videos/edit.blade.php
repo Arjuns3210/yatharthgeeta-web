@@ -40,31 +40,24 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Cover Image</label>
-                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
-                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('cover_image')" value="{{$videos['cover_image']}}"><br/>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                    <img src="{{$media->getFullUrl() ?? ''}}" width="200px" height="200px" alt="">
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Duration (In Min)</label>
+                                                        <label>Duration (In Minutes)</label>
                                                         <input class="form-control" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)" value="{{$videos->duration}}"><br/>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Cover Image</label>
-                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('cover_image')" value="{{$videos['cover_image']}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)" value="{{$videos->sequence}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="100px" alt="">
+                                                        <label>Video Link<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="link" name="link" value="{{$videos->link}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Link<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="link" name="link" value="{{$videos->link}}"><br/>
+                                                        <label>Cover Image</label>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
+                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('cover_image')" value="{{$videos['cover_image']}}"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="100px" alt="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -89,7 +82,7 @@
                                                             <?php if($translated_block_fields_value == 'textarea') { ?>
                                                                 <div class="col-md-6 mb-3">
                                                                     <label>{{$translated_block_fields_key}}</label>
-                                                                    <textarea class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">{{$videos[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}</textarea>
+                                                                    <textarea class="translation_block form-control required" rows="5" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">{{$videos[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}</textarea>
                                                                 </div>
                                                             <?php } ?>
                                                         <?php } ?>
