@@ -604,6 +604,14 @@ function filterNonNumeric(input) {
         input.value = inputValue.replace(/\D/g, '');
     }
 }
+function onlyNumericNegative(input) {
+    var regex = /^-?\d*\.?$/;
+    var inputValue = input.value.trim();
+    if (!regex.test(inputValue)) {
+        input.value = inputValue.replace(/\D/g, '');
+    }
+
+}
 
 function validateNameInput(input) {
     var regex = /^[A-Za-z\s]+$/;

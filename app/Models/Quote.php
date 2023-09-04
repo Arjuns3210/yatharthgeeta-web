@@ -12,10 +12,12 @@ class Quote extends Model implements HasMedia
 {
     use HasFactory,InteractsWithMedia,SoftDeletes;
     protected $fillable = [
-        'text',
-        'description',
         'image',
-        'sequence'
+        'sequence',
+		'status',
+		'share_allowance',
+		'shlok'
+		
     ];
     /**
      * The attributes that should be casted to native types.
@@ -23,11 +25,9 @@ class Quote extends Model implements HasMedia
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'text'=>'string',
-        'description'=>'string',
         'image'=>'string',
-		'sequence'=>'integer'
+		'sequence'=>'integer',
+		'shlok' => 'array',
 
     ];
 
