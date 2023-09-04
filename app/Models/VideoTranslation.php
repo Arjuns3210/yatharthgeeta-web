@@ -12,15 +12,15 @@ class VideoTranslation extends Model
         'video_id',
         'title',
         'duration',
+        'link',
         'description',
-        'author_id',
         'narrator_id',
         'status'
 
     ];
     public function Video()
     {
-        return $this->belongsTo(App\Models\Video::class);
+        return $this->belongsTo(\App\Models\Video::class);
     }
 }
 

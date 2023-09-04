@@ -64,6 +64,9 @@ Route::group(['middleware' => ['customAuth']], function () {
     Route::post('videos/fetch', 'VideoController@fetch');
     Route::get('videos/add', 'VideoController@create');
 	Route::post('videos/save', 'VideoController@store');
+	Route::get('videos/view/{id}', 'VideoController@view');
+	Route::get('videos/edit/{id}', 'VideoController@edit');
+	Route::post('videos/update', 'VideoController@update');
 
 	//staff
 	Route::get('staff', 'StaffController@index');
