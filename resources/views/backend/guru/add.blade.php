@@ -33,24 +33,16 @@
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
                                                     <div class="col-sm-6">
+                                                        <label>Image<span class="text-danger">*</span></label>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
+                                                        <input class="form-control required" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
                                                         <label>Guru Status<span class="text-danger">*</span></label>
                                                         <select class="form-control" id="status" name="status">
                                                             <option value="1">Active</option>
                                                             <option value="0">Inactive</option>
                                                         </select>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Ashram<span class="text-danger">*</span></label>
-                                                        <select class="form-control" id="location_id" name="location_id">
-                                                            <option value="" selected>Select</option>
-                                                            @foreach($ashram as $key=> $ashram)
-                                                                <option value="{{$ashram['id']}}">{{$ashram['translations'][$key]['name']}}</option>
-                                                            @endforeach
-                                                        </select><br>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Image<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')"><br/>
                                                     </div>
                                                 </div>
                                             </div>

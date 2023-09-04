@@ -44,8 +44,9 @@
                                                         <input class="form-control" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Cover Image (200 X 200, Only .jpg, .jpeg, .png)<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" accept=".jpg,.jpeg,.png" placeholder ="" type="file" id="cover_image" name="cover_image" onchange="handleFileInputChange('cover_image')"><br/>
+                                                        <label>Cover Image<span class="text-danger">*</span></label>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
+                                                        <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="cover_image" name="cover_image" onchange="handleFileInputChange('cover_image')"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>

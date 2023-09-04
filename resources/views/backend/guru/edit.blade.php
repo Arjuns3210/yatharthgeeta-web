@@ -33,16 +33,17 @@
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
                                                     <div class="col-sm-6">
+                                                        <label>Image</label>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
+                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')" value="{{$guru['image']}}"><br/>
+                                                        <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="100px" alt="" id="image">
+                                                    </div>
+                                                    <div class="col-sm-6">
                                                         <label>guru Status<span class="text-danger">*</span></label>
                                                         <select class="form-control" id="status" name="status">
                                                             <option value="1" <?php echo $guru['status'] == 1 ? 'selected' : '' ?>>Active</option>
                                                             <option value="0" <?php echo $guru['status'] == 0 ? 'selected' : '' ?>>Inactive</option>
                                                         </select>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Image</label>
-                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')" value="{{$guru['image']}}"><br/>
-                                                        <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="100px" alt="" id="image">
                                                     </div>
                                                 </div>
                                             </div>

@@ -18,8 +18,7 @@
                     	<div class="card-body">
                     		<form id="updateQuoteData" method="post" action="quotes/update?id={{$quotes['id']}}">
                     			@csrf
-                        		<div class="row">
-                                                                      
+                        		<div class="row">                  
                                     <div class="col-sm-6">
                                         <label>Sequence<span class="text-danger">*</span></label>
                                         <input class="form-control required" type="text" id="sequence" name="sequence" value="{{$quotes->sequence}}" oninput="onlyNumericNegative(this)"><br/>

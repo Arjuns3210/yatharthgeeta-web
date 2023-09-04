@@ -91,4 +91,124 @@ class LoginController extends Controller
             'password' => 'required|string',
         ])->errors();
     }
+
+    public function forgotPassword(Request $request)
+    {
+        return view('backend/auth/forgot-password');
+    }
+
+    public function forgotPasswordStore(Request $request)
+    {
+        $table = 'admins';
+        $password_reset_table = 'password_resets';
+
+        $request->validate([
+            'email' => 'required|email|exists:' . $table . ',email',
+        ]);
+
+        // We will send the password reset link to this user. Once we have attempted
+        // to send the link, we will examine the response then see the message we
+        // need to show to the user. Finally, we'll send out a proper response.
+
+        $email = trim(strtolower($request->email));
+        $token = Str::random(60);
+        
+        DB::table($password_reset_table)->updateOrInsert(
+            [
+                'email' => $email,
+                'token' => $token,
+                'created_at' => Carbon::now(),
+            ],
+            [
+                'email'   => $email,
+            ]
+        );
+        $action_link =  URL::temporarySignedRoute(
+            'password.reset',
+            now()->addHours(48),
+            ['token' => $token,
+            'email' => $email]
+        );
+
+        $adminData = Admin::where('email', $email)->first();
+        $emailData = EmailNotification::where([['mail_key', 'FORGOT_PASSWORD'], ['user_type', 'all'], ['status', 1]])->first();
+
+        $subjects = $emailData['subject'] ?? '';
+        $admin_name = $adminData['admin_name'];
+        $url = $action_link;
+        $from_name = $emailData['from_name'] ?? '';
+
+        $emailData['content'] = str_replace('$$admin_name$$', $admin_name, $emailData['content'] ?? '');
+        $emailData['content'] = str_replace('$$url$$', $url, $emailData['content']);
+        $emailData['content'] = str_replace('$$from_name$$', $from_name, $emailData['content']);
+        $content =  htmlspecialchars_decode(stripslashes($emailData['content'])); 
+        
+        if(config('global.TRIGGER_FPWD_EMAIL'))
+        Mail::send('backend/auth/email-forgot', ['body' => $content], function ($message) use ($email) {
+            $message->from(env('MAIL_FROM_ADDRESS', 'noreplycrm@indianagroup.com'), env('MAIL_FROM_NAME', 'Indiana CRM Team'));
+            $message->to($email, 'Indiana Team')->subject('Forgot Password - Indiana Team');
+        });
+        
+        Log::info('Reset Password Mail Send Successfully');
+        
+        return back()->with('status', __('passwords.sent'));
+    }
+
+    public function passwordReset(Request $request)
+    {
+        $token = $request->token;
+        $password_reset_table = 'password_resets';
+        $check_token = DB::table($password_reset_table)->where(['token' => $token])->first();
+        if (!$check_token) {
+            return view('backend/auth/page-not-found');
+        }
+        return view('backend/auth/reset-password', ['request' => $request]);
+    }
+
+
+    /**
+     * Handle an incoming new password request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function passwordUpdate(Request $request)
+    {
+        $msg_data = array();
+        $is_user = $request->c;
+        $password_reset_table = 'password_resets';
+        if ($is_user) {
+            $password_reset_table = 'user_password_resets';
+        }
+        $request->validate([
+            'token' => ['required'],
+            'email' => 'required|email|exists:' . $password_reset_table . ',email',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $email = trim(strtolower($request->email));
+        $token = $request->token;
+        $check_token = DB::table($password_reset_table)->where(['email' => $email, 'token' => $token])->first();
+        if (!$check_token) {
+            return  back()->withInput($request->only('email'))
+                ->withErrors(['email' => __('passwords.token')]);
+        }
+        if ($is_user) {
+            User::where('email', $email)->update([
+                'password' => md5($email . $request->password),
+            ]);
+            DB::table($password_reset_table)->where(['email' => $email])->delete();
+            return redirect()->route('')->with('status', __('passwords.reset'));
+            return redirect()->route('password.request')->with('status', __('passwords.reset'));
+            // return back()->with('status', __('passwords.reset'));
+        } else {
+            Admin::where('email', $email)->update([
+                'password' => md5($email . $request->password),
+            ]);
+            DB::table($password_reset_table)->where(['email' => $email])->delete();
+            return redirect()->route('login')->with('status', __('passwords.reset'));
+        }
+    }
 }

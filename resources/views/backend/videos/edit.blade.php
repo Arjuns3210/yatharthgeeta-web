@@ -40,6 +40,14 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
+                                                        <label>Cover Image</label>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
+                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('cover_image')" value="{{$videos['cover_image']}}"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                    <img src="{{$media->getFullUrl() ?? ''}}" width="200px" height="200px" alt="">
+                                                    </div>
+                                                    <div class="col-sm-6">
                                                         <label>Duration (In Min)</label>
                                                         <input class="form-control" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)" value="{{$videos->duration}}"><br/>
                                                     </div>
