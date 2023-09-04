@@ -27,7 +27,7 @@ class CreateMigrationToRunSeederToAddQuotesPermission extends Migration
     public function down()
     {
         Artisan::call('db:seed', [
-            '--class' => 'AddQuotesPermissionSeeder',
+            '--class' => 'RevertQuotesPermissionSeeder',
             '--force' => true
         ]);
     }

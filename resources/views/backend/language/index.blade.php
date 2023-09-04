@@ -16,14 +16,21 @@
                                         </div>
                                         <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                             <button class="btn btn-sm btn-outline-danger px-3 py-1 mr-2" id="listing-filter-toggle"><i class="fa fa-filter"></i> Filter</button>
+                                            @if($data['language_add'])
+                                                <a href="language/add" class="btn btn-sm btn-outline-primary px-3 py-1 src_data"><i class="fa fa-plus"></i> Add Language</a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="row mb-2" id="listing-filter-data" style="display: none;">
                                         <div class="col-md-4">
-                                            <label>Language</label>
+                                            <label>Language Name</label>
                                             <input class="form-control mb-3" type="text" id="language_name" name="language_name">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>Language Code</label>
+                                            <input class="form-control mb-3" type="text" id="language_code" name="language_code">
                                         </div>
                                         <div class="col-md-4">
                                             <label>&nbsp;</label><br/>
@@ -37,7 +44,7 @@
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
                                                     <th id="language_name" data-orderable="false" data-searchable="false">Language Name</th>
                                                     <th id="language_code" data-orderable="false" data-searchable="false">Language Code</th>
-                                                    @if($data['language_status'] || $data['language_view'] || $data['language_delete'])
+                                                    @if($data['language_status'] || $data['language_view'] || $data['language_delete'] || $data['language_edit'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
                                                     @endif
                                                 </tr>

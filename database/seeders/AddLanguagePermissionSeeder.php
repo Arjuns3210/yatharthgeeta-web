@@ -24,6 +24,20 @@ class AddLanguagePermissionSeeder extends Seeder
         $result = Permission::firstOrCreate($parent_permission);
 
         $permissions = [
+            [
+	            'name' => 'Add',
+	            'codename' => 'language_add',
+	            'parent_status' => $result->id,
+	            'description' => '',
+	            'status' => '1'
+	        ],
+            [
+	            'name' => 'Edit',
+	            'codename' => 'language_edit',
+	            'parent_status' => $result->id,
+	            'description' => '',
+	            'status' => '1'
+	        ],
 	        [
 	            'name' => 'View',
 	            'codename' => 'language_view',

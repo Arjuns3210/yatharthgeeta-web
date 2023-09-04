@@ -16,10 +16,6 @@
                                             <td><strong>Language Code</strong></td>
                                             <td>{{$data->language_code}}</td>
                                         </tr>
-                                        <tr>
-                                            <td><strong>Created At</strong></td>
-                                            <td>{{date('d-m-Y H:i A', strtotime($data->created_at)) }}</td>
-                                        </tr>
                                     </table>
                                 </div>
                             </div>
