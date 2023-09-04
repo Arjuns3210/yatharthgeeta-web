@@ -34,21 +34,14 @@
 									<div class="col-sm-6">
                                         <label>Quote Image (200*200)<span class="text-danger">*</span></label>
                                         <input class="form-control required" type="file" id="image" name="image" value="{{$quotes->image}}" accept=".jpg,.jpeg,.png" onchange="handleFileInputChange('image')"><br/>
+                                        <img src="{{$media->getFullUrl()}}" width="100px" height="100px" alt="">
                                     </div>
-                                    <div class="col-sm-6">
-                                        <label>Sequence<span class="text-danger">*</span></label>
-                                        <input class="form-control required" type="text" id="sequence" name="sequence" value="{{$quotes->sequence}}" oninput="onlyNumericNegative(this)"><br/>
 									<div class="tab-pane fade in active show">
 										<label>Share Allowance<span class="text-danger">*</span></label>
 										<select class="form-control" id="share_allowance" name="share_allowance" value="{{$quotes->share_allowance}}">
 											<option value="yes">Yes</option>
 											<option value="no">No</option>
 										</select>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="col-sm-6">
-                                            <img src="{{$media->getFullUrl()}}" width="200px" alt="">
-                                        </div>
                                     </div>									
                         		</div>
                         		<hr>
