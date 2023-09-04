@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGurusTable extends Migration
+class CreateArtistsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateGurusTable extends Migration
      */
     public function up()
     {
-        Schema::create('gurus', function (Blueprint $table) {
+        Schema::create('artists', function (Blueprint $table) {
             $table->increments('id');
             $table->string('image');
-            $table->integer('location_id')->default(0);
+            $table->string('designation')->default('guru');
             $table->boolean('visible_on_app')->nullable();
             $table->enum('status', [0, 1])->default(1);
             $table->integer('created_by')->unsigned()->nullable();

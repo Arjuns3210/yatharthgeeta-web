@@ -165,6 +165,21 @@
                         <li class="nav-item">
                             <a href="general_settings"><i class="icon-user-following"></i><span data-i18n="" class="menu-title">General Settings</span></a>
                         </li>
+                        @if(session('data')['role_id'] == 1  ||
+                            in_array('home_collection', $permission_array)
+                        )
+                        <li class="has-sub nav-item">
+                            <a href="javascript:;" class="dropdown-parent"><i class="ft-grid"></i><span data-i18n="" class="menu-title">Collections</span></a>
+                            <ul class="menu-content">
+                                <li class="{{ $lastParam ==  'home_collection' ? 'active' : '' }}">
+                                    <a href="home_collection" class="menu-item"><i class="fa fa-list-alt"></i>Home</a>
+                                </li>
+                                <li class="{{ $lastParam ==  'explore_collection' ? 'active' : '' }}">
+                                    <a href="explore_collection" class="menu-item"><i class="fa fa-list-alt"></i>Explore</a>
+                                </li>
+                            </ul>
+                        </li>
+                        @endif
                         <li class="nav-item {{ $lastParam ==  'logout' ? 'active' : ''  }}">
                             <a href="logout"><i class="fa fa-power-off"></i><span class="menu-title" >Logout</span></a>
                         </li>
