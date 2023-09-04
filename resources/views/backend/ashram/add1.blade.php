@@ -48,7 +48,7 @@
                                                         <input class="form-control required" type="text" id="phone" name="phone"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Location<span class="text-danger">*</span></label>
+                                                        <label>Address<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="location" name="location"><br/>
                                                     </div>
                                                     <div class="col-sm-6">

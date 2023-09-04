@@ -48,13 +48,13 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('ashram/save', 'AshramController@store');
 
 	//Guru's
-	Route::get('guru', 'GuruController@index');
-	Route::get('guru/add', 'GuruController@create');
-	Route::get('guru/edit/{id}', 'GuruController@edit');
-	Route::post('guru/update', 'GuruController@update');
-	Route::post('guru/fetch', 'GuruController@fetch');
-	Route::get('guru/view/{id}', 'GuruController@show');
-	Route::post('guru/save', 'GuruController@store');
+	Route::get('guru', 'ArtistController@index');
+	Route::get('guru/add', 'ArtistController@create');
+	Route::get('guru/edit/{id}', 'ArtistController@edit');
+	Route::post('guru/update', 'ArtistController@update');
+	Route::post('guru/fetch', 'ArtistController@fetch');
+	Route::get('guru/view/{id}', 'ArtistController@show');
+	Route::post('guru/save', 'ArtistController@store');
 
 	// Category
 	Route::get('books_category', 'BookCategoryController@index');

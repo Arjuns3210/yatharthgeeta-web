@@ -16,7 +16,7 @@
                                             </div>
                                             <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                                 <button class="btn btn-sm btn-outline-danger px-3 py-1 mr-2" id="listing-filter-toggle"><i class="fa fa-filter"></i> Filter</button>
-                                                @if($data['guru_add'])
+                                                @if($data['artist_add'])
                                                     <a href="guru/add" class="btn btn-sm btn-outline-primary px-3 py-1 src_data"><i class="fa fa-plus"></i> Add Guru</a>
                                                 @endif
                                             </div>
@@ -45,7 +45,7 @@
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
                                                     <th id="name" data-orderable="false" data-searchable="false">Name</th>
                                                     <th id="title" data-orderable="false" data-searchable="false">Title</th>
-                                                    @if($data['guru_edit'] || $data['guru_view'] || $data['guru_status'])
+                                                    @if($data['artist_edit'] || $data['artist_view'] || $data['artist_status'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
                                                     @endif
                                                 </tr>

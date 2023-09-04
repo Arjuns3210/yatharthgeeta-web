@@ -61,10 +61,10 @@ class ArtistController extends Controller
                         $artist_delete = checkPermission('artist_delete');
                         $actions = '<span style="white-space:nowrap;">';
                         if ($artist_view) {
-                            $actions .= '<a href="artist/view/' . $event['id'] . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View artist Details" title="View"><i class="fa fa-eye"></i></a>';
+                            $actions .= '<a href="guru/view/' . $event['id'] . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View artist Details" title="View"><i class="fa fa-eye"></i></a>';
                         }
                         if ($artist_edit) {
-                            $actions .= ' <a href="artist/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
+                            $actions .= ' <a href="guru/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
                         }
                         $actions .= '</span>';
                         return $actions;
@@ -92,7 +92,6 @@ class ArtistController extends Controller
     public function create()
     {
         $data['translated_block'] = Artist::TRANSLATED_BLOCK;
-        $data['ashram'] = Location::where('status','1')->get()->toArray();
         return view('backend/artist/add',$data);
     }
 
@@ -123,8 +122,8 @@ class ArtistController extends Controller
      */
     public function show($id)
     {
-        $data['artist'] = Artist::find($id);
-        $data['media'] = $data['artist']->getMedia(Artist::IMAGE)[0];
+        $data['guru'] = Artist::find($id);
+        $data['media'] = $data['guru']->getMedia(Artist::IMAGE)[0];
         return view('backend/artist/view',$data);
     }
 
@@ -136,15 +135,15 @@ class ArtistController extends Controller
      */
     public function edit($id)
     {
-        $data['artist'] = Artist::find($id);
-        foreach($data['artist']['translations'] as $trans) {
+        $data['guru'] = Artist::find($id);
+        foreach($data['guru']['translations'] as $trans) {
             $translated_keys = array_keys(Artist::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
-                $data['artist'][$value.'_'.$trans['locale']] = $trans[$value];
+                $data['guru'][$value.'_'.$trans['locale']] = $trans[$value];
             }
         }
         $data['translated_block'] = Artist::TRANSLATED_BLOCK;
-        $data['media'] =$data['artist']->getMedia(Artist::IMAGE)[0];
+        $data['media'] =$data['guru']->getMedia(Artist::IMAGE)[0];
         return view('backend/artist/edit',$data);
     }
 
