@@ -68,6 +68,12 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::get('videos/edit/{id}', 'VideoController@edit');
 	Route::post('videos/update', 'VideoController@update');
 
+    //Book
+    Route::get('books', 'BookController@index');
+    Route::post('books/fetch', 'BookController@fetch');
+    Route::get('books/add', 'BookController@create');
+	Route::post('books/save', 'BookController@store');
+
 	//staff
 	Route::get('staff', 'StaffController@index');
 	Route::post('staff/fetch', 'StaffController@fetch')->name('staff_fetch');
