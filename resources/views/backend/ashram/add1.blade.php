@@ -69,7 +69,6 @@
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                     </div>
                                                     <div id="map" style="height:400px; width: 400px;" class="my-3"></div>
-
                                                     <!-- <div class="col-sm-6">
                                                         <label>Working Hours :<span class="text-danger">*</span></label>
                                                         <div class="row">

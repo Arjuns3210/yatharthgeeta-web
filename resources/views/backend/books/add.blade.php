@@ -32,28 +32,23 @@
                                         <div class="tab-content">
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
-                                                <div class="col-sm-6">
-                                                    <label>Book Status<span class="text-danger">*</span></label>
-                                                    <select class="form-control" id="status" name="status">
-                                                        <option value="1">Active</option>
-                                                        <option value="0">Inactive</option>
-                                                    </select>
-                                                    </div>
                                                     <div class="col-sm-6">
                                                         <label>Number of Pages</label>
                                                         <input class="form-control" type="text" id="pages" name="pages" oninput="filterNonNumeric(this)"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Cover Image Cover Image (200 X 200, Only .jpg, .jpeg, .png)<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="cover_image" name="cover_image" onchange="handleFileInputChange('cover_image')"><br/>
+                                                        <label>Book Url<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="link" name="link"><br/>
                                                     </div>
+                                                    
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Link<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="link" name="link"><br/>
+                                                        <label>Cover Image<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="cover_image" name="cover_image" onchange="handleFileInputChange('cover_image')"><br/>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                     </div>
                                                 </div>
 

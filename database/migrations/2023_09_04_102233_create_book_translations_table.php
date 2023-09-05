@@ -20,6 +20,7 @@ class CreateBookTranslationsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->enum('status', [1, 0])->default(1);
+            $table->unique(['books_id','locale']);
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->default(0);
             $table->timestamps();
