@@ -20,7 +20,6 @@ class CreateArtistTranslationsTable extends Migration
             $table->string('name');
             $table->string('title')->nullable();
             $table->string('description')->nullable();
-            $table->enum('status', [1, 0])->default(1);
             $table->unique(['artist_id','locale']);
             $table->foreign('artist_id')->references('id')->on('artists')->onDelete('cascade');
             $table->integer('created_by')->unsigned()->nullable();

@@ -107,9 +107,9 @@ class VideoController extends Controller
             $video->status = $request->status;
             $video->save();
             if ($request->status == 1) {
-                successMessage(config('global.status.toggle'), $msg_data);
+                successMessage(trans('message.enable'), $msg_data);
             } else {
-                errorMessage(config('global.status.toggle'), $msg_data);
+                errorMessage(trans('message.disable'), $msg_data);
             }
             errorMessage('Video not found', []);
         } catch (\Exception $e) {
