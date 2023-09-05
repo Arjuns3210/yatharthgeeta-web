@@ -45,6 +45,9 @@ class ArtistController extends Controller
                                 $translationQuery->where('locale','en')->where('title', 'like', "%" . $request['search']['search_title'] . "%");
                             });
                         }
+                        if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
+                            $query->where('status', $request['search']['search_status']);
+                        }
                         $query->get()->toArray();
                     })
                     ->editColumn('name', function ($event) {

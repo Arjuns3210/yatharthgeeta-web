@@ -48,6 +48,9 @@ class AshramController extends Controller
                         if (isset($request['search']['search_location']) && !is_null($request['search']['search_location'])) {
                             $query->where('location', 'like', "%" . $request['search']['search_location'] . "%");
                         }
+                        if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
+                            $query->where('status', $request['search']['search_status']);
+                        }
                         $query->get()->toArray();
                     })
                     ->editColumn('name', function ($event) {
