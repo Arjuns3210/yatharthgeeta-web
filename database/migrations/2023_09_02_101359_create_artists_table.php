@@ -17,7 +17,7 @@ class CreateArtistsTable extends Migration
             $table->increments('id');
             $table->string('image');
             $table->string('designation')->default('guru');
-            $table->enum('visible_on_app', [0, 1])->default(0);
+            $table->enum('visible_on_app', [0, 1])->default(1);
             $table->integer('sequence');
             $table->enum('status', [0, 1])->default(1);
             $table->integer('created_by')->unsigned()->nullable();

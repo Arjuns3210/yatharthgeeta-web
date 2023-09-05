@@ -21,6 +21,7 @@ class CreateBooksTable extends Migration
             $table->longText('link');
             $table->integer('sequence');
             $table->enum('status', [1, 0])->default(1);
+            $table->enum('visible_on_app', [0, 1])->default(1);
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->default(0);
             $table->timestamps();
