@@ -46,14 +46,14 @@
                         <i class="ft-maximize font-medium-3" style="color:black !important"></i>
                     </a> --}}
                 </li>
-                   
+
                 <h5 class="translateLable padding-top-sm padding-left-sm pt-1"  data-translate="welcome_to_admin_panel">Welcome {{session('data')['name']}}</h5>
             </div>
             <div class="navbar-container pull-right">
                 <div class="collapse navbar-collapse d-block" id="navbarSupportedContent">
                     <ul class="navbar-nav">
                         <div class="d-none d-xl-block">
-                            <div class="col-sm-12">   
+                            <div class="col-sm-12">
                                 <a href="profile" class="mr-1"><span class="mr-1" style="font-size: 24px; color: #aaa;">|</span><i title="Edit Profile" class="fa fa-user-circle-o fa-lg" style="color:brown;"></i></a>
 
                                 <a href="updatePassword"><span class="mr-1" style="font-size: 24px; color: #aaa;">|</span><i title="Change Password" class="fa fa-key fa-lg" style="color:brown;"></i></a>
@@ -115,7 +115,7 @@
                         </li>
                         @if(session('data')['role_id'] == 1  ||
                             in_array('books_category', $permission_array)
-                            
+
                         )
                         <li class="has-sub nav-item">
                             <a href="javascript:;" class="dropdown-parent"><i class="ft-grid"></i><span data-i18n="" class="menu-title">Master</span></a>
@@ -123,8 +123,28 @@
                                 <li class="{{ $lastParam ==  'books_category' ? 'active' : '' }}">
                                     <a href="books_category" class="menu-item"><i class="fa fa-list-alt"></i>Books Category</a>
                                 </li>
+                                <li class="{{ $lastParam ==  'ashram' ? 'active' : '' }}">
+                                    <a href="ashram" class="menu-item"><i class="fa fa-building-o" aria-hidden="true"></i>Ashram</a>
+                                </li>
+                                <li class="{{ $lastParam ==  'guru' ? 'active' : '' }}">
+                                    <a href="guru" class="menu-item"><i class="fa fa-user-o" aria-hidden="true"></i>Guru's</a>
+                                </li>
+                                <li class="{{ $lastParam ==  'language' ? 'active' : '' }}">
+                                    <a href="language" class="menu-item"><i class="fa fa-language" aria-hidden="true"></i>Language</a>
+                                </li>
+                                <li class="{{ $lastParam ==  'banners' ? 'active' : '' }}">
+                                    <a href="banners" class="menu-item"><i class="fa fa-picture-o" aria-hidden="true"></i>Banners</a>
+                                </li>
+								<li class="{{ $lastParam ==  'quotes' ? 'active' : '' }}">
+                                    <a href="quotes" class="menu-item"><i class="fa fa-quote-left" aria-hidden="true"></i>
+                                        Quotes</a>
+                                </li>
+                                <li class="{{ $lastParam ==  'videos' ? 'active' : '' }}">
+                                    <a href="videos" class="menu-item"><i class="fa fa-video-camera" aria-hidden="true"></i>Videos</a>
+                                </li>
                             </ul>
                         </li>
+
                         @endif
                         @if(session('data')['role_id'] == 1  ||
                             in_array('role', $permission_array) ||
@@ -138,6 +158,24 @@
                                 </li>
                                 <li class="{{ $lastParam ==  'staff' ? 'active' : '' }}">
                                     <a href="staff" class="menu-item"><i class="fa fa-circle fs_i"></i>Manage Staff</a>
+                                </li>
+                            </ul>
+                        </li>
+                        @endif
+                        <li class="nav-item">
+                            <a href="general_settings"><i class="icon-user-following"></i><span data-i18n="" class="menu-title">General Settings</span></a>
+                        </li>
+                        @if(session('data')['role_id'] == 1  ||
+                            in_array('home_collection', $permission_array)
+                        )
+                        <li class="has-sub nav-item">
+                            <a href="javascript:;" class="dropdown-parent"><i class="ft-grid"></i><span data-i18n="" class="menu-title">Collections</span></a>
+                            <ul class="menu-content">
+                                <li class="{{ $lastParam ==  'home_collection' ? 'active' : '' }}">
+                                    <a href="home_collection" class="menu-item"><i class="fa fa-list-alt"></i>Home</a>
+                                </li>
+                                <li class="{{ $lastParam ==  'explore_collection' ? 'active' : '' }}">
+                                    <a href="explore_collection" class="menu-item"><i class="fa fa-list-alt"></i>Explore</a>
                                 </li>
                             </ul>
                         </li>

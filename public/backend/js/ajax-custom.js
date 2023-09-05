@@ -264,6 +264,7 @@ function submitForm(form_id, form_method, errorOverlay = '') {
             contentType: false,
             processData: false,
             success: function (data) {
+                console.log(data);
                 var response = JSON.parse(data);
                 if (response['success'] == 0) {
                     if (errorOverlay) {
@@ -303,8 +304,6 @@ function submitForm(form_id, form_method, errorOverlay = '') {
         $('a[href="#'+ih+'"]').click();
     }
 }
-
-
 
 function submitModalForm(form_id, form_method, errorOverlay = '') {
     var form = $('#' + form_id);
@@ -357,7 +356,7 @@ function submitModalForm(form_id, form_method, errorOverlay = '') {
     });
 }
 
-//FOR CkEditor data pass to server - added by sagar - START 
+//FOR CkEditor data pass to server - added by sagar - START
 function submitEditor(form_id) {
     var content = theEditor.getData();
     var form = $('#' + form_id);
@@ -372,7 +371,7 @@ function submitEditor(form_id) {
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         data: form.serialize() + '&editiorData=' + content,
         success: function (data) {
-            // console.log(data);
+            //console.log(data);
             var response = JSON.parse(data);
             if (response['success'] == 0) {
                 $.activeitNoty({
@@ -390,16 +389,12 @@ function submitEditor(form_id) {
                     container: 'floating',
                     timer: 3000
                 });
-
-            }
-            setTimeout(function () {
-                location.reload();
-            }, 2000);
+            }            
         }
     });
 }
 
-//FOR CkEditor data pass to server - added by sagar - END 
+//FOR CkEditor data pass to server - added by sagar - END
 $(document).on('click', '#addStock', function (event) {
     var trlen = $('#batchTbl tbody tr').length;
     if (trlen == 0) {
@@ -468,7 +463,6 @@ $(document).on('click', '.delimg', function (event) {
         }
     });
 });
-
 
 $(document).on('click', '.delete-data', function (event) {
     var ib = $(this).attr('data-id');
@@ -583,12 +577,12 @@ function getProductDetails(product) {
     });
 }
 
-$(window).keydown(function(event){
-    if(event.keyCode == 13) {
-      event.preventDefault();
-      $('#'+event.target.id).closest('form').find('button').click();
-    }
-});
+// $(window).keydown(function(event){
+//     if(event.keyCode == 13) {
+//       event.preventDefault();
+//       $('#'+event.target.id).closest('form').find('button').click();
+//     }
+// });
 
 
 // For validate number  input
@@ -601,3 +595,59 @@ function validateNumberInput(input) {
         input.value = '';
     }
 }
+
+function filterNonNumeric(input) {
+    var regex = /^\d+$/;
+    var inputValue = input.value.trim();
+
+    if (!regex.test(inputValue)) {
+        input.value = inputValue.replace(/\D/g, '');
+    }
+}
+function onlyNumericNegative(input) {
+    var regex = /^-?\d*\.?$/;
+    var inputValue = input.value.trim();
+    if (!regex.test(inputValue)) {
+        input.value = inputValue.replace(/\D/g, '');
+    }
+
+}
+
+function validateNameInput(input) {
+    var regex = /^[A-Za-z\s]+$/;
+    var inputValue = input.value.trim();
+
+    if (!regex.test(inputValue)) {
+        input.value = inputValue.replace(/[^A-Za-z\s]/g, '');
+    }
+}
+
+function handleFileInputChange(id) {
+    var fileInput = document.getElementById(id);
+    var file = fileInput.files[0];
+
+    if (file) {
+        var allowedExtensions = [".jpg", ".jpeg", ".png"];
+        var fileExtension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+
+        if (!allowedExtensions.includes(fileExtension)) {
+            $.activeitNoty({
+                type: 'danger',
+                icon: 'fa fa-minus',
+                message: 'Please select a JPG or PNG file.' ,
+                container: 'floating',
+                timer: 3000
+            });
+            fileInput.value = "";
+        }
+    }
+}
+
+function onlyNumericNegative(input) {
+    var regex = /^-?\d*\.?$/;
+    var inputValue = input.value.trim();
+    if (!regex.test(inputValue)) {
+        input.value = inputValue.replace(/\D/g, '');
+    }
+}
+
