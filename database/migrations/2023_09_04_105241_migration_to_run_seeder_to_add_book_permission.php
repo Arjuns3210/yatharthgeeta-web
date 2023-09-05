@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class MigrationToRunSeederToAddGeneralSettingsPermission extends Migration
+class MigrationToRunSeederToAddBookPermission extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class MigrationToRunSeederToAddGeneralSettingsPermission extends Migration
     public function up()
     {
         Artisan::call('db:seed', [
-            '--class' => 'AddGeneralSettingsPermissionSeeder',
+            '--class' => 'AddBookPermissionSeeder',
             '--force' => true
         ]);
     }
@@ -27,7 +27,7 @@ class MigrationToRunSeederToAddGeneralSettingsPermission extends Migration
     public function down()
     {
         Artisan::call('db:seed', [
-            '--class' => 'RevertGeneralSettingsPermissionSeeder',
+            '--class' => 'RevertBookPermissionSeeder',
             '--force' => true
         ]);
     }

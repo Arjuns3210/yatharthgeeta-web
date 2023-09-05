@@ -87,6 +87,12 @@ Route::group(['middleware' => ['customAuth']], function () {
     Route::post('videos/publish', 'VideoController@updateStatus');
     Route::get('videos/delete/{id}', 'VideoController@destroy');
 
+    //Book
+    Route::get('books', 'BookController@index');
+    Route::post('books/fetch', 'BookController@fetch');
+    Route::get('books/add', 'BookController@create');
+	Route::post('books/save', 'BookController@store');
+
 	//staff
 	Route::get('staff', 'StaffController@index');
 	Route::post('staff/fetch', 'StaffController@fetch')->name('staff_fetch');
