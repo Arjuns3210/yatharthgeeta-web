@@ -27,7 +27,7 @@ class MigrationToRunSeederToAddGeneralSettingsPermission extends Migration
     public function down()
     {
         Artisan::call('db:seed', [
-            '--class' => 'AddGeneralSettingsPermissionSeeder',
+            '--class' => 'RevertGeneralSettingsPermissionSeeder',
             '--force' => true
         ]);
     }
