@@ -33,17 +33,17 @@
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
                                                     <div class="col-sm-6">
-                                                        <label>Duration (In Min)</label>
+                                                        <label>Duration (In Minutes)</label>
                                                         <input class="form-control" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Link<span class="text-danger">*</span></label>
+                                                        <label>Video Link<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="link" name="link"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Cover Image<span class="text-danger">*</span></label>
-                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                         <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="cover_image" name="cover_image" onchange="handleFileInputChange('cover_image')"><br/>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>

@@ -24,7 +24,6 @@ class CreateVideoTranslationsTable extends Migration
             $table->integer('narrator_id')->unsigned()->nullable();
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->default(0);
-            $table->unique(['video_id','locale']);
             $table->timestamps();
             $table->softDeletes();
         });

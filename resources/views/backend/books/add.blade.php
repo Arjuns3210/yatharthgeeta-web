@@ -40,7 +40,6 @@
                                                         <label>Book Url<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="link" name="link"><br/>
                                                     </div>
-                                                    
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)"><br/>
