@@ -45,6 +45,9 @@ class VideoController extends Controller
                             if (isset($request['search']['search_sequence']) && !is_null($request['search']['search_sequence'])) {
                                 $query->where('sequence', 'like', "%" . $request['search']['search_sequence'] . "%");
                             }
+                            if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
+                                $query->where('status', $request['search']['search_status']);
+                            }
                             $query->get()->toArray();
                         })->editColumn('title', function ($event) {
                             $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));

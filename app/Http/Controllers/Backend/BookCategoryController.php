@@ -51,6 +51,9 @@ class BookCategoryController extends Controller
                         if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
                             $query->where('book_categories.status', $request['search']['search_status']);
                         }
+                        if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
+                            $query->where('status', $request['search']['search_status']);
+                        }
                         $query->get()->toArray();
                     })
                     ->editColumn('category_name_'.\App::getLocale(), function ($event) {
