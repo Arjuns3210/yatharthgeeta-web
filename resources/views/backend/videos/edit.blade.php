@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Edit Video Details :  {{$videos->title}}</h5>
+                                    <h5 class="pt-2">Edit Video Details :  {{$videos['data']->title}}</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -32,13 +32,6 @@
                                         <div class="tab-content">
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <label>Video Status<span class="text-danger">*</span></label>
-                                                        <select class="form-control" id="status" name="status">
-                                                            <option value="1" <?php echo $videos['status'] == 1 ? 'selected' : '' ?>>Active</option>
-                                                            <option value="0" <?php echo $videos['status'] == 0 ? 'selected' : '' ?>>Inactive</option>
-                                                        </select>
-                                                    </div>
                                                     <div class="col-sm-6">
                                                         <label>Duration (In Minutes)</label>
                                                         <input class="form-control" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)" value="{{$videos->duration}}"><br/>

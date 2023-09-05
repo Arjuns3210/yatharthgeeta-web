@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Edit Video Details</h5>
+                                    <h5 class="pt-2">Edit Book Details :</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -15,7 +15,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form id="editVideoForm" method="post" action="videos/update?id={{$videos['id']}}">
+                            <form id="editBookForm" method="post" action="books/update?id={{$books['id']}}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -33,26 +33,22 @@
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
                                                     <div class="col-sm-6">
-                                                        <label>Video Status<span class="text-danger">*</span></label>
-                                                        <select class="form-control" id="status" name="status">
-                                                            <option value="1" <?php echo $videos['status'] == 1 ? 'selected' : '' ?>>Active</option>
-                                                            <option value="0" <?php echo $videos['status'] == 0 ? 'selected' : '' ?>>Inactive</option>
-                                                        </select>
+                                                        <label>Number of Pages</label>
+                                                        <input class="form-control" type="text" id="pages" name="pages" value="{{$books->pages}}" oninput="filterNonNumeric(this)"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Book Url<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="link" name="link" value="{{$books->link}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Cover Image</label>
-                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('cover_image')" value="{{$videos['cover_image']}}"><br/>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                    <img src="{{$media->getFullUrl() ?? ''}}" width="200px" height="200px" alt="">
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Duration (In Min)</label>
-                                                        <input class="form-control" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)" value="{{$videos->duration}}"><br/>
+                                                        <input class="form-control" accept=".jpg,.jpeg,.png" type="file" id="cover_image" name="cover_image" onchange="handleFileInputChange('cover_image')"><br/>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
+                                                        <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="100px" alt="">
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="filterNonNumeric(this)" value="{{$videos->sequence}}"><br/>
+                                                        <input class="form-control required" type="text" id="sequence" name="sequence" value="{{$books->pages}}" oninput="onlyNumericNegative(this)"><br/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -65,10 +61,10 @@
 
                                                             <?php if($translated_block_fields_value == 'input') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}}</label>
-                                                                    <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" value="{{$videos[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}">
+                                                                    <label>Book {{$translated_block_fields_key}}</label>
+                                                                    <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" value="{{$books[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}">
                                                                 </div>
-                                                            <?php 
+                                                            <?php
                                                         } ?>
                                                         <?php } ?>
                                                     </div>
@@ -77,7 +73,7 @@
                                                             <?php if($translated_block_fields_value == 'textarea') { ?>
                                                                 <div class="col-md-6 mb-3">
                                                                     <label>{{$translated_block_fields_key}}</label>
-                                                                    <textarea class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">{{$videos[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}</textarea>
+                                                                    <textarea class="translation_block form-control required" rows="5" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">{{$books[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}</textarea>
                                                                 </div>
                                                             <?php } ?>
                                                         <?php } ?>
@@ -91,8 +87,8 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="pull-right">
-                                            <button type="button" class="btn btn-success" onclick="submitForm('editVideoForm','post')">Submit</button>
-                                            <a href="{{URL::previous()}}" class="btn btn-sm btn-danger px-3 py-1"> Cancel</a>
+                                            <button type="button" class="btn btn-success" onclick="submitForm('editBookForm','post')">Submit</button>
+                                            <a href="{{URL::previous()}}" class="btn btn-danger"> Cancel</a>
                                         </div>
                                     </div>
                                 </div>

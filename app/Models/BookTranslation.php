@@ -9,13 +9,13 @@ class BookTranslation extends Model
 {
     use HasFactory;
     public $fillable = [
-        'books_id',
-        'Name',
+        'book_id',
+        'name',
         'description',
         'status'
 
     ];
-    public function Book()
+    public function books()
     {
         return $this->belongsTo(\App\Models\Book::class);
     }

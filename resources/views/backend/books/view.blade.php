@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">View Video</h5>
+                                    <h5 class="pt-2">View Book</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -21,31 +21,31 @@
                                         <div class="col-12">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-bordered">
-                                                    @foreach($videos['translations'] as $key => $data)
+                                                    @foreach($books['translations'] as $key => $data)
                                                     <tr>
-                                                        <td><strong>Title ({{ ucfirst($data['locale']) }})</strong></td>
-                                                        <td>{{ $data['title'] }}</td>
+                                                        <td><strong>Name ({{ ucfirst($data['locale']) }})</strong></td>
+                                                        <td>{{ $data['name'] }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Description</strong></td>
                                                         <td>{{ $data['description'] }}</td>
                                                     </tr>
+                                                    @endforeach
                                                     <tr>
                                                         <td><strong>Link</strong></td>
-                                                        <td>{{ $data['link'] }}</td>
+                                                        <td>{{ $books['link'] }}</td>
                                                     </tr>
-                                                    @endforeach
                                                     <tr>
                                                         <td><strong>Cover Image </strong></td>
                                                         <td><img src="{{$media->getFullUrl() ?? ''}}" width="200px" height="200px" alt=""></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Duration</strong></td>
-                                                        <td>{{ $videos['duration'] }}</td>
+                                                        <td><strong>Number of Pages</strong></td>
+                                                        <td>{{ $books['pages'] }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Sequence</strong></td>
-                                                        <td>{{ $videos->sequence ?? ''}}</td>
+                                                        <td>{{ $books->sequence ?? ''}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Status</strong></td>
