@@ -4,6 +4,8 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
+use App\Models\BookTranslation;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -29,7 +31,12 @@ class BookController extends Controller
         {
             if ($request->ajax()) {
                 try {
-                    $query = Book::orderBy('updated_at','desc');
+                    $query = Book::leftJoin('book_translations', function ($join) {
+                        $join->on("book_translations.book_id", '=', "books.id");
+                        $join->where('book_translations.locale', \App::getLocale());
+                     })
+                     ->select('books.*')
+                    ->orderBy('updated_at','desc');
                     return DataTables::of($query)
                         ->filter(function ($query) use ($request) {
                             if (isset($request['search']['search_name']) && !is_null($request['search']['search_name'])) {
@@ -38,13 +45,13 @@ class BookController extends Controller
                                 });
                             }
                             if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
-                                $query->where('status', 'like', "%" . $request['search']['search_status'] . "%");
+                                $query->where('books.status', 'like', "%" . $request['search']['search_status'] . "%");
                             }
                             if (isset($request['search']['search_sequence']) && !is_null($request['search']['search_sequence'])) {
                                 $query->where('sequence', 'like', "%" . $request['search']['search_sequence'] . "%");
                             }
                             $query->get()->toArray();
-                        })->editColumn('name', function ($event) {
+                        })->editColumn('name_'.\App::getLocale(), function ($event) {
                             $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
                             return $event['translations'][$Key_index]['name'];
 
@@ -64,11 +71,21 @@ class BookController extends Controller
                             if ($book_edit) {
                                 $actions .= ' <a href="books/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
                             }
+                            if ($book_delete) {
+                                $actions .= ' <a data-option="" data-url="books/delete/' . $event->id . '" class="btn btn-danger btn-sm delete-data" title="delete"><i class="fa fa-trash"></i></a>';
+                            }
+                            if ($book_status) {
+                                if ($event->status == '1') {
+                                    $actions .= ' <input type="checkbox" data-url="books/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery" checked>';
+                                } else {
+                                    $actions .= ' <input type="checkbox" data-url="books/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery">';
+                                }
+                            }
                             $actions .= '</span>';
                             return $actions;
                         })
                         ->addIndexColumn()
-                        ->rawColumns(['name'.\App::getLocale(),'sequence', 'action'])->setRowId('id')->make(true);
+                        ->rawColumns(['name_'.\App::getLocale(),'sequence', 'action'])->setRowId('id')->make(true);
                 } catch (\Exception $e) {
                     \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                     return response([
@@ -98,7 +115,7 @@ class BookController extends Controller
             }
             errorMessage('Book not found', []);
         } catch (\Exception $e) {
-            errorMessage(trans('auth.something_went_wrong'));
+            errorMessage('something_went_wrong');
         }
 
     }
@@ -141,9 +158,11 @@ class BookController extends Controller
      * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function show(Book $book)
+    public function view($id)
     {
-        //
+        $data['books'] = Book::find($id);
+        $data['media'] = $data['books']->getMedia(Book::COVER_IMAGE)[0];
+        return view('backend/books/view',$data);
     }
 
     /**
@@ -152,9 +171,18 @@ class BookController extends Controller
      * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function edit(Book $book)
+    public function edit($id)
     {
-        //
+        $data['books'] = Book::find($id);
+        foreach($data['books']['translations'] as $trans) {
+            $translated_keys = array_keys(Book::TRANSLATED_BLOCK);
+            foreach ($translated_keys as $value) {
+                $data['books'][$value.'_'.$trans['locale']] = $trans[$value];
+            }
+        }
+        $data['translated_block'] = Book::TRANSLATED_BLOCK;
+        $data['media'] =$data['books']->getMedia(Book::COVER_IMAGE)[0];
+        return view('backend/books/edit',$data);
     }
 
     /**
@@ -164,9 +192,25 @@ class BookController extends Controller
      * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Book $book)
+    public function update(Request $request)
     {
-        //
+        $data = Book::find($_GET['id']);
+        $input=$request->all();
+        if (!$data) {
+            errorMessage('Book Not Found', []);
+        }
+        $translated_keys = array_keys(Book::TRANSLATED_BLOCK);
+        foreach ($translated_keys as $value)
+        {
+            $input[$value] = (array) json_decode($input[$value]);
+        }
+        $book = Utils::flipTranslationArray($input, $translated_keys);
+        $data->update($book);
+        if(!empty($input['cover_image'])){
+            $data->clearMediaCollection(Book::COVER_IMAGE);
+            storeMedia($data, $input['cover_image'], Book::COVER_IMAGE);
+        }
+        successMessage('Data Updated successfully', []);
     }
 
     /**
@@ -175,8 +219,10 @@ class BookController extends Controller
      * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Book $book)
+    public function destroy($id)
     {
-        //
+        $data= Book::find($id);
+        $data->delete();
+        successMessage('Data Deleted successfully', []);
     }
 }

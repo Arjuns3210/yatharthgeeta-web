@@ -19,7 +19,7 @@ class Book extends Model implements HasMedia
 
     public $fillable = [
         'cover_image',
-        'number_of_pages',
+        'pages',
         'link',
         'status',
         'sequence'
@@ -36,7 +36,7 @@ class Book extends Model implements HasMedia
 
     const COVER_IMAGE= 'cover_image';
 
-    public function BookTranslations()
+    public function bookTranslations()
     {
         return $this->hasMany(\App\Models\BookTranslation::class);
     }

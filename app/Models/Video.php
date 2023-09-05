@@ -37,7 +37,7 @@ class Video extends Model implements HasMedia
 
     const COVER_IMAGE= 'cover_image';
 
-    public function VideoTranslations()
+    public function videoTranslations()
     {
         return $this->hasMany(\App\Models\VideoTranslation::class);
     }

@@ -16,7 +16,7 @@ class VideoTranslation extends Model
         'status'
 
     ];
-    public function Video()
+    public function video()
     {
         return $this->belongsTo(\App\Models\Video::class);
     }

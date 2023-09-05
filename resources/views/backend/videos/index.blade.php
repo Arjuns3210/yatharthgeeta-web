@@ -50,7 +50,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
-                                                    <th id="title" data-orderable="false" data-searchable="false">Title</th>
+                                                    <th id="title_{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Title ({{\App::getLocale()}})</th>
                                                     <th id="sequence" data-orderable="false" data-searchable="false">Sequence</th>
                                                     @if($data['videos_status'] || $data['videos_edit'] || $data['videos_view'] || $data['videos_delete'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
