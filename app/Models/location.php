@@ -50,7 +50,7 @@ class location extends Model implements HasMedia
     public $translatedAttributes = ['name', 'title', 'description', 'do','dont'];
 
     const IMAGE= 'image';
-    
+
     public const TRANSLATED_BLOCK = [
         'name' => 'input',
         'title' => 'input',

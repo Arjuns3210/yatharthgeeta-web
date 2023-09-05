@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLanguagesTable extends Migration
+class CreateLanguageTranslationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class CreateLanguagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('languages', function (Blueprint $table) {
+        Schema::create('language_translations', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('language_code')->unique();
-            $table->enum('status', [1, 0])->default(1);
-            $table->enum('visible_on_app' ,[1,0])->default(1);
-            $table->integer('sequence')->nullable();
+            $table->unsignedInteger('language_id');
+            $table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade');
+            $table->string('locale')->index();
+            $table->string('name');
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->foreign('created_by')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
+            $table->unique(['language_id','locale']);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -35,6 +36,6 @@ class CreateLanguagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('languages');
+        Schema::dropIfExists('language_translations');
     }
 }
