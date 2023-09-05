@@ -126,7 +126,7 @@
                                 <li class="{{ $lastParam ==  'banners' ? 'active' : '' }}">
                                     <a href="banners" class="menu-item"><i class="fa fa-list-alt"></i>Banners</a>
                                 </li>
-                                <li class="{{ $lastParam ==  'audios' ? 'active' : '' }}">
+                                <li class="{{ ($lastParam ==  'audios' || $lastParam ==  'audio_episodes') ? 'active' : '' }}">
                                     <a href="audios" class="menu-item"><i class="fa fa-list-alt"></i>Audio</a>
                                 </li>
                             </ul>

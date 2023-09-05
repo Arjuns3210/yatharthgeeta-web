@@ -39,8 +39,19 @@ Route::group(['middleware' => ['customAuth']], function () {
     Route::get('audio/edit/{id}', 'AudioController@edit');
     Route::post('audio/update', 'AudioController@update');
     Route::get('audio/view/{id}', 'AudioController@show');
-    Route::get('add_episodes/{id}', 'AudioController@addEpisodes');
-    Route::post('save_episodes', 'AudioController@saveEpisodes');
+    Route::post('publish_audio', 'AudioController@updateStatus');
+    Route::get('audio_delete/{id}', 'AudioController@destroy');
+    
+    // audio episodes
+    Route::get('audio_episodes/{audioId?}', 'AudioEpisodeController@index');
+    Route::post('audio_episode/fetch', 'AudioEpisodeController@fetch');
+    Route::post('audio_episode/save', 'AudioEpisodeController@store');
+    Route::get('audio_episode/add/{id}', 'AudioEpisodeController@create');
+    Route::get('audio_episode/edit/{id}', 'AudioEpisodeController@edit');
+    Route::post('audio_episode/update', 'AudioEpisodeController@update');
+    Route::get('audio_episode/view/{id}', 'AudioEpisodeController@show');
+    Route::post('publish_audio_episode', 'AudioEpisodeController@updateStatus');
+    Route::get('audio_episode_delete/{id}', 'AudioEpisodeController@destroy');
 
     //Banner
     Route::get('banners', 'BannerController@index');

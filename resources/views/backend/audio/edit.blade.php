@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Edit Audio Category</h5>
+                                    <h5 class="pt-2">Edit Audio : {{$audio['translations'][0]['title'] ?? ''}}</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -44,11 +44,11 @@
                                                         <label>Cover Image</label>
                                                         <input class="form-control " type="file" accept=".jpg, .jpeg, .png" name="cover_image">
                                                     </div>
-                                                    <div class="col-sm-6 mb-2">
-                                                        <label>Audio File (MP3)<span class="text-danger">*</span></label>
+                                                    <div class="col-sm-6 mb-2 file-input-div">
+                                                        <label>Audio File (MP3)</label>
                                                         <input class="form-control " type="file" accept=".mp3, .wav"  name="audio_file">
                                                     </div>
-                                                    <div class="col-sm-6 mb-2">
+                                                    <div class="col-sm-6 mb-2 file-input-div">
                                                         <label>Srt for lyrics</label>
                                                         <input class="form-control " type="file" accept=".srt" name="srt_file">
                                                     </div>
@@ -75,7 +75,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
-                                                        <label>Author<span class="text-danger">*</span></label>
+                                                        <label>Speaker<span class="text-danger">*</span></label>
                                                         <select class="form-control select2" id="author_id" name="author_id">
                                                             <option value="">Select</option>
                                                         </select>
@@ -123,33 +123,19 @@
     <script>
         $('.select2').select2();
         $(document).ready(function() {
+            let hasEpisodeValue = $('#has_episodes').val();
+            if (hasEpisodeValue == '1') {
+                $('.file-input-div').addClass('d-none');
+            } else {
+                $('.file-input-div').removeClass('d-none');
+            }
             $('#has_episodes').change(function() {
                 if ($(this).val() == '1') {
-                    $('.episodes-details-div').removeClass('d-none');
+                    $('.file-input-div').addClass('d-none');
                 } else {
-                    $('.episodes-details-div').addClass('d-none');
+                    $('.file-input-div').removeClass('d-none');
                 }
             });
-
-            $('.add_episode_item').click(function () {
-                var rowCount = $('.episodes-append-div .row').length - 1;
-                $.ajax({
-                    type: 'GET',
-                    url: 'prepare_episode_item/'+rowCount,
-                    success: function (data) {
-                        // Append the data to the container
-                        var $newElements = $(data);
-                        $('.episodes-append-div').append($newElements);
-
-                        // Initialize Select2 on the newly added elements
-                        $newElements.find('.select2').select2();
-                    },
-                });
-            });
-        });
-
-        $(document).on('click', '.remove_episode_item', function () {
-            $(this).closest('.episode-master-div').remove();
         });
     </script>
 </section>

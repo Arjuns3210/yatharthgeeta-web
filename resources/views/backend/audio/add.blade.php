@@ -43,11 +43,11 @@
                                                         <label>Cover Image</label>
                                                         <input class="form-control " type="file" accept=".jpg, .jpeg, .png" name="cover_image">
                                                     </div>
-                                                    <div class="col-sm-6 mb-2">
+                                                    <div class="col-sm-6 mb-2 file-input-div">
                                                         <label>Audio File (MP3)<span class="text-danger file-label">*</span></label>
                                                         <input class="form-control file-input required" type="file" accept=".mp3, .wav"  name="audio_file">
                                                     </div>
-                                                    <div class="col-sm-6 mb-2">
+                                                    <div class="col-sm-6 mb-2 file-input-div">
                                                         <label>Srt for lyrics<span class="text-danger file-label">*</span></label>
                                                         <input class="form-control required file-input" type="file" accept=".srt" name="srt_file">
                                                     </div>
@@ -74,7 +74,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
-                                                        <label>Author<span class="text-danger">*</span></label>
+                                                        <label>Speaker<span class="text-danger">*</span></label>
                                                         <select class="form-control select2" id="author_id" name="author_id">
                                                             <option value="">Select</option>
                                                         </select>
@@ -125,9 +125,11 @@
                 if ($(this).val() == '1') {
                     $('.file-label').text('');
                     $('.file-input').removeClass('required');
+                    $('.file-input-div').addClass('d-none');
                 } else {
                     $('.file-label').text('*');
                     $('.file-input').addClass('required');
+                    $('.file-input-div').removeClass('d-none');
                 }
             });
 

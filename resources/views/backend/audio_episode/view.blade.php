@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">View Audio : {{$audio->translations[0]->title ?? ''}}</h5>
+                                    <h5 class="pt-2">View Audio Episode : {{$audioEpisode->translations[0]->title ?? ''}}</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -18,7 +18,7 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade mt-2 show active" role="tabpanel">
                                     <div class="row">
-                                        <div class="col-12">
+                                        <div class="col-sm-12">
                                             <ul class="nav nav-tabs">
                                                 <li class="nav-item">
                                                     <a class="nav-link active" data-toggle="tab" href="#data_details">Details</a>
@@ -36,16 +36,8 @@
                                                             <div class="table-responsive">
                                                                 <table class="table table-striped table-bordered">
                                                                     <tr>
-                                                                        <td><strong>Has Episodes</strong></td>
-                                                                        <td>{{ ($audio->has_episodes == 1) ? 'Yes' : 'No' }}</td>
-                                                                    </tr>
-                                                                    <tr>
                                                                         <td><strong>Duration (In Minute)</strong></td>
-                                                                        <td>{{ $audio->duration ?? ''}}</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td><strong>Sequence</strong></td>
-                                                                        <td>{{ $audio->sequence }}</td>
+                                                                        <td>{{ $audioEpisode->duration ?? ''}}</td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td><strong>Audio File</strong></td>
@@ -57,9 +49,9 @@
                                                                                 'audio/wav',  // WAV
                                                                             ];
                                                                             @endphp
-                                                                            @if (in_array($audioFile->mime_type, $allowedMimeTypes))
+                                                                            @if (in_array($audioEpisodeFile->mime_type, $allowedMimeTypes))
                                                                                 <audio id="audioPlayer" controls>
-                                                                                    <source src="{{$audioFile->getFullUrl() ?? ''}}" type="audio/mpeg">
+                                                                                    <source src="{{$audioEpisodeFile->getFullUrl() ?? ''}}" type="audio/mpeg">
                                                                                     Your browser does not support the audio element.
                                                                                 </audio>
                                                                             @else
@@ -68,45 +60,67 @@
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td><strong>Cover Image</strong></td>
-                                                                        @if(!empty($audioCoverImage))
-                                                                            <td><img src="{{$audioCoverImage->getFullUrl() ?? ''}}" alt="" width="50px"></td>
-                                                                        @else
-                                                                            <td></td>
-                                                                        @endif
+                                                                        <td><strong>Srt File</strong></td>
+                                                                       <td>
+                                                                           @if(!empty($audioEpisodeSrtFile))
+                                                                           <div class="d-flex mb-1 ">
+                                                                               <input type="text"
+                                                                                      class="form-control input-sm bg-white document-border"
+                                                                                      value="{{ $audioEpisodeSrtFile->name ?? ''}}"
+                                                                                      readonly
+                                                                                      style="color: black !important;">
+                                                                               <a href="{{$audioEpisodeSrtFile->getFullUrl() ?? ''}}"
+                                                                                  class="btn btn-primary mx-2 px-2"
+                                                                                  target="_blank"><i class="fa ft-eye"></i></a>                                                          
+                                                                           </div>
+                                                                           @else
+                                                                               -
+                                                                               @endif
+                                                                       </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td><strong>Date Time</strong></td>
-                                                                        <td>{{\Carbon\Carbon::parse($audio->created_at)->format('d-m-Y')}}</td>
+                                                                        <td>{{\Carbon\Carbon::parse($audioEpisode->created_at)->format('d-m-Y')}}</td>
                                                                     </tr>
+                                                                   
                                                                 </table>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 @foreach (config('translatable.locales') as $translated_data_tabs)
-                                                    <div id="{{ $translated_data_tabs }}_block_details" class="tab-pane fade">
-                                                            @php
-                                                                                 $data  = $audio->translations()->where('locale',$translated_data_tabs)->first();
+                                                    <div id="{{ $translated_data_tabs }}_block_details" class="tab-pane fade"> 
+                                                        @php
+                                                            $translateData  = $audioEpisode->translations()->where('locale',$translated_data_tabs)->first();
                                                         @endphp
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <div class="table-responsive">
                                                                     <table class="table table-striped table-bordered">
-                                                                            <tr>
-                                                                                <td><strong>Title</strong></td>
-                                                                                <td>{{ $data->title ?? '' }}</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><strong>Description</strong></td>
-                                                                                <td>{{ $data->description ?? '' }}</td>
-                                                                            </tr>
+                                                                        <tr>
+                                                                            <td><strong>Audio Episode Title</strong>
+                                                                            </td>
+                                                                            <td>{{ $translateData->title ?? ''}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td><strong>Chapter</strong>
+                                                                            </td>
+                                                                            <td>{{ $translateData->chapters ?? ''}}</td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td><strong>Chapter</strong>
+                                                                            </td>
+                                                                            <td>{{ $translateData->verses ?? ''}}</td>
+                                                                        </tr>
                                                                     </table>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 @endforeach
+
                                             </div>
                                         </div>
                                     </div>

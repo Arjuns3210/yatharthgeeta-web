@@ -66,4 +66,10 @@ class Audio extends Model implements HasMedia
     {
         return $this->hasMany(AudioTranslation::class);
     }
+    
+    public function episodes()
+    {
+     
+        return $this->hasMany(AudioEpisode::class);
+    }
 }

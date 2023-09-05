@@ -7,6 +7,7 @@ use App\Http\Requests\AddAudioRequest;
 use App\Http\Requests\UpdateAudioRequest;
 use App\Models\Audio;
 use App\Models\AudioEpisode;
+use App\Models\AudioTranslation;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -70,19 +71,33 @@ class AudioController extends Controller
                         return $event->status == 1 ?'Active' : 'Inactive';
                     })
                     ->editColumn('action', function ($event) {
-                        $audio_category_view = checkPermission('audio_category_view');
-                        $audio_category_edit = checkPermission('audio_category_edit');
-                        $audio_category_status = checkPermission('audio_category_status');
-                        $audio_category_delete = checkPermission('audio_category_delete');
+                        $audios_view = checkPermission('audios_view');
+                        $audios_edit = checkPermission('audios_edit');
+                        $audios_status = checkPermission('audios_status');
+                        $audios_delete = checkPermission('audios_delete');
+                        $audio_episode_view = checkPermission('audio_episode_view');
+                        $is_head = session('data')['is_head'] ?? false;
                         $actions = '<span style="white-space:nowrap;">';
-                        if ($audio_category_view) {
+                        if ($audios_view) {
                             $actions .= '<a href="audio/view/' . $event['id'] . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View Category Details" title="View"><i class="fa fa-eye"></i></a>';
                         }
-                        if ($audio_category_view && $event['has_episodes'] == 1) {
-                            $actions .= ' <a href="add_episodes/' . $event->id . '" class="btn btn-info btn-sm src_data" title="Manage Episode"><i class="fa fa-archive"></i></a>';
-                        }
-                        if ($audio_category_edit) {
+                        if ($audios_edit) {
                             $actions .= ' <a href="audio/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
+                        }
+                        if ($audios_status) {
+                            if ($event->status == '1') {
+                                $actions .= ' <input type="checkbox" data-url="publish_audio" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery" checked>';
+                            } else {
+                                $actions .= ' <input type="checkbox" data-url="publish_audio" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery">';
+                            }
+                        }
+                        if ($audios_delete && $is_head){
+                            $key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
+                            $dataUrl =  $event->translations[$key_index]->title ?? '';
+                            $actions .= ' <a data-option="'.$dataUrl.'" data-url="audio_delete/'.$event->id.'" class="btn btn-danger btn-sm delete-data" title="delete"><i class="fa fa-trash"></i></a>';
+                        }
+                        if ($audio_episode_view && $event['has_episodes'] == 1) {
+                            $actions .= ' <a href="audio_episodes?audioId=' . $event->id . '" class="btn btn-info btn-sm" title="Manage Episode"><i class="fa fa-archive"></i></a>';
                         }
                         $actions .= '</span>';
                         return $actions;
@@ -316,7 +331,7 @@ class AudioController extends Controller
             DB::rollBack();
             Log::error("Something Went Wrong. Error: ".$e->getMessage());
 
-            errorMessage('Something Went Wrong.');
+            errorMessage($e->getMessage());
         }
     }
 
@@ -324,11 +339,27 @@ class AudioController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $audio = Audio::with('episodes')->find($id);
+            if ($audio->exists()){
+                $audio->episodes()->delete();
+                $audio->delete();
+                DB::commit();
+                successMessage('Audio Deleted successfully', []);
+            }
+
+            errorMessage('Audio not found', []);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("Something Went Wrong. Error: " . $e->getMessage());
+
+            errorMessage("Something Went Wrong.");
+        }
     }
 
     /**
@@ -343,8 +374,8 @@ class AudioController extends Controller
         if ($data['audio']) {
             $data['audioTitle'] = $data['audio']->translations()->first();
             $data['translated_block'] = AudioEpisode::TRANSLATED_BLOCK;
-            $data['audioEpisodes'] = AudioEpisode::with('translations')->where('id',$data['audio']->id)->get();
-            
+            $data['audioEpisodes'] = AudioEpisode::with('translations')->where('audio_id',$id)->get();
+           
             return view('backend/audio/add_episodes', $data);
         }
 
@@ -354,39 +385,34 @@ class AudioController extends Controller
     /**
      * @param  Request  $request
      *
-     * save Audio Episode Form
      */
-    public function saveEpisodes(Request $request)
+    public function updateStatus(Request $request)
     {
         try {
             DB::beginTransaction();
-            $input = $request->all();
-            $translated_keys = array_keys(AudioEpisode::TRANSLATED_BLOCK);
-            foreach ($translated_keys as $value) {
-                $input[$value] = (array) json_decode($input[$value]);
-            }
-            $saveArray = Utils::flipTranslationArray($input, $translated_keys);
-            $audioEpisode = AudioEpisode::create($saveArray);
-            $episodeTitle = $audioEpisode->translations()->first()->title ?? '';
-            $audioFileName = null;
-            //store audio file
-            if (! empty($input['audio_file']) && $audioEpisode) {
-                storeMedia($audioEpisode, $input['audio_file'], AudioEpisode::EPISODE_AUDIO_FILE);
-                $audioFileName = $episodeTitle.'_en_'.$audioEpisode->id;
-                $audioEpisode->update(['file_name' => $audioFileName]);
-            }
-            //store srt file
-            if (! empty($input['srt_file']) && $audioEpisode) {
-                storeMedia($audioEpisode, $input['srt_file'], AudioEpisode::EPISODE_AUDIO_SRT_FILE);
-            }
-            DB::commit();
 
-            successMessage('Data Saved successfully', []);
+            $msg_data = array();
+            $input = $request->all();
+            $input['updated_by'] = session('data')['id'];
+
+            $audio = Audio::find($input['id']);
+            if ($audio->exists()) {
+                $audio->update($input);
+                DB::commit();
+                if ($input['status'] == 1) {
+                    successMessage('Published', $msg_data);
+                } else {
+                    successMessage('Unpublished', $msg_data);
+                }
+            }
+
+            errorMessage('Audio not found', []);
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error("Something Went Wrong. Error: ".$e->getMessage());
+            Log::error("Something Went Wrong. Error: " . $e->getMessage());
 
-            errorMessage($e->getMessage());
+            errorMessage("Something Went Wrong");
         }
     }
+
 }
