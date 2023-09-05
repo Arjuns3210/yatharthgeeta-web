@@ -123,14 +123,31 @@
                                 <li class="{{ $lastParam ==  'books_category' ? 'active' : '' }}">
                                     <a href="books_category" class="menu-item"><i class="fa fa-list-alt"></i>Books Category</a>
                                 </li>
+                                <li class="{{ $lastParam ==  'ashram' ? 'active' : '' }}">
+                                    <a href="ashram" class="menu-item"><i class="fa fa-building-o" aria-hidden="true"></i>Ashram</a>
+                                </li>
+                                <li class="{{ $lastParam ==  'guru' ? 'active' : '' }}">
+                                    <a href="guru" class="menu-item"><i class="fa fa-user-o" aria-hidden="true"></i>Guru's</a>
+                                </li>
+                                <li class="{{ $lastParam ==  'language' ? 'active' : '' }}">
+                                    <a href="language" class="menu-item"><i class="fa fa-language" aria-hidden="true"></i>Language</a>
+                                </li>
                                 <li class="{{ $lastParam ==  'banners' ? 'active' : '' }}">
-                                    <a href="banners" class="menu-item"><i class="fa fa-list-alt"></i>Banners</a>
+                                    <a href="banners" class="menu-item"><i class="fa fa-picture-o" aria-hidden="true"></i>Banners</a>
+                                </li>
+								<li class="{{ $lastParam ==  'quotes' ? 'active' : '' }}">
+                                    <a href="quotes" class="menu-item"><i class="fa fa-quote-left" aria-hidden="true"></i>
+                                        Quotes</a>
+                                </li>
+                                <li class="{{ $lastParam ==  'videos' ? 'active' : '' }}">
+                                    <a href="videos" class="menu-item"><i class="fa fa-video-camera" aria-hidden="true"></i>Videos</a>
                                 </li>
                                 <li class="{{ ($lastParam ==  'audios' || $lastParam ==  'audio_episodes') ? 'active' : '' }}">
                                     <a href="audios" class="menu-item"><i class="fa fa-list-alt"></i>Audio</a>
                                 </li>
                             </ul>
                         </li>
+
                         @endif
                         @if(session('data')['role_id'] == 1  ||
                             in_array('role', $permission_array) ||
@@ -144,6 +161,24 @@
                                 </li>
                                 <li class="{{ $lastParam ==  'staff' ? 'active' : '' }}">
                                     <a href="staff" class="menu-item"><i class="fa fa-circle fs_i"></i>Manage Staff</a>
+                                </li>
+                            </ul>
+                        </li>
+                        @endif
+                        <li class="nav-item">
+                            <a href="general_settings"><i class="icon-user-following"></i><span data-i18n="" class="menu-title">General Settings</span></a>
+                        </li>
+                        @if(session('data')['role_id'] == 1  ||
+                            in_array('home_collection', $permission_array)
+                        )
+                        <li class="has-sub nav-item">
+                            <a href="javascript:;" class="dropdown-parent"><i class="ft-grid"></i><span data-i18n="" class="menu-title">Collections</span></a>
+                            <ul class="menu-content">
+                                <li class="{{ $lastParam ==  'home_collection' ? 'active' : '' }}">
+                                    <a href="home_collection" class="menu-item"><i class="fa fa-list-alt"></i>Home</a>
+                                </li>
+                                <li class="{{ $lastParam ==  'explore_collection' ? 'active' : '' }}">
+                                    <a href="explore_collection" class="menu-item"><i class="fa fa-list-alt"></i>Explore</a>
                                 </li>
                             </ul>
                         </li>

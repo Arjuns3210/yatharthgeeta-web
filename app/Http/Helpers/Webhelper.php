@@ -11,6 +11,22 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\Storage;
 use Image as thumbimage;
 
+if(!function_exists('formatName')){
+    function formatName($unformatted_name = '',$reverse_format = false)
+    {
+        $formatted_name = '';
+
+        if (!empty($unformatted_name)) {
+            if($reverse_format){
+                $formatted_name = str_replace('-', '_', $unformatted_name);
+            }else{
+                $formatted_name = str_replace('-', ' ', $unformatted_name);
+            }
+        }
+
+        return $formatted_name;
+    }
+}
 if (!function_exists('errorMessage')) {
     function errorMessage($msg = '', $data = array(), $expireSessionCode = "")
     {
@@ -53,6 +69,21 @@ if (!function_exists('generateRandomOTP')) {
     {
         // return (rand(1000,9999));
         return (1234);
+    }
+}
+
+if (!function_exists('displayStatus')) {
+    function displayStatus($displayValue = "")
+    {
+        $returnArray = array(
+            '1' => 'Active',
+            '0' => 'In-Active'
+        );
+        if (!empty($displayValue)) {
+            $returnArray = $returnArray[$displayValue];
+        }
+
+        return $returnArray;
     }
 }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Video;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
 use App\Models\Banner;
@@ -36,13 +37,20 @@ class BannerController extends Controller
                         if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
                             $query->where('status', 'like', "%" . $request['search']['search_status'] . "%");
                         }
-                        if (isset($request['search']['search_title']) && !is_null($request['search']['search_title'])) {
+                        if (isset($request['search']['search_sequence']) && !is_null($request['search']['search_sequence'])) {
+                            $query->where('sequence', 'like', "%" . $request['search']['search_sequence'] . "%");
+                        }
+                        if
+                        (isset($request['search']['search_title']) && !is_null($request['search']['search_title'])) {
                             $query->where('title', 'like', "%" . $request['search']['search_title'] . "%");
                         }
                         $query->get()->toArray();
                     })
                     ->editColumn('title',function ($event) {
                         return $event['title'];
+                    })
+                    ->editColumn('sequence',function ($event) {
+                        return $event['sequence'];
                     })
                     ->editColumn('action', function ($event) {
                         $banners_view = checkPermission('banners_view');
@@ -57,6 +65,9 @@ class BannerController extends Controller
                         if ($banners_edit) {
                             $actions .= ' <a href="banners/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
                         }
+                        if ($banners_delete) {
+                            $actions .= ' <a data-option="" data-url="banners/delete/' . $event->id . '" class="btn btn-danger btn-sm delete-data" title="delete"><i class="fa fa-trash"></i></a>';
+                        }
                         if ($banners_status) {
                             if ($event->status == '1') {
                                 $actions .= ' <input type="checkbox" data-url="banners/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery" checked>';
@@ -68,7 +79,7 @@ class BannerController extends Controller
                         return $actions;
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['title','action'])->setRowId('id')->make(true);
+                    ->rawColumns(['title','sequence','action'])->setRowId('id')->make(true);
             } catch (\Exception $e) {
                 \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                 return response([
@@ -108,6 +119,7 @@ class BannerController extends Controller
      */
     public function create()
     {
+
         return view('backend/banners/add');
     }
 
@@ -122,8 +134,7 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $saveArray = Utils::flipTranslationArray($input);
-        $data = Banner::create($saveArray);
+        $data = Banner::create($input);
         storeMedia($data, $input['cover'], Banner::COVER);
         successMessage('Data Saved successfully', []);
 
@@ -172,9 +183,11 @@ class BannerController extends Controller
         if (!$data) {
             errorMessage('Banner Not Found', []);
         }
-        $category = Utils::flipTranslationArray($input);
-        $data->update($category);
-        storeMedia($data, $input['cover'], Banner::COVER);
+        $data->update($input);
+        if(!empty($input['cover'])){
+            $data->clearMediaCollection(Banner::COVER);
+            storeMedia($data, $input['cover'], Banner::COVER);
+        }
         successMessage('Data Saved successfully', []);
     }
 
@@ -186,6 +199,9 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data= Banner::find($id);
+        $data->delete();
+        successMessage('Data Deleted successfully', []);
+
     }
 }

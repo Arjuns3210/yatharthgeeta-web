@@ -6,6 +6,9 @@ namespace App\MediaLibrary;
 use App\Models\Audio;
 use App\Models\AudioEpisode;
 use App\Models\Banner;
+use App\Models\Ashram;
+use App\Models\Quote;
+use App\Models\Video;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\PathGenerator\PathGenerator;
 
@@ -21,6 +24,14 @@ class CustomPathGenerator implements PathGenerator
         switch ($media->collection_name) {
             case Banner::COVER;
                 return str_replace('{PARENT_DIR}', Banner::COVER, $path);
+            case Ashram::IMAGE;
+                return str_replace('{PARENT_DIR}', Ashram::IMAGE, $path);
+			case Quote::IMAGE;
+                return str_replace('{PARENT_DIR}', Quote::IMAGE, $path);
+            case Video::COVER_IMAGE;
+                return str_replace('{PARENT_DIR}', Video::COVER_IMAGE, $path);
+            case Guru::IMAGE;
+                return str_replace('{PARENT_DIR}', Guru::IMAGE, $path);
             case Audio::AUDIO_FILE;
                 return str_replace('{PARENT_DIR}', Audio::AUDIO_FILE, $path);
             case Audio::AUDIO_COVER_IMAGE;
@@ -51,4 +62,3 @@ class CustomPathGenerator implements PathGenerator
         return $this->getPath($media).'rs-images/';
     }
 }
-

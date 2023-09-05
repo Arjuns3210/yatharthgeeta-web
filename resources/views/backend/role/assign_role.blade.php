@@ -42,9 +42,9 @@
                                                                     <td></td>
                                                                 @else    
                                                                     @if(in_array($item['id'], $data['role_permissions']))
-                                                                        <td><input type="checkbox" data-url="publish_permission?id={{$data['roleData']['id']}}" id="switchery{{$item['id']}}" data-id="{{$item['id']}}" class="js-switch switchery" checked></td>
+                                                                        <td><input type="checkbox" data-url="publish/permission?id={{$data['roleData']['id']}}" id="switchery{{$item['id']}}" data-id="{{$item['id']}}" class="js-switch switchery" checked></td>
                                                                     @else
-                                                                        <td><input type="checkbox" data-url="publish_permission?id={{$data['roleData']['id']}}" id="switchery{{$item['id']}}" data-id="{{$item['id']}}" class="js-switch switchery"></td>
+                                                                        <td><input type="checkbox" data-url="publish/permission?id={{$data['roleData']['id']}}" id="switchery{{$item['id']}}" data-id="{{$item['id']}}" class="js-switch switchery"></td>
                                                                     @endif
                                                                 @endif   
                                                             @endif	

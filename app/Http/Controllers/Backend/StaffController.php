@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\adminservices\CreateStaffRequest;
-use App\Http\Requests\adminservices\UpdateStaffRequest;
+use App\Http\Requests\CreateStaffRequest;
+use App\Http\Requests\UpdateStaffRequest;
 use App\Models\Admin;
 use App\Models\Collection;
 use App\Models\Country;
@@ -90,9 +90,9 @@ class StaffController extends Controller
                         }
                         if ($staff_status) {
                             if ($event->status == '1') {
-                                $actions .= ' <input type="checkbox" data-url="publish_staff" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery" checked>';
+                                $actions .= ' <input type="checkbox" data-url="publish/staff" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery" checked>';
                             } else {
-                                $actions .= ' <input type="checkbox" data-url="publish_staff" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery">';
+                                $actions .= ' <input type="checkbox" data-url="publish/staff" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery">';
                             }
                         }
 
