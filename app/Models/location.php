@@ -9,7 +9,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Astrotomic\Translatable\Translatable;
 
 
-class location extends Model implements HasMedia
+class Location extends Model implements HasMedia
 {
     use SoftDeletes;
     use HasFactory;

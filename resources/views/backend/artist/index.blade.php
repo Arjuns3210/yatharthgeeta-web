@@ -51,7 +51,7 @@
                                                 <thead>
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
-                                                    <th id="name" data-orderable="false" data-searchable="false">Name</th>
+                                                    <th id="name_{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Name {{\App::getLocale()}}</th>
                                                     <th id="title" data-orderable="false" data-searchable="false">Title</th>
                                                     @if($data['artist_edit'] || $data['artist_view'] || $data['artist_status'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
