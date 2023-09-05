@@ -48,7 +48,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="sequence" name="sequence" value="{{$books->pages}}" oninput="onlyNumericNegative(this)"><br/>
+                                                        <input class="form-control required" type="text" id="sequence" name="sequence" value="{{$books->sequence}}" oninput="onlyNumericNegative(this)"><br/>
                                                     </div>
                                                 </div>
                                             </div>
