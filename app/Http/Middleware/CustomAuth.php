@@ -33,7 +33,9 @@ class CustomAuth
             $permissions = DB::select("SELECT codename FROM permissions where status = '1' and id in (".$role_permissions.")");
             Session::flash('permissions', $permissions);
             $langauge = explode('-', explode(',', $request->header('Accept-Language'))[0]);
-            \App::setLocale($langauge[0]);
+            if(in_array($langauge[0], config('translatable.locales'))) {
+                \App::setLocale($langauge[0]);
+            }
             return $next($request);
         } else {
             return redirect('webadmin/');
