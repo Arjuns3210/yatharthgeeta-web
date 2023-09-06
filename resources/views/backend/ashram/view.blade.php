@@ -15,26 +15,22 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="tab-content">
-                                <div class="tab-pane fade mt-2 show active" role="tabpanel">
-                                    <div class="row">
-                                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="#data_details">Details</a>
+                                        </li>
+                                        <?php foreach (config('translatable.locales') as $translated_tabs) { ?>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#<?php echo $translated_tabs ?>_block_details"><?php echo $translated_tabs; ?></a>
+                                            </li>
+                                        <?php } ?>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div id="data_details" class="tab-pane fade in active show">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-bordered">
-                                                    @foreach($ashram['translations'] as $key => $data)
-                                                    <tr>
-                                                        <td><strong>Name ({{ ucfirst($data['locale']) }})</strong></td>
-                                                        <td>{{ $data['name'] }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Title</strong></td>
-                                                        <td>{{ $data['title'] }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Description</strong></td>
-                                                        <td>{{ $data['description'] }}</td>
-                                                    </tr>
-                                                    @endforeach
                                                     @php
                                                     $phone_array = json_decode($ashram['phone']);
                                                     @endphp
@@ -55,6 +51,22 @@
                                                 </table>
                                             </div>
                                         </div>
+                                        <?php foreach (config('translatable.locales') as $translated_data_tabs) { ?>
+                                            <div id="<?php echo $translated_data_tabs ?>_block_details" class="tab-pane fade">
+                                                <div class="row">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-bordered">
+                                                            <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
+                                                                    <tr>
+                                                                        <td><strong>{{ucfirst($translated_block_fields_key)}}</strong></td>
+                                                                        <td><?php echo $ashram[$translated_block_fields_key.'_'.$translated_data_tabs] ?? '' ?></td>
+                                                                    </tr>
+                                                            <?php } ?>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>

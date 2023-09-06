@@ -161,6 +161,13 @@ class BookController extends Controller
     public function view($id)
     {
         $data['books'] = Book::find($id);
+        foreach($data['books']['translations'] as $trans) {
+            $translated_keys = array_keys(Book::TRANSLATED_BLOCK);
+            foreach ($translated_keys as $value) {
+                $data['books'][$value.'_'.$trans['locale']] = $trans[$value];
+            }
+        }
+        $data['translated_block'] = Book::TRANSLATED_BLOCK;
         $data['media'] = $data['books']->getMedia(Book::COVER_IMAGE)[0];
         return view('backend/books/view',$data);
     }
@@ -177,12 +184,12 @@ class BookController extends Controller
         foreach($data['books']['translations'] as $trans) {
             $translated_keys = array_keys(Book::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
-                $data['books'][$value.'_'.$trans['locale']] = $trans[$value];
+                $data['books'][$value.'_'.$trans['locale']] = str_replace("<br/>", "\r\n", $trans[$value]);
             }
         }
         $data['translated_block'] = Book::TRANSLATED_BLOCK;
         $data['media'] =$data['books']->getMedia(Book::COVER_IMAGE)[0];
-        return view('backend/books/edit',$data);
+        return view('backend/books/edit', $data);
     }
 
     /**

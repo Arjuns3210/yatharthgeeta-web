@@ -126,6 +126,13 @@ class ArtistController extends Controller
     public function show($id)
     {
         $data['guru'] = Artist::find($id);
+        foreach($data['guru']['translations'] as $trans) {
+            $translated_keys = array_keys(Artist::TRANSLATED_BLOCK);
+            foreach ($translated_keys as $value) {
+                $data['guru'][$value.'_'.$trans['locale']] = str_replace("<br/>", "\r\n", $trans[$value]);
+            }
+        }
+        $data['translated_block'] = Artist::TRANSLATED_BLOCK;
         $data['media'] = $data['guru']->getMedia(Artist::IMAGE)[0];
         return view('backend/artist/view',$data);
     }
@@ -165,7 +172,7 @@ class ArtistController extends Controller
             errorMessage('artist Not Found', []);
         }
         $translated_keys = array_keys(Artist::TRANSLATED_BLOCK);
-        foreach ($translated_keys as $value) 
+        foreach ($translated_keys as $value)
         {
             $input[$value] = (array) json_decode($input[$value]);
         }
