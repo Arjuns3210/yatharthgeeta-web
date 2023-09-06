@@ -23,7 +23,7 @@
                                         </li>
                                         <?php foreach (config('translatable.locales') as $translated_tabs) { ?>
                                             <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#<?php echo $translated_tabs ?>_block_details"><?php echo $translated_tabs; ?></a>
+                                                <a class="nav-link" data-toggle="tab" href="#<?php echo $translated_tabs ?>_block_details">{{ config('translatable.locales_name')[$translated_tabs] }}</a>
                                             </li>
                                         <?php } ?>
                                     </ul>
@@ -45,7 +45,7 @@
                                                         <table class="table table-striped table-bordered">
                                                             <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                                     <tr>
-                                                                        <td><strong>{{$translated_block_fields_key}}</strong></td>
+                                                                        <td><strong>{{ucfirst($translated_block_fields_key)}}</strong></td>
                                                                         <td><?php echo $category[$translated_block_fields_key.'_'.$translated_data_tabs] ?? '' ?></td>
                                                                     </tr>
                                                             <?php } ?>

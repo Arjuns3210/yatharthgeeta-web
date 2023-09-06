@@ -12,8 +12,12 @@ return [
     */
     'locales' => [
         'en',
-        'hi',
-        'fr'
+        'hi'
+    ],
+
+    'locales_name' => [
+        'en' => "English",
+        'hi' => "Hindi"
     ],
 
     /*
