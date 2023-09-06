@@ -247,7 +247,7 @@ function submitForm(form_id, form_method, errorOverlay = '') {
             for(i=0; i < keys.length; i++) {
                 test = {};
                 for(j=0; j < lang.length; j++) {
-                    test[lang[j]] = $('#'+keys[i]+'_'+lang[j]).val();
+                    test[lang[j]] = nl2br($('#'+keys[i]+'_'+lang[j]).val());
                 }
                 trans[keys[i]] = test;
                 formdata.append(keys[i], JSON.stringify(test));
@@ -302,6 +302,14 @@ function submitForm(form_id, form_method, errorOverlay = '') {
         var ih = $('.border-danger').last().closest('.tab-pane').attr('id');
         $('a[href="#'+ih+'"]').click();
     }
+}
+
+function nl2br (str, is_xhtml) {     
+
+    var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br/>' : '<br>';      
+
+    return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');  
+
 }
 
 function submitModalForm(form_id, form_method, errorOverlay = '') {

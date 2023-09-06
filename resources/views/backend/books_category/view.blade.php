@@ -46,7 +46,7 @@
                                                             <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                                     <tr>
                                                                         <td><strong>{{$translated_block_fields_key}}</strong></td>
-                                                                        <td>{{$category[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}</td>
+                                                                        <td><?php echo $category[$translated_block_fields_key.'_'.$translated_data_tabs] ?? '' ?></td>
                                                                     </tr>
                                                             <?php } ?>
                                                         </table>
