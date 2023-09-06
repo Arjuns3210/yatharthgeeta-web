@@ -53,7 +53,7 @@ class AshramController extends Controller
                         }
                         $query->get()->toArray();
                     })
-                    ->editColumn('name', function ($event) {
+                    ->editColumn('name_'.\App::getLocale(), function ($event) {
                         $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
                         return $event['translations'][$Key_index]['name'];
                     })->editColumn('title', function ($event) {
@@ -78,7 +78,7 @@ class AshramController extends Controller
                         return $actions;
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['name'.\App::getLocale(), 'short_description','location','status', 'action'])->setRowId('id')->make(true);
+                    ->rawColumns(['name_'.\App::getLocale(), 'title','location','status', 'action'])->setRowId('id')->make(true);
             } catch (\Exception $e) {
                 \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                 return response([
