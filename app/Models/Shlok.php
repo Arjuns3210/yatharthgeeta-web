@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Shlok extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia, SoftDeletes;
+    use HasFactory, InteractsWithMedia, SoftDeletes, Translatable;
 
     protected $fillable = [
         'background_image',
@@ -20,6 +21,13 @@ class Shlok extends Model implements HasMedia
 		'status',
     ];
 
+    public $translatedAttributes = ['title', 'description'];
+    public const TRANSLATED_BLOCK = [
+	    'title' => 'input',
+	    'description' => 'textarea'
+
+	];
+    
     /**
      * The attributes that should be casted to native types.
      *
@@ -31,10 +39,9 @@ class Shlok extends Model implements HasMedia
 
     ];
 
-    public static $rules = [
-        'text.*' => 'string|required',
-        'description.*' => 'string|required',
-        'image.*' => 'string|required',
-        'sequence' => 'integer|required'
-    ];
+    public function shlokTranslations()
+    {
+        return $this->hasMany(\App\Models\ShlokTranslation::class);
+    }
+
 }
