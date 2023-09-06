@@ -9,7 +9,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Video extends Model implements HasMedia
+class Book extends Model implements HasMedia
 
 {
     use SoftDeletes;
@@ -19,26 +19,25 @@ class Video extends Model implements HasMedia
 
     public $fillable = [
         'cover_image',
-        'views',
-        'duration',
+        'pages',
         'link',
         'status',
         'sequence'
 
     ];
 
-    public $translatedAttributes = ['title', 'description'];
+    public $translatedAttributes = ['name', 'description'];
 
     public const TRANSLATED_BLOCK = [
-	    'title' => 'input',
+	    'name' => 'input',
 	    'description' => 'textarea'
 
 	];
 
     const COVER_IMAGE= 'cover_image';
 
-    public function videoTranslations()
+    public function bookTranslations()
     {
-        return $this->hasMany(\App\Models\VideoTranslation::class);
+        return $this->hasMany(\App\Models\BookTranslation::class);
     }
 }

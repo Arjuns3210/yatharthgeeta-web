@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVideoTranslationsTable extends Migration
+class CreateBookTranslationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateVideoTranslationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('video_translations', function (Blueprint $table) {
+        Schema::create('book_translations', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignId('video_id')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('book_id')->onUpdate('cascade')->onDelete('cascade');
             $table->string('locale')->index();
-            $table->string('title');
+            $table->string('name');
             $table->string('description');
-            $table->unique(['video_id','locale']);
-            $table->foreignId('author_id')->onUpdate('cascade')->onDelete('cascade')->nullable();
-            $table->integer('narrator_id')->unsigned()->nullable();
+            $table->unique(['book_id','locale']);
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->default(0);
             $table->timestamps();
@@ -36,6 +34,6 @@ class CreateVideoTranslationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('video_translations');
+        Schema::dropIfExists('book_translations');
     }
 }

@@ -5,20 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VideoTranslation extends Model
+class BookTranslation extends Model
 {
     use HasFactory;
     public $fillable = [
-        'video_id',
-        'title',
+        'book_id',
+        'name',
         'description',
-        'narrator_id',
         'status'
 
     ];
-    public function video()
+    public function books()
     {
-        return $this->belongsTo(\App\Models\Video::class);
+        return $this->belongsTo(\App\Models\Book::class);
     }
 }
-

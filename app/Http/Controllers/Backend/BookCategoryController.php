@@ -51,6 +51,9 @@ class BookCategoryController extends Controller
                         if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
                             $query->where('book_categories.status', $request['search']['search_status']);
                         }
+                        if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
+                            $query->where('status', $request['search']['search_status']);
+                        }
                         $query->get()->toArray();
                     })
                     ->editColumn('category_name_'.\App::getLocale(), function ($event) {
@@ -128,6 +131,13 @@ class BookCategoryController extends Controller
     public function show($id)
     {
         $data['category'] = BookCategory::find($id)->toArray();
+        foreach($data['category']['translations'] as $trans) {
+            $translated_keys = array_keys(BookCategory::TRANSLATED_BLOCK);
+            foreach ($translated_keys as $value) {
+                $data['category'][$value.'_'.$trans['locale']] = $trans[$value];
+            }
+        }
+        $data['translated_block'] = BookCategory::TRANSLATED_BLOCK;
         return view('backend/books_category/view',$data);
     }
 
@@ -143,7 +153,7 @@ class BookCategoryController extends Controller
         foreach($data['category']['translations'] as $trans) {
             $translated_keys = array_keys(BookCategory::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
-                $data['category'][$value.'_'.$trans['locale']] = $trans[$value];
+                $data['category'][$value.'_'.$trans['locale']] = str_replace("<br/>", "\r\n", $trans[$value]);
             }
         }
         $data['translated_block'] = BookCategory::TRANSLATED_BLOCK;

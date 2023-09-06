@@ -51,11 +51,11 @@
                                                         <label>Address<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="location" name="location"><br/>
                                                     </div>
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-6" >
                                                         <label>Latitude<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="latitude" name="latitude" oninput="filterNonNumeric(this)"><br/>
                                                     </div>
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-6" hidden>
                                                         <label>Longitude<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="longitude" name="longitude" oninput="filterNonNumeric(this)"><br/>
                                                     </div>
@@ -65,9 +65,10 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Image <span class="text-danger">*</span></label>
-                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                         <input class="form-control required" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')"><br/>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                     </div>
+                                                    <div id="map" style="height:400px; width: 400px;" class="my-3"></div>
                                                     <!-- <div class="col-sm-6">
                                                         <label>Working Hours :<span class="text-danger">*</span></label>
                                                         <div class="row">
@@ -130,3 +131,47 @@
         </div>
     </div>
 </section>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSrdDORoPiSFHR_XPUDEc8BNsLrfVhBeQ&callback=initMap" type="text/javascript"></script>
+<script>
+    let map;
+    let geocoder; // Define a geocoder to convert lat/lng to address
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: -34.397, lng: 150.644 },
+            zoom: 8,
+            scrollwheel: true,
+        });
+
+        geocoder = new google.maps.Geocoder(); // Initialize the geocoder
+
+        const uluru = { lat: -34.397, lng: 150.644 };
+        let marker = new google.maps.Marker({
+            position: uluru,
+            map: map,
+            draggable: true
+        });
+
+        google.maps.event.addListener(marker, 'position_changed', function () {
+            let lat = marker.position.lat();
+            let lng = marker.position.lng();
+            $('#latitude').val(lat);
+            $('#longitude').val(lng);
+
+            // Reverse geocode to get the address
+            geocoder.geocode({ 'location': { lat, lng } }, function (results, status) {
+                if (status === 'OK') {
+                    if (results[0]) {
+                        const address = results[0].formatted_address;
+                        $('#google_address').val(address);
+                    }
+                }
+            });
+        });
+
+        google.maps.event.addListener(map, 'click', function (event) {
+            const pos = event.latLng;
+            marker.setPosition(pos);
+        });
+    }
+</script>

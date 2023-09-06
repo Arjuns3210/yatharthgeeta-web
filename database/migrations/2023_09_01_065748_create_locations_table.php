@@ -19,7 +19,8 @@ class CreateLocationsTable extends Migration
             $table->string('latitude');
             $table->string('longitude');
             $table->string('google_address');
-            $table->boolean('visible_on_app')->nullable();
+            $table->integer('sequence');
+            $table->enum('visible_on_app', [0, 1])->default(1);
             $table->enum('status', [0, 1])->default(1);
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();

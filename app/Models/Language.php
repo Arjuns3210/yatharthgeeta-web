@@ -5,14 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Astrotomic\Translatable\Translatable;
 
 class Language extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use Translatable;
+
     protected $fillable = [
-        'language_name',
         'language_code',
+        'status',
+        'sequence'
     ];
     /**
      * The attributes that should be casted to native types.
@@ -20,14 +24,17 @@ class Language extends Model
      * @var array
      */
     protected $casts = [
-        'language_name' => 'string',
-        'language_code'=>'string'
+        'id' => 'integer',
+        'status'=>'boolean'
     ];
 
-    public static $rules = [
-        'language_name' => 'string|required',
-        'language_code' => 'string|required'
+    public $translatedAttributes = ['name'];
+
+    public const TRANSLATED_BLOCK = [
+        'name' => 'input',
     ];
-
-
+    public function languageTranslations()
+    {
+        return $this->hasMany(\App\Models\LanguageTranslation::class);
+    }
 }

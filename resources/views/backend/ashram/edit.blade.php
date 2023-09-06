@@ -65,8 +65,8 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Image</label>
-                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                         <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')" value="{{$ashram['image']}}"><br/>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                         <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="100px" alt="" id="image">
                                                     </div>
                                                     <!-- <div class="col-sm-6">

@@ -16,20 +16,20 @@ class CreateLocationTranslationsTable extends Migration
         Schema::create('location_translations', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('location_id');
-            $table->string('name');
             $table->string('locale');
+            $table->string('name');
             $table->string('title')->nullable();
             $table->string('description')->nullable();
             $table->text('do')->nullable();
             $table->text('dont')->nullable();
-            $table->enum('status', [1, 0])->default(1);
+            $table->unique(['location_id','locale']);
+            $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();
             $table->foreign('created_by')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
         });
     }
 

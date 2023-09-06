@@ -9,7 +9,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Astrotomic\Translatable\Translatable;
 
 
-class location extends Model implements HasMedia
+class Location extends Model implements HasMedia
 {
     use SoftDeletes;
     use HasFactory;
@@ -50,7 +50,7 @@ class location extends Model implements HasMedia
     public $translatedAttributes = ['name', 'title', 'description', 'do','dont'];
 
     const IMAGE= 'image';
-    
+
     public const TRANSLATED_BLOCK = [
         'name' => 'input',
         'title' => 'input',

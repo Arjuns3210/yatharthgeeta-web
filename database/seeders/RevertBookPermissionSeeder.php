@@ -1,11 +1,11 @@
 <?php
 
 namespace Database\Seeders;
-use App\Models\Permission;
 
+use App\Models\Permission;
 use Illuminate\Database\Seeder;
 
-class RevertGeneralSettingsPermissionSeeder extends Seeder
+class RevertBookPermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,11 +15,16 @@ class RevertGeneralSettingsPermissionSeeder extends Seeder
     public function run()
     {
         $permissions = [
-        	'general_settings'
+        	'book',
+        	'book_add',
+        	'book_edit',
+        	'book_view',
+        	'book_status',
+        	'book_delete'
         ];
         $permissionData = Permission::whereIn('codename', $permissions)->pluck('id');
         foreach ($permissionData as $permission) {
         	Permission::find($permission)->delete();
+        }
     }
-}
 }

@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Add Video</h5>
+                                    <h5 class="pt-2">Add Book</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -15,7 +15,7 @@
                             </div>
                         </div>
                     	<div class="card-body">
-                    		<form id="saveVideo" method="post" action="videos/save">
+                    		<form id="saveBook" method="post" action="books/save">
                     			@csrf
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -33,11 +33,11 @@
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
                                                     <div class="col-sm-6">
-                                                        <label>Duration (In Minutes)</label>
-                                                        <input class="form-control" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)"><br/>
+                                                        <label>Number of Pages</label>
+                                                        <input class="form-control" type="text" id="pages" name="pages" oninput="filterNonNumeric(this)"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Video Link<span class="text-danger">*</span></label>
+                                                        <label>Book Url<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="link" name="link"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
@@ -59,7 +59,7 @@
                                                         <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                             <?php if($translated_block_fields_value == 'input') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}}</label>
+                                                                    <label>Book {{$translated_block_fields_key}}</label>
                                                                     <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">
                                                                 </div>
                                                             <?php } ?>
@@ -84,8 +84,8 @@
                         		<div class="row">
                         			<div class="col-sm-12">
                         				<div class="pull-right">
-                        					<button type="button" class="btn btn-success" onclick="submitForm('saveVideo','post')">Submit</button>
-                                            <a href="{{URL::previous()}}" class="btn btn-sm btn-danger px-3 py-1"> Cancel</a>
+                        					<button type="button" class="btn btn-success" onclick="submitForm('saveBook','post')">Submit</button>
+                                            <a href="{{URL::previous()}}" class="btn btn-danger"> Cancel</a>
                         				</div>
                         			</div>
                         		</div>

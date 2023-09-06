@@ -13,7 +13,6 @@ if(localStorage.getItem("dataurl") == window.location.href) {
         for(i=0; i<data.length; i++) {
             $('#'+data[i][0]).val(data[i][1]);
         }
-        // $('#listing-filter-data').show();
     }
     localStorage.removeItem("indesign_ids");
     localStorage.removeItem("dataurl");
@@ -248,7 +247,8 @@ function submitForm(form_id, form_method, errorOverlay = '') {
             for(i=0; i < keys.length; i++) {
                 test = {};
                 for(j=0; j < lang.length; j++) {
-                    test[lang[j]] = $('#'+keys[i]+'_'+lang[j]).val();
+                    test[lang[j]] = nl2br($('#'+keys[i]+'_'+lang[j]).val());
+                    console.log(test[lang[j]]);
                 }
                 trans[keys[i]] = test;
                 formdata.append(keys[i], JSON.stringify(test));
@@ -303,6 +303,14 @@ function submitForm(form_id, form_method, errorOverlay = '') {
         var ih = $('.border-danger').last().closest('.tab-pane').attr('id');
         $('a[href="#'+ih+'"]').click();
     }
+}
+
+function nl2br (str, is_xhtml) {     
+
+    var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br/>' : '<br>';      
+
+    return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, breakTag);  
+
 }
 
 function submitModalForm(form_id, form_method, errorOverlay = '') {
@@ -577,12 +585,12 @@ function getProductDetails(product) {
     });
 }
 
-// $(window).keydown(function(event){
-//     if(event.keyCode == 13) {
-//       event.preventDefault();
-//       $('#'+event.target.id).closest('form').find('button').click();
-//     }
-// });
+$(window).keydown(function(event){
+    if(event.keyCode == 13 && !event.target.matches("textarea")) {
+      event.preventDefault();
+      $('#'+event.target.id).closest('form').find('button').click();
+    }
+});
 
 
 // For validate number  input
