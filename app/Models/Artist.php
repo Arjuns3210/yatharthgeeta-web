@@ -19,7 +19,8 @@ class Artist extends Model implements HasMedia
 
     public $fillable = [
         'image',
-        'visible_on_app',
+        'sequence',
+        'visible_on_app'
     ];
 
     protected $dates = ['deleted_at'];
@@ -42,7 +43,7 @@ class Artist extends Model implements HasMedia
     public $translatedAttributes = ['name', 'title', 'description'];
 
     const IMAGE= 'image';
-    
+
     public const TRANSLATED_BLOCK = [
         'name' => 'input',
         'title' => 'input',

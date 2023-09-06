@@ -25,7 +25,7 @@
                                             </li>
                                             <?php foreach (config('translatable.locales') as $translated_tabs) { ?>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" data-toggle="tab" href="#<?php echo $translated_tabs ?>_block_details"><?php echo $translated_tabs; ?></a>
+                                                    <a class="nav-link" data-toggle="tab" href="#<?php echo $translated_tabs ?>_block_details">{{ config('translatable.locales_name')[$translated_tabs] }}</a>
                                                 </li>
                                             <?php } ?>
                                         </ul>
