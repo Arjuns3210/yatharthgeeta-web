@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddAudioRequest;
 use App\Http\Requests\UpdateAudioRequest;
+use App\Models\Artist;
 use App\Models\Audio;
 use App\Models\AudioEpisode;
 use App\Models\AudioTranslation;
+use App\Models\Language;
 use App\Models\Media;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -127,7 +129,7 @@ class AudioController extends Controller
     public function create()
     {
         $localeLanguage = \App::getLocale();
-        if ($localeLanguage == 'en-US') {
+        if (str_contains($localeLanguage, 'en')) {
             $localeLanguage = 'en';
         } else {
             $localeLanguage = 'hi';
@@ -140,6 +142,17 @@ class AudioController extends Controller
             },
         ])->where('status', 1)->get();
 
+        $data['gurus'] = Artist::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->get();
+        $data['languages'] = Language::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->where('status', 1)->get();
+        
         return view('backend/audio/add', $data);
     }
     
@@ -178,7 +191,7 @@ class AudioController extends Controller
                 'srt_file_name'        => $srtFileName,
                 'has_episodes'         => $hasEpisodes,
                 'people_also_read_ids' => implode(',',$input['people_also_read_ids'] ?? []),
-                'language_id'          => 1,
+                'language_id'          => $input['language_id'] ?? null,
                 'duration'             => $input['duration'] ?? null,
                 'sequence'             => $input['sequence'] ?? null,
                 'author_id'            => $input['author_id'] ?? null,
@@ -250,7 +263,7 @@ class AudioController extends Controller
     public function edit($id)
     {
         $localeLanguage = \App::getLocale();
-        if ($localeLanguage == 'en-US') {
+        if (str_contains($localeLanguage, 'en')) {
             $localeLanguage = 'en';
         } else {
             $localeLanguage = 'hi';
@@ -276,6 +289,17 @@ class AudioController extends Controller
         $data['audioCoverImage'] = $audio->getMedia(Audio::AUDIO_COVER_IMAGE);
         $data['audioFile'] = $audio->getMedia(Audio::AUDIO_FILE);
         $data['srtFile'] = $audio->getMedia(Audio::AUDIO_SRT_FILE);
+
+        $data['gurus'] = Artist::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->get();
+        $data['languages'] = Language::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->where('status', 1)->get();
         
         return view('backend/audio/edit',$data);
     }

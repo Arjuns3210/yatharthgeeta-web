@@ -25,7 +25,7 @@
                                             </li>
                                             @foreach (config('translatable.locales') as $translated_tabs)
                                                 <li class="nav-item">
-                                                    <a class="nav-link" data-toggle="tab" href="#{{ $translated_tabs }}_block_details">{{ $translated_tabs }}</a>
+                                                    <a class="nav-link" data-toggle="tab" href="#{{ $translated_tabs }}_block_details">{{ config('translatable.locales_name')[$translated_tabs] }}</a>
                                                 </li>
                                             @endforeach
                                         </ul>
@@ -41,14 +41,70 @@
                                                             <label>sequence<span style="color:#ff0000">*</span></label>
                                                             <input class="form-control required" type="number"    id="sequence" name="sequence" value="{{$audioEpisode['sequence']}}"><br/>
                                                         </div>
-                                                        <div class="col-sm-6">
-                                                            <label>Audio File (MP3)</label>
-                                                            <input class="form-control " type="file"  accept=".mp3, .wav" name="audio_file">
+                                                    <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center file-input-div">
+                                                        <p class="font-weight-bold">Audio File (MP3)</p>
+                                                        <div class="shadow bg-white rounded d-inline-block mb-2">
+                                                            <div class="input-file">
+                                                                <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
+                                                                    <input type="file"  name="audio_file"  class="audio-file" id="audioFiles" accept=".mp3, .wav">
+                                                                </label>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-sm-6 mb-2">
-                                                            <label>Srt for lyrics</label>
-                                                            <input class="form-control " type="file" accept=".srt" name="srt_file">
+                                                        <p id="files-area">
+                                                            <span id="audioFilesLists">
+                                                                <span id="audio-files-names"></span>
+                                                            </span>
+                                                        </p>
+                                                        <div class="mt-2">
+                                                            @foreach($audioFile as $data)
+                                                                <div class="d-flex mb-1  audio-file-div-{{$data->id}}">
+                                                                    <input type="text"
+                                                                           class="form-control input-sm bg-white document-border"
+                                                                           value="{{ $data->name }}"
+                                                                           readonly style="color: black !important;">
+                                                                    <a href="{{ $data->getFullUrl() }}"
+                                                                       class="btn btn-primary mx-2 px-2" target="_blank"><i
+                                                                                class="fa ft-eye"></i></a>
+                                                                    <a href="javascript:void(0)"
+                                                                       class="btn btn-danger delete-audio-file  px-2"
+                                                                       data-url="{{ $data->getFullUrl() }}" data-id="{{ $data->id }}"><i
+                                                                                class="fa ft-trash"></i></a>
+                                                                </div>
+                                                            @endforeach
                                                         </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center file-input-div">
+                                                        <p class="font-weight-bold">Srt for lyrics</p>
+                                                        <div class="shadow bg-white rounded d-inline-block mb-2">
+                                                            <div class="input-file">
+                                                                <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
+                                                                    <input type="file"  class="srt-file" id="srtFiles" accept=".srt" name="srt_file">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <p id="files-area">
+                                                            <span id="srtFilesLists">
+                                                                <span id="srt-files-names"></span>
+                                                            </span>
+                                                        </p>
+                                                        <div class="mt-2">
+                                                            @foreach($srtFile as $file)
+                                                                <div class="d-flex mb-1  srt-file-div-{{$file->id}}">
+                                                                    <input type="text"
+                                                                           class="form-control input-sm bg-white document-border"
+                                                                           value="{{ $file->name }}"
+                                                                           readonly style="color: black !important;">
+                                                                    <a href="{{ $file->getFullUrl() }}"
+                                                                       class="btn btn-primary mx-2 px-2" target="_blank"><i
+                                                                                class="fa ft-eye"></i></a>
+                                                                    <a href="javascript:void(0)"
+                                                                       class="btn btn-danger delete-srt-file  px-2"
+                                                                       data-url="{{ $file->getFullUrl() }}" data-id="{{ $file->id }}"><i
+                                                                                class="fa ft-trash"></i></a>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -92,33 +148,106 @@
     <script>
         $('.select2').select2();
         $(document).ready(function() {
-            $('#has_episodes').change(function() {
-                if ($(this).val() == '1') {
-                    $('.episodes-details-div').removeClass('d-none');
-                } else {
-                    $('.episodes-details-div').addClass('d-none');
-                }
-            });
+            const audioFileData = new DataTransfer();
 
-            $('.add_episode_item').click(function () {
-                var rowCount = $('.episodes-append-div .row').length - 1;
-                $.ajax({
-                    type: 'GET',
-                    url: 'prepare_episode_item/'+rowCount,
-                    success: function (data) {
-                        // Append the data to the container
-                        var $newElements = $(data);
-                        $('.episodes-append-div').append($newElements);
+            function handleAudioFileAttachmentChange() {
+                const attachmentInput = document.getElementById('audioFiles');
 
-                        // Initialize Select2 on the newly added elements
-                        $newElements.find('.select2').select2();
-                    },
+                attachmentInput.addEventListener('change', function (e) {
+                    if (this.files.length === 1) {
+                        const file = this.files[0];
+                        const fileBloc = $('<span/>', { class: 'file-block' });
+                        const fileName = $('<span/>', { class: 'name', text: file.name });
+
+                        fileBloc.append('<span class="file-delete audio-files-delete"><span>+</span></span>').
+                            append(fileName);
+
+                        // Clear existing uploaded documents
+                        $('#audioFilesLists > #audio-files-names').empty();
+
+                        $('#audioFilesLists > #audio-files-names').append(fileBloc);
+                        audioFileData.items.clear(); // Clear existing items
+                        audioFileData.items.add(file);
+                    } else {
+                        // Display an error message or take appropriate action for multiple files
+                        alert('Please upload only one document at a time.');
+                        // Reset the input field to clear selected files
+                        this.value = '';
+                        $('#audioFilesLists > #audio-files-names').empty();
+                        audioFileData.items.clear();
+                    }
                 });
-            });
-        });
 
-        $(document).on('click', '.remove_episode_item', function () {
-            $(this).closest('.episode-master-div').remove();
+                $(document).on('click', 'span.audio-files-delete', function () {
+                    // Clear UI
+                    $('#audioFilesLists > #audio-files-names').empty();
+
+                    // Clear DataTransfer object (audioFileData)
+                    audioFileData.items.clear();
+
+                    // Reset the input field to clear selected files
+                    const input = document.getElementById('audioFiles');
+                    input.value = ''; // This should clear the selected file(s) in the input field
+                });
+            }
+
+            handleAudioFileAttachmentChange();
+
+
+            const srtFileData = new DataTransfer();
+
+            function handleSrtFileAttachmentChange() {
+                const attachmentInput = document.getElementById('srtFiles');
+
+                attachmentInput.addEventListener('change', function (e) {
+                    if (this.files.length === 1) {
+                        const file = this.files[0];
+                        const fileBloc = $('<span/>', { class: 'file-block' });
+                        const fileName = $('<span/>', { class: 'name', text: file.name });
+
+                        fileBloc.append('<span class="file-delete srt-files-delete"><span>+</span></span>').
+                            append(fileName);
+
+                        // Clear existing uploaded documents
+                        $('#srtFilesLists > #srt-files-names').empty();
+
+                        $('#srtFilesLists > #srt-files-names').append(fileBloc);
+                        srtFileData.items.clear(); // Clear existing items
+                        srtFileData.items.add(file);
+                    } else {
+                        // Display an error message or take appropriate action for multiple files
+                        alert('Please upload only one document at a time.');
+                        // Reset the input field to clear selected files
+                        this.value = '';
+                        $('#srtFilesLists > #srt-files-names').empty();
+                        srtFileData.items.clear();
+                    }
+                });
+
+                $(document).on('click', 'span.srt-files-delete', function () {
+                    // Clear UI
+                    $('#srtFilesLists > #srt-files-names').empty();
+
+                    // Clear DataTransfer object (audioFileData)
+                    srtFileData.items.clear();
+
+                    // Reset the input field to clear selected files
+                    const input = document.getElementById('srtFiles');
+                    input.value = ''; // This should clear the selected file(s) in the input field
+                });
+            }
+
+            handleSrtFileAttachmentChange();
+            
+            $('.delete-audio-file').click(function () {
+                let mediaId = $(this).attr('data-id');
+                deleteDocuments(mediaId, '.audio-file-div-');
+            });
+
+            $('.delete-srt-file').click(function () {
+                let mediaId = $(this).attr('data-id');
+                deleteDocuments(mediaId, '.srt-file-div-');
+            });
         });
     </script>
 </section>

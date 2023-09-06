@@ -25,7 +25,7 @@
                                             </li>
                                             @foreach (config('translatable.locales') as $translated_tabs)
                                                 <li class="nav-item">
-                                                    <a class="nav-link" data-toggle="tab" href="#{{ $translated_tabs }}_block_details">{{ $translated_tabs }}</a>
+                                                    <a class="nav-link" data-toggle="tab" href="#{{ $translated_tabs }}_block_details">{{ config('translatable.locales_name')[$translated_tabs] }}</a>
                                                 </li>
                                             @endforeach
                                         </ul>
@@ -34,7 +34,7 @@
                                                 <div class="row">
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Has Episodes<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2" id="has_episodes" name="has_episodes">
+                                                        <select class="form-control select2 required" id="has_episodes" name="has_episodes">
                                                             <option value="0">No</option>
                                                             <option value="1">Yes</option>
                                                         </select>
@@ -63,15 +63,16 @@
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Language<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2" id="language_id" name="language_id">
-                                                            @foreach(config('translatable.locales') as $language)
-                                                                <option value="{{$language}}">{{$language}}</option>
+                                                        <select class="form-control select2 required" id="language_id" name="language_id">
+                                                            <option value="">Select</option>
+                                                            @foreach($languages as $language)
+                                                                <option value="{{$language->id}}">{{$language->translations[0]->name ?? ''}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
-                                                        <label>People Also Read<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2" id="people_also_read_ids" name="people_also_read_ids[]" multiple>
+                                                        <label>People Also Read</label>
+                                                        <select class="form-control select2 " id="people_also_read_ids" name="people_also_read_ids[]" multiple>
                                                         @foreach($audios as $audio)
                                                                 <option value="{{$audio->id}}">{{$audio->translations[0]->title ?? ''}}</option>
                                                         @endforeach
@@ -79,8 +80,11 @@
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Speaker<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2" id="author_id" name="author_id">
+                                                        <select class="form-control select2 required" id="author_id" name="author_id">
                                                             <option value="">Select</option>
+                                                            @foreach($gurus as $speaker)
+                                                                <option value="{{$speaker->id}}">{{$speaker->translations[0]->name ?? ''}}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">

@@ -25,7 +25,7 @@
                                     <div class="card-body">
                                         <div class="row mb-2" id="listing-filter-data" style="display: none;">
                                             <div class="col-md-4">
-                                                <label>Audio Episode Name</label>
+                                                <label>Audio Episode Title</label>
                                                 <input class="form-control mb-3" type="text" id="search_title" name="search_title">
                                             </div>
                                             <div class="col-md-4">
@@ -47,10 +47,10 @@
                                                 <thead>
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
-                                                    <th id="title{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Audio Title ({{\App::getLocale()}})</th>
+                                                    <th id="title{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Audio Title ({{ config('translatable.locales_name')[\App::getLocale()] }})</th>
                                                     <th id="duration" data-orderable="false" data-searchable="false">Duration (In Minute)</th>
-                                                    <th id="chapter" data-orderable="false" data-searchable="false">Chapter</th>
-                                                    <th id="verses" data-orderable="false" data-searchable="false">Verses</th>
+{{--                                                    <th id="chapter" data-orderable="false" data-searchable="false">Chapter</th>--}}
+{{--                                                    <th id="verses" data-orderable="false" data-searchable="false">Verses</th>--}}
                                                     @if($data['audio_episode_status'] || $data['audio_episode_edit'] || $data['audio_episode_view'] || $data['audio_episode_delete'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
                                                     @endif

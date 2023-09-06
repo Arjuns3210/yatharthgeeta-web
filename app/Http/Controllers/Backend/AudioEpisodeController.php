@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddAudioEpisodeRequest;
 use App\Http\Requests\AddAudioRequest;
+use App\Http\Requests\UpdateAudioEpisodeRequest;
 use App\Http\Requests\UpdateAudioRequest;
 use App\Models\Audio;
 use App\Models\AudioEpisode;
@@ -147,19 +149,21 @@ class AudioEpisodeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  AddAudioEpisodeRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddAudioEpisodeRequest $request)
     {
         try {
             DB::beginTransaction();
             $input = $request->all();
+            dd($input);
             $translated_keys = array_keys(AudioEpisode::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
                 $input[$value] = (array) json_decode($input[$value]);
             }
             $saveArray = Utils::flipTranslationArray($input, $translated_keys);
+            dd($saveArray);
             $audioEpisode = AudioEpisode::create($saveArray);
             $episodeTitle = $audioEpisode->translations()->first()->title ?? '';
             $audioFileName = null;
@@ -207,7 +211,8 @@ class AudioEpisodeController extends Controller
      */
     public function edit($id)
     {
-        $data['audioEpisode'] = AudioEpisode::with('translations')->find($id)->toArray();
+        $audioEpisode = AudioEpisode::with('translations')->find($id);
+        $data['audioEpisode'] = $audioEpisode->toArray();
         foreach($data['audioEpisode']['translations'] as $trans) {
             $translated_keys = array_keys(AudioEpisode::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
@@ -215,6 +220,8 @@ class AudioEpisodeController extends Controller
             }
         }
         $data['translated_block'] = AudioEpisode::TRANSLATED_BLOCK;
+        $data['audioFile'] = $audioEpisode->getMedia(AudioEpisode::EPISODE_AUDIO_FILE);
+        $data['srtFile'] = $audioEpisode->getMedia(AudioEpisode::EPISODE_AUDIO_SRT_FILE);
         
         return view('backend/audio_episode/edit',$data);
     }
@@ -222,9 +229,10 @@ class AudioEpisodeController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @param  UpdateAudioEpisodeRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UpdateAudioEpisodeRequest $request)
     {
         try {
             DB::beginTransaction();

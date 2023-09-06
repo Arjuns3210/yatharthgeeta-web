@@ -31,6 +31,7 @@ class UpdateAudioRequest extends FormRequest
             'duration'     => 'required|integer',
             'sequence'     => 'required|integer',
             'language_id'  => 'required',
+            'author_id'  => 'required',
         ];
     }
 

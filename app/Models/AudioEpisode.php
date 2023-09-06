@@ -49,8 +49,10 @@ class AudioEpisode extends Model implements HasMedia
 
     public const TRANSLATED_BLOCK = [
         'title'    => 'input',
-        'chapters' => 'input',
-        'verses'   => 'input',
+        'chapter_name' => 'input',
+        'chapter_number'   => 'input',
+        'verses_name'   => 'input',
+        'verses_number'   => 'input',
     ];
 
     public function audioEpisodeTranslations()

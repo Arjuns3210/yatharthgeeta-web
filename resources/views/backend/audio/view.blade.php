@@ -25,7 +25,7 @@
                                                 </li>
                                                 @foreach (config('translatable.locales') as $translated_tabs)
                                                     <li class="nav-item">
-                                                        <a class="nav-link" data-toggle="tab" href="#{{ $translated_tabs }}_block_details">{{ $translated_tabs }}</a>
+                                                        <a class="nav-link" data-toggle="tab" href="#{{ $translated_tabs }}_block_details">{{ config('translatable.locales_name')[$translated_tabs] }}</a>
                                                     </li>
                                                 @endforeach
                                             </ul>
@@ -57,7 +57,7 @@
                                                                                 'audio/wav',  // WAV
                                                                             ];
                                                                             @endphp
-                                                                            @if (in_array($audioFile->mime_type, $allowedMimeTypes))
+                                                                            @if (in_array($audioFile->mime_type ??'' , $allowedMimeTypes))
                                                                                 <audio id="audioPlayer" controls>
                                                                                     <source src="{{$audioFile->getFullUrl() ?? ''}}" type="audio/mpeg">
                                                                                     Your browser does not support the audio element.

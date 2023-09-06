@@ -26,7 +26,7 @@
                                             </li>
                                             @foreach (config('translatable.locales') as $translated_tabs)
                                                 <li class="nav-item">
-                                                    <a class="nav-link" data-toggle="tab" href="#{{ $translated_tabs }}_block_details">{{ $translated_tabs }}</a>
+                                                    <a class="nav-link" data-toggle="tab" href="#{{ $translated_tabs }}_block_details">{{ config('translatable.locales_name')[$translated_tabs] ?? '' }}</a>
                                                 </li>
                                             @endforeach
                                         </ul>
@@ -41,13 +41,35 @@
                                                         <label>sequence<span style="color:#ff0000">*</span></label>
                                                         <input class="form-control required" type="number"    id="sequence" name="sequence"><br/>
                                                     </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Audio File (MP3)<span style="color:#ff0000">*</span></label>
-                                                        <input class="form-control required" type="file"  accept=".mp3, .wav" name="audio_file">
+                                                    <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center file-input-div">
+                                                        <p class="font-weight-bold">Audio File (MP3) <span class="text-danger">*</span></p>
+                                                        <div class="shadow bg-white rounded d-inline-block mb-2">
+                                                            <div class="input-file">
+                                                                <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
+                                                                    <input type="file"  name="audio_file"  class="audio-file" id="audioFiles" accept=".mp3, .wav">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <p id="files-area">
+                                                            <span id="audioFilesLists">
+                                                                <span id="audio-files-names"></span>
+                                                            </span>
+                                                        </p>
                                                     </div>
-                                                    <div class="col-sm-6 mb-2">
-                                                        <label>Srt for lyrics<span style="color:#ff0000">*</span></label>
-                                                        <input class="form-control required" type="file" accept=".srt" name="srt_file">
+                                                    <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center file-input-div">
+                                                        <p class="font-weight-bold">Srt for lyrics <span class="text-danger">*</span></p>
+                                                        <div class="shadow bg-white rounded d-inline-block mb-2">
+                                                            <div class="input-file">
+                                                                <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
+                                                                    <input type="file"  class="srt-file" id="srtFiles" accept=".srt" name="srt_file">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <p id="files-area">
+                                                            <span id="srtFilesLists">
+                                                                <span id="srt-files-names"></span>
+                                                            </span>
+                                                        </p>
                                                     </div>
                                                 </div>
 
@@ -90,5 +112,96 @@
     </div>
     <script>
         $('.select2').select2();
+        $(document).ready(function(){
+            const audioFileData = new DataTransfer();
+
+            function handleAudioFileAttachmentChange() {
+                const attachmentInput = document.getElementById('audioFiles');
+
+                attachmentInput.addEventListener('change', function (e) {
+                    if (this.files.length === 1) {
+                        const file = this.files[0];
+                        const fileBloc = $('<span/>', { class: 'file-block' });
+                        const fileName = $('<span/>', { class: 'name', text: file.name });
+
+                        fileBloc.append('<span class="file-delete audio-files-delete"><span>+</span></span>').
+                            append(fileName);
+
+                        // Clear existing uploaded documents
+                        $('#audioFilesLists > #audio-files-names').empty();
+
+                        $('#audioFilesLists > #audio-files-names').append(fileBloc);
+                        audioFileData.items.clear(); // Clear existing items
+                        audioFileData.items.add(file);
+                    } else {
+                        // Display an error message or take appropriate action for multiple files
+                        alert('Please upload only one document at a time.');
+                        // Reset the input field to clear selected files
+                        this.value = '';
+                        $('#audioFilesLists > #audio-files-names').empty();
+                        audioFileData.items.clear();
+                    }
+                });
+
+                $(document).on('click', 'span.audio-files-delete', function () {
+                    // Clear UI
+                    $('#audioFilesLists > #audio-files-names').empty();
+
+                    // Clear DataTransfer object (audioFileData)
+                    audioFileData.items.clear();
+
+                    // Reset the input field to clear selected files
+                    const input = document.getElementById('audioFiles');
+                    input.value = ''; // This should clear the selected file(s) in the input field
+                });
+            }
+
+            handleAudioFileAttachmentChange();
+
+            const srtFileData = new DataTransfer();
+
+            function handleSrtFileAttachmentChange() {
+                const attachmentInput = document.getElementById('srtFiles');
+
+                attachmentInput.addEventListener('change', function (e) {
+                    if (this.files.length === 1) {
+                        const file = this.files[0];
+                        const fileBloc = $('<span/>', { class: 'file-block' });
+                        const fileName = $('<span/>', { class: 'name', text: file.name });
+
+                        fileBloc.append('<span class="file-delete srt-files-delete"><span>+</span></span>').
+                            append(fileName);
+
+                        // Clear existing uploaded documents
+                        $('#srtFilesLists > #srt-files-names').empty();
+
+                        $('#srtFilesLists > #srt-files-names').append(fileBloc);
+                        srtFileData.items.clear(); // Clear existing items
+                        srtFileData.items.add(file);
+                    } else {
+                        // Display an error message or take appropriate action for multiple files
+                        alert('Please upload only one document at a time.');
+                        // Reset the input field to clear selected files
+                        this.value = '';
+                        $('#srtFilesLists > #srt-files-names').empty();
+                        srtFileData.items.clear();
+                    }
+                });
+
+                $(document).on('click', 'span.srt-files-delete', function () {
+                    // Clear UI
+                    $('#srtFilesLists > #srt-files-names').empty();
+
+                    // Clear DataTransfer object (audioFileData)
+                    srtFileData.items.clear();
+
+                    // Reset the input field to clear selected files
+                    const input = document.getElementById('srtFiles');
+                    input.value = ''; // This should clear the selected file(s) in the input field
+                });
+            }
+
+            handleSrtFileAttachmentChange();
+        });
     </script>
 </section>
