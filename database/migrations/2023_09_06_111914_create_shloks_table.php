@@ -17,7 +17,7 @@ class CreateShloksTable extends Migration
             $table->id();
             $table->string('background_image')->nullable();
             $table->integer('sequence');
-            $table->enum('share_allowance', ['yes', 'no'])->default('yes');
+            $table->enum('share_allowed', ['yes', 'no'])->default('yes');
             $table->longText('shlok')->nullable();
             $table->enum('status', [1, 0])->default(1);
             $table->integer('created_by')->default(0);
