@@ -131,6 +131,13 @@ class BookCategoryController extends Controller
     public function show($id)
     {
         $data['category'] = BookCategory::find($id)->toArray();
+        foreach($data['category']['translations'] as $trans) {
+            $translated_keys = array_keys(BookCategory::TRANSLATED_BLOCK);
+            foreach ($translated_keys as $value) {
+                $data['category'][$value.'_'.$trans['locale']] = $trans[$value];
+            }
+        }
+        $data['translated_block'] = BookCategory::TRANSLATED_BLOCK;
         return view('backend/books_category/view',$data);
     }
 

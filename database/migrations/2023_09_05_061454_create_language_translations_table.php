@@ -15,8 +15,7 @@ class CreateLanguageTranslationsTable extends Migration
     {
         Schema::create('language_translations', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('language_id');
-            $table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade');
+            $table->integer('language_id')->unsigned();
             $table->string('locale')->index();
             $table->string('name');
             $table->integer('created_by')->unsigned()->nullable();
@@ -24,8 +23,7 @@ class CreateLanguageTranslationsTable extends Migration
             $table->foreign('created_by')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
             $table->unique(['language_id','locale']);
-            $table->timestamps();
-            $table->softDeletes();
+            $table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

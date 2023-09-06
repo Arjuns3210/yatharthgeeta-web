@@ -13,7 +13,6 @@ if(localStorage.getItem("dataurl") == window.location.href) {
         for(i=0; i<data.length; i++) {
             $('#'+data[i][0]).val(data[i][1]);
         }
-        $('#listing-filter-data').show();
     }
     localStorage.removeItem("indesign_ids");
     localStorage.removeItem("dataurl");
@@ -577,12 +576,12 @@ function getProductDetails(product) {
     });
 }
 
-// $(window).keydown(function(event){
-//     if(event.keyCode == 13) {
-//       event.preventDefault();
-//       $('#'+event.target.id).closest('form').find('button').click();
-//     }
-// });
+$(window).keydown(function(event){
+    if(event.keyCode == 13 && !event.target.matches("textarea")) {
+      event.preventDefault();
+      $('#'+event.target.id).closest('form').find('button').click();
+    }
+});
 
 
 // For validate number  input
