@@ -54,7 +54,7 @@
                                                         <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                             <?php if($translated_block_fields_value == 'textarea') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}} ({{  config('translatable.locales_name')[$translated_data_tabs] }})</label>
+                                                                    <label>{{$translated_block_fields_key}}</label>
                                                                     <textarea class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">{{$category[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}</textarea>
                                                                 </div>
                                                             <?php } ?>
