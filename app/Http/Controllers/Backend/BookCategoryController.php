@@ -153,7 +153,7 @@ class BookCategoryController extends Controller
         foreach($data['category']['translations'] as $trans) {
             $translated_keys = array_keys(BookCategory::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
-                $data['category'][$value.'_'.$trans['locale']] = $trans[$value];
+                $data['category'][$value.'_'.$trans['locale']] = str_replace("<br/>", "\r\n", $trans[$value]);
             }
         }
         $data['translated_block'] = BookCategory::TRANSLATED_BLOCK;

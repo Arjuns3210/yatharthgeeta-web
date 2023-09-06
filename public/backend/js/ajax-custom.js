@@ -248,6 +248,7 @@ function submitForm(form_id, form_method, errorOverlay = '') {
                 test = {};
                 for(j=0; j < lang.length; j++) {
                     test[lang[j]] = nl2br($('#'+keys[i]+'_'+lang[j]).val());
+                    console.log(test[lang[j]]);
                 }
                 trans[keys[i]] = test;
                 formdata.append(keys[i], JSON.stringify(test));
@@ -308,7 +309,7 @@ function nl2br (str, is_xhtml) {
 
     var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br/>' : '<br>';      
 
-    return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');  
+    return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, breakTag);  
 
 }
 
