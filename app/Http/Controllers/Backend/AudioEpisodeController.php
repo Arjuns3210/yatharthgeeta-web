@@ -84,7 +84,7 @@ class AudioEpisodeController extends Controller
                         $audio_episode_edit = checkPermission('audio_category_edit');
                         $audio_episode_status = checkPermission('audio_category_status');
                         $audio_episode_delete = checkPermission('audio_category_delete');
-                        $is_head = session('data')['is_head'] ?? true;
+                        $is_head = session('data')['is_head'] ?? false;
                         $actions = '<span style="white-space:nowrap;">';
                         if ($audio_episode_view) {
                             $actions .= '<a href="audio_episode/view/' . $event['id'] . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View Category Details" title="View"><i class="fa fa-eye"></i></a>';

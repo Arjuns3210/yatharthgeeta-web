@@ -39,17 +39,19 @@
                                                             <option value="1">Yes</option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-6 mb-2">
-                                                        <label>Cover Image</label>
-                                                        <input class="form-control " type="file" accept=".jpg, .jpeg, .png" name="cover_image">
-                                                    </div>
-                                                    <div class="col-sm-6 mb-2 file-input-div">
-                                                        <label>Audio File (MP3)<span class="text-danger file-label">*</span></label>
-                                                        <input class="form-control file-input required" type="file" accept=".mp3, .wav"  name="audio_file">
-                                                    </div>
-                                                    <div class="col-sm-6 mb-2 file-input-div">
-                                                        <label>Srt for lyrics<span class="text-danger file-label">*</span></label>
-                                                        <input class="form-control required file-input" type="file" accept=".srt" name="srt_file">
+                                                    <div class="col-md-6 col-lg-6 col-sm-6 border-left text-center">
+                                                        <p class="font-weight-bold">Cover Image</p>
+                                                        <div class="shadow bg-white rounded d-inline-block mb-2">
+                                                            <div class="input-file">
+                                                                <label class="label-input-file">Choose Files &nbsp;&nbsp;&nbsp;<i class="ft-upload font-medium-1"></i><input type="file" name="cover_image" class="cover-images" id="coverImages" accept=".jpg, .jpeg, .png">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <p id="files-area">
+                                                            <span id="coverImagesLists">
+                                                                <span id="cover-images-names"></span>
+                                                            </span>
+                                                        </p>
                                                     </div>
                                                     <div class="col-md-6 mb-2">
                                                         <label>Duration (In Minute)<span style="color:#ff0000">*</span></label>
@@ -70,7 +72,9 @@
                                                     <div class="col-sm-6 mb-2">
                                                         <label>People Also Read<span class="text-danger">*</span></label>
                                                         <select class="form-control select2" id="people_also_read_ids" name="people_also_read_ids[]" multiple>
-
+                                                        @foreach($audios as $audio)
+                                                                <option value="{{$audio->id}}">{{$audio->translations[0]->title ?? ''}}</option>
+                                                        @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
@@ -78,6 +82,38 @@
                                                         <select class="form-control select2" id="author_id" name="author_id">
                                                             <option value="">Select</option>
                                                         </select>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center file-input-div">
+                                                        <p class="font-weight-bold">Audio File (MP3)</p>
+                                                        <div class="shadow bg-white rounded d-inline-block mb-2">
+                                                            <div class="input-file">
+                                                                <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
+                                                                    <input type="file"  name="audio_file"  class="audio-file" id="audioFiles" accept=".mp3, .wav">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <p id="files-area">
+                                                            <span id="audioFilesLists">
+                                                                <span id="audio-files-names"></span>
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center file-input-div">
+                                                        <p class="font-weight-bold">Srt for lyrics</p>
+                                                        <div class="shadow bg-white rounded d-inline-block mb-2">
+                                                            <div class="input-file">
+                                                                <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
+                                                                    <input type="file"  class="srt-file" id="srtFiles" accept=".srt" name="srt_file">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <p id="files-area">
+                                                            <span id="srtFilesLists">
+                                                                <span id="srt-files-names"></span>
+                                                            </span>
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 
@@ -148,6 +184,142 @@
                     },
                 });
             });
+
+            const coverImageData = new DataTransfer();
+
+            function handleCoverImagesAttachmentChange() {
+                const attachmentInput = document.getElementById('coverImages');
+
+                attachmentInput.addEventListener('change', function (e) {
+                    if (this.files.length === 1) {
+                        const file = this.files[0];
+                        const fileBloc = $('<span/>', { class: 'file-block' });
+                        const fileName = $('<span/>', { class: 'name', text: file.name });
+
+                        fileBloc.append('<span class="file-delete cover-image-delete"><span>+</span></span>').
+                            append(fileName);
+
+                        // Clear existing uploaded documents
+                        $('#coverImagesLists > #cover-images-names').empty();
+
+                        $('#coverImagesLists > #cover-images-names').append(fileBloc);
+                        coverImageData.items.clear(); // Clear existing items
+                        coverImageData.items.add(file);
+                    } else {
+                        // Display an error message or take appropriate action for multiple files
+                        alert('Please upload only one document at a time.');
+                        // Reset the input field to clear selected files
+                        this.value = '';
+                        $('#coverImagesLists > #cover-images-names').empty();
+                        coverImageData.items.clear();
+                    }
+                });
+
+                $(document).on('click', 'span.cover-image-delete', function () {
+                    // Clear UI
+                    $('#coverImagesLists > #cover-images-names').empty();
+
+                    // Clear DataTransfer object (coverImageData)
+                    coverImageData.items.clear();
+
+                    // Reset the input field to clear selected files
+                    const input = document.getElementById('coverImages');
+                    input.value = ''; // This should clear the selected file(s) in the input field
+                });
+            }
+
+            handleCoverImagesAttachmentChange();
+
+            const audioFileData = new DataTransfer();
+
+            function handleAudioFileAttachmentChange() {
+                const attachmentInput = document.getElementById('audioFiles');
+
+                attachmentInput.addEventListener('change', function (e) {
+                    if (this.files.length === 1) {
+                        const file = this.files[0];
+                        const fileBloc = $('<span/>', { class: 'file-block' });
+                        const fileName = $('<span/>', { class: 'name', text: file.name });
+
+                        fileBloc.append('<span class="file-delete audio-files-delete"><span>+</span></span>').
+                            append(fileName);
+
+                        // Clear existing uploaded documents
+                        $('#audioFilesLists > #audio-files-names').empty();
+
+                        $('#audioFilesLists > #audio-files-names').append(fileBloc);
+                        audioFileData.items.clear(); // Clear existing items
+                        audioFileData.items.add(file);
+                    } else {
+                        // Display an error message or take appropriate action for multiple files
+                        alert('Please upload only one document at a time.');
+                        // Reset the input field to clear selected files
+                        this.value = '';
+                        $('#audioFilesLists > #audio-files-names').empty();
+                        audioFileData.items.clear();
+                    }
+                });
+
+                $(document).on('click', 'span.audio-files-delete', function () {
+                    // Clear UI
+                    $('#audioFilesLists > #audio-files-names').empty();
+
+                    // Clear DataTransfer object (audioFileData)
+                    audioFileData.items.clear();
+
+                    // Reset the input field to clear selected files
+                    const input = document.getElementById('audioFiles');
+                    input.value = ''; // This should clear the selected file(s) in the input field
+                });
+            }
+
+            handleAudioFileAttachmentChange();
+            
+            
+            const srtFileData = new DataTransfer();
+
+            function handleSrtFileAttachmentChange() {
+                const attachmentInput = document.getElementById('srtFiles');
+
+                attachmentInput.addEventListener('change', function (e) {
+                    if (this.files.length === 1) {
+                        const file = this.files[0];
+                        const fileBloc = $('<span/>', { class: 'file-block' });
+                        const fileName = $('<span/>', { class: 'name', text: file.name });
+
+                        fileBloc.append('<span class="file-delete srt-files-delete"><span>+</span></span>').
+                            append(fileName);
+
+                        // Clear existing uploaded documents
+                        $('#srtFilesLists > #srt-files-names').empty();
+
+                        $('#srtFilesLists > #srt-files-names').append(fileBloc);
+                        srtFileData.items.clear(); // Clear existing items
+                        srtFileData.items.add(file);
+                    } else {
+                        // Display an error message or take appropriate action for multiple files
+                        alert('Please upload only one document at a time.');
+                        // Reset the input field to clear selected files
+                        this.value = '';
+                        $('#srtFilesLists > #srt-files-names').empty();
+                        srtFileData.items.clear();
+                    }
+                });
+
+                $(document).on('click', 'span.srt-files-delete', function () {
+                    // Clear UI
+                    $('#srtFilesLists > #srt-files-names').empty();
+
+                    // Clear DataTransfer object (audioFileData)
+                    srtFileData.items.clear();
+
+                    // Reset the input field to clear selected files
+                    const input = document.getElementById('srtFiles');
+                    input.value = ''; // This should clear the selected file(s) in the input field
+                });
+            }
+
+            handleSrtFileAttachmentChange();
         });
 
         $(document).on('click', '.remove_episode_item', function () {

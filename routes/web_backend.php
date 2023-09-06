@@ -76,6 +76,7 @@ Route::group(['middleware' => ['customAuth']], function () {
     Route::get('audio/view/{id}', 'AudioController@show');
     Route::post('publish_audio', 'AudioController@updateStatus');
     Route::get('audio_delete/{id}', 'AudioController@destroy');
+    Route::post('delete_documents', 'AudioController@deleteMedia')->name('delete_documents');
     
     // audio episodes
     Route::get('audio_episodes/{audioId?}', 'AudioEpisodeController@index');

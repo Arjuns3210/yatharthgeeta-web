@@ -8,9 +8,11 @@ use App\Http\Requests\UpdateAudioRequest;
 use App\Models\Audio;
 use App\Models\AudioEpisode;
 use App\Models\AudioTranslation;
+use App\Models\Media;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use App\Utils\Utils;
 use Illuminate\Support\Facades\DB;
@@ -124,17 +126,23 @@ class AudioController extends Controller
      */
     public function create()
     {
+        $localeLanguage = \App::getLocale();
+        if ($localeLanguage == 'en-US') {
+            $localeLanguage = 'en';
+        } else {
+            $localeLanguage = 'hi';
+        }
+
         $data['translated_block'] = Audio::TRANSLATED_BLOCK;
-       
-        return view('backend/audio/add',$data);
+        $data['audios'] = Audio::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->where('status', 1)->get();
+
+        return view('backend/audio/add', $data);
     }
     
-    public function prepareEpisodeItem($number)
-    {
-        $returnValue = view('backend/audio/prepare_episode_item')->render();
-
-        return \Illuminate\Support\Facades\Response::json($returnValue);
-    }
 
 
     /**
@@ -241,7 +249,19 @@ class AudioController extends Controller
      */
     public function edit($id)
     {
-        $data['audio'] = Audio::find($id)->toArray();
+        $localeLanguage = \App::getLocale();
+        if ($localeLanguage == 'en-US') {
+            $localeLanguage = 'en';
+        } else {
+            $localeLanguage = 'hi';
+        }
+        $data['audios'] = Audio::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->where('status', 1)->get();
+        $audio = Audio::find($id);
+        $data['audio'] = $audio->toArray();
         foreach($data['audio']['translations'] as $trans) {
             $translated_keys = array_keys(Audio::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
@@ -249,6 +269,13 @@ class AudioController extends Controller
             }
         }
         $data['translated_block'] = Audio::TRANSLATED_BLOCK;
+        $data['peopleAlsoReadIds'] = explode(",", $data['audio']['people_also_read_ids'] ?? '');
+        $data['audioCoverImage'] = [];
+        $data['audioFile'] = [];
+        $data['srtFile'] = [];
+        $data['audioCoverImage'] = $audio->getMedia(Audio::AUDIO_COVER_IMAGE);
+        $data['audioFile'] = $audio->getMedia(Audio::AUDIO_FILE);
+        $data['srtFile'] = $audio->getMedia(Audio::AUDIO_SRT_FILE);
         
         return view('backend/audio/edit',$data);
     }
@@ -412,6 +439,36 @@ class AudioController extends Controller
             Log::error("Something Went Wrong. Error: " . $e->getMessage());
 
             errorMessage("Something Went Wrong");
+        }
+    }
+
+    /**
+     * @param  Request  $request
+     *
+     * delete any media
+     * @return bool
+     */
+    public function deleteMedia(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $input = $request->all();
+            if (! empty($input['id'])) {
+                $media = Media::find($input['id']);
+                if ($media->exists()) {
+                    $media->delete();
+
+                    DB::commit();
+                    return true;
+                }
+            }
+           
+            return false;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            Log::error("Something Went Wrong. Error: ".$e->getMessage());
         }
     }
 
