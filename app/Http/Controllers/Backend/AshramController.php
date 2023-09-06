@@ -139,7 +139,7 @@ class AshramController extends Controller
         foreach($data['ashram']['translations'] as $trans) {
             $translated_keys = array_keys(Location::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
-                $data['ashram'][$value.'_'.$trans['locale']] = str_replace("<br/>", "\r\n", $trans[$value]);
+                $data['ashram'][$value.'_'.$trans['locale']] = $trans[$value];
             }
         }
         $data['translated_block'] = Location::TRANSLATED_BLOCK;
@@ -159,7 +159,7 @@ class AshramController extends Controller
         foreach($data['ashram']['translations'] as $trans) {
             $translated_keys = array_keys(Location::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
-                $data['ashram'][$value.'_'.$trans['locale']] = $trans[$value];
+                $data['ashram'][$value.'_'.$trans['locale']] = str_replace("<br/>", "\r\n", $trans[$value]);
             }
         }
         $data['translated_block'] = Location::TRANSLATED_BLOCK;

@@ -129,7 +129,7 @@ class ArtistController extends Controller
         foreach($data['guru']['translations'] as $trans) {
             $translated_keys = array_keys(Artist::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
-                $data['guru'][$value.'_'.$trans['locale']] = str_replace("<br/>", "\r\n", $trans[$value]);
+                $data['guru'][$value.'_'.$trans['locale']] = $trans[$value];
             }
         }
         $data['translated_block'] = Artist::TRANSLATED_BLOCK;
@@ -149,7 +149,7 @@ class ArtistController extends Controller
         foreach($data['guru']['translations'] as $trans) {
             $translated_keys = array_keys(Artist::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
-                $data['guru'][$value.'_'.$trans['locale']] = $trans[$value];
+                $data['guru'][$value.'_'.$trans['locale']] = str_replace("<br/>", "\r\n", $trans[$value]);
             }
         }
         $data['translated_block'] = Artist::TRANSLATED_BLOCK;
