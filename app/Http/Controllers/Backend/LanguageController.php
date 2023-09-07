@@ -56,7 +56,7 @@ class LanguageController extends Controller
                         $language_status = checkPermission('language_status');
                         $actions = '<span style="white-space:nowrap;">';
                         if ($language_view) {
-                            $actions .= '<a href="language/view/' . $event->id . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View Language" title="View Language"><i class="fa fa-eye"></i></a>';
+                            $actions .= '<a href="language/view/' . $event->id . '" class="btn btn-primary btn-sm modal_src_data" data-size="large"><i class="fa fa-eye"></i></a>';
                         }
                         if ($language_edit) {
                             $actions .= ' <a href="language/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';

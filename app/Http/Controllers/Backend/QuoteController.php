@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Utils\Utils;
 use Yajra\DataTables\DataTables;
+use App\Models\LanguageTranslation;
+use App\Models\QuoteCategoryTranslation;
 
 
 class QuoteController extends Controller
@@ -45,7 +47,9 @@ class QuoteController extends Controller
     public function store(Request $request)
     {
 		$input = $request->all();
-		$input['shlok'] = json_encode($request->input('shlok'));
+        $input['language_id'] = LanguageTranslation::where('locale','hi')->first();
+        $input['quote_category_id'] = QuoteCategoryTranslation::where('quote_category_id','2');
+        print_r($input['quote_category_id']);exit;
         $data = Quote::create($input);
         storeMedia($data, $input['image'], Quote::IMAGE);
         successMessage('Data Saved successfully', []);
