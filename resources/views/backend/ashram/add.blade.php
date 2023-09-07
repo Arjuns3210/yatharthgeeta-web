@@ -51,11 +51,11 @@
                                                         <label>Address<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="location" name="location"><br/>
                                                     </div>
-                                                    <div class="col-sm-6" >
+                                                    <div class="col-sm-6" id="latitudeArea">
                                                         <label>Latitude<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="latitude" name="latitude" oninput="filterNonNumeric(this)"><br/>
                                                     </div>
-                                                    <div class="col-sm-6" hidden>
+                                                    <div class="col-sm-6" id="longtitudeArea">
                                                         <label>Longitude<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="longitude" name="longitude" oninput="filterNonNumeric(this)"><br/>
                                                     </div>
@@ -131,47 +131,27 @@
         </div>
     </div>
 </section>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSrdDORoPiSFHR_XPUDEc8BNsLrfVhBeQ&callback=initMap" type="text/javascript"></script>
-<script>
-    let map;
-    let geocoder; // Define a geocoder to convert lat/lng to address
-
-    function initMap() {
-        map = new google.maps.Map(document.getElementById("map"), {
-            center: { lat: -34.397, lng: 150.644 },
-            zoom: 8,
-            scrollwheel: true,
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+        src="https://maps.google.com/maps/api/js?key=Your_Google_Key=places&callback=initAutocomplete"></script>
+    <script>
+        $(document).ready(function () {
+            // $("#latitudeArea").addClass("d-none");
+            // $("#longtitudeArea").addClass("d-none");
         });
-
-        geocoder = new google.maps.Geocoder(); // Initialize the geocoder
-
-        const uluru = { lat: -34.397, lng: 150.644 };
-        let marker = new google.maps.Marker({
-            position: uluru,
-            map: map,
-            draggable: true
-        });
-
-        google.maps.event.addListener(marker, 'position_changed', function () {
-            let lat = marker.position.lat();
-            let lng = marker.position.lng();
-            $('#latitude').val(lat);
-            $('#longitude').val(lng);
-
-            // Reverse geocode to get the address
-            geocoder.geocode({ 'location': { lat, lng } }, function (results, status) {
-                if (status === 'OK') {
-                    if (results[0]) {
-                        const address = results[0].formatted_address;
-                        $('#google_address').val(address);
-                    }
-                }
+    </script>
+    <script>
+        google.maps.event.addDomListener(window, 'load', initialize);
+        function initialize() {
+            var input = document.getElementById('google_address');
+            var autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.addListener('place_changed', function () {
+                var place = autocomplete.getPlace();
+                $('#latitude').val(place.geometry['location'].lat());
+                $('#longitude').val(place.geometry['location'].lng());
+                // $("#latitudeArea").removeClass("d-none");
+                // $("#longtitudeArea").removeClass("d-none");
             });
-        });
-
-        google.maps.event.addListener(map, 'click', function (event) {
-            const pos = event.latLng;
-            marker.setPosition(pos);
-        });
-    }
-</script>
+        }
+    </script>
