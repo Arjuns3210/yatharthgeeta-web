@@ -25,7 +25,7 @@
                                             </li>
                                             <?php foreach (config('translatable.locales') as $translated_tabs) { ?>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" data-toggle="tab" href="#<?php echo $translated_tabs ?>_block_details"><?php echo $translated_tabs; ?></a>
+                                                    <a class="nav-link" data-toggle="tab" href="#<?php echo $translated_tabs ?>_block_details">{{ config('translatable.locales_name')[$translated_tabs] }}</a>
                                                 </li>
                                             <?php } ?>
                                         </ul>
@@ -36,6 +36,10 @@
                                                         <label>Image<span class="text-danger">*</span></label>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                         <input class="form-control required" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Sequence<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Guru Status<span class="text-danger">*</span></label>

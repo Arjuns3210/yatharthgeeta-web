@@ -91,6 +91,13 @@ class LanguageController extends Controller
 
     function view($id){
         $data['data'] = Language::find($id);
+        foreach($data['data']['translations'] as $trans) {
+            $translated_keys = array_keys(Language::TRANSLATED_BLOCK);
+            foreach ($translated_keys as $value) {
+                $data['data'][$value.'_'.$trans['locale']] = $trans[$value];
+            }
+        }
+        $data['translated_block'] = Language::TRANSLATED_BLOCK;
         return view('backend/language/view',$data);
     }
 
@@ -135,7 +142,7 @@ class LanguageController extends Controller
         foreach($data['data']['translations'] as $trans) {
             $translated_keys = array_keys(Language::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
-                $data['data'][$value.'_'.$trans['locale']] = $trans[$value];
+                $data['data'][$value.'_'.$trans['locale']] = str_replace("<br/>", "\r\n", $trans[$value]);
             }
         }
         $data['translated_block'] = Language::TRANSLATED_BLOCK;

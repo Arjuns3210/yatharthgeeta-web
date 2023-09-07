@@ -51,6 +51,10 @@
                                                         <label>Address<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="location" name="location"><br/>
                                                     </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Sequence<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)"><br/>
+                                                    </div>
                                                     <div class="col-sm-6" >
                                                         <label>Latitude<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="latitude" name="latitude" oninput="filterNonNumeric(this)"><br/>
