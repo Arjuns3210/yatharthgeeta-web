@@ -48,8 +48,12 @@
                                                         <input class="form-control required" type="text" id="phone" name="phone" value="{{$ashram['phone']}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Location<span class="text-danger">*</span></label>
+                                                        <label>Address<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="location" name="location" value="{{$ashram['location']}}"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Sequence<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)" value="{{$ashram['sequence']}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Latitude<span class="text-danger">*</span></label>
@@ -98,7 +102,7 @@
                                                                     <label>{{$translated_block_fields_key}}</label>
                                                                     <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" value="{{$ashram[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}">
                                                                 </div>
-                                                            <?php 
+                                                            <?php
                                                         } ?>
                                                         <?php } ?>
                                                     </div>

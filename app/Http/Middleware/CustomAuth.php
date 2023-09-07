@@ -38,11 +38,12 @@ class CustomAuth
             
             if(session('data')['force_pwd_change_flag'] == 1 || session('data')['pwd_expiry_date'] <= $currentDate){
                 return redirect('webadmin/password_expired');
-                dd(session('data')['force_pwd_change_flag']);
             }
             $langauge = explode('-', explode(',', $request->header('Accept-Language'))[0]);
-            \App::setLocale($langauge[0]);
             Session::flash('permissions', $permissions);
+            if(in_array($langauge[0], config('translatable.locales'))) {
+                \App::setLocale($langauge[0]);
+            }
             return $next($request);
         } else {
             return redirect('webadmin/');
