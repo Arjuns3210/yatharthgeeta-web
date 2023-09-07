@@ -209,4 +209,12 @@ class AshramController extends Controller
     {
         //
     }
+
+    public function deleteImage(Request $request)
+    {
+        $msg_data = array();
+        $data = Location::find($_GET['id']);
+        dd($data);
+        successMessage('image deleted successfully', $msg_data);
+    }
 }

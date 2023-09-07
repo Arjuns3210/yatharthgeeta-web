@@ -25,7 +25,7 @@
                                             </li>
                                             <?php foreach (config('translatable.locales') as $translated_tabs) { ?>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" data-toggle="tab" href="#<?php echo $translated_tabs ?>_block_details"><?php echo $translated_tabs; ?></a>
+                                                    <a class="nav-link" data-toggle="tab" href="#<?php echo $translated_tabs ?>_block_details">{{ config('translatable.locales_name')[$translated_tabs] }}</a>
                                                 </li>
                                             <?php } ?>
                                         </ul>
@@ -55,11 +55,11 @@
                                                         <label>Sequence<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)" value="{{$ashram['sequence']}}"><br/>
                                                     </div>
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-6" hidden>
                                                         <label>Latitude<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="latitude" name="latitude" oninput="filterNonNumeric(this)" value="{{$ashram['latitude']}}"><br/>
                                                     </div>
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-6" hidden>
                                                         <label>Longitude<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="longitude" name="longitude" oninput="filterNonNumeric(this)" value="{{$ashram['longitude']}}"><br/>
                                                     </div>
@@ -71,8 +71,12 @@
                                                         <label>Image</label>
                                                         <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')" value="{{$ashram['image']}}"><br/>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
-                                                        <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="100px" alt="" id="image">
+                                                        <div class="main-del-section" style="position: relative; border: 1px solid #999; border-radius: 5px; padding: 5px; margin-right: 10px; display: inline-block;">
+                                                            <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="auto">
+                                                            <span class="delimg bg-danger text-center" id="{{$ashram['id']}}" data-url="ashram/delete_img?id={{$ashram['id']}}" style="padding: 0 5px; position: absolute; top: -8px; right: -8px; border-radius: 50%; cursor: pointer;"><i class="fa fa-times text-light"></i></span>
+                                                        </div>
                                                     </div>
+                                                    <div id="map" style="height:400px; width: 400px;" class="my-3"></div>
                                                     <!-- <div class="col-sm-6">
                                                         <label>Working Hours :<span class="text-danger">*</span></label>
                                                         <div class="row">
@@ -138,3 +142,49 @@
         </div>
     </div>
 </section>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSrdDORoPiSFHR_XPUDEc8BNsLrfVhBeQ&callback=initMap" type="text/javascript"></script>
+<script>
+    let map;
+    let geocoder; // Define a geocoder to convert lat/lng to address
+
+    function initMap() {
+        var lati = parseInt("<?php echo $ashram['latitude']?>");
+        var lang = parseInt("<?php echo $ashram['longitude']?>");
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: lati, lng: lang },
+            zoom: 10,
+            scrollwheel: true,
+        });
+
+        geocoder = new google.maps.Geocoder(); // Initialize the geocoder
+
+        const uluru = { lat: lati, lng: lang };
+        let marker = new google.maps.Marker({
+            position: uluru,
+            map: map,
+            draggable: true
+        });
+
+        google.maps.event.addListener(marker, 'position_changed', function () {
+            let lat = marker.position.lat();
+            let lng = marker.position.lng();
+            $('#latitude').val(lat);
+            $('#longitude').val(lng);
+
+            // Reverse geocode to get the address
+            geocoder.geocode({ 'location': { lat, lng } }, function (results, status) {
+                if (status === 'OK') {
+                    if (results[0]) {
+                        const address = results[0].formatted_address;
+                        $('#google_address').val(address);
+                    }
+                }
+            });
+        });
+
+        google.maps.event.addListener(map, 'click', function (event) {
+            const pos = event.latLng;
+            marker.setPosition(pos);
+        });
+    }
+</script>

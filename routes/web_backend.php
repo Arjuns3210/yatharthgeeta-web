@@ -46,6 +46,7 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('ashram/fetch', 'AshramController@fetch');
 	Route::get('ashram/view/{id}', 'AshramController@show');
 	Route::post('ashram/save', 'AshramController@store');
+	Route::post('ashram/delete_img', 'AshramController@deleteImage');
 
 	//Guru's
 	Route::get('guru', 'ArtistController@index');
