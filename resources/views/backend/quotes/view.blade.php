@@ -2,8 +2,18 @@
 	<div class="users-list-table">
         <div class="row">
             <div class="col-12">
-                <div>
+                <div class="card">
                     <div class="card-content">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-12 col-sm-7">
+                                    <h5 class="pt-2">View Quotes Details</h5>
+                                </div>
+                                <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
+                                    <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
+                                </div>
+                            </div>
+                        </div>
                     	<div class="card-body">
                             <div class="col-12">
                                 <div class="table-responsive">
