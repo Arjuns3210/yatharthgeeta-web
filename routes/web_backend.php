@@ -113,7 +113,7 @@ Route::group(['middleware' => ['customAuth']], function () {
 
 
 	Route::post('home_collection/fetch', 'HomeCollectionController@fetch');
-	Route::get('home_collection/add', 'HomeCollectionController@add');
+	Route::get('home_collection/add', 'HomeCollectionController@create');
 	Route::post('home_collection/save', 'HomeCollectionController@store');
 	Route::get('home_collection/edit/{id}', 'HomeCollectionController@edit');
 	Route::post('home_collection/update', 'HomeCollectionController@update');

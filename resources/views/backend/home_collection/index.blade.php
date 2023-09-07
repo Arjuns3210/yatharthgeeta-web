@@ -53,7 +53,7 @@
                                             </div>
                                         </div>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered table-striped datatable" id="dataTable" width="100%" cellspacing="0" data-url="home_collection/fetch">
+                                            <table class="table table-bordered table-striped " id="" width="100%" cellspacing="0" data-url="home_collection/fetch">
                                                 <thead>
                                                     <tr>
                                                         <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
@@ -77,7 +77,4 @@
             </section>
         </div>
     </div>
-    <script>
-        $('.select2').select2();
-    </script>
 @endsection

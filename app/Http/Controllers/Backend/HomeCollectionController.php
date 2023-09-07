@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\BookCategory;
 use App\Models\HomeCollection;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,11 @@ class HomeCollectionController extends Controller
      */
     public function create()
     {
-        //
+        $data['translated_block'] = [];
+        $data['collection_types'] = HomeCollection::COLLECTION_TYPES;
+        $data['orientation_types'] = HomeCollection::ORIENTATION_TYPE;
+
+        return view('backend/home_collection/add',$data);
     }
 
     /**
