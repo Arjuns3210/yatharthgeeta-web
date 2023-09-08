@@ -461,7 +461,7 @@ $(document).on('click', '.delimg', function (event) {
                                 icon: 'fa fa-check',
                                 message: response['message'],
                                 container: 'floating',
-                                timer: 3000
+                                timer: 1000
                             });
                             $('#' + main_id).closest('.main-del-section').remove();
                         }
