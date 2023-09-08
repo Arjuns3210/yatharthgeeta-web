@@ -174,6 +174,9 @@
                         <li class="nav-item">
                             <a href="general_settings"><i class="icon-user-following"></i><span data-i18n="" class="menu-title">General Settings</span></a>
                         </li>
+                        <li class="nav-item">
+                            <a href="customer"><i class="icon-user-following"></i><span data-i18n="" class="menu-title">Customer</span></a>
+                        </li>
                         @if(session('data')['role_id'] == 1  ||
                             in_array('home_collection', $permission_array)
                         )

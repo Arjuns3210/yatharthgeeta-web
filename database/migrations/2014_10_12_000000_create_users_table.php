@@ -19,11 +19,18 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('phone', 10);
             $table->string('whatsapp_no', 10)->nullable();
-            $table->string('approval_status', 255)->default('accepted')->comment('pending|accepted|rejected');
+            $table->string('password');
+            $table->enum('gender', ['M','F','O'])->nullable();
+            $table->string('city');
+            $table->string('state');
+            $table->string('pin_code');
+            $table->string('approval_status')->default('accepted')->comment('pending|accepted|rejected');
             $table->datetime('approved_on')->nullable();
             $table->integer('approved_by')->default(0)->comment('Admin Id');
             $table->longText('admin_remark')->nullable();
-            $table->enum('status', [1, 0])->default(1);
+            $table->enum('login_allowed', [1, 0])->default(1);
+            $table->enum('otp_allowed', [1, 0])->default(1);
+            $table->enum('password_allowed', [1, 0])->default(1);
             $table->enum('sms_notification', [1, 0])->default(1);
             $table->enum('email_notification', [1, 0])->default(1);
             $table->enum('whatsapp_notification', [1, 0])->default(1);
@@ -31,12 +38,11 @@ class CreateUsersTable extends Migration
             $table->enum('fpwd_flag', ['Y', 'N'])->default('N');
             $table->datetime('last_login')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
             $table->rememberToken();
+            $table->enum('status', [1, 0])->default(1);
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->default(0);
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            $table->timestamps();
             $table->softDeletes();
         });
     }
