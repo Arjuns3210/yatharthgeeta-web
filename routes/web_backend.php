@@ -145,19 +145,20 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('publish/staff', 'StaffController@updateStatus');
 	Route::get('staff/view/{id}', 'StaffController@view');
 
-	//Home Collecton
+	//Home Collection
 	Route::get('home_collection', 'HomeCollectionController@index');
-
-
 	Route::post('home_collection/fetch', 'HomeCollectionController@fetch');
 	Route::get('home_collection/add', 'HomeCollectionController@create');
 	Route::post('home_collection/save', 'HomeCollectionController@store');
 	Route::get('home_collection/edit/{id}', 'HomeCollectionController@edit');
 	Route::post('home_collection/update', 'HomeCollectionController@update');
-	Route::post('publish_staff', 'HomeCollectionController@updateStatus');
-	Route::get('home_collection/view/{id}', 'HomeCollectionController@view');
+	Route::post('home_collection/publish', 'HomeCollectionController@updateStatus');
+	Route::get('home_collection/view/{id}', 'HomeCollectionController@show');
+    Route::post('home_collection/publish', 'HomeCollectionController@updateStatus');
+    Route::get('home_collection/delete/{id}', 'HomeCollectionController@destroy');
+    Route::get('get_mapped_listing/{type}', 'HomeCollectionController@getMappedListing');
 
-	//manage role
+    //manage role
 	Route::get('roles', 'RoleController@roles');
 	Route::post('role/fetch', 'RoleController@roleData')->name('role/fetch');
 	Route::get('role_permission/{id}', 'RoleController@assignRolePermission');

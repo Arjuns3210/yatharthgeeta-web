@@ -4,13 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 class HomeCollectionMapping extends Model implements HasMedia
 {
-    use SoftDeletes;
     use HasFactory;
     use InteractsWithMedia;
 
@@ -25,4 +23,18 @@ class HomeCollectionMapping extends Model implements HasMedia
     ];
     
     const MULTIPLE_COLLECTION_IMAGE = 'multiple_collection_image';
+    
+    const BOOK = 'Book';
+    const AUDIO = 'Audio';
+    const VIDEO = 'Video';
+    const SHLOK = 'Shlok';
+    const ARTIST = 'Artist';
+
+    const MAPPING_COLLECTION_TYPES = [
+        self::BOOK     => 'Book',
+        self::AUDIO    => 'Audio',
+        self::VIDEO    => 'Video',
+        self::SHLOK    => 'Shlok',
+        self::ARTIST   => 'Artist',
+    ];
 }

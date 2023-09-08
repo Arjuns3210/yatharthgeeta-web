@@ -39,20 +39,31 @@ class HomeCollection extends Model implements HasMedia
     
     const SINGLE = 'Single';
     const MULTIPLE = 'Multiple';
-    const BOOKS = 'Book';
-    const AUDIOS = 'Audio';
-    const VIDEOS = 'Video';
-    const SHLOKS = 'Shlok';
+    const BOOK = 'Book';
+    const AUDIO = 'Audio';
+    const VIDEO = 'Video';
+    const SHLOK = 'Shlok';
     const ARTIST = 'Artist';
 
     const COLLECTION_TYPES = [
         self::SINGLE   => 'Single',
         self::MULTIPLE => 'Multiple',
-        self::BOOKS    => 'Book',
-        self::AUDIOS   => 'Audio',
-        self::VIDEOS   => 'Video',
-        self::SHLOKS   => 'Shlok',
+        self::BOOK     => 'Book',
+        self::AUDIO    => 'Audio',
+        self::VIDEO    => 'Video',
+        self::SHLOK    => 'Shlok',
         self::ARTIST   => 'Artist',
     ];
-    
+
+    function language()
+    {
+
+        return $this->belongsTo(Language::class);
+    }
+
+    function homeCollectionDetails()
+    {
+
+        return $this->hasMany(HomeCollectionMapping::class, 'home_collection_id');
+    }
 }
