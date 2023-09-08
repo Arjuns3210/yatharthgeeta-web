@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Edit Ashram</h5>
+                                    <h5 class="pt-2">Edit Ashram: {{$ashram['name']}}</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -45,7 +45,8 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Contact (add More no by comma)<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="phone" name="phone" value="{{$ashram['phone']}}"><br/>
+                                                        <?php $output = implode(',', json_decode($ashram['phone'])); ?>
+                                                        <input class="form-control required" type="text" id="phone" name="phone" value="{{$output}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Address<span class="text-danger">*</span></label>
