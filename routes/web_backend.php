@@ -100,6 +100,17 @@ Route::group(['middleware' => ['customAuth']], function () {
     Route::post('books/publish', 'BookController@updateStatus');
     Route::get('books/delete/{id}', 'BookController@destroy');
 
+    //Mantra
+    Route::get('mantras', 'MantraController@index');
+    Route::post('mantras/fetch', 'MantraController@fetch');
+    Route::get('mantras/add', 'MantraController@create');
+    Route::post('mantras/save', 'MantraController@store');
+    Route::get('mantras/view/{id}', 'MantraController@view');
+	Route::get('mantras/edit/{id}', 'MantraController@edit');
+	Route::post('mantras/update', 'MantraController@update');
+    Route::post('mantras/publish', 'MantraController@updateStatus');
+    Route::get('mantras/delete/{id}', 'MantraController@destroy');
+
 	//staff
 	Route::get('staff', 'StaffController@index');
 	Route::post('staff/fetch', 'StaffController@fetch')->name('staff_fetch');
@@ -148,6 +159,10 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::get('quotes/edit/{id}', 'QuoteController@edit');
 	Route::post('quotes/update', 'QuoteController@update');
     Route::post('quotes/publish', 'QuoteController@updateStatus');
+
+    //quote category
+    Route::get('quote_category', 'QuoteCategoryController@index');
+    Route::post('quote_category/fetch', 'QuoteCategoryController@fetch');
 
     //general settings
     Route::get('general_settings', 'GeneralSettingController@index');

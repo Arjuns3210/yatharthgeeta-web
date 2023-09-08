@@ -12,12 +12,12 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-12 col-sm-7">
-                                            <h5 class="pt-2">Manage Quote List</h5>
+                                            <h5 class="pt-2">Manage Quote Category List</h5>
                                         </div>
                                         <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                             <button class="btn btn-sm btn-outline-danger px-3 py-1 mr-2" id="listing-filter-toggle"><i class="fa fa-filter"></i> Filter</button>
-                                            @if($data['quotes_add'])
-                                                <a href="quotes/add" class="btn btn-sm btn-outline-primary px-3 py-1 src_data"><i class="fa fa-plus"></i> Add Quotes</a>
+                                            @if($data['quote_category_add'])
+                                                <a href="quote_category/add" class="btn btn-sm btn-outline-primary px-3 py-1 src_data"><i class="fa fa-plus"></i>Add Quote Category</a>
                                             @endif
                                         </div>
                                     </div>
@@ -25,8 +25,8 @@
                                 <div class="card-body">
                                     <div class="row mb-2" id="listing-filter-data" style="display: none;">
                                         <div class="col-md-4">
-                                            <label>Sequence</label>
-                                            <input class="form-control mb-3" type="text" id="search_sequence" name="search_sequence">
+                                            <label>Category Name</label>
+                                            <input class="form-control mb-3" type="text" id="search_name" name="search_name">
                                         </div>
                                         <div class="col-md-4">
                                             <label>Status</label>
@@ -42,13 +42,13 @@
                                         </div>
                                     </div>
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-striped datatable" id="dataTable" width="100%" cellspacing="0" data-url="quotes/fetch">
+                                        <table class="table table-bordered table-striped datatable" id="dataTable" width="100%" cellspacing="0" data-url="quote_category/fetch">
                                             <thead>
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
-                                                    <th id="image" data-orderable="false" data-searchable="false">Quote Image</th>
-                                                    <th id="sequence" data-orderable="false" data-searchable="false">Sequence</th>
-                                                    @if($data['quotes_status'] || $data['quotes_edit'] || $data['quotes_view'] || $data['quotes_delete'])
+                                                    <th id="name_{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Category Name ({{\App::getLocale()}})</th>
+                                                    <th id="status" data-orderable="false" data-searchable="false">Status</th>
+                                                    @if($data['quote_category_status'] || $data['quote_category_edit'] || $data['quote_category_view'] || $data['quote_category_delete'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
                                                     @endif
                                                 </tr>

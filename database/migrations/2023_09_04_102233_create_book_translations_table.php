@@ -15,10 +15,11 @@ class CreateBookTranslationsTable extends Migration
     {
         Schema::create('book_translations', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignId('book_id')->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('book_id')->unsigned();
             $table->string('locale')->index();
             $table->string('name');
             $table->string('description');
+            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade')->onUpdate('cascade');
             $table->unique(['book_id','locale']);
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->default(0);

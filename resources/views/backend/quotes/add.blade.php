@@ -16,37 +16,23 @@
                         </div>
                         <!-- <hr class="mb-0"> -->
                     	<div class="card-body">
-                    		<form id="saveQuote" method="post" action="quotes/save">
+                    		<form id="saveQuotes" method="post" action="quotes/save">
                     			@csrf
-                        		<div class="row">               
+                        		<div class="row">
                                     <div class="col-sm-6">
-                                        <label>Quote Image (200*200)<span class="text-danger">*</span></label>
+                                        <label>Image<span class="text-danger">*</span></label>
                                         <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="image" name="image" onchange="handleFileInputChange('image')"><br/>
                                     </div>
-									<div class="tab-pane fade in active show">
-										<label>Shlok<span class="text-danger">*</span></label>
-										<select class="form-control" id="shlok" name="shlok">
-											<option value="A">A</option>
-											<option value="B">B</option>
-										</select>
-                                    </div> 
-									<div class="col-sm-6">
+                        			<div class="col-sm-6">
                         				<label>Sequence<span class="text-danger">*</span></label>
-                        				<input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)"><br/>
+                        				<input class="form-control required" type="text" id="sequence" name="sequence" oninput="filterNonNumeric(this)"><br/>
                         			</div>
-									<div class="tab-pane fade in active show">
-										<label>Share Allowance<span class="text-danger">*</span></label>
-										<select class="form-control" id="share_allowance" name="share_allowance">
-											<option value="yes">Yes</option>
-											<option value="no">No</option>
-										</select>
-                                    </div> 	
                         		</div>
                         		<hr>
                         		<div class="row">
                         			<div class="col-sm-12">
                         				<div class="pull-right">
-                        					<button type="button" class="btn btn-success" onclick="submitForm('saveQuote','post')">Submit</button>
+                        					<button type="button" class="btn btn-success" onclick="submitForm('saveQuotes','post')">Submit</button>
 											<a href="{{URL::previous()}}" class="btn btn-danger px-3 py-1">Cancel</a>
                         				</div>
                         			</div>

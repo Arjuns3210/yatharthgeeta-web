@@ -41,6 +41,9 @@ class LanguageController extends Controller
                         if (isset($request['search']['search_language_code']) && !is_null($request['search']['search_language_code'])) {
                             $query->where('languages.language_code', 'like', "%" . $request['search']['search_language_code'] . "%");
                         }
+                        if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
+                            $query->where('languages.status', 'like', "%" . $request['search']['search_status'] . "%");
+                        }
                         $query->get()->toArray();
                     })->editColumn('name_'.\App::getLocale(), function ($event) {
                         $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
@@ -56,7 +59,7 @@ class LanguageController extends Controller
                         $language_status = checkPermission('language_status');
                         $actions = '<span style="white-space:nowrap;">';
                         if ($language_view) {
-                            $actions .= '<a href="language/view/' . $event->id . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View Language" title="View Language"><i class="fa fa-eye"></i></a>';
+                            $actions .= '<a href="language/view/' . $event->id . '" class="btn btn-primary btn-sm modal_src_data" data-size="large"><i class="fa fa-eye"></i></a>';
                         }
                         if ($language_edit) {
                             $actions .= ' <a href="language/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
@@ -109,9 +112,9 @@ class LanguageController extends Controller
             $language->status = $request->status;
             $language->save();
             if ($request->status == 1) {
-                successMessage('Enable', $msg_data);
+                successMessage(trans('message.enable'), $msg_data);
             } else {
-                successMessage('Disable', $msg_data);
+                errorMessage(trans('message.disable'), $msg_data);
             }
             errorMessage('language not found', []);
         } catch (\Exception $e) {
