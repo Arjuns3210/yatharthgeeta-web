@@ -19,6 +19,7 @@ class CreateQuotesTable extends Migration
             $table->foreign('quote_category_id')->references('id')->on('quote_categories')->onDelete('cascade');
 			$table->unsignedInteger('language_id');
             $table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade');
+            $table->integer('artist_id')->default(0);
             $table->longText('image');
             $table->integer('sequence');
             $table->enum('status', [1, 0])->default(1);

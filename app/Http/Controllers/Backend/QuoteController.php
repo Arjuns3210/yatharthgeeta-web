@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Utils\Utils;
 use Yajra\DataTables\DataTables;
+use App\Models\Language;
 use App\Models\LanguageTranslation;
+use App\Models\QuoteCategory;
 use App\Models\QuoteCategoryTranslation;
 
 
@@ -47,13 +49,13 @@ class QuoteController extends Controller
     public function store(Request $request)
     {
 		$input = $request->all();
-        $input['language_id'] = LanguageTranslation::where('locale','hi')->first();
-        $input['quote_category_id'] = QuoteCategoryTranslation::where('quote_category_id','2');
-        print_r($input['quote_category_id']);exit;
+        $input['language_id'] = Language::where('language_code','hi')->first()->id;
+        $input['quote_category_id'] = QuoteCategory::where('id','2')->first()->id;
         $data = Quote::create($input);
         storeMedia($data, $input['image'], Quote::IMAGE);
         successMessage('Data Saved successfully', []);
     }
+
 
 
     /**
@@ -122,16 +124,17 @@ class QuoteController extends Controller
                 $query = Quote::orderBy('updated_at','desc');
                 return DataTables::of($query)
                     ->filter(function ($query) use ($request) {
-                        if (isset($request['search']['share_allowance']) && !is_null($request['search']['share_allowance'])) {
-                            $query->where('share_allowance', 'like', "%" . $request['search']['share_allowance'] . "%");
+                        if (isset($request['search']['search_sequence']) && !is_null($request['search']['search_sequence'])) {
+                            $query->where('sequence', 'like', "%" . $request['search']['search_sequence'] . "%");
                         }
-                        if (isset($request['search']['sequence']) && !is_null($request['search']['sequence'])) {
-                            $query->where('sequence', 'like', "%" . $request['search']['sequence'] . "%");
+                        if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
+                            $query->where('quotes.status', 'like', "%" . $request['search']['search_status'] . "%");
                         }
                         $query->get()->toArray();
                     })
-                    ->editColumn('text',function ($event) {
-                        return $event['text'];
+                    ->editColumn('image', function ($event) {
+                        $media = $event->getMedia(Quote::IMAGE)->first();
+                        return !empty($media) ? "<img src='" . $media->getFullUrl() . "' alt='Quote Image' width='130px'/>" : '';
                     })
                     ->editColumn('sequence',function ($event) {
                         return $event['sequence'];
@@ -143,7 +146,7 @@ class QuoteController extends Controller
                         $quotes_status = checkPermission('quotes_status');
                         $actions = '<span style="white-space:nowrap;">';
                         if ($quotes_view) {
-                            $actions .= '<a href="quotes/view/' . $event['id'] . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View Quote Details" title="View"><i class="fa fa-eye"></i></a>';
+                            $actions .= '<a href="quotes/view/' . $event['id'] . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" title="View"><i class="fa fa-eye"></i></a>';
                         }
                         if ($quotes_edit) {
                             $actions .= ' <a href="quotes/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
@@ -160,7 +163,9 @@ class QuoteController extends Controller
                         return $actions;
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['text','sequence','action'])->setRowId('id')->make(true);
+                    ->rawColumns([
+
+                        'image','sequence','action'])->setRowId('id')->make(true);
             } catch (\Exception $e) {
                 \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                 return response([
@@ -182,9 +187,9 @@ class QuoteController extends Controller
             $quotes->status = $request->status;
             $quotes->save();
             if ($request->status == 1) {
-                successMessage('Enable', $msg_data);
+                successMessage(trans('message.enable'), $msg_data);
             } else {
-                successMessage('Disable', $msg_data);
+                errorMessage(trans('message.disable'), $msg_data);
             }
             errorMessage('Quotes not found', []);
         } catch (\Exception $e) {

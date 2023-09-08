@@ -8,12 +8,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LanguageTranslation extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     public $fillable = [
         'name'
     ];
 
+    public $timestamps = false;
+    protected $dates = ['deleted_at'];
+
+    protected $hidden = [
+        'deleted_at'
+    ];
 
     public function language()
     {

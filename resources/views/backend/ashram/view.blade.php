@@ -23,7 +23,7 @@
                                         </li>
                                         <?php foreach (config('translatable.locales') as $translated_tabs) { ?>
                                             <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#<?php echo $translated_tabs ?>_block_details"><?php echo $translated_tabs; ?></a>
+                                                <a class="nav-link" data-toggle="tab" href="#<?php echo $translated_tabs ?>_block_details">{{ config('translatable.locales_name')[$translated_tabs] }}</a>
                                             </li>
                                         <?php } ?>
                                     </ul>
@@ -31,6 +31,18 @@
                                         <div id="data_details" class="tab-pane fade in active show">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-bordered">
+                                                    <tr>
+                                                        <td><strong>Email</strong></td>
+                                                        <td>{{$ashram['email']}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Sequence</strong></td>
+                                                        <td>{{$ashram['sequence']}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Address</strong></td>
+                                                        <td>{{$ashram['location']}}</td>
+                                                    </tr>
                                                     @php
                                                     $phone_array = json_decode($ashram['phone']);
                                                     @endphp
@@ -44,10 +56,12 @@
                                                             </ul>
                                                         </td>
                                                     </tr>
+                                                    @if(isset($media))
                                                     <tr>
                                                         <td><strong>Ashram Image </strong></td>
                                                         <td><img src="{{$media->getFullUrl() ?? ''}}" width="200px" height="200px" alt=""></td>
                                                     </tr>
+                                                    @endif
                                                 </table>
                                             </div>
                                         </div>
