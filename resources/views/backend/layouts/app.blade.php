@@ -142,9 +142,11 @@
                                     <a href="quote_category" class="menu-item"><i class="fa fa-quote-left" aria-hidden="true"></i>
                                         Quotes Category</a>
                                 </li> --}}
+                                <li class="{{ $lastParam ==  'mantras' ? 'active' : '' }}">
+                                    <a href="mantras" class="menu-item"><i class="fa fa-ravelry" aria-hidden="true"></i>Mantras</a>
+                                </li>
 								<li class="{{ $lastParam ==  'quotes' ? 'active' : '' }}">
-                                    <a href="quotes" class="menu-item"><i class="fa fa-quote-left" aria-hidden="true"></i>
-                                        Quotes</a>
+                                    <a href="quotes" class="menu-item"><i class="fa fa-quote-left" aria-hidden="true"></i>Quotes</a>
                                 </li>
                                 <li class="{{ $lastParam ==  'videos' ? 'active' : '' }}">
                                     <a href="videos" class="menu-item"><i class="fa fa-video-camera" aria-hidden="true"></i>Videos</a>

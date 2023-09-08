@@ -235,9 +235,11 @@ function submitForm(form_id, form_method, errorOverlay = '') {
             translation_block_lang = [];
             trans = {};
             var i=0;
+            arr = [];
             $('.translation_block').each(function() {
-                translation_block_key[i] = (($(this).prop('id')).split('_'))[0];
-                translation_block_lang[i] = (($(this).prop('id')).split('_'))[1];
+                arr = (($(this).prop('id')).split('_'));
+                translation_block_key[i] = ($(this).prop('id')).replace("_"+arr[arr.length-1], "");;
+                translation_block_lang[i] = arr[arr.length-1];
                 i++;
             });
             keys = translation_block_key.filter(onlyUnique);
@@ -248,11 +250,11 @@ function submitForm(form_id, form_method, errorOverlay = '') {
                 test = {};
                 for(j=0; j < lang.length; j++) {
                     test[lang[j]] = nl2br($('#'+keys[i]+'_'+lang[j]).val());
-                    console.log(test[lang[j]]);
                 }
                 trans[keys[i]] = test;
                 formdata.append(keys[i], JSON.stringify(test));
             }
+            console.log(trans);
         }
         formdata.append("key", JSON.stringify(["a","b","c"]));
         $.ajax({
@@ -264,7 +266,6 @@ function submitForm(form_id, form_method, errorOverlay = '') {
             contentType: false,
             processData: false,
             success: function (data) {
-                console.log(data);
                 var response = JSON.parse(data);
                 if (response['success'] == 0) {
                     if (errorOverlay) {
