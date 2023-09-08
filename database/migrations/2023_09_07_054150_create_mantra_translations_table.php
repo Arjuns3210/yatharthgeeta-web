@@ -15,10 +15,12 @@ class CreateMantraTranslationsTable extends Migration
     {
         Schema::create('mantra_translations', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignId('mantra_id')->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('mantra_id')->unsigned();
             $table->string('locale')->index();
             $table->string('title');
             $table->text('description');
+            $table->foreign('mantra_id')->references('id')->on('mantras')->onDelete('cascade')->onUpdate('cascade');
+            $table->unique(['mantra_id','locale']);
             $table->timestamps();
         });
     }
