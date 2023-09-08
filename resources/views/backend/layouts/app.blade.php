@@ -135,8 +135,11 @@
                                 <li class="{{ $lastParam ==  'language' ? 'active' : '' }}">
                                     <a href="language" class="menu-item"><i class="fa fa-language" aria-hidden="true"></i>Language</a>
                                 </li>
-                                <li class="{{ $lastParam ==  'banners' ? 'active' : '' }}">
-                                    <a href="banners" class="menu-item"><i class="fa fa-picture-o" aria-hidden="true"></i>Banners</a>
+                                <li class="{{ $lastParam ==  'events' ? 'active' : '' }}">
+                                    <a href="events" class="menu-item"><i class="fa fa-picture-o" aria-hidden="true"></i>Event</a>
+                                </li>
+                                <li class="{{ $lastParam ==  'event_images' ? 'active' : '' }}">
+                                    <a href="event_images" class="menu-item"><i class="fa fa-picture-o" aria-hidden="true"></i>Event Gallay</a>
                                 </li>
                                 {{-- <li class="{{ $lastParam ==  'quote_category' ? 'active' : '' }}">
                                     <a href="quote_category" class="menu-item"><i class="fa fa-quote-left" aria-hidden="true"></i>

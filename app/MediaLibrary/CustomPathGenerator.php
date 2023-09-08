@@ -5,6 +5,8 @@ namespace App\MediaLibrary;
 
 use App\Models\Banner;
 use App\Models\Ashram;
+use App\Models\Event;
+use App\Models\EventImage;
 use App\Models\Quote;
 use App\Models\Video;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -20,8 +22,10 @@ class CustomPathGenerator implements PathGenerator
         $path = '{PARENT_DIR}'.DIRECTORY_SEPARATOR.$media->id.DIRECTORY_SEPARATOR;
 
         switch ($media->collection_name) {
-            case Banner::COVER;
-                return str_replace('{PARENT_DIR}', Banner::COVER, $path);
+            case EventImage::IMAGE;
+                return str_replace('{PARENT_DIR}', EventImage::IMAGE, $path);
+            case Event::COVER;
+                return str_replace('{PARENT_DIR}', Event::COVER, $path);
             case Ashram::IMAGE;
                 return str_replace('{PARENT_DIR}', Ashram::IMAGE, $path);
 			case Quote::IMAGE;
