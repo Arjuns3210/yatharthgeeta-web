@@ -76,6 +76,25 @@
                                                                         @endif
                                                                     </tr>
                                                                     <tr>
+                                                                        <td><strong>Srt File</strong></td>
+                                                                        <td>
+                                                                            @if(!empty($audioSrtFile))
+                                                                                <div class="d-flex mb-1 ">
+                                                                                    <input type="text"
+                                                                                           class="form-control input-sm bg-white document-border"
+                                                                                           value="{{ $audioSrtFile->name ?? ''}}"
+                                                                                           readonly
+                                                                                           style="color: black !important;">
+                                                                                    <a href="{{$audioSrtFile->getFullUrl() ?? ''}}"
+                                                                                       class="btn btn-primary mx-2 px-2"
+                                                                                       target="_blank"><i class="fa ft-eye"></i></a>
+                                                                                </div>
+                                                                            @else
+                                                                                -
+                                                                            @endif
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
                                                                         <td><strong>Date Time</strong></td>
                                                                         <td>{{\Carbon\Carbon::parse($audio->created_at)->format('d-m-Y')}}</td>
                                                                     </tr>

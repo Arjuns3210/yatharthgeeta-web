@@ -104,15 +104,25 @@
                                                                             <td>{{ $translateData->title ?? ''}}</td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td><strong>Chapter</strong>
+                                                                            <td><strong>Chapter Number</strong>
                                                                             </td>
-                                                                            <td>{{ $translateData->chapters ?? ''}}</td>
+                                                                            <td>{{ $translateData->chapter_number ?? ''}}</td>
                                                                         </tr>
 
                                                                         <tr>
-                                                                            <td><strong>Chapter</strong>
+                                                                            <td><strong>Chapter Name</strong>
                                                                             </td>
-                                                                            <td>{{ $translateData->verses ?? ''}}</td>
+                                                                            <td>{{ $translateData->chapter_name ?? ''}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td><strong>Verses Number</strong>
+                                                                            </td>
+                                                                            <td>{{$translateData->verses_number ?? ''}}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td><strong>Verses Name</strong>
+                                                                            </td>
+                                                                            <td>{{$translateData->verses_name ?? ''}}</td>
                                                                         </tr>
                                                                     </table>
                                                                 </div>

@@ -48,15 +48,21 @@ class AudioController extends Controller
      */
     public function fetch(Request $request)
     {
+        $localeLanguage = \App::getLocale();
+        if (str_contains($localeLanguage, 'en')) {
+            $localeLanguage = 'en';
+        } else {
+            $localeLanguage = 'hi';
+        }
         if ($request->ajax()) {
             try {
                 $query = Audio::orderBy('updated_at','desc');
 
                 return DataTables::of($query)
-                    ->filter(function ($query) use ($request) {
+                    ->filter(function ($query) use ($request ,$localeLanguage) {
                         if (isset($request['search']['search_title']) && !is_null($request['search']['search_title'])) {
-                            $query->whereHas('translations', function ($translationQuery) use ($request) {
-                                $translationQuery->where('title', 'like', "%" . $request['search']['search_title'] . "%");
+                            $query->whereHas('translations', function ($translationQuery) use ($request ,$localeLanguage) {
+                                $translationQuery->where('locale',$localeLanguage)->where('title', 'like', "%" . $request['search']['search_title'] . "%");
                             });
                         }
                         if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
@@ -250,6 +256,7 @@ class AudioController extends Controller
         $data['audio'] = Audio::with('translations')->findOrFail($id);
         $data['audioFile'] = $data['audio']->getMedia(Audio::AUDIO_FILE)->first()?? '';
         $data['audioCoverImage'] = $data['audio']->getMedia(Audio::AUDIO_COVER_IMAGE)->first()?? '';
+        $data['audioSrtFile'] = $data['audio']->getMedia(Audio::AUDIO_SRT_FILE)->first()?? '';
         
         return view('backend/audio/view')->with($data);
     }

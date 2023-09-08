@@ -18,7 +18,7 @@ class AddSomeFiledIntoAudioEpisodeTranslationsTable extends Migration
             $table->string('chapter_name')->after('chapters')->nullable();
             $table->string('verses_name')->after('verses')->nullable();
             $table->integer('chapter_number')->after('chapter_name')->nullable();
-            $table->integer('verse_number')->after('verses')->nullable();
+            $table->integer('verses_number')->after('verses')->nullable();
             
             //drop column
             $table->dropColumn('chapters');

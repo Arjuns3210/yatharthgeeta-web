@@ -50,15 +50,21 @@ class AudioEpisodeController extends Controller
      */
     public function fetch(Request $request)
     {
+        $localeLanguage = \App::getLocale();
+        if (str_contains($localeLanguage, 'en')) {
+            $localeLanguage = 'en';
+        } else {
+            $localeLanguage = 'hi';
+        }
         if ($request->ajax()) {
             try {
                 $query = AudioEpisode::where('audio_id',$request['search']['search_audio_id'] ?? '')->orderBy('updated_at','desc');
 
                 return DataTables::of($query)
-                    ->filter(function ($query) use ($request) {
+                    ->filter(function ($query) use ($request ,$localeLanguage) {
                         if (isset($request['search']['search_title']) && !is_null($request['search']['search_title'])) {
-                            $query->whereHas('translations', function ($translationQuery) use ($request) {
-                                $translationQuery->where('title', 'like', "%" . $request['search']['search_title'] . "%");
+                            $query->whereHas('translations', function ($translationQuery) use ($request ,$localeLanguage) {
+                                $translationQuery->where('locale',$localeLanguage)->where('title', 'like', "%" . $request['search']['search_title'] . "%");
                             });
                         }
                         if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
@@ -157,13 +163,11 @@ class AudioEpisodeController extends Controller
         try {
             DB::beginTransaction();
             $input = $request->all();
-            dd($input);
             $translated_keys = array_keys(AudioEpisode::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
                 $input[$value] = (array) json_decode($input[$value]);
             }
             $saveArray = Utils::flipTranslationArray($input, $translated_keys);
-            dd($saveArray);
             $audioEpisode = AudioEpisode::create($saveArray);
             $episodeTitle = $audioEpisode->translations()->first()->title ?? '';
             $audioFileName = null;
