@@ -9,6 +9,7 @@ use App\Models\Admin;
 use App\Models\Collection;
 use App\Models\Country;
 use App\Models\Role;
+use Carbon\carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -128,12 +129,16 @@ class StaffController extends Controller
     public function store(CreateStaffRequest $request)
     {
         try {
+            $currentDate = Carbon::now();
+            $expiryDate = $currentDate->addDays(90);
             DB::beginTransaction();
             $input = $request->all();
             $input['email'] = strtolower(trim($input['email']));
             $input['country_id'] = '91';
             $input['password'] =  md5($input['email'].$input['password']);
             $input['created_by'] = session('data')['id'];
+            $input['pwd_expiry_date'] = $expiryDate;
+            $input['force_pwd_change_flag'] = '1';
             Admin::create($input);
 
             DB::commit();

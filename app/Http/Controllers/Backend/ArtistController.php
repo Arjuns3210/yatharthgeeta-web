@@ -53,7 +53,7 @@ class ArtistController extends Controller
                     ->editColumn('name_'.\App::getLocale(), function ($event) {
                         $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
                         return $event['translations'][$Key_index]['name'];
-                    })->editColumn('title', function ($event) {
+                    })->editColumn('title_'.\App::getLocale(), function ($event) {
                         $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
                         return $event['translations'][$Key_index]['title'];
                     })
@@ -73,7 +73,7 @@ class ArtistController extends Controller
                         return $actions;
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['name'.\App::getLocale(), 'title','status', 'action'])->setRowId('id')->make(true);
+                    ->rawColumns(['name_'.\App::getLocale(), 'title_'.\App::getLocale(),'status', 'action'])->setRowId('id')->make(true);
             } catch (\Exception $e) {
                 \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                 return response([

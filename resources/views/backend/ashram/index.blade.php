@@ -56,7 +56,7 @@
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
                                                     <th id="name_{{ \App::getLocale()}}" data-orderable="false" data-searchable="false">Name ({{ config('translatable.locales_name')[\App::getLocale()] }})</th>
-                                                    <th id="title" data-orderable="false" data-searchable="false">Title</th>
+                                                    <th id="title_{{ \App::getLocale()}}" data-orderable="false" data-searchable="false">Title ({{ config('translatable.locales_name')[\App::getLocale()] }})</th>
                                                     <th id="location" data-orderable="false" data-searchable="false">Address</th>
                                                     @if($data['ashram_edit'] || $data['ashram_view'] || $data['ashram_status'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>

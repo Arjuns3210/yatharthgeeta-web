@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Login
-Route::get('/', 'LoginController@index');
+Route::get('/', 'LoginController@index')->name('login');
 Route::post('login', 'LoginController@login');
 Route::get('/forgot-password', 'LoginController@forgotPassword')->name('password.request');
 Route::post('/forgot-password', 'LoginController@forgotPasswordStore')->name('password.email');
@@ -46,6 +46,7 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('ashram/fetch', 'AshramController@fetch');
 	Route::get('ashram/view/{id}', 'AshramController@show');
 	Route::post('ashram/save', 'AshramController@store');
+	Route::post('ashram/delete_img', 'AshramController@deleteImage');
 
 	//Guru's
 	Route::get('guru', 'ArtistController@index');

@@ -56,7 +56,7 @@ class AshramController extends Controller
                     ->editColumn('name_'.\App::getLocale(), function ($event) {
                         $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
                         return $event['translations'][$Key_index]['name'];
-                    })->editColumn('title', function ($event) {
+                    })->editColumn('title_'.\App::getLocale(), function ($event) {
                         $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
                         return $event['translations'][$Key_index]['title'];
                     })->editColumn('location', function ($event) {
@@ -78,7 +78,7 @@ class AshramController extends Controller
                         return $actions;
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['name_'.\App::getLocale(), 'title','location','status', 'action'])->setRowId('id')->make(true);
+                    ->rawColumns(['name_'.\App::getLocale(), 'title_'.\App::getLocale(),'location','status', 'action'])->setRowId('id')->make(true);
             } catch (\Exception $e) {
                 \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                 return response([
@@ -101,7 +101,7 @@ class AshramController extends Controller
     {
         $data['translated_block'] = Location::TRANSLATED_BLOCK;
 
-        return view('backend/ashram/add1',$data);
+        return view('backend/ashram/add',$data);
     }
 
     /**
@@ -208,5 +208,13 @@ class AshramController extends Controller
     public function destroy(Ashram $ashram)
     {
         //
+    }
+
+    public function deleteImage(Request $request)
+    {
+        $msg_data = array();
+        $data = Location::find($_GET['id']);
+        dd($data);
+        successMessage('image deleted successfully', $msg_data);
     }
 }
