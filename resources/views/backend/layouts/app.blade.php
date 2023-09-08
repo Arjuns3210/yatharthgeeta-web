@@ -151,6 +151,9 @@
                                 <li class="{{ $lastParam ==  'videos' ? 'active' : '' }}">
                                     <a href="videos" class="menu-item"><i class="fa fa-video-camera" aria-hidden="true"></i>Videos</a>
                                 </li>
+                                <li class="{{ ($lastParam ==  'audios' || $lastParam ==  'audio_episodes') ? 'active' : '' }}">
+                                    <a href="audios" class="menu-item"><i class="fa fa-play-circle-o" style="font-size:1.7rem !important"></i>Audio</a>
+                                </li>
                             </ul>
                         </li>
 

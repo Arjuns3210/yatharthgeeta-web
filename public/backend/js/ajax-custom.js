@@ -660,3 +660,36 @@ function onlyNumericNegative(input) {
     }
 }
 
+function deleteDocuments (mediaId, removeClassName) {
+    bootbox.confirm({
+        message: 'Are you sure you want to delete this Document?',
+        buttons: {
+            confirm: {
+                label: 'Yes, I confirm',
+                className: 'btn-primary',
+            },
+            cancel: {
+                label: 'Cancel',
+                className: 'btn-danger',
+            },
+        },
+        callback: function (result) {
+            if (result) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: "delete_documents",
+                    data: { id :mediaId ,_token : $('meta[name=csrf-token]').attr('content')},
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                    success: function (result) {
+                        if (result) {
+                            $(removeClassName + mediaId).remove();
+                        }
+                    },
+                });
+            }
+        },
+    });
+}
