@@ -43,7 +43,7 @@
                                                 <thead>
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
-                                                    <th id="name_{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Language Name ({{\App::getLocale()}})</th>
+                                                    <th id="name_{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Language Name ({{ config('translatable.locales_name')[\App::getLocale()] }})</th>
                                                     <th id="language_code" data-orderable="false" data-searchable="false">Language Code</th>
                                                     @if($data['language_edit'] || $data['language_view'] || $data['language_status'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
