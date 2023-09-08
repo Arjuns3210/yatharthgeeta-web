@@ -19,10 +19,12 @@ class CreateHomeCollectionTable extends Migration
             $table->string('description');
             $table->enum('type', ['Single', 'Multiple', 'Book', 'Audio', 'Video', 'Shlok', 'Artist'])->default('Single');
             $table->integer('sequence')->nullable();
-            $table->enum('is_scrollable',[0,1])->default(0);
+            $table->enum('is_scrollable', [0, 1])->default(0);
             $table->integer('display_in_column')->default(1);
             $table->integer('language_id');
             $table->enum('status', [0, 1])->default(1);
+            $table->integer('created_by')->default(0);
+            $table->integer('updated_by')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

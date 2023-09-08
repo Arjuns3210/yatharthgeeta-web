@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+
+class HomeCollectionMapping extends Model implements HasMedia
+{
+    use SoftDeletes;
+    use HasFactory;
+    use InteractsWithMedia;
+
+    public $table = 'home_collection_mappings';
+    public $fillable = [
+        'title',
+        'home_collection_id',
+        'mapped_ids',
+        'sequence',
+        'is_clickable',
+        'mapped_to',
+    ];
+    
+    const MULTIPLE_COLLECTION_IMAGE = 'multiple_collection_image';
+}

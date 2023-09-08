@@ -3,9 +3,16 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateCollectionRequest;
+use App\Models\Artist;
+use App\Models\Book;
 use App\Models\BookCategory;
 use App\Models\HomeCollection;
+use App\Models\Language;
+use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class HomeCollectionController extends Controller
 {
@@ -29,9 +36,50 @@ class HomeCollectionController extends Controller
      */
     public function create()
     {
+        $localeLanguage = \App::getLocale();
+        if (str_contains($localeLanguage, 'en')) {
+            $localeLanguage = 'en';
+        } else {
+            $localeLanguage = 'hi';
+        }
         $data['translated_block'] = [];
         $data['collection_types'] = HomeCollection::COLLECTION_TYPES;
-        $data['orientation_types'] = HomeCollection::ORIENTATION_TYPE;
+
+        $data['books'] = Book::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->where('status', 1)->get();
+        
+        $data['audios'] = Artist::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->where('status', 1)->get();
+        
+        $data['videos'] = Video::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->where('status', 1)->get();
+
+        $data['shloks'] = Artist::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->get();
+        
+        $data['artists'] = Artist::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->get();
+        
+        $data['languages'] = Language::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->where('status', 1)->get(); 
 
         return view('backend/home_collection/add',$data);
     }
@@ -39,12 +87,36 @@ class HomeCollectionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  CreateCollectionRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCollectionRequest $request)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $input = $request->all();
+            $input['type'] = $input['collection_type'];
+            $input['is_scrollable'] = false;
+            if (! empty($input['is_scrollable'])) {
+                $input['is_scrollable'] = true;
+            }
+            $input['created_by'] = session('data')['id'] ?? 0;
+            $collection = HomeCollection::create($input);
+            if (! empty($collection) && $input['type'] == 'Book' && !empty($input['book_id'])) {
+                $homeCollectionDetails = [
+                    'home_collection_id' => $collection->id,
+                    'mapped_ids'         => $collection->id,
+                ];
+            }
+            DB::commit();
+
+            successMessage('Data Saved successfully', []);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("Something Went Wrong. Error: ".$e->getMessage());
+
+            errorMessage($e->getMessage());
+        }
     }
 
     /**
@@ -72,7 +144,7 @@ class HomeCollectionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  \App\Models\HomeCollection  $homeCollection
      * @return \Illuminate\Http\Response
      */
