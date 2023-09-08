@@ -22,12 +22,6 @@ class CreateAudioEpisodeTranslationsTable extends Migration
             $table->string('title')->nullable();
             $table->string('chapters')->nullable();
             $table->string('verses')->nullable();
-            
-            $table->enum('status', [1, 0])->default(1);
-            $table->integer('created_by')->default(0);
-            $table->integer('updated_by')->default(0);
-            $table->softDeletes();
-            $table->timestamps();
         });
     }
 

@@ -20,9 +20,6 @@ class AudioEpisodeTranslation extends Model
         'verses_name',
         'chapter_number',
         'verses_number',
-        'status',
-        'created_by',
-        'updated_by',
     ];
 
     /**

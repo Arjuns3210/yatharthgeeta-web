@@ -17,9 +17,6 @@ class AudioTranslation extends Model
         'locale',
         'title',
         'description',
-        'status',
-        'created_by',
-        'updated_by',
     ];
 
     /**
