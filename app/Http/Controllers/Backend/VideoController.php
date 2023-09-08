@@ -49,7 +49,7 @@ class VideoController extends Controller
                                 $query->where('status', $request['search']['search_status']);
                             }
                             $query->get()->toArray();
-                        })->editColumn('title', function ($event) {
+                        })->editColumn('title_'.\App::getLocale(), function ($event) {
                             $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
                             return $event['translations'][$Key_index]['title'];
 
@@ -83,7 +83,7 @@ class VideoController extends Controller
                             return $actions;
                         })
                         ->addIndexColumn()
-                        ->rawColumns(['title'.\App::getLocale(),'sequence', 'action'])->setRowId('id')->make(true);
+                        ->rawColumns(['title_'.\App::getLocale(),'sequence', 'action'])->setRowId('id')->make(true);
                 } catch (\Exception $e) {
                     \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                     return response([
@@ -157,6 +157,13 @@ class VideoController extends Controller
     public function view($id)
     {
         $data['videos'] = Video::find($id);
+        foreach($data['videos']['translations'] as $trans) {
+            $translated_keys = array_keys(Video::TRANSLATED_BLOCK);
+            foreach ($translated_keys as $value) {
+                $data['videos'][$value.'_'.$trans['locale']] = $trans[$value];
+            }
+        }
+        $data['translated_block'] = Video::TRANSLATED_BLOCK;
         $data['media'] = $data['videos']->getMedia(Video::COVER_IMAGE)[0];
         return view('backend/videos/view',$data);
     }
@@ -173,7 +180,7 @@ class VideoController extends Controller
         foreach($data['videos']['translations'] as $trans) {
             $translated_keys = array_keys(Video::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
-                $data['videos'][$value.'_'.$trans['locale']] = $trans[$value];
+                $data['videos'][$value.'_'.$trans['locale']] = str_replace("<br/>", "\r\n", $trans[$value]);
             }
         }
         $data['translated_block'] = Video::TRANSLATED_BLOCK;

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Login
-Route::get('/', 'LoginController@index');
+Route::get('/', 'LoginController@index')->name('login');
 Route::post('login', 'LoginController@login');
 Route::get('/forgot-password', 'LoginController@forgotPassword')->name('password.request');
 Route::post('/forgot-password', 'LoginController@forgotPasswordStore')->name('password.email');
@@ -46,6 +46,7 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('ashram/fetch', 'AshramController@fetch');
 	Route::get('ashram/view/{id}', 'AshramController@show');
 	Route::post('ashram/save', 'AshramController@store');
+	Route::post('ashram/delete_img', 'AshramController@deleteImage');
 
 	//Guru's
 	Route::get('guru', 'ArtistController@index');
@@ -55,6 +56,7 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('guru/fetch', 'ArtistController@fetch');
 	Route::get('guru/view/{id}', 'ArtistController@show');
 	Route::post('guru/save', 'ArtistController@store');
+	Route::post('guru/delete_img', 'ArtistController@deleteImage');
 
 	// Category
 	Route::get('books_category', 'BookCategoryController@index');
@@ -64,6 +66,30 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::get('books_category/edit/{id}', 'BookCategoryController@edit');
 	Route::post('books_category/update', 'BookCategoryController@update');
 	Route::get('books_category/view/{id}', 'BookCategoryController@show');
+    
+    //audio
+    Route::get('audios', 'AudioController@index');
+    Route::get('audio/add', 'AudioController@create');
+    Route::get('prepare_episode_item/{number}', 'AudioController@prepareEpisodeItem');
+    Route::post('audio/fetch', 'AudioController@fetch');
+    Route::post('audio/save', 'AudioController@store');
+    Route::get('audio/edit/{id}', 'AudioController@edit');
+    Route::post('audio/update', 'AudioController@update');
+    Route::get('audio/view/{id}', 'AudioController@show');
+    Route::post('publish_audio', 'AudioController@updateStatus');
+    Route::get('audio_delete/{id}', 'AudioController@destroy');
+    Route::post('delete_documents', 'AudioController@deleteMedia')->name('delete_documents');
+    
+    // audio episodes
+    Route::get('audio_episodes/{audioId?}', 'AudioEpisodeController@index');
+    Route::post('audio_episode/fetch', 'AudioEpisodeController@fetch');
+    Route::post('audio_episode/save', 'AudioEpisodeController@store');
+    Route::get('audio_episode/add/{id}', 'AudioEpisodeController@create');
+    Route::get('audio_episode/edit/{id}', 'AudioEpisodeController@edit');
+    Route::post('audio_episode/update', 'AudioEpisodeController@update');
+    Route::get('audio_episode/view/{id}', 'AudioEpisodeController@show');
+    Route::post('publish_audio_episode', 'AudioEpisodeController@updateStatus');
+    Route::get('audio_episode_delete/{id}', 'AudioEpisodeController@destroy');
 
     //Banner
     Route::get('banners', 'BannerController@index');
@@ -97,6 +123,17 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('books/update', 'BookController@update');
     Route::post('books/publish', 'BookController@updateStatus');
     Route::get('books/delete/{id}', 'BookController@destroy');
+
+    //Mantra
+    Route::get('mantras', 'MantraController@index');
+    Route::post('mantras/fetch', 'MantraController@fetch');
+    Route::get('mantras/add', 'MantraController@create');
+    Route::post('mantras/save', 'MantraController@store');
+    Route::get('mantras/view/{id}', 'MantraController@view');
+	Route::get('mantras/edit/{id}', 'MantraController@edit');
+	Route::post('mantras/update', 'MantraController@update');
+    Route::post('mantras/publish', 'MantraController@updateStatus');
+    Route::get('mantras/delete/{id}', 'MantraController@destroy');
 
 	//staff
 	Route::get('staff', 'StaffController@index');
@@ -146,6 +183,10 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::get('quotes/edit/{id}', 'QuoteController@edit');
 	Route::post('quotes/update', 'QuoteController@update');
     Route::post('quotes/publish', 'QuoteController@updateStatus');
+
+    //quote category
+    Route::get('quote_category', 'QuoteCategoryController@index');
+    Route::post('quote_category/fetch', 'QuoteCategoryController@fetch');
 
     //general settings
     Route::get('general_settings', 'GeneralSettingController@index');

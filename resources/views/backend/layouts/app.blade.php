@@ -130,7 +130,7 @@
                                     <a href="ashram" class="menu-item"><i class="fa fa-building-o" aria-hidden="true"></i>Ashram</a>
                                 </li>
                                 <li class="{{ $lastParam ==  'guru' ? 'active' : '' }}">
-                                    <a href="guru" class="menu-item"><i class="fa fa-user-o" aria-hidden="true"></i>Guru's</a>
+                                    <a href="guru" class="menu-item"><i class="fa fa-user-o" aria-hidden="true"></i>Guru</a>
                                 </li>
                                 <li class="{{ $lastParam ==  'language' ? 'active' : '' }}">
                                     <a href="language" class="menu-item"><i class="fa fa-language" aria-hidden="true"></i>Language</a>
@@ -138,12 +138,21 @@
                                 <li class="{{ $lastParam ==  'banners' ? 'active' : '' }}">
                                     <a href="banners" class="menu-item"><i class="fa fa-picture-o" aria-hidden="true"></i>Banners</a>
                                 </li>
+                                {{-- <li class="{{ $lastParam ==  'quote_category' ? 'active' : '' }}">
+                                    <a href="quote_category" class="menu-item"><i class="fa fa-quote-left" aria-hidden="true"></i>
+                                        Quotes Category</a>
+                                </li> --}}
+                                <li class="{{ $lastParam ==  'mantras' ? 'active' : '' }}">
+                                    <a href="mantras" class="menu-item"><i class="fa fa-ravelry" aria-hidden="true"></i>Mantras</a>
+                                </li>
 								<li class="{{ $lastParam ==  'quotes' ? 'active' : '' }}">
-                                    <a href="quotes" class="menu-item"><i class="fa fa-quote-left" aria-hidden="true"></i>
-                                        Quotes</a>
+                                    <a href="quotes" class="menu-item"><i class="fa fa-quote-left" aria-hidden="true"></i>Quotes</a>
                                 </li>
                                 <li class="{{ $lastParam ==  'videos' ? 'active' : '' }}">
                                     <a href="videos" class="menu-item"><i class="fa fa-video-camera" aria-hidden="true"></i>Videos</a>
+                                </li>
+                                <li class="{{ ($lastParam ==  'audios' || $lastParam ==  'audio_episodes') ? 'active' : '' }}">
+                                    <a href="audios" class="menu-item"><i class="fa fa-play-circle-o" style="font-size:1.7rem !important"></i>Audio</a>
                                 </li>
                             </ul>
                         </li>
@@ -154,7 +163,7 @@
                             in_array('staff', $permission_array)
                            )
                         <li class="has-sub nav-item">
-                            <a href="javascript:;" class="dropdown-parent"><i class="icon-user-following"></i><span data-i18n="" class="menu-title">Staff Management</span></a>
+                            <a href="javascript:;" class="dropdown-parent"><i class="icon-user-following"></i><span data-i18n="" class="menu-title">Staff</span></a>
                             <ul class="menu-content">
                                 <li class="{{ $lastParam ==  'roles' ? 'active' : '' }}">
                                     <a href="roles" class="menu-item"><i class="fa fa-circle fs_i"></i>Manage Roles</a>

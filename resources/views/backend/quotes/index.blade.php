@@ -12,7 +12,7 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-12 col-sm-7">
-                                            <h5 class="pt-2">Manage Quotes List</h5>
+                                            <h5 class="pt-2">Manage Quote List</h5>
                                         </div>
                                         <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                             <button class="btn btn-sm btn-outline-danger px-3 py-1 mr-2" id="listing-filter-toggle"><i class="fa fa-filter"></i> Filter</button>
@@ -23,15 +23,18 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <div class="row mb-2" id="listing-filter-data" style="display: none;">                                      
-										
+                                    <div class="row mb-2" id="listing-filter-data" style="display: none;">
                                         <div class="col-md-4">
                                             <label>Sequence</label>
-                                            <input class="form-control mb-3" type="text" id="sequence" name="sequence">
+                                            <input class="form-control mb-3" type="text" id="search_sequence" name="search_sequence">
                                         </div>
-										<div class="col-md-4">
-                                            <label>Share Allowance</label>
-                                            <input class="form-control mb-3" type="text" id="share_allowance" name="share_allowance">
+                                        <div class="col-md-4">
+                                            <label>Status</label>
+                                            <select class="form-control mb-3" type="text" id="search_status" name="search_status">
+                                                <option value="">All</option>
+                                                <option value="1">Active</option>
+                                                <option value="0">Inactive</option>
+                                            </select>
                                         </div>
                                         <div class="col-md-4">
                                             <label>&nbsp;</label><br/>
@@ -43,10 +46,9 @@
                                             <thead>
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
-                                                    <th id="shlok" data-orderable="false" data-searchable="false">Shlok</th>
+                                                    <th id="image" data-orderable="false" data-searchable="false">Quote Image</th>
                                                     <th id="sequence" data-orderable="false" data-searchable="false">Sequence</th>
-													<th id="share_allowance" data-orderable="false" data-searchable="false">Share Allowance</th>
-                                                    @if($data['quotes_edit'] || $data['quotes_view'] || $data['quotes_status'])
+                                                    @if($data['quotes_status'] || $data['quotes_edit'] || $data['quotes_view'] || $data['quotes_delete'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
                                                     @endif
                                                 </tr>

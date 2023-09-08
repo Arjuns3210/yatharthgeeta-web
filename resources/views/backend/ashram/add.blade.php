@@ -25,7 +25,7 @@
                                             </li>
                                             <?php foreach (config('translatable.locales') as $translated_tabs) { ?>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" data-toggle="tab" href="#<?php echo $translated_tabs ?>_block_details"><?php echo $translated_tabs; ?></a>
+                                                    <a class="nav-link" data-toggle="tab" href="#<?php echo $translated_tabs ?>_block_details">{{ config('translatable.locales_name')[$translated_tabs] }}</a>
                                                 </li>
                                             <?php } ?>
                                         </ul>
@@ -51,13 +51,17 @@
                                                         <label>Address<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="location" name="location"><br/>
                                                     </div>
-                                                    <div class="col-sm-6" >
+                                                    <div class="col-sm-6">
+                                                        <label>Sequence<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6" hidden>
                                                         <label>Latitude<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="latitude" name="latitude" oninput="filterNonNumeric(this)"><br/>
+                                                        <input class="form-control required" type="text" id="latitude" name="latitude" value="19.1005574066246"><br/>
                                                     </div>
                                                     <div class="col-sm-6" hidden>
                                                         <label>Longitude<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="longitude" name="longitude" oninput="filterNonNumeric(this)"><br/>
+                                                        <input class="form-control required" type="text" id="longitude" name="longitude" value="72.88494229316711"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Goolge Address<span class="text-danger">*</span></label>
@@ -102,7 +106,7 @@
                                                     <div class="row">
                                                         <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                             <?php if($translated_block_fields_value == 'textarea') { ?>
-                                                                <div class="col-md-6 mb-3">
+                                                                <div class="col-md-12 mb-3">
                                                                     <label>{{formatName($translated_block_fields_key)}}</label>
                                                                     <textarea class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}"></textarea>
                                                                 </div>
@@ -137,15 +141,17 @@
     let geocoder; // Define a geocoder to convert lat/lng to address
 
     function initMap() {
+        var lati = 19.1005574066246;
+        var lang = 72.88494229316711;
         map = new google.maps.Map(document.getElementById("map"), {
-            center: { lat: -34.397, lng: 150.644 },
-            zoom: 8,
+            center: { lat: lati, lng: lang },
+            zoom: 15,
             scrollwheel: true,
         });
 
         geocoder = new google.maps.Geocoder(); // Initialize the geocoder
 
-        const uluru = { lat: -34.397, lng: 150.644 };
+        const uluru = { lat: lati, lng: lang };
         let marker = new google.maps.Marker({
             position: uluru,
             map: map,

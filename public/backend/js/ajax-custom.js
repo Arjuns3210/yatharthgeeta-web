@@ -235,9 +235,11 @@ function submitForm(form_id, form_method, errorOverlay = '') {
             translation_block_lang = [];
             trans = {};
             var i=0;
+            arr = [];
             $('.translation_block').each(function() {
-                translation_block_key[i] = (($(this).prop('id')).split('_'))[0];
-                translation_block_lang[i] = (($(this).prop('id')).split('_'))[1];
+                arr = (($(this).prop('id')).split('_'));
+                translation_block_key[i] = ($(this).prop('id')).replace("_"+arr[arr.length-1], "");;
+                translation_block_lang[i] = arr[arr.length-1];
                 i++;
             });
             keys = translation_block_key.filter(onlyUnique);
@@ -248,11 +250,11 @@ function submitForm(form_id, form_method, errorOverlay = '') {
                 test = {};
                 for(j=0; j < lang.length; j++) {
                     test[lang[j]] = nl2br($('#'+keys[i]+'_'+lang[j]).val());
-                    console.log(test[lang[j]]);
                 }
                 trans[keys[i]] = test;
                 formdata.append(keys[i], JSON.stringify(test));
             }
+            console.log(trans);
         }
         formdata.append("key", JSON.stringify(["a","b","c"]));
         $.ajax({
@@ -264,7 +266,6 @@ function submitForm(form_id, form_method, errorOverlay = '') {
             contentType: false,
             processData: false,
             success: function (data) {
-                console.log(data);
                 var response = JSON.parse(data);
                 if (response['success'] == 0) {
                     if (errorOverlay) {
@@ -305,11 +306,11 @@ function submitForm(form_id, form_method, errorOverlay = '') {
     }
 }
 
-function nl2br (str, is_xhtml) {     
+function nl2br (str, is_xhtml) {
 
-    var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br/>' : '<br>';      
+    var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br/>' : '<br>';
 
-    return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, breakTag);  
+    return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, breakTag);
 
 }
 
@@ -397,7 +398,7 @@ function submitEditor(form_id) {
                     container: 'floating',
                     timer: 3000
                 });
-            }            
+            }
         }
     });
 }
@@ -461,7 +462,7 @@ $(document).on('click', '.delimg', function (event) {
                                 icon: 'fa fa-check',
                                 message: response['message'],
                                 container: 'floating',
-                                timer: 3000
+                                timer: 1000
                             });
                             $('#' + main_id).closest('.main-del-section').remove();
                         }
@@ -659,3 +660,36 @@ function onlyNumericNegative(input) {
     }
 }
 
+function deleteDocuments (mediaId, removeClassName) {
+    bootbox.confirm({
+        message: 'Are you sure you want to delete this Document?',
+        buttons: {
+            confirm: {
+                label: 'Yes, I confirm',
+                className: 'btn-primary',
+            },
+            cancel: {
+                label: 'Cancel',
+                className: 'btn-danger',
+            },
+        },
+        callback: function (result) {
+            if (result) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: "delete_documents",
+                    data: { id :mediaId ,_token : $('meta[name=csrf-token]').attr('content')},
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                    success: function (result) {
+                        if (result) {
+                            $(removeClassName + mediaId).remove();
+                        }
+                    },
+                });
+            }
+        },
+    });
+}

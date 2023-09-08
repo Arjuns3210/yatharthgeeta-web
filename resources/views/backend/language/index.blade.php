@@ -34,6 +34,14 @@
                                                 <input class="form-control mb-3" type="text" id="search_language_code" name="search_language_code">
                                             </div>
                                             <div class="col-md-4">
+                                                <label>Status</label>
+                                                <select class="form-control mb-3" type="text" id="search_status" name="search_status">
+                                                    <option value="">All</option>
+                                                    <option value="1">Active</option>
+                                                    <option value="0">Inactive</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
                                                 <label>&nbsp;</label><br/>
                                                 <input class="btn btn-md btn-primary px-3 py-1 mb-3" id="clear-form-data" type="reset" value="Clear Search">
                                             </div>
@@ -43,7 +51,7 @@
                                                 <thead>
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
-                                                    <th id="name_{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Language Name ({{\App::getLocale()}})</th>
+                                                    <th id="name_{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Language Name ({{ config('translatable.locales_name')[\App::getLocale()] }})</th>
                                                     <th id="language_code" data-orderable="false" data-searchable="false">Language Code</th>
                                                     @if($data['language_edit'] || $data['language_view'] || $data['language_status'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>

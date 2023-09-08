@@ -25,7 +25,7 @@
                                             </li>
                                             <?php foreach (config('translatable.locales') as $translated_tabs) { ?>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" data-toggle="tab" href="#<?php echo $translated_tabs ?>_block_details"><?php echo $translated_tabs; ?></a>
+                                                    <a class="nav-link" data-toggle="tab" href="#<?php echo $translated_tabs ?>_block_details">{{ config('translatable.locales_name')[$translated_tabs] }}</a>
                                                 </li>
                                             <?php } ?>
                                         </ul>
@@ -33,10 +33,8 @@
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
                                                     <div class="col-sm-6">
-                                                        <label>Image</label>
-                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
-                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')" value="{{$guru['image']}}"><br/>
-                                                        <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="100px" alt="" id="image">
+                                                        <label>Sequence<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="sequence" name="sequence" value="{{$guru['sequence']}}" oninput="onlyNumericNegative(this)"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>guru Status<span class="text-danger">*</span></label>
@@ -44,6 +42,17 @@
                                                             <option value="1" <?php echo $guru['status'] == 1 ? 'selected' : '' ?>>Active</option>
                                                             <option value="0" <?php echo $guru['status'] == 0 ? 'selected' : '' ?>>Inactive</option>
                                                         </select>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Image</label>
+                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')" value="{{$guru['image']}}"><br/>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
+                                                        @if(isset($media))
+                                                        <div class="main-del-section" style="position: relative; border: 1px solid #999; border-radius: 5px; padding: 5px; margin-right: 10px; display: inline-block;">
+                                                            <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="auto">
+                                                            <span class="delimg bg-danger text-center" id="{{$guru['id']}}" data-url="guru/delete_img?id={{$guru['id']}}" style="padding: 0 5px; position: absolute; top: -8px; right: -8px; border-radius: 50%; cursor: pointer;"><i class="fa fa-times text-light"></i></span>
+                                                        </div>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -59,7 +68,7 @@
                                                                     <label>{{$translated_block_fields_key}}</label>
                                                                     <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" value="{{$guru[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}">
                                                                 </div>
-                                                            <?php 
+                                                            <?php
                                                         } ?>
                                                         <?php } ?>
                                                     </div>

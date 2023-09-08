@@ -67,6 +67,8 @@ class LoginController extends Controller
                 "name"=>$response[0]['admin_name'],
                 "email"=>$request->email,
                 "role_id"=>$response[0]['role_id'],
+                "force_pwd_change_flag" => $response[0]['force_pwd_change_flag'],
+                "pwd_expiry_date" => $response[0]['pwd_expiry_date'],
                 "permissions"=>$response[0]['role']['permission']
             );
             $request->session()->put('data',$data);

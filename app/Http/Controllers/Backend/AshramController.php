@@ -56,7 +56,7 @@ class AshramController extends Controller
                     ->editColumn('name_'.\App::getLocale(), function ($event) {
                         $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
                         return $event['translations'][$Key_index]['name'];
-                    })->editColumn('title', function ($event) {
+                    })->editColumn('title_'.\App::getLocale(), function ($event) {
                         $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
                         return $event['translations'][$Key_index]['title'];
                     })->editColumn('location', function ($event) {
@@ -78,7 +78,7 @@ class AshramController extends Controller
                         return $actions;
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['name_'.\App::getLocale(), 'title','location','status', 'action'])->setRowId('id')->make(true);
+                    ->rawColumns(['name_'.\App::getLocale(), 'title_'.\App::getLocale(),'location','status', 'action'])->setRowId('id')->make(true);
             } catch (\Exception $e) {
                 \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                 return response([
@@ -101,7 +101,7 @@ class AshramController extends Controller
     {
         $data['translated_block'] = Location::TRANSLATED_BLOCK;
 
-        return view('backend/ashram/add1',$data);
+        return view('backend/ashram/add',$data);
     }
 
     /**
@@ -136,7 +136,19 @@ class AshramController extends Controller
     public function show($id)
     {
         $data['ashram'] = Location::find($id);
-        $data['media'] = $data['ashram']->getMedia(Location::IMAGE)[0];
+        foreach($data['ashram']['translations'] as $trans) {
+            $translated_keys = array_keys(Location::TRANSLATED_BLOCK);
+            foreach ($translated_keys as $value) {
+                $data['ashram'][$value.'_'.$trans['locale']] = $trans[$value];
+            }
+        }
+        $data['translated_block'] = Location::TRANSLATED_BLOCK;
+        if (!empty($data['ashram']->getMedia(Location::IMAGE))) {
+            $media = $data['ashram']->getMedia(Location::IMAGE);
+            if (isset($media[0])) {
+                $data['media'] = $media[0];
+            }
+        }
         return view('backend/ashram/view',$data);
     }
 
@@ -152,11 +164,16 @@ class AshramController extends Controller
         foreach($data['ashram']['translations'] as $trans) {
             $translated_keys = array_keys(Location::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
-                $data['ashram'][$value.'_'.$trans['locale']] = $trans[$value];
+                $data['ashram'][$value.'_'.$trans['locale']] = str_replace("<br/>", "\r\n", $trans[$value]);
             }
         }
         $data['translated_block'] = Location::TRANSLATED_BLOCK;
-        $data['media'] =$data['ashram']->getMedia(Location::IMAGE)[0];
+        if (!empty($data['ashram']->getMedia(Location::IMAGE))) {
+            $media = $data['ashram']->getMedia(Location::IMAGE);
+            if (isset($media[0])) {
+                $data['media'] = $media[0];
+            }
+        }
         return view('backend/ashram/edit',$data);
     }
 
@@ -179,7 +196,7 @@ class AshramController extends Controller
             errorMessage('Ashram Not Found', []);
         }
         $translated_keys = array_keys(Location::TRANSLATED_BLOCK);
-        foreach ($translated_keys as $value) 
+        foreach ($translated_keys as $value)
         {
             $input[$value] = (array) json_decode($input[$value]);
         }
@@ -201,5 +218,13 @@ class AshramController extends Controller
     public function destroy(Ashram $ashram)
     {
         //
+    }
+
+    public function deleteImage(Request $request)
+    {
+        $msg_data = array();
+        $data = Location::find($_GET['id']);
+        $data->clearMediaCollection(Location::IMAGE);
+        successMessage('image deleted successfully', $msg_data);
     }
 }
