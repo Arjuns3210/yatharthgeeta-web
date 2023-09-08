@@ -171,7 +171,6 @@ class AdminController extends Controller
             if (($key = array_search($permission_id, $permissions)) !== false) {
                 unset($permissions[$key]);
             }
-            // $permissions = explode(',', implode(',', $permissions));
         }
 
         $msg_data = array();
@@ -319,6 +318,7 @@ class AdminController extends Controller
         $admins->save();
 
         return response()->json(['success' => true]);
+        // return redirect('webadmin/');
     }
 
     private function validatePwdRequest(Request $request)

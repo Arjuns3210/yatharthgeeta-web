@@ -53,7 +53,7 @@ class ArtistController extends Controller
                     ->editColumn('name_'.\App::getLocale(), function ($event) {
                         $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
                         return $event['translations'][$Key_index]['name'];
-                    })->editColumn('title', function ($event) {
+                    })->editColumn('title_'.\App::getLocale(), function ($event) {
                         $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
                         return $event['translations'][$Key_index]['title'];
                     })
@@ -73,7 +73,7 @@ class ArtistController extends Controller
                         return $actions;
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['name'.\App::getLocale(), 'title','status', 'action'])->setRowId('id')->make(true);
+                    ->rawColumns(['name_'.\App::getLocale(), 'title_'.\App::getLocale(),'status', 'action'])->setRowId('id')->make(true);
             } catch (\Exception $e) {
                 \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                 return response([
@@ -133,7 +133,12 @@ class ArtistController extends Controller
             }
         }
         $data['translated_block'] = Artist::TRANSLATED_BLOCK;
-        $data['media'] = $data['guru']->getMedia(Artist::IMAGE)[0];
+        if (!empty($data['guru']->getMedia(Artist::IMAGE))) {
+            $media = $data['guru']->getMedia(Artist::IMAGE);
+            if (isset($media[0])) {
+                $data['media'] = $media[0];
+            }
+        }
         return view('backend/artist/view',$data);
     }
 
@@ -153,7 +158,12 @@ class ArtistController extends Controller
             }
         }
         $data['translated_block'] = Artist::TRANSLATED_BLOCK;
-        $data['media'] =$data['guru']->getMedia(Artist::IMAGE)[0];
+        if (!empty($data['guru']->getMedia(Artist::IMAGE))) {
+            $media = $data['guru']->getMedia(Artist::IMAGE);
+            if (isset($media[0])) {
+                $data['media'] = $media[0];
+            }
+        }
         return view('backend/artist/edit',$data);
     }
 
@@ -194,5 +204,13 @@ class ArtistController extends Controller
     public function destroy(artist $artist)
     {
         //
+    }
+
+    public function deleteImage(Request $request)
+    {
+        $msg_data = array();
+        $data = Artist::find($_GET['id']);
+        $data->clearMediaCollection(Artist::IMAGE);
+        successMessage('image deleted successfully', $msg_data);
     }
 }

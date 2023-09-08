@@ -15,9 +15,10 @@ class Quote extends Model implements HasMedia
         'image',
         'sequence',
 		'status',
-		'share_allowance',
-		'shlok'
-		
+		'quote_category_id',
+        'image',
+        'language_id'
+
     ];
     /**
      * The attributes that should be casted to native types.
@@ -26,16 +27,15 @@ class Quote extends Model implements HasMedia
      */
     protected $casts = [
         'image'=>'string',
-		'sequence'=>'integer',
-		'shlok' => 'array',
+        'sequence'=>'integer',
+        'status' => 'boolean'
 
     ];
 
     public static $rules = [
-        'text.*' => 'string|required',
-        'description.*' => 'string|required',
         'image.*' => 'longText|required',
-        'sequence' => 'integer|required'
+        'sequence' => 'integer|required',
+        'status' => 'boolean'
     ];
 
     const IMAGE= 'image';
