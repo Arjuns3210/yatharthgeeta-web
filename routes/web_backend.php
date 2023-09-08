@@ -158,6 +158,10 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('quotes/update', 'QuoteController@update');
     Route::post('quotes/publish', 'QuoteController@updateStatus');
 
+    //quote category
+    Route::get('quote_category', 'QuoteCategoryController@index');
+    Route::post('quote_category/fetch', 'QuoteCategoryController@fetch');
+
     //general settings
     Route::get('general_settings', 'GeneralSettingController@index');
     Route::post('updateSettingInfo', 'GeneralSettingController@updateSetting');
