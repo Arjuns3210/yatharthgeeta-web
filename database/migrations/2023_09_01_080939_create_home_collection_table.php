@@ -19,7 +19,7 @@ class CreateHomeCollectionTable extends Migration
             $table->string('description');
             $table->string('image');
             $table->string('no_of_images');
-            $table->enum('type', ['single', 'multiple', 'ebook', 'audio_books', 'videos', 'shloks'])->default('single');
+            $table->enum('type', ['single', 'multiple', 'books', 'audios', 'videos', 'shloks'])->default('single');
             $table->integer('sequence')->nullable();
             $table->json('extra_details')->nullable()->comment('JSON Data');
             $table->enum('orientation', ['horizontal', 'vertical'])->default('horizontal');

@@ -22,12 +22,6 @@ class CreateArtistTranslationsTable extends Migration
             $table->string('description')->nullable();
             $table->unique(['artist_id','locale']);
             $table->foreign('artist_id')->references('id')->on('artists')->onDelete('cascade');
-            $table->integer('created_by')->unsigned()->nullable();
-            $table->integer('updated_by')->unsigned()->nullable();
-            $table->foreign('created_by')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('updated_by')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
-            $table->timestamps();
-            $table->softDeletes();
         });
     }
 
