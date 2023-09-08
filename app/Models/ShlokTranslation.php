@@ -11,6 +11,7 @@ class ShlokTranslation extends Model
     public $fillable = [
         'shlok_id',
         'title',
+        'locale',
         'description',
         'status',
         'chapter',
