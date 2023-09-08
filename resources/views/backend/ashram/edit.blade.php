@@ -69,12 +69,14 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Image</label>
-                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')" value="{{$ashram['image']}}"><br/>
+                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')"><br/>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
+                                                        @if(isset($media))
                                                         <div class="main-del-section" style="position: relative; border: 1px solid #999; border-radius: 5px; padding: 5px; margin-right: 10px; display: inline-block;">
                                                             <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="auto">
                                                             <span class="delimg bg-danger text-center" id="{{$ashram['id']}}" data-url="ashram/delete_img?id={{$ashram['id']}}" style="padding: 0 5px; position: absolute; top: -8px; right: -8px; border-radius: 50%; cursor: pointer;"><i class="fa fa-times text-light"></i></span>
                                                         </div>
+                                                        @endif
                                                     </div>
                                                     <div id="map" style="height:400px; width: 400px;" class="my-3"></div>
                                                     <!-- <div class="col-sm-6">
