@@ -16,6 +16,7 @@ class CreateAudioCategoriesTable extends Migration
         Schema::create('audio_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->enum('status', [1, 0])->default(1);
+            $table->integer('sequence');
             $table->timestamps();
             $table->softDeletes();
         });

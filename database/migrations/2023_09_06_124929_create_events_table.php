@@ -20,10 +20,11 @@ class CreateEventsTable extends Migration
             $table->date('event_end_date');
             $table->time('event_start_time');
             $table->time('event_end_time');
-            $table->unsignedBigInteger('location_id');
+            $table->integer('location_id')->unsigned();
             $table->boolean('visible_on_app');
             $table->date('event_visible_date');
-            $table->unsignedBigInteger('artist_id');
+            $table->integer('artist_id')->unsigned();
+            $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

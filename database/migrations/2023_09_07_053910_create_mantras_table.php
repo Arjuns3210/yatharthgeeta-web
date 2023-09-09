@@ -15,8 +15,8 @@ class CreateMantrasTable extends Migration
     {
         Schema::create('mantras', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('sanskrit_title');
-            $table->string('reference_name', 255)->default('-Bhagvad Geeta');
+            $table->longText('sanskrit_title');
+            $table->string('reference_name', 255)->default('Bhagvad Geeta');
             $table->string('reference_url', 255)->default('yatharthgeeta.com');
             $table->integer('sequence');
             $table->enum('status', [1, 0])->default(1);

@@ -14,8 +14,8 @@ class CreateShlokTranslationsTable extends Migration
     public function up()
     {
         Schema::create('shlok_translations', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('shlok_id');
+            $table->increments('id');
+            $table->integer('shlok_id')->unsigned();
             $table->foreign('shlok_id')->references('id')->on('shloks')->onDelete('cascade');
             $table->string('locale')->index();
             $table->string('title');

@@ -14,7 +14,7 @@ class CreateLocationsTable extends Migration
             $table->json('phone')->nullable();
             $table->string('email');
             $table->string('image');
-            $table->text('days')->nullable();
+            $table->text('working_days')->nullable();
             $table->string('location');
             $table->string('latitude');
             $table->string('longitude');
