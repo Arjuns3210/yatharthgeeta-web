@@ -148,8 +148,8 @@
 								<li class="{{ $lastParam ==  'quotes' ? 'active' : '' }}">
                                     <a href="quotes" class="menu-item"><i class="fa fa-quote-left" aria-hidden="true"></i>Quotes</a>
                                 </li>
-                                <li class="{{ $lastParam ==  'videos' ? 'active' : '' }}">
-                                    <a href="videos" class="menu-item"><i class="fa fa-video-camera" aria-hidden="true"></i>Videos</a>
+                                <li class="{{ $lastParam ==  'shloks' ? 'active' : '' }}">
+                                    <a href="shloks" class="menu-item"><i class="fa fa-bookmark" aria-hidden="true"></i>Shloks</a>
                                 </li>
                                 <li class="{{ ($lastParam ==  'audios' || $lastParam ==  'audio_episodes') ? 'active' : '' }}">
                                     <a href="audios" class="menu-item"><i class="fa fa-play-circle-o" style="font-size:1.7rem !important"></i>Audio</a>

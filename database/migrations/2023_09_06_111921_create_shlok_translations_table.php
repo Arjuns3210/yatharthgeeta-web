@@ -22,6 +22,7 @@ class CreateShlokTranslationsTable extends Migration
             $table->string('description');
             $table->string('chapter');
             $table->unique(['shlok_id','locale']);
+            $table->enum('status', [1, 0])->default(1);
         });
     }
 
