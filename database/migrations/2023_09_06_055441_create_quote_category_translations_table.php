@@ -19,13 +19,7 @@ class CreateQuoteCategoryTranslationsTable extends Migration
             $table->foreign('quote_category_id')->references('id')->on('quote_categories')->onDelete('cascade');
             $table->string('locale')->index();
             $table->string('name');
-            $table->integer('created_by')->unsigned()->nullable();
-            $table->integer('updated_by')->unsigned()->nullable();
-            $table->foreign('created_by')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('updated_by')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
             $table->unique(['quote_category_id','locale']);
-            $table->timestamps();
-            $table->softDeletes();
         });
     }
 

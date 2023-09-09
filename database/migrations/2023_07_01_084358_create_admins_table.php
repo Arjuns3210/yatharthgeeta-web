@@ -24,6 +24,8 @@ class CreateAdminsTable extends Migration
             $table->text('address')->nullable();
             $table->integer('role_id')->unsigned();
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade')->onUpdate('cascade');
+            $table->enum('is_head', [1, 0])->default(0);
+            $table->enum('on_leave', [1, 0])->default(0);
             $table->enum('login_allowed', [1, 0])->default(1);
             $table->enum('status', [1, 0])->default(1);
             $table->enum('force_pwd_change_flag', [1, 0])->default(1);
