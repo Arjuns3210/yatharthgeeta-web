@@ -42,7 +42,6 @@ class AddSomeFiledIntoAudioEpisodeTranslationsTable extends Migration
             $table->dropColumn('chapter_name');
             $table->dropColumn('verses_name');
             $table->dropColumn('chapter_number');
-            $table->dropColumn('verse_number');
         });
     }
 }
