@@ -15,7 +15,6 @@ class EventImage extends Model implements HasMedia
     protected $fillable = [
         'title',
         'event_id',
-        'images',
         'sequence',
         'status'
     ];
@@ -27,17 +26,16 @@ class EventImage extends Model implements HasMedia
     protected $casts = [
         'id' => 'integer',
         'title'=>'string',
-        'images'=>'string',
         'sequence'=>'integer',
         'status' => 'boolean'
     ];
 
     public static $rules = [
         'title.*' => 'string|required',
-        'images.*' => 'longText|required',
+        'images.*' => 'required',
         'sequence.*' => 'integer|required',
         'status' => 'boolean'
     ];
 
-    const IMAGE= 'image';
+    const IMAGE = 'image';
 }

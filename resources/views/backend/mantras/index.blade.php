@@ -25,7 +25,7 @@
                                 <div class="card-body">
                                     <div class="row mb-2" id="listing-filter-data" style="display: none;">
                                         <div class="col-md-4">
-                                            <label>Title</label>
+                                            <label>Sanskrit Title</label>
                                             <input class="form-control mb-3" type="text" id="search_sanskrit_title" name="search_sanskrit_title" >
                                         </div>
                                         <div class="col-md-4">
@@ -50,7 +50,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
-                                                    <th id="sanskrit_title" data-orderable="false" data-searchable="false">Title</th>
+                                                    <th id="sanskrit_title" data-orderable="false" data-searchable="false">Sanskrit Title</th>
                                                     <th id="sequence" data-orderable="false" data-searchable="false">Sequence</th>
                                                     @if($data['mantra_status'] || $data['mantra_edit'] || $data['mantra_view'] || $data['mantra_delete'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>

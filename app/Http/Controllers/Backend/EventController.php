@@ -23,6 +23,7 @@ class EventController extends Controller
         $data['event_view'] = checkPermission('event_view');
         $data['event_add'] = checkPermission('event_add');
         $data['event_edit'] = checkPermission('event_edit');
+        $event_images=true;
         $data['event_status'] = checkPermission('event_status');
         $data['event_delete'] = checkPermission('event_delete');
         return view('backend/events/index',["data"=>$data]);
@@ -63,6 +64,7 @@ class EventController extends Controller
                             $event_view = checkPermission('event_view');
                             $event_add = checkPermission('event_add');
                             $event_edit = checkPermission('event_edit');
+                            $event_images=true;
                             $event_status = checkPermission('event_status');
                             $event_delete = checkPermission('event_delete');
                             $actions = '<span style="white-space:nowrap;">';
@@ -71,6 +73,9 @@ class EventController extends Controller
                             }
                             if ($event_edit) {
                                 $actions .= ' <a href="events/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
+                            }
+                            if ($event_images) {
+                                $actions .= ' <a href="event_images/add " class="btn btn-success btn-sm src_data" title="Gallery"><i class="fa fa-picture-o"></i></a>';
                             }
                             if ($event_delete) {
                                 $actions .= ' <a data-option="" data-url="events/delete/' . $event->id . '" class="btn btn-danger btn-sm delete-data" title="delete"><i class="fa fa-trash"></i></a>';

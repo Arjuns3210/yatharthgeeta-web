@@ -80,6 +80,7 @@
                                                     <div class="col-sm-6">
                                                         <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="100px" alt="">
                                                     </div>
+
                                                 </div>
                                             </div>
 

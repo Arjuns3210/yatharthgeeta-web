@@ -131,16 +131,30 @@ class EventImageController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-
-        $data = EventImage::create($input);
-        $images = $request->file('images');
-        foreach ($images as $image) {
-            // Assuming you are using the Spatie MediaLibrary package
-            $data->addMedia($image)->toMediaCollection(EventImage::IMAGE);
+        // print_r($input); exit();
+        //$data = EventImage::create($input);
+        //$images = $request->file('images');
+        // foreach ($images as $image) {
+        //     // Assuming you are using the Spatie MediaLibrary package
+        // }
+        if ($request->hasFile('images')) {
+            foreach($input['images'] as $key => $value) {
+                $event_image = new EventImage();
+                $event_image->event_id = $input['event_id'];
+                $event_image->title = $input['title'];
+                $event_image->images = $value;
+                $event_image->sequence = $input['sequence'];
+                $event_image->save();
+                $event_image->addMedia($value)->toMediaCollection(EventImage::IMAGE);
+            }
         }
-        storeMedia($data, $request->file('images'), EventImage::IMAGE);
-        successMessage('Data Saved successfully', []);
+        // storeMedia($data, $request->file('images'), EventImage::IMAGE);
+        //successMessage('Data Saved successfully', []);
 
+    // print_r($input); exit();
+
+    // storeMedia($data, $request->file('images'), EventImage::IMAGE);
+    successMessage('Data Saved successfully', []);
     }
 
     /**

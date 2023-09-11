@@ -15,6 +15,8 @@ class EventTranslation extends Model
         'long_description'
 
     ];
+
+    public $timestamps = false;
     public function event()
     {
         return $this->belongsTo(\App\Models\Event::class);

@@ -18,7 +18,7 @@ class CreateEventImagesTable extends Migration
             $table->integer('event_id')->unsigned();
             $table->string('title');
             $table->longText('images');
-            $table->integer('sequence')->unique();
+            $table->integer('sequence');
             $table->enum('visible_in_app', [1, 0])->default(1);
             $table->enum('status', [1, 0])->default(1);
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade')->onUpdate('cascade');

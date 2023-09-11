@@ -11,6 +11,7 @@ class BookTranslation extends Model
     public $fillable = [
         'book_id',
         'name',
+        'highlight_descrption',
         'description',
         'status'
 

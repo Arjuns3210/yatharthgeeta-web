@@ -18,18 +18,27 @@ class Book extends Model implements HasMedia
     use InteractsWithMedia;
 
     public $fillable = [
+        'book_category_id',
         'cover_image',
+        'pdf_file_name',
+        'epub_file_name',
+        'artist_id',
         'pages',
+        'language_id',
+        'audio_id',
+        'video_id',
+        'related_id',
         'link',
         'status',
         'sequence'
 
     ];
 
-    public $translatedAttributes = ['name', 'description'];
+    public $translatedAttributes = ['name', 'highlight_descrption', 'description'];
 
     public const TRANSLATED_BLOCK = [
 	    'name' => 'input',
+        'highlight_descrption'=>'textarea',
 	    'description' => 'textarea'
 
 	];
