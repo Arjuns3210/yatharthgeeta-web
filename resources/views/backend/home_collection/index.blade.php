@@ -26,25 +26,24 @@
                                     <div class="card-body">
                                         <div class="row mb-2" id="listing-filter-data" style="display: none;">
                                             <div class="col-md-4">
-                                                <label>Name</label>
-                                                <input class="form-control mb-3" type="text" id="search_name" name="search_name">
+                                                <label>Collection Title</label>
+                                                <input class="form-control mb-3" type="text" id="search_collection_title" name="search_collection_title">
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label>Collection Type<span class="text-danger">*</span></label>
+                                                <select class="form-control  required" id="search_collection_type" name="search_collection_type">
+                                                    <option value="">All</option>
+                                                    @foreach($data['collection_types'] as $key => $type)
+                                                        <option value="{{$key}}">{{$type}}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="col-md-4">
-                                                <label>Nick Name</label>
-                                                <input class="form-control mb-3" type="text" id="search_nick_name" name="search_nick_name">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label>Email</label>
-                                                <input class="form-control mb-3" type="email" id="search_email" name="search_email">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label>Phone</label>
-                                                <input class="form-control mb-3" type="text" id="search_phone" name="search_phone">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label>Role</label>
-                                                <select class="form-control mb-3 select2" id="search_role" name="search_role" style="width: 100% !important;">
-                                                    <option value="">Select</option>
+                                                <label>Status</label>
+                                                <select class="form-control mb-3" type="text" id="search_status" name="search_status">
+                                                    <option value="">All</option>
+                                                    <option value="1">Active</option>
+                                                    <option value="0">Inactive</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-4">
@@ -53,11 +52,11 @@
                                             </div>
                                         </div>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered table-striped datatable" id="dataTable" width="100%" cellspacing="0" data-url="home_collection/fetch">
+                                            <table class="table table-bordered table-striped  datatable" id="dataTable" width="100%" cellspacing="0" data-url="home_collection/fetch">
                                                 <thead>
                                                     <tr>
                                                         <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
-                                                        <th id="name" data-orderable="false" data-searchable="false">Name</th>
+                                                        <th id="title" data-orderable="false" data-searchable="false">Name</th>
                                                         <th id="type" data-orderable="false" data-searchable="false">Type</th>
                                                         <th id="sequence" data-orderable="false" data-searchable="false">Sequence</th>
 
@@ -77,7 +76,4 @@
             </section>
         </div>
     </div>
-    <script>
-        $('.select2').select2();
-    </script>
 @endsection
