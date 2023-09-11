@@ -166,7 +166,7 @@
                                                         <label>Shlok<span class="text-danger">*</span></label>
                                                         <select class="form-control select2 " id="shlok_id" name="shlok_id[]" multiple>
                                                             @foreach($shloks as $sholk)
-                                                                <option value="{{$sholk->id}}">{{$sholk->translations[0]->name ?? ''}}</option>
+                                                                <option value="{{$sholk->id}}">{{$sholk->translations[0]->title ?? ''}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -299,7 +299,7 @@
 
                             $mappedIdsSelect.append($('<option>', {
                                 value: value.id,
-                                text: value.translations[0].name ?? ''
+                                text: value.translations[0].title ?? ''
                             }));
                         }
                     });

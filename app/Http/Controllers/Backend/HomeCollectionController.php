@@ -12,6 +12,7 @@ use App\Models\BookCategory;
 use App\Models\HomeCollection;
 use App\Models\HomeCollectionMapping;
 use App\Models\Language;
+use App\Models\Shlok;
 use App\Models\Video;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -147,7 +148,7 @@ class HomeCollectionController extends Controller
             },
         ])->where('status', 1)->get();
 
-        $data['shloks'] = Artist::with([
+        $data['shloks'] = Shlok::with([
             'translations' => function ($query) use ($localeLanguage) {
                 $query->where('locale', $localeLanguage);
             },
@@ -288,7 +289,7 @@ class HomeCollectionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  HomeCollection  $homeCollection
+     * @param $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -326,7 +327,7 @@ class HomeCollectionController extends Controller
             },
         ])->where('status', 1)->get();
 
-        $data['shloks'] = Artist::with([
+        $data['shloks'] = Shlok::with([
             'translations' => function ($query) use ($localeLanguage) {
                 $query->where('locale', $localeLanguage);
             },
@@ -566,7 +567,7 @@ class HomeCollectionController extends Controller
             ])->where('status', 1)->get();
         }
         if ($type == HomeCollectionMapping::SHLOK) {
-            $data['shloks'] = Artist::with([
+            $data['shloks'] = Shlok::with([
                 'translations' => function ($query) use ($localeLanguage) {
                     $query->where('locale', $localeLanguage);
                 },
