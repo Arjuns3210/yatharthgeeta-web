@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class HomeCollectionMapping extends Model implements HasMedia
 {
@@ -21,9 +22,9 @@ class HomeCollectionMapping extends Model implements HasMedia
         'is_clickable',
         'mapped_to',
     ];
-    
+
     const MULTIPLE_COLLECTION_IMAGE = 'multiple_collection_image';
-    
+
     const BOOK = 'Book';
     const AUDIO = 'Audio';
     const VIDEO = 'Video';
@@ -31,10 +32,20 @@ class HomeCollectionMapping extends Model implements HasMedia
     const ARTIST = 'Artist';
 
     const MAPPING_COLLECTION_TYPES = [
-        self::BOOK     => 'Book',
-        self::AUDIO    => 'Audio',
-        self::VIDEO    => 'Video',
-        self::SHLOK    => 'Shlok',
-        self::ARTIST   => 'Artist',
+        self::BOOK   => 'Book',
+        self::AUDIO  => 'Audio',
+        self::VIDEO  => 'Video',
+        self::SHLOK  => 'Shlok',
+        self::ARTIST => 'Artist',
     ];
+    public $appends = ['multiple_collection_image'];
+
+    public function getMultipleCollectionImageAttribute(): string
+    {
+        
+        /** @var Media $media */
+        $media = $this->getMedia(self::MULTIPLE_COLLECTION_IMAGE)->first();
+        
+        return ! empty($media) ? $media->getFullUrl() : '21312';
+    }
 }

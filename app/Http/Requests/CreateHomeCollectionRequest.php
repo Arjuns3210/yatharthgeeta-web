@@ -52,6 +52,13 @@ class CreateHomeCollectionRequest extends FormRequest
         if ($collectionType == HomeCollection::SHLOK) {
             $ruleData['artist_id'] = 'required';
         }
+        if ($collectionType == HomeCollection::MULTIPLE) {
+            $ruleData['img_file.*'] = 'required|mimes:jpeg,png,jpg,gif';
+            $ruleData['img_clickable.*'] = 'required';
+            $ruleData['mapped_to.*'] = 'required';
+            $ruleData['mapped_ids'] = 'required|array';
+            $ruleData['mapped_ids.*'] = 'required|array';
+        }
 
         return $ruleData;
     }

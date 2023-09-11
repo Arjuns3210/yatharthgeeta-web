@@ -59,7 +59,7 @@
                                                             <input class="form-control required" type="text" id="sequence" name="sequence" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode ==46' value="{{$collection->sequence ?? ''}}"><br/>
                                                         </div>
                                                         <div class="col-sm-12 pl-0 pr-0">
-                                                            <label>display in columns</label>
+                                                            <label>Display in columns<span class="text-danger">*</span></label>
                                                             <input class="form-control required" type="text" id="display_in_column" name="display_in_column" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode ==46' value="{{$collection->display_in_column ?? ''}}"><br/>
                                                         </div>
                                                         <div class="col-sm-12 pl-0 pr-0 mt-2">
@@ -72,71 +72,100 @@
                                                 </div>
 
                                                 @if($collection->type == \App\Models\HomeCollection::MULTIPLE)
-                                                <div class="row div_multiple">
-                                                    <!-- -------------------multiple_div start----------------------- -->
-                                                    <div class="col-md-12 ">
-                                                        <div class="row" id="dummy_div_multiple">
-                                                            <div class="col-md-12 main_div_multiple mb-0">
-                                                                <div class="row">
-                                                                    <div class="col-md-3 mt-1">
-                                                                        <label>Image Upload<span class="text-danger">*</span></label>
-                                                                    </div>
-                                                                    <div class="col-md-3 mt-1">
-                                                                        <label>Is Clickable</label>
-                                                                    </div>
-                                                                    <div class="col-md-3 mt-1">
-                                                                        <label>Mapped Type</label>
-                                                                    </div>
+                                                    <div class="row div_multiple">
+                                                        <div class="col-md-12 ">
+                                                            <fieldset class="scheduler-border mb-3">
+                                                                <legend class="scheduler-border"> Extra Details :</legend>
+                                                                <div class="row" id="dummy_div_multiple">
+                                                                    @foreach($multipleCollectionData as $detailsKey => $collectionDetail)
+                                                                        <div class="col-md-12 main_div_multiple mb-0">
+                                                                            @if($loop->first)
+                                                                            <div class="row">
+                                                                                <div class="col-md-3 mt-1">
+                                                                                    <label>Image Upload<span class="text-danger">*</span></label>
+                                                                                </div>
+                                                                                <div class="col-md-2 mt-1">
+                                                                                    <label>Is Clickable</label>
+                                                                                </div>
+                                                                                <div class="col-md-3 mt-1">
+                                                                                    <label>Mapped Type</label>
+                                                                                </div>
+                                                                                <div class="col-md-3 mt-1">
+                                                                                    <label>Mapped Master</label>
+                                                                                </div>
+                                                                            </div>
+                                                                            @endif
+                                                                            <div class="row">
+                                                                                <div class="col-md-3 mt-1">
+                                                                                    <div class="row">
+                                                                                        <div class="col-11 ">
+                                                                                            <input type="file" class="form-control"  name="img_file[]" accept=".jpg,.jpeg,.png"><br/>
+                                                                                        </div>
+                                                                                        <div class="col-1 p-0 mt-1">
+                                                                                            <a href="{{ $collectionDetail->multiple_collection_image ?? '' }}" target=”_blank”  class="btn btn-primary btn-sm view-small-button"><i class="fa fa-eye"></i></a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-2 mt-1">
+                                                                                    <input type="hidden" name="collection_details_ids[]" value="{{$collectionDetail->id}}">
+                                                                              <select class="select2"  name="img_clickable[]" style="width: 100% !important;">
+                                                                                        <option value = "0" {{ ($collectionDetail->is_clickable == 0) ? 'selected':'' }}>No</option>
+                                                                                        <option value = "1" {{ ($collectionDetail->is_clickable == 1) ? 'selected':'' }}>Yes</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="col-md-3 mt-1">
+                                                                                    <select class="select2 mapped-to"  name="mapped_to[]" style="width: 100% !important;" >
+                                                                                        @foreach($mappingCollectionType as $key => $type)
+                                                                                            <option value = "{{$key}}" {{($collectionDetail->mapped_to == $key) ? 'selected' : ''}}>{{ $type }}</option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="col-md-3 mt-1">
+                                                                                    @php
+                                                                                    $detailsMappedIds = explode(",",$collectionDetail->mapped_ids ?? '');
+                                                                                    @endphp
+                                                                                    <select class="select2  mapped-ids"
+                                                                                            name="mapped_ids[{{$detailsKey}}][]"
+                                                                                            multiple
+                                                                                            style="width: 100% !important;">
+                                                                                        @if($collectionDetail->mapped_to == \App\Models\HomeCollectionMapping::BOOK)
+                                                                                            @foreach($books as $key => $book)
+                                                                                                <option value="{{$book->id}}" {{ in_array($book->id,$detailsMappedIds) ? 'selected' : '' }}>{{$book->translations[0]->name ?? ''}}</option>
+                                                                                            @endforeach
+                                                                                        @elseif($collectionDetail->mapped_to == \App\Models\HomeCollectionMapping::AUDIO)
+                                                                                            @foreach($audios as $audio)
+                                                                                                <option value="{{$audio->id}}" {{(in_array($audio->id,$detailsMappedIds))? 'selected':''}}>{{$audio->translations[0]->title ?? ''}}</option>
+                                                                                            @endforeach
+
+                                                                                        @elseif($collectionDetail->mapped_to == \App\Models\HomeCollectionMapping::VIDEO)
+                                                                                            @foreach($videos as $video)
+                                                                                                <option value="{{$video->id}}" {{(in_array($video->id,$detailsMappedIds))? 'selected':''}}>{{$video->translations[0]->title ?? ''}}</option>
+                                                                                            @endforeach
+                                                                                        @elseif($collectionDetail->mapped_to == \App\Models\HomeCollectionMapping::SHLOK)
+                                                                                            @foreach($shloks as $sholk)
+                                                                                                <option value="{{$sholk->id}}" {{(in_array($sholk->id,$detailsMappedIds))? 'selected':''}}>{{$sholk->translations[0]->name ?? ''}}</option>
+                                                                                            @endforeach
+
+                                                                                        @elseif($collectionDetail->mapped_to == \App\Models\HomeCollectionMapping::ARTIST)
+                                                                                            @foreach($artists as $artist)
+                                                                                                <option value="{{$artist->id}}" {{(in_array($artist->id,$detailsMappedIds))? 'selected':''}}>{{$artist->translations[0]->name ?? ''}}</option>
+                                                                                            @endforeach
+                                                                                        @endif
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="col-md-1 mt-1">
+                                                                                    @if($loop->first)
+                                                                                    <a href="javascript:void(0);"  class="btn btn-primary btn-sm add-multiple-row"><i class="fa fa-plus fa-lg"></i></a><br/>
+                                                                                    @else
+                                                                                        <a href="javascript:void(0)" class="btn btn-danger btn-sm remove-multiple-div-row"><i  class="fa fa-trash"></i></a>                                                                                                                     @endif
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endforeach
                                                                 </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-3 mt-1">
-                                                                        <input type="file" class="form-control" id="img_file_1" name="img_file[]" ><br/>
-                                                                    </div>
-                                                                    <div class="col-md-3 mt-1">
-                                                                        <select class="select2" id="img_clickable_1" name="img_clickable[]" style="width: 100% !important;">
-                                                                            <option value = "0">No</option>
-                                                                            <option value = "1">Yes</option>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="col-md-3 mt-1">
-                                                                        <select class="select2" id="mapped_to_1" name="mapped_to[]" style="width: 100% !important;">
-                                                                            <option value = "0">No</option>
-                                                                            <option value = "1">Yes</option>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="col-md-1 mt-1">
-                                                                        <a href="javascript:void(0);" onclick="add_multi_row();" class="btn btn-primary btn-sm"><i class="fa fa-plus fa-lg"></i></a><br/>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            </fieldset>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <!-- ---------------------- sample div for multiple ---------------------------- -->
-                                                <div class="sample_div_multiple_class" style= "display:none">
-                                                    <div class="col-md-12 main_div_multiple mt-0" id="sample_div_multiple">
-                                                        <div class="row">
-                                                            <div class="col-md-3">
-                                                                <input type="file" class="img_file_sample_class form-control" id="img_file_1" name="img_file[]" ><br/>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <select class="select2 img_clickable_sample_class form-control" id="img_clickable_1" name="img_clickable[]" style="width: 100% !important;">
-                                                                    <option value = "0">No</option>
-                                                                    <option value = "1">Yes</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-3 mt-1">
-                                                                <select class="select2 mapped_to_sample_class" id="mapped_to_1" name="mapped_to[]" style="width: 100% !important;">
-                                                                    <option value = "0">No</option>
-                                                                    <option value = "1">Yes</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-1">
-                                                                <button type="button" class="btn btn-danger btn-sm" onclick="remove_multi_row(this);" ><i class="fa fa-trash fa-lg"></i></button><br/>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 @endif
                                                 @if($collection->type == \App\Models\HomeCollection::SINGLE)
                                                     <div class="row div_single">
@@ -250,4 +279,125 @@
             deleteDocuments(mediaId, '.cover-image-div-');
         });
     });
+    $(document).on('change', '.mapped-to', function () {
+        var $mappedToSelect = $(this);
+        var $mappedIdsSelect = $mappedToSelect.closest('.row').find('.mapped-ids');
+        let type = $(this).val();
+        $.ajax({
+            type: 'GET',
+            url: 'get_mapped_listing/'+type,
+            success: function (data) {
+                // Clear existing options
+                $mappedIdsSelect.empty();
+                if (type == 'Book' && data.books != undefined) {
+                    // Populate options based on the AJAX response
+                    $.each(data.books, function (key, value) {
+                        if (value.translations[0] != undefined) {
+
+                            $mappedIdsSelect.append($('<option>', {
+                                value: value.id,
+                                text: value.translations[0].name ?? ''
+                            }));
+                        }
+                    });
+
+                    // Trigger Select2 to refresh and display the updated options
+                    $mappedIdsSelect.trigger('change.select2');
+                }
+                if (type == 'Audio' && data.audios != undefined) {
+                    $.each(data.audios, function (key, value) {
+                        if (value.translations[0] != undefined) {
+                            $mappedIdsSelect.append($('<option>', {
+                                value: value.id,
+                                text: value.translations[0].title ?? ''
+                            }));
+                        }
+                    });
+
+                    // Trigger Select2 to refresh and display the updated options
+                    $mappedIdsSelect.trigger('change.select2');
+                }
+                if (type == 'Video' && data.videos != undefined) {
+                    $.each(data.videos, function (key, value) {
+                        if (value.translations[0] != undefined){
+                            $mappedIdsSelect.append($('<option>', {
+                                value: value.id,
+                                text: value.translations[0].title ??''
+                            }));
+                        }
+                    });
+
+                    // Trigger Select2 to refresh and display the updated options
+                    $mappedIdsSelect.trigger('change.select2');
+                }
+                if (type == 'Shlok' && data.shloks != undefined) {
+                    $.each(data.shloks, function (key, value) {
+                        if (value.translations[0] != undefined) {
+
+                            $mappedIdsSelect.append($('<option>', {
+                                value: value.id,
+                                text: value.translations[0].name ?? ''
+                            }));
+                        }
+                    });
+
+                    // Trigger Select2 to refresh and display the updated options
+                    $mappedIdsSelect.trigger('change.select2');
+
+                }
+                if (type == 'Artist' && data.artists != undefined) {
+                    $.each(data.artists, function (key, value) {
+                        if (value.translations[0] != undefined) {
+
+                            $mappedIdsSelect.append($('<option>', {
+                                value: value.id,
+                                text: value.translations[0].name ?? ''
+                            }));
+                        }
+                    });
+
+                    // Trigger Select2 to refresh and display the updated options
+                    $mappedIdsSelect.trigger('change.select2');
+                }
+            },
+        });
+    });
+
+    $(document).on('click', '.add-multiple-row', function () {
+        // Disable the a tag
+        $(this).addClass('disabled');
+        var pluseButton = $(this);
+        let totalDiv = $('.main_div_multiple').length;
+        $.ajax({
+            type: 'GET',
+            url: 'prepare_multiple_collection_item/' + totalDiv,
+            success: function (data) {
+                // Append the data to the container
+                var $newElements = $(data);
+                $('#dummy_div_multiple').append($newElements);
+
+                // Initialize Select2 on the newly added elements
+                $newElements.find('.select2').select2();
+
+                // Re-enable the anchor tag and remove the 'disabled' class
+                pluseButton.removeClass('disabled');
+            },
+            error: function () {
+                pluseButton.removeClass('disabled');
+            }
+        });
+    });
+
+
+    $(document).on('click', '.remove-multiple-div-row', function () {
+        $(this).closest('.main_div_multiple').remove();
+        updateSelectNames();
+    });
+
+    function updateSelectNames() {
+        $('.main_div_multiple').each(function (index) {
+            var $row = $(this);
+            $row.find('select[name^="mapped_ids["]').attr('name', 'mapped_ids[' + index + '][]');
+        });
+    }
 </script>

@@ -13,6 +13,7 @@ use App\Models\HomeCollection;
 use App\Models\HomeCollectionMapping;
 use App\Models\Language;
 use App\Models\Video;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -180,6 +181,7 @@ class HomeCollectionController extends Controller
         try {
             DB::beginTransaction();
             $input = $request->all();
+            dd($input);
             $input['type'] = $input['collection_type'];
             if (! empty($input['is_scrollable'])) {
                 $input['is_scrollable'] = '1';
@@ -240,6 +242,24 @@ class HomeCollectionController extends Controller
                     'mapped_to'          => $input['type'],
                 ];
                 HomeCollectionMapping::create($homeCollectionDetails);
+            }
+
+            if (! empty($collection) && $input['type'] == HomeCollection::MULTIPLE && ! empty($input['mapped_to'])) {
+                foreach ($input['mapped_to'] as $key => $value) {
+                    $mappedIds = implode(",", $input['mapped_ids'][$key] ?? []);
+                    $homeCollectionDetails = [
+                        'home_collection_id' => $collection->id,
+                        'mapped_ids'         => $mappedIds,
+                        'sequence'           => 1,
+                        'img_clickable'      => $input['img_clickable'][$key] ?? 0,
+                        'mapped_to'          => $input['mapped_to'][$key],
+                    ];
+                    $multipleCollection = HomeCollectionMapping::create($homeCollectionDetails);
+                    if (! empty($input['img_file'][$key])) {
+                        storeMedia($multipleCollection, $input['img_file'][$key],
+                            HomeCollectionMapping::MULTIPLE_COLLECTION_IMAGE);
+                    }
+                }
             }
             DB::commit();
 
@@ -329,7 +349,13 @@ class HomeCollectionController extends Controller
         $data['collectionDetails'] = $collectionDetails;
         $data['mappedIds'] = explode(',',$data['collectionDetails']->mapped_ids ?? '');
        $data['singleImage'] = $collection->getMedia(HomeCollection::SINGLE_COLLECTION_IMAGE);
-
+        $data['mappingCollectionType'] = HomeCollectionMapping::MAPPING_COLLECTION_TYPES;
+        $data['multipleCollectionData'] = [];
+        if ($collection->type == HomeCollection::MULTIPLE){
+            $collection->load('homeCollectionDetails');
+            $data['multipleCollectionData'] = $collection->homeCollectionDetails;
+        }
+        
         return view('backend/home_collection/edit',$data);
     }
 
@@ -403,6 +429,40 @@ class HomeCollectionController extends Controller
                 ];
                 if ($detail) {
                     $detail->update($homeCollectionDetails);
+                }
+            }
+            if (! empty($collection) && $input['type'] == HomeCollection::MULTIPLE && ! empty($input['mapped_to'])) {
+                $oldCollectionDetailsIds = $collection->homeCollectionDetails()->pluck('id')->toArray();
+                $getDeletedIds = array_diff($oldCollectionDetailsIds, $input['collection_details_ids'] ?? []);
+                HomeCollectionMapping::whereIn('id', $getDeletedIds)->delete();
+                foreach ($input['mapped_to'] as $key => $value) {
+                    $mappedIds = implode(",", $input['mapped_ids'][$key] ?? []);
+                    $homeCollectionDetails = [
+                        'home_collection_id' => $collection->id,
+                        'mapped_ids'         => $mappedIds,
+                        'sequence'           => 1,
+                        'is_clickable'      => $input['img_clickable'][$key] ?? 0,
+                        'mapped_to'          => $input['mapped_to'][$key],
+                    ];
+                    if(!empty($input['collection_details_ids'][$key])){
+                        $multipleCollection = HomeCollectionMapping::where('id',$input['collection_details_ids'][$key])->first();
+                        if(!empty($multipleCollection)){
+                            $multipleCollection->update($homeCollectionDetails);
+                        }
+                    }else{
+                        $multipleCollection = HomeCollectionMapping::create($homeCollectionDetails);
+                    }
+                    if (! empty($input['img_file'][$key]) && !empty($multipleCollection)) {
+                        $multipleCollection->clearMediaCollection(HomeCollectionMapping::MULTIPLE_COLLECTION_IMAGE);
+                        storeMedia($multipleCollection, $input['img_file'][$key],
+                            HomeCollectionMapping::MULTIPLE_COLLECTION_IMAGE);
+                    }
+                }
+                
+                $getHomeCollectionDetails = HomeCollectionMapping::where('home_collection_id',$collection->id)->get();
+                foreach ($getHomeCollectionDetails as $indexKey => $getHomeCollectionDetail) {
+                    $sequence = $indexKey + 1;
+                    $getHomeCollectionDetail->update(['sequence' => $sequence]);
                 }
             }
             DB::commit();
@@ -524,5 +584,33 @@ class HomeCollectionController extends Controller
         
         return Response::json($data);
     }
+
+    /**
+     * @param $count
+     *
+     * prepare multiple div
+     * @return JsonResponse
+     */
     
+    public function prepareMultipleCollectionItem($count)
+    {
+        $localeLanguage = \App::getLocale();
+        if (str_contains($localeLanguage, 'en')) {
+            $localeLanguage = 'en';
+        } else {
+            $localeLanguage = 'hi';
+        }
+        $data['books'] = Book::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->where('status', 1)->get();
+
+        $data['mappingCollectionType'] = HomeCollectionMapping::MAPPING_COLLECTION_TYPES;
+        $data['count'] = $count;
+        
+        $returnValue =  view('backend.home_collection.prepare_multiple_collection_item')->with($data)->render();
+
+        return \Illuminate\Support\Facades\Response::json($returnValue);
+    }
 }

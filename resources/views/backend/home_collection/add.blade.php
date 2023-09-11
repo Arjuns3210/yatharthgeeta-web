@@ -15,7 +15,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form id="addHomeCollection" method="post" action="home_collection/save">
+                            <form id="addHomeCollection" method="post" action="home_collection/save" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -59,7 +59,7 @@
                                                             <input class="form-control required" type="text" id="sequence" name="sequence" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode ==46'><br/>
                                                         </div>
                                                         <div class="col-sm-12 pl-0 pr-0">
-                                                            <label>display in columns</label>
+                                                            <label>Display in columns<span class="text-danger">*</span></label>
                                                             <input class="form-control required" type="text" id="display_in_column" name="display_in_column" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode ==46'><br/>
                                                         </div>
                                                         <div class="col-sm-12 pl-0 pr-0 mt-2">
@@ -72,8 +72,9 @@
                                                 </div>
                                                 
                                                 <div class="row div_multiple">
-                                                    <!-- -------------------multiple_div start----------------------- -->
                                                     <div class="col-md-12 ">
+                                                        <fieldset class="scheduler-border mb-3">
+                                                            <legend class="scheduler-border"> Extra Details :</legend>
                                                         <div class="row" id="dummy_div_multiple">
                                                             <div class="col-md-12 main_div_multiple mb-0">
                                                                 <div class="row">
@@ -81,10 +82,10 @@
                                                                         <label>Image Upload<span class="text-danger">*</span></label>
                                                                     </div>
                                                                     <div class="col-md-2 mt-1">
-                                                                        <label>Is Clickable</label>
+                                                                        <label>Is Clickable<span class="text-danger">*</span></label>
                                                                     </div>
                                                                     <div class="col-md-3 mt-1">
-                                                                        <label>Mapped Type</label>
+                                                                        <label>Mapped Type<span class="text-danger">*</span></label>
                                                                     </div>
                                                                     <div class="col-md-3 mt-1">
                                                                         <label>Mapped Master</label>
@@ -92,7 +93,7 @@
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-md-3 mt-1">
-                                                                        <input type="file" class="form-control" id="img_file_1" name="img_file[]" ><br/>
+                                                                        <input type="file" class="form-control" id="img_file_1" name="img_file[]" accept=".jpg,.jpeg,.png"><br/>
                                                                     </div>
                                                                     <div class="col-md-2 mt-1">
                                                                         <select class="select2" id="img_clickable_1" name="img_clickable[]" style="width: 100% !important;">
@@ -101,58 +102,26 @@
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-md-3 mt-1">
-                                                                        <select class="select2 mapped-to" id="mapped_to_1" name="mapped_to[]" style="width: 100% !important;" >
+                                                                        <select class="select2 mapped-to" id="mapped_to" name="mapped_to[]" style="width: 100% !important;" >
                                                                             @foreach($mappingCollectionType as $key => $type)
                                                                                 <option value = "{{$key}}">{{ $type }}</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-md-3 mt-1">
-                                                                        <select class="select2  mapped-ids" id="mapped_ids_1" name="mapped_ids[]" multiple style="width: 100% !important;" >
+                                                                        <select class="select2  mapped-ids" id="mapped_ids" name="mapped_ids[0][]" multiple style="width: 100% !important;" >
                                                                             @foreach($books as $key => $book)
                                                                                 <option value="{{$book->id}}">{{$book->translations[0]->name ?? ''}}</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-md-1 mt-1">
-                                                                        <a href="javascript:void(0);" onclick="add_multi_row();" class="btn btn-primary btn-sm add-multiple-row"><i class="fa fa-plus fa-lg"></i></a><br/>
+                                                                        <a href="javascript:void(0);"  class="btn btn-primary btn-sm add-multiple-row"><i class="fa fa-plus fa-lg"></i></a><br/>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- ---------------------- sample div for multiple ---------------------------- -->
-                                                <div class="sample_div_multiple_class" style= "display:none">
-                                                    <div class="col-md-12 main_div_multiple mt-0" id="sample_div_multiple">
-                                                        <div class="row">
-                                                            <div class="col-md-3">
-                                                                <input type="file" class="img_file_sample_class form-control" id="img_file_1" name="img_file[]" ><br/>
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <select class="select2 img_clickable_sample_class form-control" id="img_clickable_1" name="img_clickable[]" style="width: 100% !important;">
-                                                                    <option value = "0">No</option>
-                                                                    <option value = "1">Yes</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-3 mt-1">
-                                                                <select class="select2 mapped_to_sample_class mapped-to " id="mapped_to_1" name="mapped_to[]" style="width: 100% !important;">
-                                                                    @foreach($mappingCollectionType as $key => $type)
-                                                                        <option value = "{{$key}}">{{ $type }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-3 mt-1">
-                                                                <select class="select2 mapped_ids_sample_class mapped-ids " id="mapped_ids_1" name="mapped_ids[]" style="width: 100% !important;" multiple>
-                                                                    @foreach($books as $key => $book)
-                                                                        <option value="{{$book->id}}">{{$book->translations[0]->name ?? ''}}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-md-1">
-                                                                <button type="button" class="btn btn-danger btn-sm" onclick="remove_multi_row(this);" ><i class="fa fa-trash fa-lg"></i></button><br/>
-                                                            </div>
-                                                        </div>
+                                                        </div> 
+                                                        </fieldset>
                                                     </div>
                                                 </div>
                                                 
@@ -356,22 +325,42 @@
             },
         });
     });
-    function add_multi_row(){
-        var i = parseInt($('[id^=img_file_]:last').attr('id').substr(9))+1;
-        console.log(i);
-        $('.sample_div_multiple_class .img_file_sample_class').attr({'name':'img_file[]','id':'img_file_'+ i,'class':'form-control '});
-        $('.sample_div_multiple_class .img_clickable_sample_class').attr({'name':'img_clickable[]','id':'img_clickable_'+ i,});
-        $('.sample_div_multiple_class .mapped_to_sample_class').attr({'name':'mapped_to[]','id':'mapped_to'+ i});
-        $('.sample_div_multiple_class .mapped_ids_sample_class').attr({'name':'mapped_ids[]','id':'mapped_ids'+ i,});
 
-        var sampleClone = $('#sample_div_multiple').clone();
-        sampleClone.find("span").remove();
-        sampleClone.find("select").select2();
-        $('#dummy_div_multiple').append(sampleClone);
-    }
+    $(document).on('click', '.add-multiple-row', function () {
+        // Disable the a tag
+        $(this).addClass('disabled');
+        var pluseButton = $(this);
+        let totalDiv = $('.main_div_multiple').length;
+        $.ajax({
+            type: 'GET',
+            url: 'prepare_multiple_collection_item/' + totalDiv,
+            success: function (data) {
+                // Append the data to the container
+                var $newElements = $(data);
+                $('#dummy_div_multiple').append($newElements);
 
-    function remove_multi_row($this)
-    {
-        $($this).parents('.main_div_multiple').remove();
+                // Initialize Select2 on the newly added elements
+                $newElements.find('.select2').select2();
+
+                // Re-enable the anchor tag and remove the 'disabled' class
+                pluseButton.removeClass('disabled');
+            },
+            error: function () {
+                pluseButton.removeClass('disabled');
+            }
+        });
+    });
+
+
+    $(document).on('click', '.remove-multiple-div-row', function () {
+        $(this).closest('.main_div_multiple').remove();
+        updateSelectNames();
+    });
+
+    function updateSelectNames() {
+        $('.main_div_multiple').each(function (index) {
+            var $row = $(this);
+            $row.find('select[name^="mapped_ids["]').attr('name', 'mapped_ids[' + index + '][]');
+        });
     }
 </script>

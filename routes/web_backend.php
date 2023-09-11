@@ -157,6 +157,7 @@ Route::group(['middleware' => ['customAuth']], function () {
     Route::post('home_collection/publish', 'HomeCollectionController@updateStatus');
     Route::get('home_collection/delete/{id}', 'HomeCollectionController@destroy');
     Route::get('get_mapped_listing/{type}', 'HomeCollectionController@getMappedListing');
+    Route::get('prepare_multiple_collection_item/{count}','HomeCollectionController@prepareMultipleCollectionItem');
 
     //manage role
 	Route::get('roles', 'RoleController@roles');

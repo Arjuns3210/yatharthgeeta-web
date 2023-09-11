@@ -8,6 +8,7 @@ use App\Models\AudioEpisode;
 use App\Models\Banner;
 use App\Models\Ashram;
 use App\Models\HomeCollection;
+use App\Models\HomeCollectionMapping;
 use App\Models\Quote;
 use App\Models\Video;
 use App\Models\Artist;
@@ -46,6 +47,8 @@ class CustomPathGenerator implements PathGenerator
                 return str_replace('{PARENT_DIR}', AudioEpisode::EPISODE_AUDIO_SRT_FILE, $path);
                 case HomeCollection::SINGLE_COLLECTION_IMAGE;
                 return str_replace('{PARENT_DIR}', HomeCollection::SINGLE_COLLECTION_IMAGE, $path);
+            case HomeCollectionMapping::MULTIPLE_COLLECTION_IMAGE;
+                return str_replace('{PARENT_DIR}', HomeCollectionMapping::MULTIPLE_COLLECTION_IMAGE, $path);
             case 'default';
                 return '';
         }
