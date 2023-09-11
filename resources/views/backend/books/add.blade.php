@@ -33,6 +33,14 @@
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
                                                     <div class="col-sm-6">
+                                                        <label>Book Category</label>
+                                                        <select class="form-control mb-3" type="text" id="book_category_id" name="book_category_id">
+                                                            @foreach($location as $location)
+                                                                <option value="{{$location->id}}">{{$location->name}}</option>
+                                                            @endforeach
+                                                            </select>
+                                                    </div>
+                                                    <div class="col-sm-6">
                                                         <label>Number of Pages</label>
                                                         <input class="form-control" type="text" id="pages" name="pages" oninput="filterNonNumeric(this)"><br/>
                                                     </div>
