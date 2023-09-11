@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMantrasTable extends Migration
+class CreateShloksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,20 @@ class CreateMantrasTable extends Migration
      */
     public function up()
     {
-        Schema::create('mantras', function (Blueprint $table) {
+        Schema::create('shloks', function (Blueprint $table) {
             $table->increments('id');
-            $table->longText('sanskrit_title');
-            $table->string('reference_name', 255)->default('Bhagvad Geeta');
-            $table->string('reference_url', 255)->default('yatharthgeeta.com');
+            $table->string('background_image')->nullable();
             $table->integer('sequence');
+            $table->enum('share_allowed', ['yes', 'no'])->default('yes');
+            $table->longText('sanskrit_title')->nullable();
+            $table->integer('verses_number')->nullable();
+            $table->integer('chapter_number')->nullable();
+            $table->integer('audio_episode_id')->nullable();
             $table->enum('status', [1, 0])->default(1);
-            $table->enum('share_allowed', ['Y', 'N'])->default('Y');
-            $table->enum('visible_on_app', [0, 1])->default(1);
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->default(0);
-            $table->timestamps();
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 
@@ -36,6 +37,6 @@ class CreateMantrasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mantras');
+        Schema::dropIfExists('shloks');
     }
 }
