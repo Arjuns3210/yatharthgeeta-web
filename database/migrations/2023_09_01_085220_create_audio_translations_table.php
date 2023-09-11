@@ -16,11 +16,11 @@ class CreateAudioTranslationsTable extends Migration
         Schema::create('audio_translations', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('audio_id')->unsigned();
-            $table->foreign('audio_id')->references('id')
-                ->on('audios')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('audio_id')->references('id')->on('audios')->onDelete('cascade')->onUpdate('cascade');
             $table->string('locale')->nullable();
             $table->string('title')->nullable();
             $table->text('description')->nullable();
+            $table->unique(['audio_id','locale']);
         });
     }
 

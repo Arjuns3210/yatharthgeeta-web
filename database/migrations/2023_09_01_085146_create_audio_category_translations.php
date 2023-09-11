@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLanguageTranslationsTable extends Migration
+class CreateAudioCategoryTranslations extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateLanguageTranslationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('language_translations', function (Blueprint $table) {
+        Schema::create('audio_category_translations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('language_id')->unsigned();
+            $table->integer('audio_category_id')->unsigned();
             $table->string('locale')->index();
             $table->string('name');
-            $table->unique(['language_id','locale']);
-            $table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade')->onUpdate('cascade');
+            $table->unique(['audio_category_id','locale']);
+            $table->foreign('audio_category_id')->references('id')->on('audio_categories')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -30,6 +30,6 @@ class CreateLanguageTranslationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('language_translations');
+        Schema::dropIfExists('audio_category_translation');
     }
 }

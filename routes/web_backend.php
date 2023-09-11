@@ -192,6 +192,16 @@ Route::group(['middleware' => ['customAuth']], function () {
     Route::get('general_settings', 'GeneralSettingController@index');
     Route::post('updateSettingInfo', 'GeneralSettingController@updateSetting');
 
+    //Shlok
+    Route::get('shloks', 'ShlokController@index')->name('shloks.index');
+    Route::post('shloks/fetch', 'ShlokController@fetch');
+    Route::get('shloks/add', 'ShlokController@create');
+	Route::post('shloks/save', 'ShlokController@store');
+    Route::get('shloks/view/{id}', 'ShlokController@view');
+	Route::get('shloks/edit/{id}', 'ShlokController@edit');
+	Route::post('shloks/update/{id}', 'ShlokController@update');
+    Route::post('shloks/publish', 'ShlokController@updateStatus');
+    Route::get('shloks/delete/{id}', 'ShlokController@destroy');
 
 	// Logout
 	Route::get('/logout', function () {

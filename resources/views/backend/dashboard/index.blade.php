@@ -7,6 +7,9 @@
             <div class="content-wrapper">
                 <section id="minimal-statistics">
                     <div class="row">
+                        <div class="col-xl-3 col-lg-6 col-12"></div>
+                    </div>
+                    <div class="row">
                         <div class="col-12">
                             <h1 class="content-header">
                                 <b>Welcome to Yatharth Geeta Admin Panel</b>

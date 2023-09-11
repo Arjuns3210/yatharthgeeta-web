@@ -24,10 +24,6 @@ class CreateVideoTranslationsTable extends Migration
             $table->foreign('video_id')->references('id')->on('videos')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('artist_id')->references('id')->on('artists')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->unique(['video_id','locale']);
-            $table->integer('created_by')->default(0);
-            $table->integer('updated_by')->default(0);
-            $table->timestamps();
-            $table->softDeletes();
         });
     }
 

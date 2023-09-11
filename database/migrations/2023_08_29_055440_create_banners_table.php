@@ -21,10 +21,8 @@ class CreateBannersTable extends Migration
             $table->integer('lang_id')->unsigned()->nullable();
             $table->enum('visible_in_app', [1, 0])->default(1);
             $table->enum('status', [1, 0])->default(1);
-            $table->integer('created_by')->unsigned()->nullable();
-            $table->integer('updated_by')->unsigned()->nullable();
-            $table->foreign('created_by')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('updated_by')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('created_by')->default(0);
+            $table->integer('updated_by')->default(0);
             $table->timestamps();
             $table->softDeletes();
 
