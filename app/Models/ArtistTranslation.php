@@ -9,6 +9,8 @@ class ArtistTranslation extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     public $fillable = [
         'name',
         'artist_id',

@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class BookTranslation extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
+
     public $fillable = [
         'book_id',
         'name',

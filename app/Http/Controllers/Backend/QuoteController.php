@@ -68,6 +68,12 @@ class QuoteController extends Controller
     {
         $data['quotes'] = Quote::find($id);
         $data['media'] = $data['quotes']->getMedia(Quote::IMAGE)[0];
+        if (!empty($data['quotes']->getMedia(Quote::IMAGE))) {
+            $media = $data['quotes']->getMedia(Quote::IMAGE);
+            if (isset($media[0])) {
+                $data['media'] = $media[0];
+            }
+        }
 		return view('backend/quotes/view')->with($data);
     }
 
@@ -81,6 +87,12 @@ class QuoteController extends Controller
     {
         $data['quotes'] = Quote::find($id);
         $data['media']= $data['quotes']->getMedia( Quote::IMAGE)[0];
+        if (!empty($data['quotes']->getMedia(Quote::IMAGE))) {
+            $media = $data['quotes']->getMedia(Quote::IMAGE);
+            if (isset($media[0])) {
+                $data['media'] = $media[0];
+            }
+        }
 		return view('backend/quotes/edit')->with($data);
     }
 
@@ -146,7 +158,7 @@ class QuoteController extends Controller
                         $quotes_status = checkPermission('quotes_status');
                         $actions = '<span style="white-space:nowrap;">';
                         if ($quotes_view) {
-                            $actions .= '<a href="quotes/view/' . $event['id'] . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" title="View"><i class="fa fa-eye"></i></a>';
+                            $actions .= '<a href="quotes/view/' . $event['id'] . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View Quote Details" title="View"><i class="fa fa-eye"></i></a>';
                         }
                         if ($quotes_edit) {
                             $actions .= ' <a href="quotes/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
@@ -195,5 +207,13 @@ class QuoteController extends Controller
         } catch (\Exception $e) {
             errorMessage(trans('auth.something_went_wrong'));
         }
+    }
+
+    public function deleteImage(Request $request)
+    {
+        $msg_data = array();
+        $data = Quote::find($_GET['id']);
+        $data->clearMediaCollection(Quote::IMAGE);
+        successMessage('image deleted successfully', $msg_data);
     }
 }
