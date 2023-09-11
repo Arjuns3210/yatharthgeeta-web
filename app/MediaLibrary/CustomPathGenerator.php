@@ -3,10 +3,13 @@
 namespace App\MediaLibrary;
 
 
+use App\Models\Audio;
+use App\Models\AudioEpisode;
 use App\Models\Banner;
 use App\Models\Ashram;
 use App\Models\Quote;
 use App\Models\Video;
+use App\Models\Artist;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\PathGenerator\PathGenerator;
 
@@ -28,8 +31,18 @@ class CustomPathGenerator implements PathGenerator
                 return str_replace('{PARENT_DIR}', Quote::IMAGE, $path);
             case Video::COVER_IMAGE;
                 return str_replace('{PARENT_DIR}', Video::COVER_IMAGE, $path);
-            case Guru::IMAGE;
-                return str_replace('{PARENT_DIR}', Guru::IMAGE, $path);
+            case Artist::IMAGE;
+                return str_replace('{PARENT_DIR}', Artist::IMAGE, $path);
+            case Audio::AUDIO_FILE;
+                return str_replace('{PARENT_DIR}', Audio::AUDIO_FILE, $path);
+            case Audio::AUDIO_COVER_IMAGE;
+                return str_replace('{PARENT_DIR}', Audio::AUDIO_COVER_IMAGE, $path);
+            case Audio::AUDIO_SRT_FILE;
+                return str_replace('{PARENT_DIR}', Audio::AUDIO_SRT_FILE, $path);
+            case AudioEpisode::EPISODE_AUDIO_FILE;
+                return str_replace('{PARENT_DIR}', AudioEpisode::EPISODE_AUDIO_FILE, $path);
+            case AudioEpisode::EPISODE_AUDIO_SRT_FILE;
+                return str_replace('{PARENT_DIR}', AudioEpisode::EPISODE_AUDIO_SRT_FILE, $path);
             case 'default';
                 return '';
         }

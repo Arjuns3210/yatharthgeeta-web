@@ -39,10 +39,12 @@
                                                         <td><strong>Status</strong></td>
                                                         <td><?php echo $guru['status'] == 1 ? 'Active' : 'Inactive' ?></td>
                                                     </tr>
+                                                    @if(isset($media))
                                                     <tr>
                                                         <td><strong>guru Image </strong></td>
                                                         <td><img src="{{$media->getFullUrl() ?? ''}}" width="200px" height="200px" alt=""></td>
                                                     </tr>
+                                                    @endif
                                                 </table>
                                             </div>
                                         </div>

@@ -14,11 +14,12 @@ class CreateGeneralSettingsTable extends Migration
     public function up()
     {
         Schema::create('general_settings', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('type');
             $table->longText('value');
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->default(0);
+            $table->enum('status', [1, 0])->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -18,13 +18,10 @@ class CreateBookTranslationsTable extends Migration
             $table->integer('book_id')->unsigned();
             $table->string('locale')->index();
             $table->string('name');
+            $table->string('highlight_descrption');
             $table->string('description');
             $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade')->onUpdate('cascade');
             $table->unique(['book_id','locale']);
-            $table->integer('created_by')->default(0);
-            $table->integer('updated_by')->default(0);
-            $table->timestamps();
-            $table->softDeletes();
         });
     }
 

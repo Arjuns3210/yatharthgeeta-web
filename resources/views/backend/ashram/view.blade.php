@@ -56,10 +56,12 @@
                                                             </ul>
                                                         </td>
                                                     </tr>
+                                                    @if(isset($media))
                                                     <tr>
                                                         <td><strong>Ashram Image </strong></td>
                                                         <td><img src="{{$media->getFullUrl() ?? ''}}" width="200px" height="200px" alt=""></td>
                                                     </tr>
+                                                    @endif
                                                 </table>
                                             </div>
                                         </div>
