@@ -78,7 +78,7 @@ class HomeCollectionController extends Controller
                         $home_collection_view = checkPermission('home_collection_view');
                         $home_collection_status = checkPermission('home_collection_status');
                         $home_collection_delete = checkPermission('home_collection_delete');
-                        $is_head = session('data')['is_head'] ?? true;
+                        $is_head = session('data')['is_head'] ?? false;
                         $actions = '<span style="white-space:nowrap;">';
                         if ($home_collection_view) {
                             $actions .= '<a href="home_collection/view/' . $event['id'] . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View Book Details" title="View"><i class="fa fa-eye"></i></a>';
