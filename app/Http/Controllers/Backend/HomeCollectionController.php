@@ -181,7 +181,6 @@ class HomeCollectionController extends Controller
         try {
             DB::beginTransaction();
             $input = $request->all();
-            dd($input);
             $input['type'] = $input['collection_type'];
             if (! empty($input['is_scrollable'])) {
                 $input['is_scrollable'] = '1';
