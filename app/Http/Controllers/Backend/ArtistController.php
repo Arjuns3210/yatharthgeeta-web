@@ -133,7 +133,12 @@ class ArtistController extends Controller
             }
         }
         $data['translated_block'] = Artist::TRANSLATED_BLOCK;
-        $data['media'] = $data['guru']->getMedia(Artist::IMAGE)[0];
+        if (!empty($data['guru']->getMedia(Artist::IMAGE))) {
+            $media = $data['guru']->getMedia(Artist::IMAGE);
+            if (isset($media[0])) {
+                $data['media'] = $media[0];
+            }
+        }
         return view('backend/artist/view',$data);
     }
 
@@ -153,7 +158,12 @@ class ArtistController extends Controller
             }
         }
         $data['translated_block'] = Artist::TRANSLATED_BLOCK;
-        $data['media'] =$data['guru']->getMedia(Artist::IMAGE)[0];
+        if (!empty($data['guru']->getMedia(Artist::IMAGE))) {
+            $media = $data['guru']->getMedia(Artist::IMAGE);
+            if (isset($media[0])) {
+                $data['media'] = $media[0];
+            }
+        }
         return view('backend/artist/edit',$data);
     }
 
@@ -194,5 +204,13 @@ class ArtistController extends Controller
     public function destroy(artist $artist)
     {
         //
+    }
+
+    public function deleteImage(Request $request)
+    {
+        $msg_data = array();
+        $data = Artist::find($_GET['id']);
+        $data->clearMediaCollection(Artist::IMAGE);
+        successMessage('image deleted successfully', $msg_data);
     }
 }

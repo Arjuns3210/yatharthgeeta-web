@@ -24,12 +24,6 @@ class CreateLocationTranslationsTable extends Migration
             $table->text('dont')->nullable();
             $table->unique(['location_id','locale']);
             $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
-            $table->integer('created_by')->unsigned()->nullable();
-            $table->integer('updated_by')->unsigned()->nullable();
-            $table->foreign('created_by')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('updated_by')->references('id')->on('admins')->onUpdate('cascade')->onDelete('cascade');
-            $table->timestamps();
-            $table->softDeletes();
         });
     }
 

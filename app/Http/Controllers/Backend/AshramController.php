@@ -143,7 +143,12 @@ class AshramController extends Controller
             }
         }
         $data['translated_block'] = Location::TRANSLATED_BLOCK;
-        $data['media'] = $data['ashram']->getMedia(Location::IMAGE)[0];
+        if (!empty($data['ashram']->getMedia(Location::IMAGE))) {
+            $media = $data['ashram']->getMedia(Location::IMAGE);
+            if (isset($media[0])) {
+                $data['media'] = $media[0];
+            }
+        }
         return view('backend/ashram/view',$data);
     }
 
@@ -163,7 +168,12 @@ class AshramController extends Controller
             }
         }
         $data['translated_block'] = Location::TRANSLATED_BLOCK;
-        $data['media'] =$data['ashram']->getMedia(Location::IMAGE)[0];
+        if (!empty($data['ashram']->getMedia(Location::IMAGE))) {
+            $media = $data['ashram']->getMedia(Location::IMAGE);
+            if (isset($media[0])) {
+                $data['media'] = $media[0];
+            }
+        }
         return view('backend/ashram/edit',$data);
     }
 
@@ -214,7 +224,7 @@ class AshramController extends Controller
     {
         $msg_data = array();
         $data = Location::find($_GET['id']);
-        dd($data);
+        $data->clearMediaCollection(Location::IMAGE);
         successMessage('image deleted successfully', $msg_data);
     }
 }

@@ -18,9 +18,6 @@ class CreateBookCategoryTranslationsTable extends Migration
             $table->integer('book_category_id')->unsigned();
             $table->string('locale')->index();
             $table->string('name');
-            $table->string('title');
-            $table->longText('subtitle');
-            $table->longText('description');
             $table->unique(['book_category_id','locale']);
             $table->foreign('book_category_id')->references('id')->on('book_categories')->onDelete('cascade')->onUpdate('cascade');
         });

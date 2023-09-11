@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Edit Guru</h5>
+                                    <h5 class="pt-2">Edit Guru: {{$guru['name']}}</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -45,9 +45,14 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Image</label>
-                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                         <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')" value="{{$guru['image']}}"><br/>
-                                                        <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="100px" alt="" id="image">
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
+                                                        @if(isset($media))
+                                                        <div class="main-del-section" style="position: relative; border: 1px solid #999; border-radius: 5px; padding: 5px; margin-right: 10px; display: inline-block;">
+                                                            <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="auto">
+                                                            <span class="delimg bg-danger text-center" id="{{$guru['id']}}" data-url="guru/delete_img?id={{$guru['id']}}" style="padding: 0 5px; position: absolute; top: -8px; right: -8px; border-radius: 50%; cursor: pointer;"><i class="fa fa-times text-light"></i></span>
+                                                        </div>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
