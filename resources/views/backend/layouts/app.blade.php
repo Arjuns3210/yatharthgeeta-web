@@ -46,8 +46,7 @@
                         <i class="ft-maximize font-medium-3" style="color:black !important"></i>
                     </a> --}}
                 </li>
-
-                <h5 class="translateLable padding-top-sm padding-left-sm pt-1"  data-translate="welcome_to_admin_panel">Welcome {{session('data')['name']}}</h5>
+                <h5 class="translateLable padding-top-sm padding-left-sm pt-1"  data-translate="welcome_to_admin_panel">Hari Om {{session('data')['name']}}</h5>
             </div>
             <div class="navbar-container pull-right">
                 <div class="collapse navbar-collapse d-block" id="navbarSupportedContent">
@@ -220,4 +219,5 @@
 <script src="../backend/js/ajax-custom.js"></script>
 <script src="../backend/js/mypcot.min.js"></script>
 <script src="../backend/js/select2.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
 </html>
