@@ -28,9 +28,9 @@ class RemoveSomeColumnIntoEventImages extends Migration
     public function down()
     {
         Schema::table('event_images', function (Blueprint $table) {
-            $table->string('title');
-            $table->longText('images');
-            $table->integer('sequence');
+            $table->string('title')->nullable();
+            $table->enum('visible_in_app', [1, 0])->default(1);
+            $table->integer('sequence')->nullable();
         });
     }
 }
