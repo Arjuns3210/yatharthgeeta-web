@@ -66,7 +66,7 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::get('books_category/edit/{id}', 'BookCategoryController@edit');
 	Route::post('books_category/update', 'BookCategoryController@update');
 	Route::get('books_category/view/{id}', 'BookCategoryController@show');
-    
+
     //audio
     Route::get('audios', 'AudioController@index');
     Route::get('audio/add', 'AudioController@create');
@@ -79,7 +79,7 @@ Route::group(['middleware' => ['customAuth']], function () {
     Route::post('publish_audio', 'AudioController@updateStatus');
     Route::get('audio_delete/{id}', 'AudioController@destroy');
     Route::post('delete_documents', 'AudioController@deleteMedia')->name('delete_documents');
-    
+
     // audio episodes
     Route::get('audio_episodes/{audioId?}', 'AudioEpisodeController@index');
     Route::post('audio_episode/fetch', 'AudioEpisodeController@fetch');
@@ -135,6 +135,28 @@ Route::group(['middleware' => ['customAuth']], function () {
     Route::post('mantras/publish', 'MantraController@updateStatus');
     Route::get('mantras/delete/{id}', 'MantraController@destroy');
 
+    //Event Images
+    Route::get('event_images', 'EventImageController@index');
+    Route::post('event_images/fetch', 'EventImageController@fetch');
+    Route::get('event_images/add', 'EventImageController@create');
+    Route::post('event_images/save', 'EventImageController@store');
+    Route::get('event_images/view/{id}', 'EventImageController@view');
+	Route::get('event_images/edit/{id}', 'EventImageController@edit');
+    Route::post('event_images/update', 'EventImageController@update');
+    Route::post('event_images/publish', 'EventImageController@updateStatus');
+    Route::get('event_images/delete/{id}', 'EventImageController@destroy');
+
+    //Event
+    Route::get('events', 'EventController@index');
+    Route::post('events/fetch', 'EventController@fetch');
+    Route::get('events/add', 'EventController@create');
+    Route::post('events/save', 'EventController@store');
+    Route::get('events/view/{id}', 'EventController@view');
+	Route::get('events/edit/{id}', 'EventController@edit');
+    Route::post('events/update', 'EventController@update');
+    Route::post('events/publish', 'EventController@updateStatus');
+    Route::get('events/delete/{id}', 'EventController@destroy');
+
 	//staff
 	Route::get('staff', 'StaffController@index');
 	Route::post('staff/fetch', 'StaffController@fetch')->name('staff_fetch');
@@ -185,6 +207,7 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::get('quotes/edit/{id}', 'QuoteController@edit');
 	Route::post('quotes/update', 'QuoteController@update');
     Route::post('quotes/publish', 'QuoteController@updateStatus');
+    Route::post('quotes/delete_img', 'AshramController@deleteImage');
 
     //quote category
     Route::get('quote_category', 'QuoteCategoryController@index');

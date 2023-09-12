@@ -12,12 +12,12 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-12 col-sm-7">
-                                            <h5 class="pt-2">Manage Mantra List</h5>
+                                            <h5 class="pt-2">Manage Event List</h5>
                                         </div>
                                         <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                             <button class="btn btn-sm btn-outline-danger px-3 py-1 mr-2" id="listing-filter-toggle"><i class="fa fa-filter"></i> Filter</button>
-                                            @if($data['mantra_add'])
-                                                <a href="mantras/add" class="btn btn-sm btn-outline-primary px-3 py-1 src_data"><i class="fa fa-plus"></i> Add mantra</a>
+                                            @if($data['event_add'])
+                                                <a href="events/add" class="btn btn-sm btn-outline-primary px-3 py-1 src_data"><i class="fa fa-plus"></i> Add Event</a>
                                             @endif
                                         </div>
                                     </div>
@@ -25,12 +25,12 @@
                                 <div class="card-body">
                                     <div class="row mb-2" id="listing-filter-data" style="display: none;">
                                         <div class="col-md-4">
-                                            <label>Sanskrit Title</label>
-                                            <input class="form-control mb-3" type="text" id="search_sanskrit_title" name="search_sanskrit_title" >
+                                            <label>Title</label>
+                                            <input class="form-control mb-3" type="text" id="search_title" name="search_title">
                                         </div>
                                         <div class="col-md-4">
                                             <label>Sequence</label>
-                                            <input class="form-control mb-3" type="text" id="search_sequence" name="search_sequence" oninput="onlyNumericNegative(this)">
+                                            <input class="form-control mb-3" type="text" id="search_sequence" name="search_sequence">
                                         </div>
                                         <div class="col-md-4">
                                             <label>Status</label>
@@ -46,13 +46,13 @@
                                         </div>
                                     </div>
                                     <div class="table-responsive">
-                                        <table class="table table-bordered table-striped datatable" id="dataTable" width="100%" cellspacing="0" data-url="mantras/fetch">
+                                        <table class="table table-bordered table-striped datatable" id="dataTable" width="100%" cellspacing="0" data-url="events/fetch">
                                             <thead>
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
-                                                    <th id="sanskrit_title" data-orderable="false" data-searchable="false">Sanskrit Title</th>
+                                                    <th id="title_{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Title ({{ config('translatable.locales_name')[\App::getLocale()] }})</th>
                                                     <th id="sequence" data-orderable="false" data-searchable="false">Sequence</th>
-                                                    @if($data['mantra_status'] || $data['mantra_edit'] || $data['mantra_view'] || $data['mantra_delete'])
+                                                    @if($data['event_status'] || $data['event_edit'] || $data['event_view'] || $data['event_delete'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
                                                     @endif
                                                 </tr>

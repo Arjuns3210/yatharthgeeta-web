@@ -9,6 +9,8 @@ class ArtistTranslation extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     public $fillable = [
         'name',
         'artist_id',
@@ -16,8 +18,6 @@ class ArtistTranslation extends Model
         'title',
         'description',
     ];
-
-
     public function guru()
     {
         return $this->belongsTo(App\Models\Artist::class);
