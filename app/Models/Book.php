@@ -28,6 +28,7 @@ class Book extends Model implements HasMedia
         'audio_id',
         'video_id',
         'related_id',
+        'link',
         'status',
         'sequence'
 
@@ -37,7 +38,7 @@ class Book extends Model implements HasMedia
 
     public const TRANSLATED_BLOCK = [
 	    'name' => 'input',
-        'highlight_descrption' => 'textarea',
+        'highlight_descrption'=>'textarea',
 	    'description' => 'textarea'
 
 	];

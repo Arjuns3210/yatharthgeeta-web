@@ -5,25 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ArtistTranslation extends Model
+class EventTranslation extends Model
 {
     use HasFactory;
-
-    public $timestamps = false;
-
     public $fillable = [
-        'name',
-        'artist_id',
-        'locale',
+        'event_id',
         'title',
-        'description',
+        'short_description',
+        'long_description'
+
     ];
 
     public $timestamps = false;
-
-
-    public function guru()
+    public function event()
     {
-        return $this->belongsTo(App\Models\Artist::class);
+        return $this->belongsTo(\App\Models\Event::class);
     }
 }

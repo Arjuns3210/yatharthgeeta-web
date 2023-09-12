@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class VideoTranslation extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+
     public $fillable = [
         'video_id',
         'title',

@@ -7,6 +7,8 @@ use App\Models\Audio;
 use App\Models\AudioEpisode;
 use App\Models\Banner;
 use App\Models\Ashram;
+use App\Models\Event;
+use App\Models\EventImage;
 use App\Models\HomeCollection;
 use App\Models\HomeCollectionMapping;
 use App\Models\Quote;
@@ -25,8 +27,10 @@ class CustomPathGenerator implements PathGenerator
         $path = '{PARENT_DIR}'.DIRECTORY_SEPARATOR.$media->id.DIRECTORY_SEPARATOR;
 
         switch ($media->collection_name) {
-            case Banner::COVER;
-                return str_replace('{PARENT_DIR}', Banner::COVER, $path);
+            case EventImage::IMAGE;
+                return str_replace('{PARENT_DIR}', EventImage::IMAGE, $path);
+            case Event::COVER;
+                return str_replace('{PARENT_DIR}', Event::COVER, $path);
             case Ashram::IMAGE;
                 return str_replace('{PARENT_DIR}', Ashram::IMAGE, $path);
 			case Quote::IMAGE;
