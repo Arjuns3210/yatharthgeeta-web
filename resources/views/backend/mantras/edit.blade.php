@@ -34,7 +34,7 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <label>Sanskrit Title</label>
-                                                        <input class="form-control" type="text" id="sanskrit_title" name="sanskrit_title" value="{{$mantras->sanskrit_title}}"><br/>
+                                                        <textarea class="form-control" type="text" id="sanskrit_title" name="sanskrit_title">{{$mantras->sanskrit_title}}</textarea><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>

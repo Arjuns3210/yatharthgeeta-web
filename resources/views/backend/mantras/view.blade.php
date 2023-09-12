@@ -34,7 +34,7 @@
                                                 <table class="table table-striped table-bordered">
                                                     <tr>
                                                         <td><strong>Sanskrit Title</strong></td>
-                                                        <td>{{ $mantras['sanskrit_title'] }}</td>
+                                                        <td><?php echo str_replace("\n", "<br/>", $mantras->sanskrit_title) ?? '' ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Sequence</strong></td>
