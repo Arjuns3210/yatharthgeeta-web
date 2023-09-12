@@ -19,8 +19,6 @@ class LocationTranslation extends Model
         'dont'
     ];
 
-    public $timestamps = false;
-
 
     public function location()
     {

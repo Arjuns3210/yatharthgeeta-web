@@ -16,7 +16,6 @@ class ArtistTranslation extends Model
         'title',
         'description',
     ];
-    public $timestamps = false;
     public function guru()
     {
         return $this->belongsTo(App\Models\Artist::class);
