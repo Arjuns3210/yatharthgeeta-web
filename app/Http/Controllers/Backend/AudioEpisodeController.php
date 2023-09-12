@@ -15,6 +15,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use App\Utils\Utils;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\DataTables;
@@ -36,7 +37,7 @@ class AudioEpisodeController extends Controller
         $data['audio_episode_view'] = checkPermission('audio_episode_view');
         $data['audio_episode_status'] = checkPermission('audio_episode_status');
         $data['audio_episode_delete'] = checkPermission('audio_episode_delete');
-        $data['audio_id'] = $input['audioId'];
+        $data['audio_id'] = Crypt::decryptString($input['audioId']);
         $data['audio'] = Audio::with('translations')->findOrFail($data['audio_id']);
         
         return view('backend/audio_episode/index',["data"=>$data]);

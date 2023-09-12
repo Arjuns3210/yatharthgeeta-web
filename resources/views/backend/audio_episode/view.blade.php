@@ -40,6 +40,14 @@
                                                                         <td>{{ $audioEpisode->duration ?? ''}}</td>
                                                                     </tr>
                                                                     <tr>
+                                                                        <td><strong>Main Shlok</strong></td>
+                                                                        <td>{!!$audioEpisode->main_shlok ?? ''!!}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td><strong>Explanation Shlok</strong></td>
+                                                                        <td>{!! $audioEpisode->explanation_shlok ?? ''!!}</td>
+                                                                    </tr>
+                                                                    <tr>
                                                                         <td><strong>Audio File</strong></td>
                                                                         <td>
                                                                             @php

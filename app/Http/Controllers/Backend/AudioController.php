@@ -17,6 +17,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use App\Utils\Utils;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\DataTables;
@@ -107,7 +108,8 @@ class AudioController extends Controller
                             $actions .= ' <a data-option="'.$dataUrl.'" data-url="audio_delete/'.$event->id.'" class="btn btn-danger btn-sm delete-data" title="delete"><i class="fa fa-trash"></i></a>';
                         }
                         if ($audio_episode_view && $event['has_episodes'] == 1) {
-                            $actions .= ' <a href="audio_episodes?audioId=' . $event->id . '" class="btn btn-info btn-sm" title="Manage Episode"><i class="fa fa-archive"></i></a>';
+                            $id = Crypt::encryptString($event->id);
+                            $actions .= ' <a href="audio_episodes?audioId=' . $id. '" class="btn btn-info btn-sm" title="Manage Episode"><i class="fa fa-archive"></i></a>';
                         }
                         $actions .= '</span>';
                         return $actions;
