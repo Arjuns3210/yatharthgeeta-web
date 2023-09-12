@@ -30,6 +30,6 @@ class CreateAudioCategoryTranslations extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('audio_category_translation');
+        Schema::dropIfExists('audio_category_translations');
     }
 }

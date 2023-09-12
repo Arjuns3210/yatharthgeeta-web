@@ -40,6 +40,10 @@
                                                                         <td>{{ ($audio->has_episodes == 1) ? 'Yes' : 'No' }}</td>
                                                                     </tr>
                                                                     <tr>
+                                                                        <td><strong>Audio Category</strong></td>
+                                                                        <td>{{ $audioCategory->translations[0]->name ?? '' }}</td>
+                                                                    </tr>
+                                                                    <tr>
                                                                         <td><strong>Duration (In Minute)</strong></td>
                                                                         <td>{{ $audio->duration ?? ''}}</td>
                                                                     </tr>

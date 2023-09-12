@@ -12,53 +12,50 @@
                                     <div class="card-header">
                                         <div class="row">
                                             <div class="col-12 col-sm-7">
-                                                <h5 class="pt-2">Manage Audio List</h5>
+                                                <h5 class="pt-2">Manage Customer</h5>
                                             </div>
                                             <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                                 <button class="btn btn-sm btn-outline-danger px-3 py-1 mr-2" id="listing-filter-toggle"><i class="fa fa-filter"></i> Filter</button>
-                                                @if($data['audios_add'])
-                                                    <a href="audio/add" class="btn btn-sm btn-outline-primary px-3 py-1 src_data"><i class="fa fa-plus"></i> Add Audio</a>
-                                                @endif
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- <hr class="mb-0"> -->
                                     <div class="card-body">
                                         <div class="row mb-2" id="listing-filter-data" style="display: none;">
                                             <div class="col-md-4">
-                                                <label>Audio Name</label>
+                                                <label>Name</label>
+                                                <input class="form-control mb-3" type="text" id="search_name" name="search_name">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label>Title</label>
                                                 <input class="form-control mb-3" type="text" id="search_title" name="search_title">
                                             </div>
                                             <div class="col-md-4">
-                                                <label>Audio Category</label>
-                                                <select class="form-control mb-3" type="text" id="search_audio_category_id" name="search_audio_category_id">
-                                                    <option value="">All</option>
-                                                    @foreach($data['audioCategories'] as $audioCategory)
-                                                        <option value="{{$audioCategory->id}}">{{$audioCategory->translations[0]->name ?? ''}}</option>
-                                                    @endforeach
-                                                </select>
+                                                <label>Email</label>
+                                                <input class="form-control mb-3" type="text" id="search_email" name="search_email">
                                             </div>
                                             <div class="col-md-4">
-                                                <label>Status</label>
-                                                <select class="form-control mb-3" type="text" id="search_status" name="search_status">
-                                                    <option value="">All</option>
-                                                    <option value="1">Active</option>
-                                                    <option value="0">Inactive</option>
-                                                </select>
-                                            </div>
+                                            <label>Status</label>
+                                            <select class="form-control mb-3" type="text" id="search_status" name="search_status">
+                                                <option value="">All</option>
+                                                <option value="1">Active</option>
+                                                <option value="0">Inactive</option>
+                                            </select>
+                                        </div>
                                             <div class="col-md-4">
                                                 <label>&nbsp;</label><br/>
                                                 <input class="btn btn-md btn-primary px-3 py-1 mb-3" id="clear-form-data" type="reset" value="Clear Search">
                                             </div>
                                         </div>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered table-striped datatable" id="dataTable" width="100%" cellspacing="0" data-url="audio/fetch">
+                                            <table class="table table-bordered table-striped datatable" id="dataTable" width="100%" cellspacing="0" data-url="customer/fetch">
                                                 <thead>
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
-                                                    <th id="title{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Audio Title ({{ config('translatable.locales_name')[\App::getLocale()] }})</th>
-                                                    <th id="audio_category{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Audio Category ({{ config('translatable.locales_name')[\App::getLocale()] }})</th>
-                                                    <th id="duration" data-orderable="false" data-searchable="false">Duration (In Minute)</th>
-                                                    @if($data['audios_status'] || $data['audios_edit'] || $data['audios_view'] || $data['audios_delete'])
+                                                    <th id="name" data-orderable="false" data-searchable="false">Name</th>
+                                                    <th id="email" data-orderable="false" data-searchable="false">Email</th>
+                                                    <th id="phone" data-orderable="false" data-searchable="false">Phone</th>
+                                                    @if($data['customer_edit'] || $data['customer_view'] || $data['customer_status'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
                                                     @endif
                                                 </tr>

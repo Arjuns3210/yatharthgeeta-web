@@ -135,16 +135,9 @@ Route::group(['middleware' => ['customAuth']], function () {
     Route::post('mantras/publish', 'MantraController@updateStatus');
     Route::get('mantras/delete/{id}', 'MantraController@destroy');
 
-    //Event Images
-    Route::get('event_images', 'EventImageController@index');
-    Route::post('event_images/fetch', 'EventImageController@fetch');
-    Route::get('event_images/add', 'EventImageController@create');
+    //manage Event Images
+    Route::get('event_images/add/{eventId}', 'EventImageController@create');
     Route::post('event_images/save', 'EventImageController@store');
-    Route::get('event_images/view/{id}', 'EventImageController@view');
-	Route::get('event_images/edit/{id}', 'EventImageController@edit');
-    Route::post('event_images/update', 'EventImageController@update');
-    Route::post('event_images/publish', 'EventImageController@updateStatus');
-    Route::get('event_images/delete/{id}', 'EventImageController@destroy');
 
     //Event
     Route::get('events', 'EventController@index');
@@ -212,6 +205,14 @@ Route::group(['middleware' => ['customAuth']], function () {
     //quote category
     Route::get('quote_category', 'QuoteCategoryController@index');
     Route::post('quote_category/fetch', 'QuoteCategoryController@fetch');
+
+	//customer
+	Route::get('customer', 'CustomerController@index');
+	Route::post('customer/fetch', 'CustomerController@fetch');
+	Route::get('customer/view/{id}', 'CustomerController@show');
+	Route::get('customer/edit/{id}', 'CustomerController@edit');
+	Route::post('customer/update', 'CustomerController@update');
+    Route::post('customer/publish', 'CustomerController@updateStatus');
 
     //general settings
     Route::get('general_settings', 'GeneralSettingController@index');

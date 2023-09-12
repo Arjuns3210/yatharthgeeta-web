@@ -136,6 +136,7 @@ class StaffController extends Controller
             $input['email'] = strtolower(trim($input['email']));
             $input['country_id'] = '91';
             $input['password'] =  md5($input['email'].$input['password']);
+            $input['is_head'] = $request->is_head ? '1': '0';
             $input['created_by'] = session('data')['id'];
             $input['pwd_expiry_date'] = $expiryDate;
             $input['force_pwd_change_flag'] = '1';
@@ -189,12 +190,10 @@ class StaffController extends Controller
         try {
             DB::beginTransaction();
             $input = $request->all();
+            $input['is_head'] = $request->is_head ? '1': '0';
             $input['updated_by'] = session('data')['id'];
             $staff =  Admin::where('id',$input['id'])->first();
-
-            if ($staff){
-                $staff->update($input);
-            }
+            $staff->update($input);
             DB::commit();
             successMessage('Staff Updated successfully', []);
         } catch (\Exception $e) {

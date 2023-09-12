@@ -53,6 +53,14 @@
                                                             </span>
                                                         </p>
                                                     </div>
+                                                    <div class="col-sm-6 mb-2">
+                                                        <label>Audio Category<span class="text-danger">*</span></label>
+                                                        <select class="form-control select2 required" id="audio_category_id" name="audio_category_id">
+                                                            @foreach($audioCategories as $audioCategory)
+                                                                <option value="{{$audioCategory->id}}">{{$audioCategory->translations[0]->name ?? ''}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                                     <div class="col-md-6 mb-2">
                                                         <label>Duration (In Minute)<span style="color:#ff0000">*</span></label>
                                                         <input class="form-control required" type="number" id="duration" name="duration">
@@ -86,8 +94,6 @@
                                                                 <option value="{{$speaker->id}}">{{$speaker->translations[0]->name ?? ''}}</option>
                                                             @endforeach
                                                         </select>
-                                                    </div>
-                                                    <div class="col-sm-6">
                                                     </div>
                                                     <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center file-input-div">
                                                         <p class="font-weight-bold">Audio File (MP3)</p>

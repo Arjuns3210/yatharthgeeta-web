@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEventTranslationsTable extends Migration
+class CreateVideoCategoryTranslationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateEventTranslationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('event_translations', function (Blueprint $table) {
+        Schema::create('video_category_translations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('event_id')->unsigned();
-            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('video_category_id');
+            $table->foreign('video_category_id')->references('id')->on('video_categories')->onDelete('cascade');
             $table->string('locale')->index();
             $table->string('name');
-            $table->text('short_description');
-            $table->text('long_description');
-            $table->unique(['event_id', 'locale']);
+            $table->unique(['video_category_id','locale']);
         });
     }
 
@@ -32,6 +30,6 @@ class CreateEventTranslationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event_translations');
+        Schema::dropIfExists('video_category_translations');
     }
 }

@@ -18,20 +18,24 @@
                     	<div class="card-body">
                     		<form id="updateStaffData" method="post" action="staff/update">
                     			@csrf
-                        		<div class="row">
+                                <div class="row">
                         			<div class="col-sm-6">
                         				<label>Role<span class="text-danger">*</span></label>
                         				<select class="select2 required" id="role_id" name="role_id" style="width: 100% !important;">
                                             <option value="">Select</option>
                                             @foreach($data['roles'] as $roles)
-                                                @if($roles->id == $data['data']->role_id)
-                                                    <option value="{{$roles->id}}" selected>{{$roles->role_name}}</option>
-                                                @else
-                                                    <option value="{{$roles->id}}">{{$roles->role_name}}</option>
-                                                @endif
+                                                <option value="{{$roles->id}}">{{$roles->role_name}}</option>
                                             @endforeach
                                         </select><br/>
                         			</div>
+                                    <div class="col-sm-6 d-flex" style="margin-top:30px">
+                                        <input type="checkbox" class="largerCheckbox" id="is_head" name="is_head" value="{{$data['data']->is_head}}" {{ $data['data']->is_head == 1 ? 'checked' :'' }}>
+                                        <div class="ml-2">
+                                            <label class="" for="is_head">Is Head ?</label>
+                                        </div>
+                                    </div>
+								</div><br/>
+                        		<div class="row">
                                     <div class="col-sm-6">
                                         <label>Admin Name<span class="text-danger">*</span></label>
                                         <input class="form-control required" type="text" id="admin_name" name="admin_name" value="{{$data['data']->admin_name}}"><br/>
@@ -73,4 +77,11 @@
 </section>
 <script>
     $('.select2').select2();
+    $('#is_head').click(function(){
+        if( $(this).val()==1){
+            $(this).val(0);
+        }else{
+            $(this).val(1)
+        }
+    });
 </script>

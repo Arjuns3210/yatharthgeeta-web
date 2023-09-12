@@ -41,6 +41,16 @@
                                                             <label>sequence<span style="color:#ff0000">*</span></label>
                                                             <input class="form-control required" type="number"    id="sequence" name="sequence" value="{{$audioEpisode['sequence']}}"><br/>
                                                         </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Main Shlok<span class="text-danger">*</span></label>
+                                                        <textarea class="form-control required" rows="10" name="main_shlok">{{$audioEpisode['main_shlok'] ?? ''}}</textarea>
+                                                        <br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Explanation Shlok<span class="text-danger">*</span></label>
+                                                        <textarea class="form-control required" rows="10" name="explanation_shlok">{{$audioEpisode['explanation_shlok']}}</textarea>
+                                                        <br/>
+                                                    </div>
                                                     <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center file-input-div">
                                                         <p class="font-weight-bold">Audio File (MP3)</p>
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
