@@ -15,7 +15,7 @@ class MantraTranslation extends Model
         'description'
 
     ];
-    public $timestamps = false;
+
     public function mantra()
     {
         return $this->belongsTo(\App\Models\Mantra::class);
