@@ -5,7 +5,6 @@ namespace App\MediaLibrary;
 
 use App\Models\Audio;
 use App\Models\AudioEpisode;
-use App\Models\Banner;
 use App\Models\Location;
 use App\Models\Event;
 use App\Models\EventImage;
@@ -27,8 +26,6 @@ class CustomPathGenerator implements PathGenerator
         $path = '{PARENT_DIR}'.DIRECTORY_SEPARATOR.$media->id.DIRECTORY_SEPARATOR;
 
         switch ($media->collection_name) {
-            case Banner::COVER;
-                return str_replace('{PARENT_DIR}', Banner::COVER, $path);
             case Location::IMAGE;
                 return str_replace('{PARENT_DIR}', Location::IMAGE, $path);
             case EventImage::IMAGE;
