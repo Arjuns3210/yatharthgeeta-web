@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Artist;
 use App\Models\Book;
+use App\Models\BookCategory;
 use App\Models\BookTranslation;
+use App\Models\Language;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
@@ -128,6 +131,9 @@ class BookController extends Controller
     public function create()
     {
         $data['translated_block'] = Book::TRANSLATED_BLOCK;
+        $data['book_category'] = BookCategory::all();
+        $data['language'] = Language::all();
+        $data['artist'] = Artist::all();
         return view('backend/books/add', $data);
     }
 

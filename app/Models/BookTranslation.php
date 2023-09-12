@@ -16,6 +16,7 @@ class BookTranslation extends Model
         'status'
 
     ];
+    public $timestamps = false;
     public function books()
     {
         return $this->belongsTo(\App\Models\Book::class);

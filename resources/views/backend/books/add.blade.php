@@ -35,8 +35,8 @@
                                                     <div class="col-sm-6">
                                                         <label>Book Category</label>
                                                         <select class="form-control mb-3" type="text" id="book_category_id" name="book_category_id">
-                                                            @foreach($location as $location)
-                                                                <option value="{{$location->id}}">{{$location->name}}</option>
+                                                            @foreach($book_category as $book_category)
+                                                                <option value="{{$book_category->id}}">{{$book_category->name}}</option>
                                                             @endforeach
                                                             </select>
                                                     </div>
@@ -45,8 +45,40 @@
                                                         <input class="form-control" type="text" id="pages" name="pages" oninput="filterNonNumeric(this)"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Book Url<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="link" name="link"><br/>
+                                                        <label>Book Pdf<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="file" id="pdf_file_name" name="pdf_file_name"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>File Extension<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="epub_file_name" name="epub_file_name"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Audio Url<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="audio_id" name="audio_id"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Video Url<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="video_id" name="video_id"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Related Books<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="related_id" name="related_id"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Guru</label>
+                                                        <select class="form-control mb-3" type="text" id="artist_id" name="artist_id">
+                                                        @foreach($artist as $artist)
+                                                            <option value="{{$artist->id}}">{{$artist->name}}</option>
+                                                        @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Language</label>
+                                                        <select class="form-control mb-3" type="text" id="language_id" name="language_id">
+                                                        @foreach($language as $language)
+                                                            <option value="{{$language->id}}">{{$language->name}}</option>
+                                                        @endforeach
+                                                        </select>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Cover Image<span class="text-danger">*</span></label>
