@@ -113,6 +113,29 @@ class AshramController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
+        $working_days_data = [
+            "open_monday"     => $input['open_monday'] == 'on' ? 'true' : "false",
+            "start_monday"    => !empty($input['open_monday']) ? $input['start_monday'] ?? '' :'',
+            "end_monday"      => !empty($input['open_monday']) ? $input['end_monday'] ?? '' :'',
+            "open_tuesday"    => $input['open_tuesday'] ?? "off",
+            "start_tuesday"   => !empty($input['open_tuesday']) ? $input['start_tuesday'] ?? '' :'',
+            "end_tuesday"     => !empty($input['open_tuesday']) ? $input['end_tuesday'] ?? '' :'',
+            "open_wednesday"  => $input['open_wednesday'] ?? "off",
+            "start_wednesday" => !empty($input['open_wednesday']) ? $input['start_wednesday'] ?? '' :'',
+            "end_wednesday"   => !empty($input['open_wednesday']) ? $input['end_wednesday'] ?? '' :'',
+            "open_thursday"   => $input['open_thursday'] ?? "off",
+            "start_thursday"  => !empty($input['open_thursday']) ? $input['start_thursday'] ?? '' :'',
+            "end_thursday"    => !empty($input['open_thursday']) ? $input['end_thursday'] ?? '' :'',
+            "open_friday"     => $input['open_friday'] ?? "off",
+            "start_friday"    => !empty($input['open_friday']) ? $input['start_friday'] ?? '' :'',
+            "end_friday"      => !empty($input['open_friday']) ? $input['end_friday'] ?? '' :'',
+            "open_saturday"   => $input['open_saturday'] ?? "off",
+            "start_saturday"  => !empty($input['open_saturday']) ? $input['start_saturday'] ?? '' :'',
+            "end_saturday"    => !empty($input['open_saturday']) ? $input['end_saturday'] ?? '' :''
+        ];
+
+        $input['working_days'] = json_encode($working_days_data);
+
         if ($input['phone']) {
             $phone_array = explode(',', $input['phone']);
             $input['phone'] = json_encode($phone_array);
@@ -161,6 +184,9 @@ class AshramController extends Controller
     public function edit($id)
     {
         $data['ashram'] = Location::find($id);
+        $working_days_data = json_decode($data['ashram']['working_days'],true);
+        $data['working_days'] = $working_days_data;
+        // dd($data['working_days']);
         foreach($data['ashram']['translations'] as $trans) {
             $translated_keys = array_keys(Location::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {

@@ -24,6 +24,7 @@ class Location extends Model implements HasMedia
         'days',
         'sequence',
         'location',
+        'working_days',
         'latitude',
         'longitude',
         'google_address',

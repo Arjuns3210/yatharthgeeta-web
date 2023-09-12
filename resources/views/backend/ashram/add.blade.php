@@ -37,7 +37,14 @@
                                                         <select class="form-control" id="status" name="status">
                                                             <option value="1">Active</option>
                                                             <option value="0">Inactive</option>
-                                                        </select>
+                                                        </select><br>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Type<span class="text-danger">*</span></label>
+                                                        <select class="form-control" id="type" name="type">
+                                                            <option value="ashram">Ashram</option>
+                                                            <option value="others">Others</option>
+                                                        </select><br>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Email<span class="text-danger">*</span></label>
@@ -72,22 +79,70 @@
                                                         <input class="form-control required" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')"><br/>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                     </div>
-                                                    <div id="map" style="height:400px; width: 400px;" class="my-3"></div>
-                                                    <!-- <div class="col-sm-6">
-                                                        <label>Working Hours :<span class="text-danger">*</span></label>
-                                                        <div class="row">
-                                                            <div class="col-sm-6">
+                                                    <div class="col-sm-6">
+                                                        <h6><strong>Working Days :</strong><span class="text-danger">*</span></h6>
+                                                        <table class="">
+                                                            <tr>
+                                                                <th>Day</th>
+                                                                <th>Open / Close</th>
+                                                                <th style="padding-left: 33px">Start Time</th>
+                                                                <th style="padding-left: 33px">End Time</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Monday</td>
+                                                                <td class="toggle-button text-center">
+                                                                    <input type="checkbox" name="open_monday">
+                                                                </td>
+                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="start_monday"></td>
+                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="end_monday"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Tuesday</td>
+                                                                <td class="toggle-button text-center">
+                                                                    <input type="checkbox" name="open_tuesday">
+                                                                </td>
+                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="start_tuesday"></td>
+                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="end_tuesday"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Wednesday</td>
+                                                                <td class="toggle-button text-center">
+                                                                    <input type="checkbox" name="open_wednesday">
+                                                                </td>
+                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="start_wednesday"></td>
+                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="end_wednesday"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Thursday</td>
+                                                                <td class="toggle-button text-center">
+                                                                    <input type="checkbox" name="open_thursday">
+                                                                </td>
+                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="start_thursday"></td>
+                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="end_thursday"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Friday</td>
+                                                                <td class="toggle-button text-center">
+                                                                    <input type="checkbox" name="open_friday">
+                                                                </td>
+                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="start_friday"></td>
+                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="end_friday"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Saturday</td>
+                                                                <td class="toggle-button text-center">
+                                                                    <input type="checkbox" name="open_saturday">
+                                                                </td>
+                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="start_saturday"></td>
+                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="end_saturday"></td>
+                                                            </tr>
+                                                        </table>
 
-                                                                <div class="custom-switch custom-control-inline mb-1 mb-xl-0">
-                                                                    <label class="custom-control-label mr-1" for="sunday">
-                                                                        <span>Sunday</span>
-                                                                    </label>
-                                                                    <input type="checkbox" class="custom-control-input" id="sunday" name="sunday">
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div id="map" style="height:400px; width: 400px;" class="my-3"></div>
+                                                    </div>
 
-                                                    </div> -->
                                                 </div>
                                             </div>
 
@@ -180,4 +235,14 @@
             marker.setPosition(pos);
         });
     }
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            const dateInputs = checkbox.parentElement.parentElement.querySelectorAll('.date-input');
+            dateInputs.forEach(input => {
+                input.style.display = checkbox.checked ? 'table-cell' : 'none';
+            });
+        });
+    });
+
 </script>
