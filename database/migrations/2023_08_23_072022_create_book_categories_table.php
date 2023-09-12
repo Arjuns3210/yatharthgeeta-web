@@ -16,7 +16,7 @@ class CreateBookCategoriesTable extends Migration
         Schema::create('book_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->enum('status', [1, 0])->default(1);
-            $table->integer('sequence');
+            $table->integer('sequence')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
