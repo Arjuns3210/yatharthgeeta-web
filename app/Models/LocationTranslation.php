@@ -9,6 +9,8 @@ class LocationTranslation extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     public $fillable = [
         'name',
         'location_id',

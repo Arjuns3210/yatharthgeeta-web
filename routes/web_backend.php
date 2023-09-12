@@ -66,7 +66,7 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::get('books_category/edit/{id}', 'BookCategoryController@edit');
 	Route::post('books_category/update', 'BookCategoryController@update');
 	Route::get('books_category/view/{id}', 'BookCategoryController@show');
-    
+
     //audio
     Route::get('audios', 'AudioController@index');
     Route::get('audio/add', 'AudioController@create');
@@ -79,7 +79,7 @@ Route::group(['middleware' => ['customAuth']], function () {
     Route::post('publish_audio', 'AudioController@updateStatus');
     Route::get('audio_delete/{id}', 'AudioController@destroy');
     Route::post('delete_documents', 'AudioController@deleteMedia')->name('delete_documents');
-    
+
     // audio episodes
     Route::get('audio_episodes/{audioId?}', 'AudioEpisodeController@index');
     Route::post('audio_episode/fetch', 'AudioEpisodeController@fetch');
@@ -207,6 +207,7 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::get('quotes/edit/{id}', 'QuoteController@edit');
 	Route::post('quotes/update', 'QuoteController@update');
     Route::post('quotes/publish', 'QuoteController@updateStatus');
+    Route::post('quotes/delete_img', 'AshramController@deleteImage');
 
     //quote category
     Route::get('quote_category', 'QuoteCategoryController@index');
