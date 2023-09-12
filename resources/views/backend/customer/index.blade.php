@@ -31,6 +31,10 @@
                                                 <input class="form-control mb-3" type="text" id="search_title" name="search_title">
                                             </div>
                                             <div class="col-md-4">
+                                                <label>Email</label>
+                                                <input class="form-control mb-3" type="text" id="search_email" name="search_email">
+                                            </div>
+                                            <div class="col-md-4">
                                             <label>Status</label>
                                             <select class="form-control mb-3" type="text" id="search_status" name="search_status">
                                                 <option value="">All</option>
@@ -51,9 +55,9 @@
                                                     <th id="name" data-orderable="false" data-searchable="false">Name</th>
                                                     <th id="email" data-orderable="false" data-searchable="false">Email</th>
                                                     <th id="phone" data-orderable="false" data-searchable="false">Phone</th>
-                                                    {{-- @if($data['status'] || $data['user_view'] || $data['artist_status'])
+                                                    @if($data['customer_edit'] || $data['customer_view'] || $data['customer_status'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
-                                                    @endif --}}
+                                                    @endif
                                                 </tr>
                                                 </thead>
                                             </table>

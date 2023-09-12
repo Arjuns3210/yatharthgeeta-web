@@ -9,22 +9,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class User extends Model
 {
     use HasFactory, SoftDeletes;
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
+
+    protected $fillable = [
+        'login_allowed',
+        'admin_remark',
+        'is_verified',
+        'approval_status'
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'id' => 'integer',
+        'status'=>'boolean'
     ];
 }

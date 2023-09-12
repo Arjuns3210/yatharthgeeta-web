@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Customer;
+use App\Models\User;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
@@ -18,7 +18,11 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return view('backend/customer/index');
+        $data['customer_edit'] = checkPermission('customer_edit');
+        $data['customer_view'] = checkPermission('customer_view');
+        $data['customer_status'] = checkPermission('customer_status');
+        $data['customer_delete'] = checkPermission('customer_delete');
+        return view('backend/customer/index',['data' =>$data]);
     }
 
     public function fetch(Request $request)
@@ -26,32 +30,28 @@ class CustomerController extends Controller
         if ($request->ajax()) {
             try {
                 $query = User::orderBy('updated_at','desc');
-                // print_r($query->get()->toArray());exit;
+                // print_r($query->get());exit;
                 return DataTables::of($query)
                     ->filter(function ($query) use ($request) {
-                        if (isset($request['search']['search_name']) && !is_null($request['search']['search_name'])) {
-                            $query->whereHas('translations', function ($translationQuery) use ($request) {
-                                $translationQuery->where('locale','en')->where('name', 'like', "%" . $request['search']['search_name'] . "%");
-                            });
+                        if ($request['search']['search_email'] && !is_null($request['search']['search_email'])) {
+                            $query->where('email', 'like', "%" . $request['search']['search_email'] . "%");
                         }
-                        if (isset($request['search']['search_title']) && !is_null($request['search']['search_title'])) {
-                            $query->whereHas('translations', function ($translationQuery) use ($request) {
-                                $translationQuery->where('locale','en')->where('title', 'like', "%" . $request['search']['search_title'] . "%");
-                            });
+                        if ($request['search']['search_name'] && !is_null($request['search']['search_name'])) {
+                            $query->where('name', 'like', "%" . $request['search']['search_name'] . "%");
                         }
-                        if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
-                            $query->where('status', $request['search']['search_status']);
+                        if ($request['search']['search_status'] && !is_null($request['search']['search_status'])) {
+                            $query->where('status', 'like', "%" . $request['search']['search_status'] . "%");
                         }
-                        $query->get()->toArray();
+                        $query->get();
                     })
                     ->editColumn('name', function ($event) {
-                        return $event['name'][$Key_index]['title'];
+                        return $event->name;
                     })
                     ->editColumn('email', function ($event) {
-                        return $event['email'];
+                        return $event->email;
                     })
                     ->editColumn('phone', function ($event) {
-                        return $event['phone'];
+                        return  $event->phone;
                     })
                     ->editColumn('action', function ($event) {
                         $customer_edit = checkPermission('customer_edit');
@@ -60,16 +60,23 @@ class CustomerController extends Controller
                         $customer_delete = checkPermission('customer_delete');
                         $actions = '<span style="white-space:nowrap;">';
                         if ($customer_view) {
-                            $actions .= '<a href="customer/view/' . $event['id'] . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View customer Details" title="View"><i class="fa fa-eye"></i></a>';
+                            $actions .= '<a href="customer/view/' . $event->id . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View customer Details" title="View"><i class="fa fa-eye"></i></a>';
                         }
                         if ($customer_edit) {
-                            $actions .= ' <a href="customer/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
+                            $actions .= ' <a href="customer/edit/' . $event->id . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
                         }
-                        $actions .= '</span>';
+                        if ($customer_status) {
+                            if ($event->status == '1') {
+                                $actions .= ' <input type="checkbox" data-url="customer/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery" checked>';
+                            } else {
+                                $actions .= ' <input type="checkbox" data-url="customer/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery">';
+                            }
+                        }
+
                         return $actions;
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['name', 'email', 'phone','status', 'action'])->setRowId('id')->make(true);
+                    ->rawColumns(['name', 'email', 'phone', 'action'])->setRowId('id')->make(true);
             } catch (\Exception $e) {
                 \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                 return response([
@@ -110,9 +117,10 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function show(Customer $customer)
+    public function show($id)
     {
-        //
+        $data['customer'] = User::find($id);
+        return view('backend/customer/view',$data);
     }
 
     /**
@@ -121,9 +129,10 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function edit(Customer $customer)
+    public function edit($id)
     {
-        //
+        $data['data'] = User::find($id);
+		return view('backend/customer/edit',$data);
     }
 
     /**
@@ -133,9 +142,32 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Customer $customer)
+    public function update(Request $request)
     {
-        //
+        $data = User::find($_GET['id']);
+        $input=$request->all();
+        $input['is_verified'] = $request->is_verified ? 'Y': 'N';
+        // print_r($input);exit;
+        $data->update($input);
+        successMessage('Data Saved successfully', []);
+    }
+
+    public function updateStatus(Request $request)
+    {
+        try {
+            $msg_data = array();
+            $users = User::find($request->id);
+            $users->status = $request->status;
+            $users->save();
+            if ($request->status == 1) {
+                successMessage(trans('message.enable'), $msg_data);
+            } else {
+                errorMessage(trans('message.disable'), $msg_data);
+            }
+            errorMessage('Customer not found', []);
+        } catch (\Exception $e) {
+            errorMessage(trans('auth.something_went_wrong'));
+        }
     }
 
     /**
