@@ -29,6 +29,15 @@
                                                 <input class="form-control mb-3" type="text" id="search_title" name="search_title">
                                             </div>
                                             <div class="col-md-4">
+                                                <label>Audio Category</label>
+                                                <select class="form-control mb-3" type="text" id="search_audio_category_id" name="search_audio_category_id">
+                                                    <option value="">All</option>
+                                                    @foreach($data['audioCategories'] as $audioCategory)
+                                                        <option value="{{$audioCategory->id}}">{{$audioCategory->translations[0]->name ?? ''}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
                                                 <label>Status</label>
                                                 <select class="form-control mb-3" type="text" id="search_status" name="search_status">
                                                     <option value="">All</option>

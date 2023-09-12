@@ -38,6 +38,17 @@ class AudioController extends Controller
         $data['audios_view'] = checkPermission('audios_view');
         $data['audios_status'] = checkPermission('audios_status');
         $data['audios_delete'] = checkPermission('audios_delete');
+        $localeLanguage = \App::getLocale();
+        if (str_contains($localeLanguage, 'en')) {
+            $localeLanguage = 'en';
+        } else {
+            $localeLanguage = 'hi';
+        }
+        $data['audioCategories'] = AudioCategory::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->where('status', 1)->get();
         
         return view('backend/audio/index',["data"=>$data]);
     }
@@ -69,6 +80,9 @@ class AudioController extends Controller
                         }
                         if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
                             $query->where('status', $request['search']['search_status']);
+                        }
+                        if (isset($request['search']['search_audio_category_id']) && !is_null($request['search']['search_audio_category_id'])) {
+                            $query->where('audio_category_id', $request['search']['search_audio_category_id']);
                         }
                         $query->get()->toArray();
                     })
