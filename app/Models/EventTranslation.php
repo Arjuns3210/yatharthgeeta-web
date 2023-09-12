@@ -5,19 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MantraTranslation extends Model
+class EventTranslation extends Model
 {
     use HasFactory;
-    public $timestamps = false;
     public $fillable = [
-        'mantra_id',
+        'event_id',
         'title',
-        'description'
+        'short_description',
+        'long_description'
 
     ];
+
     public $timestamps = false;
-    public function mantra()
+    public function event()
     {
-        return $this->belongsTo(\App\Models\Mantra::class);
+        return $this->belongsTo(\App\Models\Event::class);
     }
 }

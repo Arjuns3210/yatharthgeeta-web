@@ -18,8 +18,6 @@ class ArtistTranslation extends Model
         'title',
         'description',
     ];
-
-
     public function guru()
     {
         return $this->belongsTo(App\Models\Artist::class);
