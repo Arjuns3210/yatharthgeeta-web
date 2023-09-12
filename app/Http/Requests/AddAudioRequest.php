@@ -27,6 +27,7 @@ class AddAudioRequest extends FormRequest
     {
         return [
             'has_episodes' => 'required',
+            'audio_category_id' => 'required',
             'audio_file'   => 'required_if:has_episodes,==,0',
             'srt_file'     => 'required_if:has_episodes,==,0',
             'duration'     => 'required|integer',

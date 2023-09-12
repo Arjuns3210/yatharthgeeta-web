@@ -7,6 +7,7 @@ use App\Http\Requests\AddAudioRequest;
 use App\Http\Requests\UpdateAudioRequest;
 use App\Models\Artist;
 use App\Models\Audio;
+use App\Models\AudioCategory;
 use App\Models\AudioEpisode;
 use App\Models\AudioTranslation;
 use App\Models\Language;
@@ -17,6 +18,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use App\Utils\Utils;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\DataTables;
@@ -36,6 +38,17 @@ class AudioController extends Controller
         $data['audios_view'] = checkPermission('audios_view');
         $data['audios_status'] = checkPermission('audios_status');
         $data['audios_delete'] = checkPermission('audios_delete');
+        $localeLanguage = \App::getLocale();
+        if (str_contains($localeLanguage, 'en')) {
+            $localeLanguage = 'en';
+        } else {
+            $localeLanguage = 'hi';
+        }
+        $data['audioCategories'] = AudioCategory::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->where('status', 1)->get();
         
         return view('backend/audio/index',["data"=>$data]);
     }
@@ -56,7 +69,7 @@ class AudioController extends Controller
         }
         if ($request->ajax()) {
             try {
-                $query = Audio::orderBy('updated_at','desc');
+                $query = Audio::with('translations','audioCategory.translations')->orderBy('updated_at','desc');
 
                 return DataTables::of($query)
                     ->filter(function ($query) use ($request ,$localeLanguage) {
@@ -68,7 +81,19 @@ class AudioController extends Controller
                         if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
                             $query->where('status', $request['search']['search_status']);
                         }
+                        if (isset($request['search']['search_audio_category_id']) && !is_null($request['search']['search_audio_category_id'])) {
+                            $query->where('audio_category_id', $request['search']['search_audio_category_id']);
+                        }
                         $query->get()->toArray();
+                    })
+                    ->editColumn('audio_category'.\App::getLocale(), function ($event) {
+                        if(!empty($event->audioCategory)){
+                            $key_index = array_search(\App::getLocale(), array_column($event->audioCategory->translations->toArray(), 'locale'));
+                            return $event->audioCategory->translations[$key_index]->name ?? '';
+                        }else{
+                            return '';
+                        }
+                      
                     })
                     ->editColumn('title'.\App::getLocale(), function ($event) {
                         $key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
@@ -107,13 +132,14 @@ class AudioController extends Controller
                             $actions .= ' <a data-option="'.$dataUrl.'" data-url="audio_delete/'.$event->id.'" class="btn btn-danger btn-sm delete-data" title="delete"><i class="fa fa-trash"></i></a>';
                         }
                         if ($audio_episode_view && $event['has_episodes'] == 1) {
-                            $actions .= ' <a href="audio_episodes?audioId=' . $event->id . '" class="btn btn-info btn-sm" title="Manage Episode"><i class="fa fa-archive"></i></a>';
+                            $id = Crypt::encryptString($event->id);
+                            $actions .= ' <a href="audio_episodes?audioId=' . $id. '" class="btn btn-info btn-sm" title="Manage Episode"><i class="fa fa-archive"></i></a>';
                         }
                         $actions .= '</span>';
                         return $actions;
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['title'.\App::getLocale(),'duration', 'status', 'action'])->setRowId('id')->make(true);
+                    ->rawColumns(['title'.\App::getLocale(),'audio_category'.\App::getLocale(),'duration', 'status', 'action'])->setRowId('id')->make(true);
             } catch (\Exception $e) {
                 \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                 return response([
@@ -147,7 +173,13 @@ class AudioController extends Controller
                 $query->where('locale', $localeLanguage);
             },
         ])->where('status', 1)->get();
-
+        
+        $data['audioCategories'] = AudioCategory::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->where('status', 1)->get();
+        
         $data['gurus'] = Artist::with([
             'translations' => function ($query) use ($localeLanguage) {
                 $query->where('locale', $localeLanguage);
@@ -203,6 +235,7 @@ class AudioController extends Controller
                 'author_id'            => $input['author_id'] ?? null,
                 'narrator_id'          => $input['narrator_id'] ?? null,
                 'created_by'           => session('data')['id'] ?? 0,
+                'audio_category_id'    => $input['audio_category_id'] ?? 0,
             ];
 
             // Prepare language-specific data
@@ -257,6 +290,7 @@ class AudioController extends Controller
         $data['audioFile'] = $data['audio']->getMedia(Audio::AUDIO_FILE)->first()?? '';
         $data['audioCoverImage'] = $data['audio']->getMedia(Audio::AUDIO_COVER_IMAGE)->first()?? '';
         $data['audioSrtFile'] = $data['audio']->getMedia(Audio::AUDIO_SRT_FILE)->first()?? '';
+        $data['audioCategory'] = AudioCategory::with('translations')->where('id', $data['audio']->audio_category_id)->first();
         
         return view('backend/audio/view')->with($data);
     }
@@ -307,6 +341,11 @@ class AudioController extends Controller
                 $query->where('locale', $localeLanguage);
             },
         ])->where('status', 1)->get();
+        $data['audioCategories'] = AudioCategory::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->where('status', 1)->get();
         
         return view('backend/audio/edit',$data);
     }
@@ -350,6 +389,7 @@ class AudioController extends Controller
                 'author_id'            => $input['author_id'] ?? null,
                 'narrator_id'          => $input['narrator_id'] ?? null,
                 'updated_by'           => session('data')['id'] ?? 0,
+                'audio_category_id'    => $input['audio_category_id'] ?? 0,
             ];
 
             // Prepare language-specific data

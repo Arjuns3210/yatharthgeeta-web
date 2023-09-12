@@ -23,7 +23,7 @@ class EventController extends Controller
         $data['event_view'] = checkPermission('event_view');
         $data['event_add'] = checkPermission('event_add');
         $data['event_edit'] = checkPermission('event_edit');
-        $event_images=true;
+        $event_images= checkPermission('event_image_add');
         $data['event_status'] = checkPermission('event_status');
         $data['event_delete'] = checkPermission('event_delete');
         return view('backend/events/index',["data"=>$data]);
@@ -31,19 +31,21 @@ class EventController extends Controller
 
     public function fetch(Request $request)
         {
+            $localeLanguage = \App::getLocale();
+            if (str_contains($localeLanguage, 'en')) {
+                $localeLanguage = 'en';
+            } else {
+                $localeLanguage = 'hi';
+            }
             if ($request->ajax()) {
                 try {
-                    $query = Event::leftJoin('event_translations', function ($join) {
-                        $join->on("event_translations.event_id", '=', "events.id");
-                        $join->where('event_translations.locale', \App::getLocale());
-                     })
-                     ->select('events.*')
-                     ->orderBy('updated_at','desc');
+                    $query = Event::with('translations')
+                        ->orderBy('updated_at','desc');
                     return DataTables::of($query)
-                        ->filter(function ($query) use ($request) {
+                        ->filter(function ($query) use ($request,$localeLanguage) {
                             if (isset($request['search']['search_title']) && !is_null($request['search']['search_title'])) {
-                                $query->whereHas('translations', function ($translationQuery) use ($request) {
-                                    $translationQuery->where('locale','en')->where('title', 'like', "%" . $request['search']['search_title'] . "%");
+                                $query->whereHas('translations', function ($translationQuery) use ($request,$localeLanguage) {
+                                    $translationQuery->where('locale',$localeLanguage)->where('title', 'like', "%" . $request['search']['search_title'] . "%");
                                 });
                             }
                             if (isset($request['search']['search_sequence']) && !is_null($request['search']['search_sequence'])) {
@@ -64,7 +66,7 @@ class EventController extends Controller
                             $event_view = checkPermission('event_view');
                             $event_add = checkPermission('event_add');
                             $event_edit = checkPermission('event_edit');
-                            $event_images=true;
+                            $event_images=checkPermission('event_image_add');
                             $event_status = checkPermission('event_status');
                             $event_delete = checkPermission('event_delete');
                             $actions = '<span style="white-space:nowrap;">';
@@ -75,7 +77,7 @@ class EventController extends Controller
                                 $actions .= ' <a href="events/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
                             }
                             if ($event_images) {
-                                $actions .= ' <a href="event_images/add " class="btn btn-success btn-sm src_data" title="Gallery"><i class="fa fa-picture-o"></i></a>';
+                                $actions .= ' <a href="event_images/add/'.$event['id'].'" class="btn btn-info btn-sm src_data" title="Gallery"><i class="fa fa-picture-o"></i></a>';
                             }
                             if ($event_delete) {
                                 $actions .= ' <a data-option="" data-url="events/delete/' . $event->id . '" class="btn btn-danger btn-sm delete-data" title="delete"><i class="fa fa-trash"></i></a>';
@@ -152,7 +154,9 @@ class EventController extends Controller
         }
         $saveArray = Utils::flipTranslationArray($input, $translated_keys);
         $data = Event::create($saveArray);
-        storeMedia($data, $input['cover'], Event::COVER);
+        if (!empty($input['cover'])){
+            storeMedia($data, $input['cover'], Event::EVENT_COVER);
+        }
         successMessage('Data Saved successfully', []);
     }
 
@@ -174,7 +178,9 @@ class EventController extends Controller
             }
         }
         $data['translated_block'] = Event::TRANSLATED_BLOCK;
-        $data['media'] = $data['event']->getMedia(Event::COVER)[0];
+        $data['coverImage'] = $data['event']->getMedia(Event::EVENT_COVER)->first();
+        $data['eventImages'] = $data['event']->getMedia(Event::EVENT_IMAGES);
+        
         return view('backend/events/view',$data);
     }
 
@@ -196,7 +202,7 @@ class EventController extends Controller
             }
         }
         $data['translated_block'] = Event::TRANSLATED_BLOCK;
-        $data['media'] =$data['event']->getMedia(Event::COVER)[0];
+        $data['coverImage'] =$data['event']->getMedia(Event::EVENT_COVER)->first();
         return view('backend/events/edit',$data);
     }
 
@@ -222,8 +228,8 @@ class EventController extends Controller
         $event = Utils::flipTranslationArray($input, $translated_keys);
         $data->update($event);
         if(!empty($input['cover'])){
-            $data->clearMediaCollection(Event::COVER);
-            storeMedia($data, $input['cover'], Event::COVER);
+            $data->clearMediaCollection(Event::EVENT_COVER);
+            storeMedia($data, $input['cover'], Event::EVENT_COVER);
         }
         successMessage('Data Updated successfully', []);
     }

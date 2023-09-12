@@ -72,4 +72,9 @@ class Audio extends Model implements HasMedia
      
         return $this->hasMany(AudioEpisode::class);
     }
+
+    function audioCategory()
+    {
+        return $this->belongsTo(AudioCategory::class);
+    }
 }
