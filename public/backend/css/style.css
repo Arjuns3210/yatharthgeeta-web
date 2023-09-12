@@ -245,3 +245,7 @@ legend.scheduler-border {
     background-color: #eee !important;
     border-bottom-color: transparent !important;
 }
+input.largerCheckbox {
+    width: 23px;
+    height: 29px;
+}
