@@ -70,7 +70,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Cover Image</label>
-                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('cover_image')" value="{{$event['cover']}}"><br/>
+                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="cover_image" name="cover_image" onchange="handleFileInputChange('cover_image')" value="{{$event['cover']}}"><br/>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                     </div>
                                                     <div class="col-sm-6">
@@ -78,7 +78,9 @@
                                                         <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)" value="{{$event->sequence}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="100px" alt="">
+                                                        @if(!empty($coverImage))
+                                                        <img src="{{$coverImage->getFullUrl() ?? ''}}" width="100px" height="100px" alt="">
+                                                            @endif
                                                     </div>
 
                                                 </div>

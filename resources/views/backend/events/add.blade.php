@@ -74,7 +74,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Cover<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="cover" name="cover" onchange="handleFileInputChange('cover')"><br/>
+                                                        <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="cover_image" name="cover_image" onchange="handleFileInputChange('cover_image')"><br/>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                     </div>
                                                 </div>

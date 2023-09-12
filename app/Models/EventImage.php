@@ -13,9 +13,7 @@ class EventImage extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia, SoftDeletes;
     protected $fillable = [
-        'title',
         'event_id',
-        'sequence',
         'status'
     ];
     /**
@@ -25,15 +23,11 @@ class EventImage extends Model implements HasMedia
      */
     protected $casts = [
         'id' => 'integer',
-        'title'=>'string',
-        'sequence'=>'integer',
         'status' => 'boolean'
     ];
 
     public static $rules = [
-        'title.*' => 'string|required',
         'images.*' => 'required',
-        'sequence.*' => 'integer|required',
         'status' => 'boolean'
     ];
 
