@@ -14,16 +14,17 @@ class CreateHomeCollectionTable extends Migration
     public function up()
     {
         Schema::create('home_collections', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('title');
             $table->string('description');
-            $table->string('image');
-            $table->string('no_of_images');
-            $table->enum('type', ['single', 'multiple', 'books', 'audios', 'videos', 'shloks'])->default('single');
+            $table->enum('type', ['Single', 'Multiple', 'Book', 'Audio', 'Video', 'Shlok', 'Artist'])->default('Single');
             $table->integer('sequence')->nullable();
-            $table->json('extra_details')->nullable()->comment('JSON Data');
-            $table->enum('orientation', ['horizontal', 'vertical'])->default('horizontal');
+            $table->enum('is_scrollable', [0, 1])->default(0);
+            $table->integer('display_in_column')->default(1);
+            $table->integer('language_id');
             $table->enum('status', [0, 1])->default(1);
+            $table->integer('created_by')->default(0);
+            $table->integer('updated_by')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

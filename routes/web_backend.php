@@ -66,7 +66,7 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::get('books_category/edit/{id}', 'BookCategoryController@edit');
 	Route::post('books_category/update', 'BookCategoryController@update');
 	Route::get('books_category/view/{id}', 'BookCategoryController@show');
-    
+
     //audio
     Route::get('audios', 'AudioController@index');
     Route::get('audio/add', 'AudioController@create');
@@ -79,7 +79,7 @@ Route::group(['middleware' => ['customAuth']], function () {
     Route::post('publish_audio', 'AudioController@updateStatus');
     Route::get('audio_delete/{id}', 'AudioController@destroy');
     Route::post('delete_documents', 'AudioController@deleteMedia')->name('delete_documents');
-    
+
     // audio episodes
     Route::get('audio_episodes/{audioId?}', 'AudioEpisodeController@index');
     Route::post('audio_episode/fetch', 'AudioEpisodeController@fetch');
@@ -145,19 +145,21 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('publish/staff', 'StaffController@updateStatus');
 	Route::get('staff/view/{id}', 'StaffController@view');
 
-	//Home Collecton
+	//Home Collection
 	Route::get('home_collection', 'HomeCollectionController@index');
-
-
 	Route::post('home_collection/fetch', 'HomeCollectionController@fetch');
-	Route::get('home_collection/add', 'HomeCollectionController@add');
+	Route::get('home_collection/add', 'HomeCollectionController@create');
 	Route::post('home_collection/save', 'HomeCollectionController@store');
 	Route::get('home_collection/edit/{id}', 'HomeCollectionController@edit');
 	Route::post('home_collection/update', 'HomeCollectionController@update');
-	Route::post('publish_staff', 'HomeCollectionController@updateStatus');
-	Route::get('home_collection/view/{id}', 'HomeCollectionController@view');
+	Route::post('home_collection/publish', 'HomeCollectionController@updateStatus');
+	Route::get('home_collection/view/{id}', 'HomeCollectionController@show');
+    Route::post('home_collection/publish', 'HomeCollectionController@updateStatus');
+    Route::get('home_collection/delete/{id}', 'HomeCollectionController@destroy');
+    Route::get('get_mapped_listing/{type}', 'HomeCollectionController@getMappedListing');
+    Route::get('prepare_multiple_collection_item/{count}','HomeCollectionController@prepareMultipleCollectionItem');
 
-	//manage role
+    //manage role
 	Route::get('roles', 'RoleController@roles');
 	Route::post('role/fetch', 'RoleController@roleData')->name('role/fetch');
 	Route::get('role_permission/{id}', 'RoleController@assignRolePermission');
@@ -183,6 +185,7 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::get('quotes/edit/{id}', 'QuoteController@edit');
 	Route::post('quotes/update', 'QuoteController@update');
     Route::post('quotes/publish', 'QuoteController@updateStatus');
+    Route::post('quotes/delete_img', 'AshramController@deleteImage');
 
     //quote category
     Route::get('quote_category', 'QuoteCategoryController@index');
