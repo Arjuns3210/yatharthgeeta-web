@@ -70,7 +70,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Cover Image</label>
-                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="cover_image" name="cover_image" onchange="handleFileInputChange('cover_image')" value="{{$event['cover']}}"><br/>
+                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="cover" name="cover" onchange="handleFileInputChange('cover')" value="{{$event['cover']}}"><br/>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                     </div>
                                                     <div class="col-sm-6">
@@ -94,7 +94,7 @@
 
                                                             <?php if($translated_block_fields_value == 'input') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}}</label>
+                                                                    <label>{{str_replace('_',' ',$translated_block_fields_key)}}</label>
                                                                     <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" value="{{$event[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}">
                                                                 </div>
                                                             <?php
@@ -105,7 +105,7 @@
                                                         <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                             <?php if($translated_block_fields_value == 'textarea') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}}</label>
+                                                                    <label>{{str_replace('_',' ',$translated_block_fields_key)}}</label>
                                                                     <textarea class="translation_block form-control required" rows="5" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">{{$event[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}</textarea>
                                                                 </div>
                                                             <?php } ?>

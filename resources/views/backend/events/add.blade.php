@@ -74,7 +74,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Cover<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="cover_image" name="cover_image" onchange="handleFileInputChange('cover_image')"><br/>
+                                                        <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="cover" name="cover" onchange="handleFileInputChange('cover')"><br/>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                     </div>
                                                 </div>
@@ -87,7 +87,7 @@
                                                         <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                             <?php if($translated_block_fields_value == 'input') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}}</label>
+                                                                    <label>{{str_replace('_',' ',$translated_block_fields_key)}}</label>
                                                                     <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">
                                                                 </div>
                                                             <?php } ?>
@@ -97,7 +97,7 @@
                                                         <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                             <?php if($translated_block_fields_value == 'textarea') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}}</label>
+                                                                    <label>{{str_replace('_',' ',$translated_block_fields_key)}}</label>
                                                                     <textarea class="translation_block form-control required" rows="5" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}"></textarea>
                                                                 </div>
                                                             <?php } ?>

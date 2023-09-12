@@ -154,8 +154,8 @@ class EventController extends Controller
         }
         $saveArray = Utils::flipTranslationArray($input, $translated_keys);
         $data = Event::create($saveArray);
-        if (!empty($input['cover_image'])){
-            storeMedia($data, $input['cover_image'], Event::EVENT_COVER);
+        if (!empty($input['cover'])){
+            storeMedia($data, $input['cover'], Event::EVENT_COVER);
         }
         successMessage('Data Saved successfully', []);
     }
@@ -227,9 +227,9 @@ class EventController extends Controller
         }
         $event = Utils::flipTranslationArray($input, $translated_keys);
         $data->update($event);
-        if(!empty($input['cover_image'])){
+        if(!empty($input['cover'])){
             $data->clearMediaCollection(Event::EVENT_COVER);
-            storeMedia($data, $input['cover_image'], Event::EVENT_COVER);
+            storeMedia($data, $input['cover'], Event::EVENT_COVER);
         }
         successMessage('Data Updated successfully', []);
     }
