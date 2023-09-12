@@ -7,9 +7,15 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
-
+use Carbon\Carbon;
+use App\Models\Book;
+use App\Models\Audio;
+use App\Models\Quote;
+use App\Models\Video;
+use App\Models\Mantra;
+use App\Models\Location;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
@@ -20,7 +26,39 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('backend/dashboard/index');
+        $data['users_total'] = \DB::table('users')->where('status', 1)->count();
+        $data['books_total'] = Book::where('status', 1)->count();
+        $data['audios_total'] = Audio::where('status', 1)->count();
+        $data['videos_total'] = Video::where('status', 1)->count();
+        $data['ashrams_total'] = Location::where('status', 1)->count();
+        // $data['shloks_total'] = Shlok::where('status', 1)->count();
+        $data['mantras_total'] = Mantra::where('status', 1)->count();
+        $data['greetings_total'] = Quote::where('status', 1)->count();
+
+        $months = [];
+        $currentMonth = Carbon::now();
+        for ($i = 0; $i < 6; $i++) {
+            $months[] = $currentMonth->copy()->subMonths($i)->startOfMonth()->format('Y-m');
+        }
+        $user_data = \DB::table('users')
+            ->select(\DB::raw('DATE_FORMAT(created_at, "%Y-%m") AS month'), \DB::raw('COUNT(*) AS count'))
+            ->where('status', '=', 1)
+            ->whereIn(\DB::raw('DATE_FORMAT(created_at, "%Y-%m")'), $months)
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+        // Convert the result to an associative array
+        $user_data = $user_data->pluck('count', 'month')->all();
+        $result = [];
+        foreach ($months as $month) {
+            $result[] = [
+                'month' => date('M-y', strtotime($month)),
+                'count' => isset($user_data[$month]) ? $user_data[$month] : 0,
+            ];
+        }
+        $data['user_data'] = array_reverse($result);
+
+        return view('backend/dashboard/index', $data);
     }
 
     /**
