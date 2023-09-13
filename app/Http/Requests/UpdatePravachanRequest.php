@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class AddAudioRequest extends FormRequest
+class UpdatePravachanRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,7 @@ class AddAudioRequest extends FormRequest
     public function rules()
     {
         return [
-            'has_episodes' => 'required',
-            'audio_file'   => 'required_if:has_episodes,==,0',
+            'id'           => 'required',
             'duration'     => 'required|integer',
             'sequence'     => 'required|integer',
             'language_id'  => 'required',

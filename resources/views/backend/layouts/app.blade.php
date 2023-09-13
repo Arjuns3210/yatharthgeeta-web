@@ -176,8 +176,8 @@
                                 <li class="{{ $lastParam ==  'mantras' ? 'active' : '' }}">
                                     <a href="mantras" class="menu-item"><i class="fa fa-ravelry" aria-hidden="true"></i>Mantras</a>
                                 </li>
-                                <li class="{{ $lastParam ==  'explore_collection' ? 'active' : '' }}">
-                                    <a href="explore_collection" class="menu-item"><i class="fa fa-list-alt"></i>Explore Collection</a>
+                                <li class="{{ $lastParam ==  'pravachans' ? 'active' : '' }}">
+                                    <a href="pravachans" class="menu-item"><i class="fa fa-volume-up" aria-hidden="true"></i>Pravachan</a>
                                 </li>
                             </ul>
                         </li>

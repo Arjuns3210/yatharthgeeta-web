@@ -91,6 +91,17 @@ Route::group(['middleware' => ['customAuth']], function () {
     Route::post('publish_audio_episode', 'AudioEpisodeController@updateStatus');
     Route::get('audio_episode_delete/{id}', 'AudioEpisodeController@destroy');
 
+    //pravachan
+    Route::get('pravachans', 'PravachanController@index');
+    Route::get('pravachan/add', 'PravachanController@create');
+    Route::post('pravachan/fetch', 'PravachanController@fetch');
+    Route::post('pravachan/save', 'PravachanController@store');
+    Route::get('pravachan/edit/{id}', 'PravachanController@edit');
+    Route::post('pravachan/update', 'PravachanController@update');
+    Route::get('pravachan/view/{id}', 'PravachanController@show');
+    Route::post('publish_pravachan', 'PravachanController@updateStatus');
+    Route::get('pravachan_delete/{id}', 'PravachanController@destroy');
+    
     //Banner
     Route::get('banners', 'BannerController@index');
     Route::post('banners/fetch', 'BannerController@fetch');
