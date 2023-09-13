@@ -15,22 +15,40 @@ class BookCategoryDataSeeder extends Seeder
      */
     public function run()
     {
-        $names = ['Bhagvad Geeta', 'Ashram','Others'];
-        for($i=0; $i<=2; $i++) {
-            $book_category = [
-                'status' => '1',
-                'sequence' => ($names[$i] === 'Others') ? 99 : ($i+1),
-            ];
-            $data = BookCategory::firstOrCreate($book_category);
-
-            foreach (config('translatable.locales') as $locale) {
-                $book_category_translation = [
-                    'book_category_id' => $data->id,
-                    'locale' => $locale,
-                    'name' => $names[$i],
-                ];
-                $translation_data = BookCategoryTranslation::firstOrCreate($book_category_translation);
-            }
+        $bookCategoryData = [
+            [
+                'sequence' => 1,
+                'status'   => 1,
+                'en'       => [
+                    'name' => 'Bhagvad Geeta',
+                ],
+                'hi'       => [
+                    'name' => 'भागवद गीता',
+                ],
+            ],
+            [
+                'sequence'     => 2,
+                'status' => 1,
+                'en'       => [
+                    'name' => 'Ashram',
+                ],
+                'hi'       => [
+                    'name' => 'आश्रम',
+                ],
+            ],
+            [
+                'sequence'     => 99,
+                'status' => 1,
+                'en'       => [
+                    'name' => 'Others',
+                ],
+                'hi'       => [
+                    'name' => 'अन्य',
+                ],
+            ],
+        ];
+        foreach ($bookCategoryData as $data){
+            BookCategory::create($data);
         }
     }
 }

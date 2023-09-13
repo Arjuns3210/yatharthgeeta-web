@@ -16,6 +16,7 @@ class CreateVideosTable extends Migration
         Schema::create('videos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('language_id')->unsigned();
+            $table->integer('video_category_id')->unsigned();
             $table->longText('cover_image');
             $table->integer('views')->unsigned()->nullable();
             $table->integer('duration');
@@ -24,6 +25,7 @@ class CreateVideosTable extends Migration
             $table->enum('visible_on_app', [0, 1])->default(1);
             $table->enum('status', [1, 0])->default(1);
             $table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade')->onUpdate('cascade')->nullable();
+            $table->foreign('video_category_id')->references('id')->on('video_categories')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->default(0);
             $table->timestamps();

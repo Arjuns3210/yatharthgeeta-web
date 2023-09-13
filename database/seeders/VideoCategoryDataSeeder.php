@@ -15,22 +15,40 @@ class VideoCategoryDataSeeder extends Seeder
      */
     public function run()
     {
-        $names = ['Bhagvad Geeta', 'Ashram','Others'];
-        for($i=0; $i<=2; $i++) {
-            $video_category = [
-                'status' => '1',
-                'sequence' => ($names[$i] === 'Others') ? 99 : ($i+1),
-            ];
-            $data = VideoCategory::firstOrCreate($video_category);
-
-            foreach (config('translatable.locales') as $locale) {
-                $video_category_translation = [
-                    'video_category_id' => $data->id,
-                    'locale' => $locale,
-                    'name' => $names[$i],
-                ];
-                $translation_data = VideoCategoryTranslation::firstOrCreate($video_category_translation);
-            }
+        $videoCategoryData = [
+            [
+                'sequence' => 1,
+                'status'   => 1,
+                'en'       => [
+                    'name' => 'Bhagvad Geeta',
+                ],
+                'hi'       => [
+                    'name' => 'भागवद गीता',
+                ],
+            ],
+            [
+                'sequence'     => 2,
+                'status' => 1,
+                'en'       => [
+                    'name' => 'Ashram',
+                ],
+                'hi'       => [
+                    'name' => 'आश्रम',
+                ],
+            ],
+            [
+                'sequence'     => 99,
+                'status' => 1,
+                'en'       => [
+                    'name' => 'Others',
+                ],
+                'hi'       => [
+                    'name' => 'अन्य',
+                ],
+            ],
+        ];
+        foreach ($videoCategoryData as $data){
+            VideoCategory::create($data);
         }
     }
 }
