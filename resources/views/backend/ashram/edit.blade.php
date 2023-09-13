@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Edit Ashram: {{$ashram['name']}}</h5>
+                                    <h5 class="pt-2">Edit Ashram: {{$ashram['name']}} ({{ config('translatable.locales_name')[\App::getLocale()] }})</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -37,7 +37,14 @@
                                                         <select class="form-control" id="status" name="status">
                                                             <option value="1" <?php echo $ashram['status'] == 1 ? 'selected' : '' ?>>Active</option>
                                                             <option value="0" <?php echo $ashram['status'] == 0 ? 'selected' : '' ?>>Inactive</option>
-                                                        </select>
+                                                        </select><br>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Type</label>
+                                                        <select class="form-control" id="type" name="type">
+                                                            <option value="ashram" <?php echo $ashram['type'] == 'ashram' ? 'selected' : '' ?>>Ashram</option>
+                                                            <option value="others" <?php echo $ashram['type'] == 'others' ? 'selected' : '' ?>>Others</option>
+                                                        </select><br>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Email<span class="text-danger">*</span></label>
@@ -79,22 +86,105 @@
                                                         </div>
                                                         @endif
                                                     </div>
-                                                    <div id="map" style="height:400px; width: 400px;" class="my-3"></div>
-                                                    <!-- <div class="col-sm-6">
-                                                        <label>Working Hours :<span class="text-danger">*</span></label>
-                                                        <div class="row">
-                                                            <div class="col-sm-6">
+                                                    <div class="col-sm-6">
+                                                        <h6><strong>Working Days :</strong><span class="text-danger">*</span></h6>
+                                                        <table class="">
+                                                            <tr>
+                                                                <th>Day</th>
+                                                                <th>Open / Close</th>
+                                                                <th style="padding-left: 33px">Start Time</th>
+                                                                <th style="padding-left: 33px">End Time</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <?php
+                                                                $monday_open = $working_days['monday_open'] == 'on' ? 'checked' : '';
+                                                                $monday_calss = $working_days['monday_open'] == 'on' ? '' : 'display:none';
+                                                                ?>
+                                                                <td>Monday</td>
+                                                                <td class="toggle-button text-center">
+                                                                    <input type="checkbox" name="monday_open" {{ $monday_open}}>
+                                                                </td>
+                                                                <td class="date-input" style="{{ $monday_calss }}"><input type="time" name="monday_start_time" value="{{$working_days['monday_start_time']}}"></td>
+                                                                <td class="date-input" style="{{ $monday_calss }}"><input type="time" name="monday_end_time" value="{{$working_days['monday_end_time']}}"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <?php
+                                                                $tuesday_open = $working_days['tuesday_open'] == 'on' ? 'checked' : '';
+                                                                $tuesday_calss = $working_days['tuesday_open'] == 'on' ? '' : 'display:none';
+                                                                ?>
+                                                                <td>Tuesday</td>
+                                                                <td class="toggle-button text-center">
+                                                                    <input type="checkbox" name="tuesday_open" {{ $tuesday_open }}>
+                                                                </td>
+                                                                <td class="date-input" style="{{ $tuesday_calss }}"><input type="time" name="tuesday_start_time" value="{{$working_days['tuesday_start_time']}}"></td>
+                                                                <td class="date-input" style="{{ $tuesday_calss }}"><input type="time" name="tuesday_end_time" value="{{$working_days['tuesday_end_time']}}"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <?php
+                                                                $wednesday_open = $working_days['wednesday_open'] == 'on' ? 'checked' : '';
+                                                                $wednesday_calss = $working_days['wednesday_open'] == 'on' ? '' : 'display:none';
+                                                                ?>
+                                                                <td>Wednesday</td>
+                                                                <td class="toggle-button text-center">
+                                                                    <input type="checkbox" name="wednesday_open" {{ $wednesday_open }}>
+                                                                </td>
+                                                                <td class="date-input" style="{{ $wednesday_calss }}"><input type="time" name="wednesday_start_time" value="{{$working_days['wednesday_start_time']}}"></td>
+                                                                <td class="date-input" style="{{ $wednesday_calss }}"><input type="time" name="wednesday_end_time" value="{{$working_days['wednesday_end_time']}}"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <?php
+                                                                $thursday_open = $working_days['thursday_open'] == 'on' ? 'checked' : '';
+                                                                $thursday_calss = $working_days['thursday_open'] == 'on' ? '' : 'display:none';
+                                                                ?>
+                                                                <td>Thursday</td>
+                                                                <td class="toggle-button text-center">
+                                                                    <input type="checkbox" name="thursday_open" {{ $thursday_open }}>
+                                                                </td>
+                                                                <td class="date-input" style="{{ $thursday_calss }}"><input type="time" name="thursday_start_time" value="{{$working_days['thursday_start_time']}}"></td>
+                                                                <td class="date-input" style="{{ $thursday_calss }}"><input type="time" name="thursday_end_time" value="{{$working_days['thursday_end_time']}}"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <?php
+                                                                $friday_open = $working_days['friday_open'] == 'on' ? 'checked' : '';
+                                                                $friday_calss = $working_days['friday_open'] == 'on' ? '' : 'display:none';
+                                                                ?>
+                                                                <td>Friday</td>
+                                                                <td class="toggle-button text-center">
+                                                                    <input type="checkbox" name="friday_open" {{ $friday_open }}>
+                                                                </td>
+                                                                <td class="date-input" style="{{ $friday_calss }}"><input type="time" name="friday_start_time" value="{{$working_days['friday_start_time']}}"></td>
+                                                                <td class="date-input" style="{{ $friday_calss }}"><input type="time" name="friday_end_time" value="{{$working_days['friday_end_time']}}"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <?php
+                                                                $saturday_open = $working_days['saturday_open'] == 'on' ? 'checked' : '';
+                                                                $saturday_calss = $working_days['saturday_open'] == 'on' ? '' : 'display:none';
+                                                                ?>
+                                                                <td>Saturday</td>
+                                                                <td class="toggle-button text-center">
+                                                                    <input type="checkbox" name="saturday_open" {{ $saturday_open }}>
+                                                                </td>
+                                                                <td class="date-input" style="{{ $saturday_calss }}"><input type="time" name="saturday_start_time" value="{{$working_days['saturday_start_time']}}"></td>
+                                                                <td class="date-input" style="{{ $saturday_calss }}"><input type="time" name="saturday_end_time" value="{{$working_days['saturday_end_time']}}"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <?php
+                                                                $sunday_open = $working_days['sunday_open'] == 'on' ? 'checked' : '';
+                                                                $sunday_calss = $working_days['sunday_open'] == 'on' ? '' : 'display:none';
+                                                                ?>
+                                                                <td>Sunday</td>
+                                                                <td class="toggle-button text-center">
+                                                                    <input type="checkbox" name="sunday_open" {{ $sunday_open }}>
+                                                                </td>
+                                                                <td class="date-input" style="{{ $sunday_calss }}"><input type="time" name="sunday_start_time" value="{{$working_days['sunday_start_time']}}"></td>
+                                                                <td class="date-input" style="{{ $sunday_calss }}"><input type="time" name="sunday_end_time" value="{{$working_days['sunday_end_time']}}"></td>
+                                                            </tr>
+                                                        </table>
 
-                                                                <div class="custom-switch custom-control-inline mb-1 mb-xl-0">
-                                                                    <label class="custom-control-label mr-1" for="sunday">
-                                                                        <span>Sunday</span>
-                                                                    </label>
-                                                                    <input type="checkbox" class="custom-control-input" id="sunday" name="sunday">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div> -->
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div id="map" style="height:400px; width: 400px;" class="my-3"></div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -190,4 +280,13 @@
             marker.setPosition(pos);
         });
     }
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            const dateInputs = checkbox.parentElement.parentElement.querySelectorAll('.date-input');
+            dateInputs.forEach(input => {
+                input.style.display = checkbox.checked ? 'table-cell' : 'none';
+            });
+        });
+    });
 </script>
