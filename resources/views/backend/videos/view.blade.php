@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">View Video</h5>
+                                    <h5 class="pt-2">View Video : {{$videos['title']}} ({{ config('translatable.locales_name')[\App::getLocale()] }})</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -38,6 +38,18 @@
                                                     <tr>
                                                         <td><strong>Link</strong></td>
                                                         <td>{{ $videos['link'] }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Video Category</strong></td>
+                                                        <td>{{ $video_category['name'] }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Language</strong></td>
+                                                        <td>{{ $language['name'] }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Link</strong></td>
+                                                        <td>{{ $artist['name'] }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Sequence</strong></td>

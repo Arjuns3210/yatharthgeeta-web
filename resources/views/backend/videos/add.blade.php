@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Add Video</h5>
+                                    <h5 class="pt-2">Add Video </h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -41,13 +41,37 @@
                                                         <input class="form-control required" type="text" id="link" name="link"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
+                                                        <label>Sequence<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)"><br/>
+                                                    </div>
+                                                    <div class="col-sm-6 mb-3">
+                                                        <label>LANGUAGE</label>
+                                                        <select class="form-control" type="text" id="language_id" name="language_id">
+                                                        @foreach($language as $language)
+                                                            <option value="{{$language->id}}">{{$language->name}}</option>
+                                                        @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-6 mb-3">
+                                                        <label>Video Category</label>
+                                                        <select class="form-control" type="text" id="video_category_id" name="video_category_id">
+                                                        @foreach($video_category as $video_category)
+                                                            <option value="{{$video_category->id}}">{{$video_category->name}}</option>
+                                                        @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Guru</label>
+                                                        <select class="form-control" type="text" id="artist_id" name="artist_id">
+                                                        @foreach($artist as $artist)
+                                                            <option value="{{$artist->id}}">{{$artist->name}}</option>
+                                                        @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-6">
                                                         <label>Cover Image<span class="text-danger">*</span></label>
                                                         <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="cover_image" name="cover_image" onchange="handleFileInputChange('cover_image')"><br/>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Sequence<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)"><br/>
                                                     </div>
                                                 </div>
 
