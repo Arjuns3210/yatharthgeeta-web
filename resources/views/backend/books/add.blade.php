@@ -48,17 +48,29 @@
                                                         <label>Number of Pages<span class="text-danger">*</span></label>
                                                         <input class="form-control" type="text" id="pages" name="pages" oninput="filterNonNumeric(this)"><br/>
                                                     </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Audio Url (add More links by comma)<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="audio_id" name="audio_id"><br/>
+                                                    <div class="col-sm-6 mb-2">
+                                                        <label>Video<span class="text-danger">*</span></label>
+                                                        <select class="form-control select2 required " id="related_id" name="related_id[]">
+                                                        @foreach($video as $video)
+                                                                <option value="{{$video->id}}">{{$video->translations[0]->title ?? ''}}</option>
+                                                        @endforeach
+                                                        </select>
                                                     </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Video Url (add More links by comma)<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="video_id" name="video_id"><br/>
+                                                    <div class="col-sm-6 mb-2">
+                                                        <label>Audio<span class="text-danger">*</span></label>
+                                                        <select class="form-control select2 required" id="related_id" name="related_id[]">
+                                                        @foreach($audio as $audio)
+                                                                <option value="{{$audio->id}}">{{$audio->translations[0]->title ?? ''}}</option>
+                                                        @endforeach
+                                                        </select>
                                                     </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Related Books Url (add More links by comma)<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="related_id" name="related_id"><br/>
+                                                    <div class="col-sm-6 mb-2">
+                                                        <label>People Also Read</label>
+                                                        <select class="form-control select2 " id="related_id" name="related_id[]">
+                                                        @foreach($books as $book)
+                                                                <option value="{{$book->id}}">{{$book->translations[0]->name ?? ''}}</option>
+                                                        @endforeach
+                                                        </select>
                                                     </div>
                                                     <div class="col-sm-6 mb-3">
                                                         <label>GURU</label>
@@ -110,15 +122,19 @@
                                                 <div class="row">
                                                     <div class="col-sm-6 offset-sm-3">
                                                         <div class="col-md-6 col-lg-12 col-sm-6 text-center file-input-div mb-3">
-                                                            <p class="font-weight">COVER IMAGE<span class="text-danger">*</span></p>
-                                                            <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
+                                                            <p class="font-weight-bold">Cover Image</p>
                                                             <div class="shadow bg-white rounded d-inline-block mb-2">
                                                                 <div class="input-file">
-                                                                    <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
-                                                                        <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="cover_image" name="cover_image" onchange="handleFileInputChange('cover_image')"><br/>
+                                                                    <label class="label-input-file">Choose Files &nbsp;&nbsp;&nbsp;<i class="ft-upload font-medium-1"></i><input type="file" name="cover_image" class="cover-images" id="cover_image" accept=".jpg, .jpeg, .png">
                                                                     </label>
                                                                 </div>
                                                             </div>
+                                                            <p id="files-area">
+                                                                <span id="coverImagesLists">
+                                                                    <span id="cover-images-names"></span>
+                                                                </span>
+                                                            </p>
+                                                            <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -168,4 +184,19 @@
             </div>
         </div>
     </div>
+    <script>
+        $('.select2').select2();
+        $(document).ready(function() {
+            $('#has_episodes').change(function() {
+                if ($(this).val() == '1') {
+                    $('.file-label').text('');
+                    $('.file-input').removeClass('required');
+                    $('.file-input-div').addClass('d-none');
+                } else {
+                    $('.file-label').text('*');
+                    $('.file-input').addClass('required');
+                    $('.file-input-div').removeClass('d-none');
+                }
+            });
+    </script>
 </section>

@@ -4,10 +4,12 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Artist;
+use App\Models\Audio;
 use App\Models\Book;
 use App\Models\BookCategory;
 use App\Models\BookTranslation;
 use App\Models\Language;
+use App\Models\Video;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
@@ -128,10 +130,18 @@ class BookController extends Controller
      */
     public function create()
     {
+        $localeLanguage = \App::getLocale();
         $data['translated_block'] = Book::TRANSLATED_BLOCK;
+        $data['books'] = Book::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->where('status', 1)->get();
         $data['book_category'] = BookCategory::all();
         $data['language'] = Language::all();
         $data['artist'] = Artist::all();
+        $data['audio'] = Audio::all();
+        $data['video'] = Video::all();
         return view('backend/books/add', $data);
     }
 
