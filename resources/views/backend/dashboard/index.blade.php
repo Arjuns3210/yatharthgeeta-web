@@ -19,13 +19,13 @@
                     </div>
                     <div class="row">
                         <div class="col-4 text-center">
-                            <img src="{{ asset('backend/img/dashboard/guru1.png') }}" alt="ashram" class="img-fluid">
+                            <img src="{{ asset('backend/img/dashboard/guru1.png') }}" class="img-fluid">
                         </div>
                         <div class="col-4 text-center">
-                            <img src="{{ asset('backend/img/dashboard/om_logo.png') }}" alt="ashram" class="img-fluid">
+                            <img src="{{ asset('backend/img/dashboard/om_logo.png') }}" class="img-fluid">
                         </div>
                         <div class="col-4 text-center">
-                            <img src="{{ asset('backend/img/dashboard/guru2.png') }}" alt="ashram" class="img-fluid">
+                            <img src="{{ asset('backend/img/dashboard/guru2.png') }}" class="img-fluid">
                         </div>
                     </div>
                     <div class="row">
