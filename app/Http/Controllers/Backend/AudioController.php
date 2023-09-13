@@ -21,6 +21,7 @@ use App\Utils\Utils;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
 
@@ -500,6 +501,8 @@ class AudioController extends Controller
             if (! empty($input['id'])) {
                 $media = Media::find($input['id']);
                 if ($media->exists()) {
+                    Storage::disk(config('app.media_disc'))
+                        ->deleteDirectory($media->collection_name.'/'.$media->id);
                     $media->delete();
 
                     DB::commit();
