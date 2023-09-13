@@ -21,6 +21,8 @@ class AudioEpisode extends Model implements HasMedia
         'sequence',
         'file_name',
         'srt_file_name',
+        'explanation_shlok',
+        'main_shlok',
         'status',
         'created_by',
         'updated_by',

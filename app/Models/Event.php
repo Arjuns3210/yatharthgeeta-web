@@ -12,9 +12,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Event extends Model implements HasMedia
 {
     use SoftDeletes;
-    use HasFactory;
     use Translatable;
     use InteractsWithMedia;
+    
     public $fillable = [
         'cover',
         'event_start_date',
@@ -38,7 +38,9 @@ class Event extends Model implements HasMedia
 
 	];
 
-    const COVER= 'cover';
+    const EVENT_COVER= 'event_cover';
+    
+    const EVENT_IMAGES = 'event_images';
 
     public function eventTranslations()
     {

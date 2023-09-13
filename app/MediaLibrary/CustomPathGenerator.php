@@ -30,8 +30,10 @@ class CustomPathGenerator implements PathGenerator
                 return str_replace('{PARENT_DIR}', Location::IMAGE, $path);
             case EventImage::IMAGE;
                 return str_replace('{PARENT_DIR}', EventImage::IMAGE, $path);
-            case Event::COVER;
-                return str_replace('{PARENT_DIR}', Event::COVER, $path);
+            case Event::EVENT_COVER;
+                return str_replace('{PARENT_DIR}', Event::EVENT_COVER, $path);
+                case Event::EVENT_IMAGES;
+                return str_replace('{PARENT_DIR}', Event::EVENT_IMAGES, $path);
 			case Quote::IMAGE;
                 return str_replace('{PARENT_DIR}', Quote::IMAGE, $path);
             case Video::COVER_IMAGE;

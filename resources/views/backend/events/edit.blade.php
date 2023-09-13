@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Edit Event Details : {{$event['title']}}</h5>
+                                    <h5 class="pt-2">Edit Event Details: {{$event['title']}} ({{ config('translatable.locales_name')[\App::getLocale()] }})</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -70,7 +70,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Cover Image</label>
-                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('cover_image')" value="{{$event['cover']}}"><br/>
+                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="cover" name="cover" onchange="handleFileInputChange('cover')" value="{{$event['cover']}}"><br/>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                     </div>
                                                     <div class="col-sm-6">
@@ -78,7 +78,9 @@
                                                         <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)" value="{{$event->sequence}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="100px" alt="">
+                                                        @if(!empty($coverImage))
+                                                        <img src="{{$coverImage->getFullUrl() ?? ''}}" width="100px" height="100px" alt="">
+                                                            @endif
                                                     </div>
 
                                                 </div>
@@ -92,7 +94,7 @@
 
                                                             <?php if($translated_block_fields_value == 'input') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}}</label>
+                                                                    <label>{{str_replace('_',' ',$translated_block_fields_key)}}</label>
                                                                     <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" value="{{$event[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}">
                                                                 </div>
                                                             <?php
@@ -103,7 +105,7 @@
                                                         <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                             <?php if($translated_block_fields_value == 'textarea') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}}</label>
+                                                                    <label>{{str_replace('_',' ',$translated_block_fields_key)}}</label>
                                                                     <textarea class="translation_block form-control required" rows="5" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">{{$event[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}</textarea>
                                                                 </div>
                                                             <?php } ?>

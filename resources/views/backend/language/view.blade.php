@@ -52,10 +52,10 @@
                                                     <div class="table-responsive">
                                                         <table class="table table-striped table-bordered">
                                                             <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
-                                                                <tr>
-                                                                    <td><strong>{{ucfirst($translated_block_fields_key)}}</strong></td>
-                                                                    <td><?php echo $data[$translated_block_fields_key.'_'.$translated_data_tabs] ?? '' ?></td>
-                                                                </tr>
+                                                                    <tr>
+                                                                        <td><strong>{{ucfirst($translated_block_fields_key)}}</strong></td>
+                                                                        <td><?php echo $data[$translated_block_fields_key.'_'.$translated_data_tabs] ?? '' ?></td>
+                                                                    </tr>
                                                             <?php } ?>
                                                         </table>
                                                     </div>
@@ -72,3 +72,4 @@
         </div>
     </div>
 </section>
+

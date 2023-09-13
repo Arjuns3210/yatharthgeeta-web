@@ -28,6 +28,8 @@ class AddAudioEpisodeRequest extends FormRequest
         return [
             'duration'   => 'required|integer',
             'sequence'   => 'required|integer',
+            'main_shlok'   => 'required',
+            'explanation_shlok'   => 'required',
             'audio_file' => 'required|mimes:mp3,wav',
             'srt_file'   => 'required',
         ];

@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">View Event</h5>
+                                    <h5 class="pt-2">View Event : {{$event['title']}} ({{ config('translatable.locales_name')[\App::getLocale()] }})</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -69,7 +69,30 @@
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Cover Image </strong></td>
-                                                        <td><img src="{{$media->getFullUrl() ?? ''}}" width="200px" height="200px" alt=""></td>
+                                                        <td>
+                                                            @if(!empty($coverImage))
+                                                            <img src="{{$coverImage->getFullUrl() ?? ''}}" width="200px" height="200px" alt="">
+                                                        @endif
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Event Image</strong></td>
+                                                        <td>
+                                                            @forelse($eventImages as  $image)
+                                                                <div class="d-flex mb-1 ">
+                                                                    <input type="text"
+                                                                           class="form-control input-sm bg-white document-border"
+                                                                           value="{{ $image->name}}"
+                                                                           readonly
+                                                                           style="color: black !important;">
+                                                                    <a href="{{$image->getFullUrl()}}"
+                                                                       class="btn btn-primary mx-2 px-2"
+                                                                       target="_blank"><i class="fa ft-eye"></i></a>
+                                                                </div>
+
+                                                            @empty
+                                                                Event Images Not uploaded
+                                                            @endforelse</td>
                                                     </tr>
                                                 </table>
                                             </div>

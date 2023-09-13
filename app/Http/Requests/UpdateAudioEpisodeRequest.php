@@ -29,6 +29,8 @@ class UpdateAudioEpisodeRequest extends FormRequest
             'id'         => 'required|integer',
             'duration'   => 'required|integer',
             'sequence'   => 'required|integer',
+            'main_shlok'   => 'required',
+            'explanation_shlok'   => 'required',
             'audio_file' => 'nullable|mimes:mp3,wav',
             'srt_file'   => 'nullable',
         ];
