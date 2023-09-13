@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Permission;
 
-class AddAshramPermissionSeeder extends Seeder
+class AddLocationPermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,8 +15,8 @@ class AddAshramPermissionSeeder extends Seeder
     public function run()
     {
         $parent_permission = [
-            'name' => 'Ashram',
-            'codename' => 'ashram',
+            'name' => 'Location',
+            'codename' => 'location',
             'parent_status' => 'parent',
             'description' => '',
             'status' => '1'
@@ -26,35 +26,35 @@ class AddAshramPermissionSeeder extends Seeder
         $permissions = [
         	[
 	            'name' => 'Add',
-	            'codename' => 'ashram_add',
+	            'codename' => 'location_add',
 	            'parent_status' => $result->id,
 	            'description' => '',
 	            'status' => '1'
 	        ],
 	        [
 	            'name' => 'Edit',
-	            'codename' => 'ashram_edit',
+	            'codename' => 'location_edit',
 	            'parent_status' => $result->id,
 	            'description' => '',
 	            'status' => '1'
 	        ],
 	        [
 	            'name' => 'View',
-	            'codename' => 'ashram_view',
+	            'codename' => 'location_view',
 	            'parent_status' => $result->id,
 	            'description' => '',
 	            'status' => '1'
 	        ],
 	        [
 	            'name' => 'Status',
-	            'codename' => 'ashram_status',
+	            'codename' => 'location_status',
 	            'parent_status' => $result->id,
 	            'description' => '',
 	            'status' => '1'
 	        ],
 	        [
 	            'name' => 'Delete',
-	            'codename' => 'ashram_delete',
+	            'codename' => 'location_delete',
 	            'parent_status' => $result->id,
 	            'description' => '',
 	            'status' => '1'

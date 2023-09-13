@@ -30,7 +30,7 @@ class DashboardController extends Controller
         $data['books_total'] = Book::where('status', 1)->count();
         $data['audios_total'] = Audio::where('status', 1)->count();
         $data['videos_total'] = Video::where('status', 1)->count();
-        $data['ashrams_total'] = Location::where('status', 1)->count();
+        $data['locations_total'] = Location::where('status', 1)->count();
         // $data['shloks_total'] = Shlok::where('status', 1)->count();
         $data['mantras_total'] = Mantra::where('status', 1)->count();
         $data['greetings_total'] = Quote::where('status', 1)->count();

@@ -103,8 +103,8 @@
                                     <div class="card-body">
                                         <div class="media">
                                             <div class="media-body text-left">
-                                                <h3 class="mb-1 warning">{{ $ashrams_total }}</h3>
-                                                <span>Total Ashrams</span><br><br>
+                                                <h3 class="mb-1 warning">{{ $locations_total }}</h3>
+                                                <span>Total Locations</span><br><br>
                                             </div>
                                             <div class="media-right align-self-center">
                                                 <i class="fa fa-file-audio-o warning font-large-2" aria-hidden="true"></i>

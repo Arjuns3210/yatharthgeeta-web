@@ -38,15 +38,15 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('/resetPassword', 'AdminController@resetPassword');
 
 
-	//Ashram
-	Route::get('ashram', 'AshramController@index');
-	Route::get('ashram/add', 'AshramController@create');
-	Route::get('ashram/edit/{id}', 'AshramController@edit');
-	Route::post('ashram/update', 'AshramController@update');
-	Route::post('ashram/fetch', 'AshramController@fetch');
-	Route::get('ashram/view/{id}', 'AshramController@show');
-	Route::post('ashram/save', 'AshramController@store');
-	Route::post('ashram/delete_img', 'AshramController@deleteImage');
+	//Location
+	Route::get('location', 'LocationController@index');
+	Route::get('location/add', 'LocationController@create');
+	Route::get('location/edit/{id}', 'LocationController@edit');
+	Route::post('location/update', 'LocationController@update');
+	Route::post('location/fetch', 'LocationController@fetch');
+	Route::get('location/view/{id}', 'LocationController@show');
+	Route::post('location/save', 'LocationController@store');
+	Route::post('location/delete_img', 'LocationController@deleteImage');
 
 	//Guru's
 	Route::get('guru', 'ArtistController@index');
