@@ -631,19 +631,27 @@ function validateNameInput(input) {
     }
 }
 
-function handleFileInputChange(id) {
+function handleFileInputChange(id, type = null) {
     var fileInput = document.getElementById(id);
     var file = fileInput.files[0];
 
     if (file) {
         var allowedExtensions = [".jpg", ".jpeg", ".png"];
+        var fileType = 'JPG or PNG';
+        if(type == 'pdf') {
+            fileType = 'PDF';
+            allowedExtensions = [".pdf"];
+        }
+        if(type == 'epub') {
+            fileType = 'EPUB';
+            allowedExtensions = [".epub"];
+        }
         var fileExtension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
-
         if (!allowedExtensions.includes(fileExtension)) {
             $.activeitNoty({
                 type: 'danger',
                 icon: 'fa fa-minus',
-                message: 'Please select a JPG or PNG file.' ,
+                message: 'Please select a '+fileType+' file.' ,
                 container: 'floating',
                 timer: 3000
             });

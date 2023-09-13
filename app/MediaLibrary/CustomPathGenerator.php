@@ -5,6 +5,7 @@ namespace App\MediaLibrary;
 
 use App\Models\Audio;
 use App\Models\AudioEpisode;
+use App\Models\Book;
 use App\Models\Location;
 use App\Models\Event;
 use App\Models\EventImage;
@@ -38,6 +39,12 @@ class CustomPathGenerator implements PathGenerator
                 return str_replace('{PARENT_DIR}', Quote::IMAGE, $path);
             case Video::COVER_IMAGE;
                 return str_replace('{PARENT_DIR}', Video::COVER_IMAGE, $path);
+            case Book::COVER_IMAGE;
+                return str_replace('{PARENT_DIR}', Book::COVER_IMAGE, $path);
+            case Book::PDF_FILE;
+                return str_replace('{PARENT_DIR}', Book::PDF_FILE, $path);
+            case Book::EPUB_FILE;
+                return str_replace('{PARENT_DIR}', Book::EPUB_FILE, $path);
             case Artist::IMAGE;
                 return str_replace('{PARENT_DIR}', Artist::IMAGE, $path);
             case Audio::AUDIO_FILE;

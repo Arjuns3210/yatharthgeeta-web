@@ -20,10 +20,11 @@ class Mantra extends Model
     public $translatedAttributes = ['title', 'description'];
 
     public const TRANSLATED_BLOCK = [
-	    'title' => 'input',
+	    'title' => 'textarea',
 	    'description' => 'textarea'
-
 	];
+    
+
 
     public function mantraTranslations()
     {

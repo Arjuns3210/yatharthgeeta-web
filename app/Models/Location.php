@@ -21,7 +21,7 @@ class Location extends Model implements HasMedia
         'phone',
         'email',
         'image',
-        'days',
+        'working_days',
         'sequence',
         'location',
         'latitude',

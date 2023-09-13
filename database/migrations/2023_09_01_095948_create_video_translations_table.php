@@ -16,13 +16,11 @@ class CreateVideoTranslationsTable extends Migration
         Schema::create('video_translations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('video_id')->unsigned();
-            $table->integer('artist_id')->unsigned();
             $table->integer('narrator_id')->unsigned()->nullable();
             $table->string('locale')->index();
             $table->string('title');
             $table->string('description');
             $table->foreign('video_id')->references('id')->on('videos')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('artist_id')->references('id')->on('artists')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->unique(['video_id','locale']);
         });
     }
