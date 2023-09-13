@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">View Ashram: {{$ashram['name']}} ({{ config('translatable.locales_name')[\App::getLocale()] }})</h5>
+                                    <h5 class="pt-2">View Location: {{$location['name']}} ({{ config('translatable.locales_name')[\App::getLocale()] }})</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -33,18 +33,18 @@
                                                 <table class="table table-striped table-bordered">
                                                     <tr>
                                                         <td><strong>Email</strong></td>
-                                                        <td>{{$ashram['email']}}</td>
+                                                        <td>{{$location['email']}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Sequence</strong></td>
-                                                        <td>{{$ashram['sequence']}}</td>
+                                                        <td>{{$location['sequence']}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Address</strong></td>
-                                                        <td>{{$ashram['location']}}</td>
+                                                        <td>{{$location['location']}}</td>
                                                     </tr>
                                                     @php
-                                                    $phone_array = json_decode($ashram['phone']);
+                                                    $phone_array = json_decode($location['phone']);
                                                     @endphp
                                                     <tr>
                                                         <td><strong>Contact No</strong></td>
@@ -58,7 +58,7 @@
                                                     </tr>
                                                     @if(isset($media))
                                                     <tr>
-                                                        <td><strong>Ashram Image </strong></td>
+                                                        <td><strong>Location Image </strong></td>
                                                         <td><img src="{{$media->getFullUrl() ?? ''}}" width="200px" height="200px" alt=""></td>
                                                     </tr>
                                                     @endif
@@ -73,7 +73,7 @@
                                                             <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                                     <tr>
                                                                         <td><strong>{{ucfirst($translated_block_fields_key)}}</strong></td>
-                                                                        <td><?php echo $ashram[$translated_block_fields_key.'_'.$translated_data_tabs] ?? '' ?></td>
+                                                                        <td><?php echo $location[$translated_block_fields_key.'_'.$translated_data_tabs] ?? '' ?></td>
                                                                     </tr>
                                                             <?php } ?>
                                                         </table>

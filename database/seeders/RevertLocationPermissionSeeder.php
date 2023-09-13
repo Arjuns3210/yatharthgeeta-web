@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Permission;
 
-class RevertAshramPermissionSeeder extends Seeder
+class RevertLocationPermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,12 +15,12 @@ class RevertAshramPermissionSeeder extends Seeder
     public function run()
     {
         $permissions = [
-        	'ashram',
-        	'ashram_add',
-        	'ashram_edit',
-        	'ashram_view',
-        	'ashram_status',
-        	'ashram_delete'
+        	'location',
+        	'location_add',
+        	'location_edit',
+        	'location_view',
+        	'location_status',
+        	'location_delete'
         ];
         $permissionData = Permission::whereIn('codename', $permissions)->pluck('id');
         foreach ($permissionData as $permission) {

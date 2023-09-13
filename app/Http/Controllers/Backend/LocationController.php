@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\DataTables;
-use App\Models\Ashram;
 use App\Models\Location;
 use App\Models\LocationTranslation;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class AshramController extends Controller
+class LocationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,12 +18,12 @@ class AshramController extends Controller
      */
     public function index()
     {
-        $data['ashram_add'] = checkPermission('ashram_add');
-        $data['ashram_edit'] = checkPermission('ashram_edit');
-        $data['ashram_view'] = checkPermission('ashram_view');
-        $data['ashram_status'] = checkPermission('ashram_status');
-        $data['ashram_delete'] = checkPermission('ashram_delete');
-        return view('backend/ashram/index',['data' =>$data]);
+        $data['location_add'] = checkPermission('location_add');
+        $data['location_edit'] = checkPermission('location_edit');
+        $data['location_view'] = checkPermission('location_view');
+        $data['location_status'] = checkPermission('location_status');
+        $data['location_delete'] = checkPermission('location_delete');
+        return view('backend/location/index',['data' =>$data]);
     }
 
     public function fetch(Request $request)
@@ -63,16 +62,16 @@ class AshramController extends Controller
                         return $event['location'];
                     })
                     ->editColumn('action', function ($event) {
-                        $ashram_edit = checkPermission('ashram_edit');
-                        $ashram_view = checkPermission('ashram_view');
-                        $ashram_status = checkPermission('ashram_status');
-                        $ashram_delete = checkPermission('ashram_delete');
+                        $location_edit = checkPermission('location_edit');
+                        $location_view = checkPermission('location_view');
+                        $location_status = checkPermission('location_status');
+                        $location_delete = checkPermission('location_delete');
                         $actions = '<span style="white-space:nowrap;">';
-                        if ($ashram_view) {
-                            $actions .= '<a href="ashram/view/' . $event['id'] . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View Ashram Details" title="View"><i class="fa fa-eye"></i></a>';
+                        if ($location_view) {
+                            $actions .= '<a href="location/view/' . $event['id'] . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View location Details" title="View"><i class="fa fa-eye"></i></a>';
                         }
-                        if ($ashram_edit) {
-                            $actions .= ' <a href="ashram/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
+                        if ($location_edit) {
+                            $actions .= ' <a href="location/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
                         }
                         $actions .= '</span>';
                         return $actions;
@@ -101,7 +100,7 @@ class AshramController extends Controller
     {
         $data['translated_block'] = Location::TRANSLATED_BLOCK;
 
-        return view('backend/ashram/add',$data);
+        return view('backend/location/add',$data);
     }
 
     /**
@@ -156,60 +155,60 @@ class AshramController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Ashram  $ashram
+     * @param  \App\Models\location  $location
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $data['ashram'] = Location::find($id);
-        foreach($data['ashram']['translations'] as $trans) {
+        $data['location'] = Location::find($id);
+        foreach($data['location']['translations'] as $trans) {
             $translated_keys = array_keys(Location::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
-                $data['ashram'][$value.'_'.$trans['locale']] = $trans[$value];
+                $data['location'][$value.'_'.$trans['locale']] = $trans[$value];
             }
         }
         $data['translated_block'] = Location::TRANSLATED_BLOCK;
-        if (!empty($data['ashram']->getMedia(Location::IMAGE))) {
-            $media = $data['ashram']->getMedia(Location::IMAGE);
+        if (!empty($data['location']->getMedia(Location::IMAGE))) {
+            $media = $data['location']->getMedia(Location::IMAGE);
             if (isset($media[0])) {
                 $data['media'] = $media[0];
             }
         }
-        return view('backend/ashram/view',$data);
+        return view('backend/location/view',$data);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Ashram  $ashram
+     * @param  \App\Models\location  $location
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $data['ashram'] = Location::find($id);
-        $working_days_data = json_decode($data['ashram']['working_days'],true);
+        $data['location'] = Location::find($id);
+        $working_days_data = json_decode($data['location']['working_days'],true);
         $data['working_days'] = $working_days_data;
-        foreach($data['ashram']['translations'] as $trans) {
+        foreach($data['location']['translations'] as $trans) {
             $translated_keys = array_keys(Location::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
-                $data['ashram'][$value.'_'.$trans['locale']] = str_replace("<br/>", "\r\n", $trans[$value]);
+                $data['location'][$value.'_'.$trans['locale']] = str_replace("<br/>", "\r\n", $trans[$value]);
             }
         }
         $data['translated_block'] = Location::TRANSLATED_BLOCK;
-        if (!empty($data['ashram']->getMedia(Location::IMAGE))) {
-            $media = $data['ashram']->getMedia(Location::IMAGE);
+        if (!empty($data['location']->getMedia(Location::IMAGE))) {
+            $media = $data['location']->getMedia(Location::IMAGE);
             if (isset($media[0])) {
                 $data['media'] = $media[0];
             }
         }
-        return view('backend/ashram/edit',$data);
+        return view('backend/location/edit',$data);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Ashram  $ashram
+     * @param  \App\Models\location  $location
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
@@ -246,15 +245,15 @@ class AshramController extends Controller
             $input['phone'] = json_encode($phone_array);
         }
         if (!$data) {
-            errorMessage('Ashram Not Found', []);
+            errorMessage('Location Not Found', []);
         }
         $translated_keys = array_keys(Location::TRANSLATED_BLOCK);
         foreach ($translated_keys as $value)
         {
             $input[$value] = (array) json_decode($input[$value]);
         }
-        $ashram = Utils::flipTranslationArray($input, $translated_keys);
-        $data->update($ashram);
+        $location = Utils::flipTranslationArray($input, $translated_keys);
+        $data->update($location);
         if(!empty($input['image'])){
             $data->clearMediaCollection(Location::IMAGE);
             storeMedia($data, $input['image'], Location::IMAGE);
@@ -265,10 +264,10 @@ class AshramController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Ashram  $ashram
+     * @param  \App\Models\location  $location
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ashram $ashram)
+    public function destroy(Location $location)
     {
         //
     }

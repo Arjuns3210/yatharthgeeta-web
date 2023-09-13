@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class MigrationToRunSeederToAddAshramPermission extends Migration
+class MigrationToRunSeederToAddLocationPermission extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class MigrationToRunSeederToAddAshramPermission extends Migration
     public function up()
     {
         Artisan::call('db:seed', [
-            '--class' => 'AddAshramPermissionSeeder',
+            '--class' => 'AddLocationPermissionSeeder',
             '--force' => true
         ]);
     }
@@ -27,7 +27,7 @@ class MigrationToRunSeederToAddAshramPermission extends Migration
     public function down()
     {
         Artisan::call('db:seed', [
-            '--class' => 'RevertAshramPermissionSeeder',
+            '--class' => 'RevertLocationPermissionSeeder',
             '--force' => true
         ]);
     }
