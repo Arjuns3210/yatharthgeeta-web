@@ -55,7 +55,7 @@
                                                     <th id="name" data-orderable="false" data-searchable="false">Name</th>
                                                     <th id="email" data-orderable="false" data-searchable="false">Email</th>
                                                     <th id="phone" data-orderable="false" data-searchable="false">Phone</th>
-                                                    @if($data['customer_edit'] || $data['customer_view'] || $data['customer_status'])
+                                                    @if($data['customer_verify'] || $data['customer_view'] || $data['customer_status'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
                                                     @endif
                                                 </tr>

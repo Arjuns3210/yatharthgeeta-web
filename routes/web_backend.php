@@ -221,8 +221,9 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::get('customer', 'CustomerController@index');
 	Route::post('customer/fetch', 'CustomerController@fetch');
 	Route::get('customer/view/{id}', 'CustomerController@show');
-	Route::get('customer/edit/{id}', 'CustomerController@edit');
-	Route::post('customer/update', 'CustomerController@update');
+	Route::get('customer/verify/{id}', 'CustomerController@isVerify');
+	Route::get('customer/change_password/{id}', 'CustomerController@changePassword');
+	Route::post('customer/changePassword', 'CustomerController@changeCustomerPassword');
     Route::post('customer/publish', 'CustomerController@updateStatus');
 
     //general settings
