@@ -91,53 +91,60 @@
                                                             <tr>
                                                                 <td>Monday</td>
                                                                 <td class="toggle-button text-center">
-                                                                    <input type="checkbox" name="open_monday">
+                                                                    <input type="checkbox" name="monday_open">
                                                                 </td>
-                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="start_monday"></td>
-                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="end_monday"></td>
+                                                                <td class="date-input" style="display:none;"><input type="time" name="monday_start_time"></td>
+                                                                <td class="date-input" style="display:none;"><input type="time" name="monday_end_time"></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Tuesday</td>
                                                                 <td class="toggle-button text-center">
-                                                                    <input type="checkbox" name="open_tuesday">
+                                                                    <input type="checkbox" name="tuesday_open">
                                                                 </td>
-                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="start_tuesday"></td>
-                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="end_tuesday"></td>
+                                                                <td class="date-input" style="display:none;"><input type="time" name="tuesday_start_time"></td>
+                                                                <td class="date-input" style="display:none;"><input type="time" name="tuesday_end_time"></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Wednesday</td>
                                                                 <td class="toggle-button text-center">
-                                                                    <input type="checkbox" name="open_wednesday">
+                                                                    <input type="checkbox" name="wednesday_open">
                                                                 </td>
-                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="start_wednesday"></td>
-                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="end_wednesday"></td>
+                                                                <td class="date-input" style="display:none;"><input type="time" name="wednesday_start_time"></td>
+                                                                <td class="date-input" style="display:none;"><input type="time" name="wednesday_end_time"></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Thursday</td>
                                                                 <td class="toggle-button text-center">
-                                                                    <input type="checkbox" name="open_thursday">
+                                                                    <input type="checkbox" name="thursday_open">
                                                                 </td>
-                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="start_thursday"></td>
-                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="end_thursday"></td>
+                                                                <td class="date-input" style="display:none;"><input type="time" name="thursday_start_time"></td>
+                                                                <td class="date-input" style="display:none;"><input type="time" name="thursday_end_time"></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Friday</td>
                                                                 <td class="toggle-button text-center">
-                                                                    <input type="checkbox" name="open_friday">
+                                                                    <input type="checkbox" name="friday_open">
                                                                 </td>
-                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="start_friday"></td>
-                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="end_friday"></td>
+                                                                <td class="date-input" style="display:none;"><input type="time" name="friday_start_time"></td>
+                                                                <td class="date-input" style="display:none;"><input type="time" name="friday_end_time"></td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Saturday</td>
                                                                 <td class="toggle-button text-center">
-                                                                    <input type="checkbox" name="open_saturday">
+                                                                    <input type="checkbox" name="saturday_open">
                                                                 </td>
-                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="start_saturday"></td>
-                                                                <td class="date-input" style="padding-left: 33px;display:none;"><input type="time" name="end_saturday"></td>
+                                                                <td class="date-input" style="display:none;"><input type="time" name="saturday_start_time"></td>
+                                                                <td class="date-input" style="display:none;"><input type="time" name="saturday_end_time"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Sunday</td>
+                                                                <td class="toggle-button text-center">
+                                                                    <input type="checkbox" name="sunday_open">
+                                                                </td>
+                                                                <td class="date-input" style="display:none;"><input type="time" name="sunday_start_time"></td>
+                                                                <td class="date-input" style="display:none;"><input type="time" name="sunday_end_time"></td>
                                                             </tr>
                                                         </table>
-
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div id="map" style="height:400px; width: 400px;" class="my-3"></div>
