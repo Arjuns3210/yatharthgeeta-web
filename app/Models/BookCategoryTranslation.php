@@ -15,7 +15,6 @@ class BookCategoryTranslation extends Model
         'book_category_id',
         'locale',
         'name',
-        'title',
         'subtitle',
         'description'
     ];

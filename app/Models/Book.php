@@ -43,7 +43,19 @@ class Book extends Model implements HasMedia
 
 	];
 
+    protected $casts = [
+        'id' => 'integer',
+        'status' => 'boolean',
+        'audio_id' => 'json',
+        'video_id' => 'json',
+        'related_id' => 'json'
+
+    ];
+
     const COVER_IMAGE= 'cover_image';
+
+    const PDF_FILE = 'pdf_file';
+    const EPUB_FILE = 'epub_file';
 
     public function bookTranslations()
     {

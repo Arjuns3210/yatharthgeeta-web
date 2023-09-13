@@ -18,7 +18,7 @@ class CreateBookTranslationsTable extends Migration
             $table->integer('book_id')->unsigned();
             $table->string('locale')->index();
             $table->string('name');
-            $table->string('highlight_descrption');
+            $table->string('short_descrption');
             $table->string('description');
             $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade')->onUpdate('cascade');
             $table->unique(['book_id','locale']);

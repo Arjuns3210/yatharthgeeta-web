@@ -46,13 +46,10 @@ class BookCategory extends Model
         'status' => 'boolean'
     ];
 
-    public $translatedAttributes = ['name', 'title', 'subtitle', 'description'];
+    public $translatedAttributes = ['name'];
 
     public const TRANSLATED_BLOCK = [
-    	'name' => 'input',
-	    'title' => 'input',
-	    'subtitle' => 'textarea',
-	    'description' => 'textarea'
+    	'name' => 'input'
 	];
 
     public function bookCategoryTranslations()
