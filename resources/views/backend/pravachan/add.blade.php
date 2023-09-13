@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Edit Audio : {{$audio['translations'][0]['title'] ?? ''}} ({{ config('translatable.locales_name')[\App::getLocale()] }})</h5>
+                                    <h5 class="pt-2">Add Pravachan</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -15,7 +15,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form id="editAudioCategoryForm" method="post" action="audio/update?id={{$audio['id']}}">
+                            <form id="addPravachanForm" method="post" action="pravachan/save">
                                 @csrf
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -32,36 +32,20 @@
                                         <div class="tab-content">
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
-                                                    <input type="hidden" name="id" value="{{ $audio['id'] }}">
-                                                    <div class="col-sm-6 mb-2">
-                                                        <label>Has Episodes<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2" id="has_episodes" name="has_episodes">
-                                                            <option value="0" {{ ($audio['has_episodes'] == 0) ?'selected' : '' }}>No</option>
-                                                            <option value="1" {{ ($audio['has_episodes'] == 1) ?'selected' : '' }}>Yes</option>
-                                                        </select>
-                                                    </div>
                                                     <div class="col-md-6 mb-2">
                                                         <label>Duration (In Minute)<span style="color:#ff0000">*</span></label>
-                                                        <input class="form-control required" type="number" id="duration" name="duration" value="{{$audio['duration']}}">
+                                                        <input class="form-control required" type="number" id="duration" name="duration">
                                                     </div>
                                                     <div class="col-md-6 mb-2">
                                                         <label>Sequence<span style="color:#ff0000">*</span></label>
-                                                        <input class="form-control required" type="number" id="sequence" name="sequence" value="{{$audio['sequence']}}">
+                                                        <input class="form-control required" type="number" id="sequence" name="sequence">
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Media Language<span class="text-danger">*</span></label>
                                                         <select class="form-control select2 required" id="language_id" name="language_id">
                                                             <option value="">Select</option>
                                                             @foreach($languages as $language)
-                                                                <option value="{{$language->id}}" {{($language->id ==$audio['language_id'] ) ? 'selected' : ''}}>{{$language->translations[0]->name ?? ''}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-6 mb-2">
-                                                        <label>People Also Listen</label>
-                                                        <select class="form-control select2" id="people_also_read_ids" name="people_also_read_ids[]" multiple>
-                                                            @foreach($audios as $data)
-                                                                <option value="{{$data->id}}" {{ in_array($data->id,$peopleAlsoReadIds) ? 'selected' : ''  }}>{{$data->translations[0]->title ?? ''}}</option>
+                                                                <option value="{{$language->id}}">{{$language->translations[0]->name ?? ''}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -70,7 +54,7 @@
                                                         <select class="form-control select2 required" id="author_id" name="author_id">
                                                             <option value="">Select</option>
                                                             @foreach($gurus as $speaker)
-                                                                <option value="{{$speaker->id}}" {{($speaker->id ==$audio['author_id'] ) ? 'selected' : ''}}>{{$speaker->translations[0]->name ?? ''}}</option>
+                                                                <option value="{{$speaker->id}}">{{$speaker->translations[0]->name ?? ''}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -78,7 +62,7 @@
                                                         <p class="font-weight-bold">Cover Image</p>
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
                                                             <div class="input-file">
-                                                                <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i><input type="file" name="cover_image" class="cover-images" id="coverImages" accept=".jpg, .jpeg, .png">
+                                                                <label class="label-input-file">Choose Files &nbsp;&nbsp;&nbsp;<i class="ft-upload font-medium-1"></i><input type="file" name="cover_image" class="cover-images" id="coverImages" accept=".jpg, .jpeg, .png">
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -87,26 +71,9 @@
                                                                 <span id="cover-images-names"></span>
                                                             </span>
                                                         </p>
-                                                        <div class="mt-2">
-                                                            @foreach($audioCoverImage as $image)
-                                                                <div class="d-flex mb-1  cover-image-div-{{$image->id}}">
-                                                                    <input type="text"
-                                                                           class="form-control input-sm bg-white document-border"
-                                                                           value="{{ $image->name }}"
-                                                                           readonly style="color: black !important;">
-                                                                    <a href="{{ $image->getFullUrl() }}"
-                                                                       class="btn btn-primary mx-2 px-2" target="_blank"><i
-                                                                                class="fa ft-eye"></i></a>
-                                                                    <a href="javascript:void(0)"
-                                                                       class="btn btn-danger delete-cover-image  px-2"
-                                                                       data-url="{{ $image->getFullUrl() }}" data-id="{{ $image->id }}"><i
-                                                                                class="fa ft-trash"></i></a>
-                                                                </div>
-                                                            @endforeach
-                                                        </div>
                                                     </div>
-                                                    <div class="col-md-6 col-lg-6 col-sm-6  text-center file-input-div">
-                                                        <p class="font-weight-bold">Audio File (MP3)</p>
+                                                    <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center file-input-div">
+                                                        <p class="font-weight-bold">Pravachan File (MP3)</p>
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
                                                             <div class="input-file">
                                                                 <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
@@ -119,53 +86,35 @@
                                                                 <span id="audio-files-names"></span>
                                                             </span>
                                                         </p>
-                                                        <div class="mt-2">
-                                                            @foreach($audioFile as $data)
-                                                                <div class="d-flex mb-1  audio-file-div-{{$data->id}}">
-                                                                    <input type="text"
-                                                                           class="form-control input-sm bg-white document-border"
-                                                                           value="{{ $data->name }}"
-                                                                           readonly style="color: black !important;">
-                                                                    <a href="{{ $data->getFullUrl() }}"
-                                                                       class="btn btn-primary mx-2 px-2" target="_blank"><i
-                                                                                class="fa ft-eye"></i></a>
-                                                                    <a href="javascript:void(0)"
-                                                                       class="btn btn-danger delete-audio-file  px-2"
-                                                                       data-url="{{ $data->getFullUrl() }}" data-id="{{ $data->id }}"><i
-                                                                                class="fa ft-trash"></i></a>
-                                                                </div>
-                                                            @endforeach
-                                                        </div>
                                                     </div>
                                                 </div>
+                                                
                                             </div>
-
                                             @foreach (config('translatable.locales') as $translated_data_tabs)
                                                 <div id="{{ $translated_data_tabs }}_block_details" class="tab-pane fade">
                                                     <div class="row">
                                                         @foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value)
                                                             <div class="col-md-6 mb-3">
                                                                 @if ($translated_block_fields_value == 'input')
-                                                                    <label>{{ $translated_block_fields_key }}</label>
-                                                                    <input class="translation_block form-control required" type="text" id="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" name="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" value="{{ $audio[$translated_block_fields_key.'_'.$translated_data_tabs] ?? '' }}">
-                                                                @elseif ($translated_block_fields_value == 'textarea')
-                                                                    <label>{{ $translated_block_fields_key }}</label>
-                                                                    <textarea class="translation_block form-control required" id="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" name="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}">{{ $audio[$translated_block_fields_key.'_'.$translated_data_tabs] ?? '' }}</textarea>
+                                                                    <label>{{ $translated_block_fields_key }}<span class="text-danger">*</span></label>
+                                                                    <input class="translation_block form-control required" type="text" id="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" name="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}">
+                                                                @endif
+                                                                @if ($translated_block_fields_value == 'textarea')
+                                                                    <label>{{ $translated_block_fields_key }}<span class="text-danger">*</span></label>
+                                                                    <textarea class="translation_block form-control required" type="text" id="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" name="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}"></textarea>
                                                                 @endif
                                                             </div>
                                                         @endforeach
                                                     </div>
                                                 </div>
                                             @endforeach
-
                                         </div>
-                                    </div>
                                 </div>
-                                <hr>
+                                </div>
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="pull-right">
-                                            <button type="button" class="btn btn-success" onclick="submitForm('editAudioCategoryForm','post')">Submit</button>
+                                            <button type="button" class="btn btn-success" onclick="submitForm('addPravachanForm','post')">Submit</button>
                                             <a href="{{URL::previous()}}" class="btn btn-sm btn-danger px-3 py-1"> Cancel</a>
                                         </div>
                                     </div>
@@ -180,20 +129,6 @@
     <script>
         $('.select2').select2();
         $(document).ready(function() {
-            let hasEpisodeValue = $('#has_episodes').val();
-            if (hasEpisodeValue == '1') {
-                $('.file-input-div').addClass('d-none');
-            } else {
-                $('.file-input-div').removeClass('d-none');
-            }
-            $('#has_episodes').change(function() {
-                if ($(this).val() == '1') {
-                    $('.file-input-div').addClass('d-none');
-                } else {
-                    $('.file-input-div').removeClass('d-none');
-                }
-            });
-
             const coverImageData = new DataTransfer();
 
             function handleCoverImagesAttachmentChange() {
@@ -241,7 +176,7 @@
 
             const audioFileData = new DataTransfer();
 
-            function handleAudioFileAttachmentChange() {
+            function handlePravachanFileAttachmentChange() {
                 const attachmentInput = document.getElementById('audioFiles');
 
                 attachmentInput.addEventListener('change', function (e) {
@@ -282,68 +217,8 @@
                 });
             }
 
-            handleAudioFileAttachmentChange();
-
-
-            const srtFileData = new DataTransfer();
-
-            function handleSrtFileAttachmentChange() {
-                const attachmentInput = document.getElementById('srtFiles');
-
-                attachmentInput.addEventListener('change', function (e) {
-                    if (this.files.length === 1) {
-                        const file = this.files[0];
-                        const fileBloc = $('<span/>', { class: 'file-block' });
-                        const fileName = $('<span/>', { class: 'name', text: file.name });
-
-                        fileBloc.append('<span class="file-delete srt-files-delete"><span>+</span></span>').
-                            append(fileName);
-
-                        // Clear existing uploaded documents
-                        $('#srtFilesLists > #srt-files-names').empty();
-
-                        $('#srtFilesLists > #srt-files-names').append(fileBloc);
-                        srtFileData.items.clear(); // Clear existing items
-                        srtFileData.items.add(file);
-                    } else {
-                        // Display an error message or take appropriate action for multiple files
-                        alert('Please upload only one document at a time.');
-                        // Reset the input field to clear selected files
-                        this.value = '';
-                        $('#srtFilesLists > #srt-files-names').empty();
-                        srtFileData.items.clear();
-                    }
-                });
-
-                $(document).on('click', 'span.srt-files-delete', function () {
-                    // Clear UI
-                    $('#srtFilesLists > #srt-files-names').empty();
-
-                    // Clear DataTransfer object (audioFileData)
-                    srtFileData.items.clear();
-
-                    // Reset the input field to clear selected files
-                    const input = document.getElementById('srtFiles');
-                    input.value = ''; // This should clear the selected file(s) in the input field
-                });
-            }
-
-            handleSrtFileAttachmentChange();
-
-            $('.delete-cover-image').click(function () {
-                let mediaId = $(this).attr('data-id');
-                deleteDocuments(mediaId, '.cover-image-div-');
-            });
-
-            $('.delete-audio-file').click(function () {
-                let mediaId = $(this).attr('data-id');
-                deleteDocuments(mediaId, '.audio-file-div-');
-            });
-
-            $('.delete-srt-file').click(function () {
-                let mediaId = $(this).attr('data-id');
-                deleteDocuments(mediaId, '.srt-file-div-');
-            });
+            handlePravachanFileAttachmentChange();
         });
+        
     </script>
 </section>

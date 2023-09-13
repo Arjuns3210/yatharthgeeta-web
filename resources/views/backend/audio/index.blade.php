@@ -29,15 +29,6 @@
                                                 <input class="form-control mb-3" type="text" id="search_title" name="search_title">
                                             </div>
                                             <div class="col-md-4">
-                                                <label>Audio Category</label>
-                                                <select class="form-control mb-3" type="text" id="search_audio_category_id" name="search_audio_category_id">
-                                                    <option value="">All</option>
-                                                    @foreach($data['audioCategories'] as $audioCategory)
-                                                        <option value="{{$audioCategory->id}}">{{$audioCategory->translations[0]->name ?? ''}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4">
                                                 <label>Status</label>
                                                 <select class="form-control mb-3" type="text" id="search_status" name="search_status">
                                                     <option value="">All</option>
@@ -56,7 +47,6 @@
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
                                                     <th id="title{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Audio Title ({{ config('translatable.locales_name')[\App::getLocale()] }})</th>
-                                                    <th id="audio_category{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Audio Category ({{ config('translatable.locales_name')[\App::getLocale()] }})</th>
                                                     <th id="duration" data-orderable="false" data-searchable="false">Duration (In Minute)</th>
                                                     @if($data['audios_status'] || $data['audios_edit'] || $data['audios_view'] || $data['audios_delete'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>

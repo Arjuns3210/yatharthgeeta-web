@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">View Audio : {{$audio->translations[0]->title ?? ''}} ({{ config('translatable.locales_name')[\App::getLocale()] }})</h5>
+                                    <h5 class="pt-2">View Pravachan: {{$audio->translations[0]->title ?? ''}} ({{ config('translatable.locales_name')[\App::getLocale()] }})</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -36,10 +36,6 @@
                                                             <div class="table-responsive">
                                                                 <table class="table table-striped table-bordered">
                                                                     <tr>
-                                                                        <td><strong>Has Episodes</strong></td>
-                                                                        <td>{{ ($audio->has_episodes == 1) ? 'Yes' : 'No' }}</td>
-                                                                    </tr>
-                                                                    <tr>
                                                                         <td><strong>Duration (In Minute)</strong></td>
                                                                         <td>{{ $audio->duration ?? ''}}</td>
                                                                     </tr>
@@ -48,7 +44,7 @@
                                                                         <td>{{ $audio->sequence }}</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td><strong>Audio File</strong></td>
+                                                                        <td><strong>Pravachan File</strong></td>
                                                                         <td>
                                                                             @php
                                                                                 $allowedMimeTypes = [
