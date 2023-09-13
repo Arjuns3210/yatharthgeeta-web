@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddAudioRequest;
+use App\Http\Requests\CreatePravachanRequest;
 use App\Http\Requests\UpdateAudioRequest;
+use App\Http\Requests\UpdatePravachanRequest;
 use App\Models\Artist;
 use App\Models\Audio;
 use App\Models\AudioCategory;
@@ -24,7 +26,7 @@ use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\DataTables;
 
 
-class AudioController extends Controller
+class PravachanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -33,13 +35,13 @@ class AudioController extends Controller
      */
     public function index()
     {
-        $data['audios_add'] = checkPermission('audios_add');
-        $data['audios_edit'] = checkPermission('audios_edit');
-        $data['audios_view'] = checkPermission('audios_view');
-        $data['audios_status'] = checkPermission('audios_status');
-        $data['audios_delete'] = checkPermission('audios_delete');
+        $data['pravachan_add'] = checkPermission('pravachan_add');
+        $data['pravachan_edit'] = checkPermission('pravachan_edit');
+        $data['pravachan_view'] = checkPermission('pravachan_view');
+        $data['pravachan_status'] = checkPermission('pravachan_status');
+        $data['pravachan_delete'] = checkPermission('pravachan_delete');
         
-        return view('backend/audio/index',["data"=>$data]);
+        return view('backend/pravachan/index',["data"=>$data]);
     }
 
     /**
@@ -58,7 +60,7 @@ class AudioController extends Controller
         }
         if ($request->ajax()) {
             try {
-                $query = Audio::with('translations','audioCategory.translations')->where('type',Audio::AUDIO)->orderBy('updated_at','desc');
+                $query = Audio::with('translations','audioCategory.translations')->where('type',Audio::PRAVACHAN)->orderBy('updated_at','desc');
 
                 return DataTables::of($query)
                     ->filter(function ($query) use ($request ,$localeLanguage) {
@@ -69,9 +71,6 @@ class AudioController extends Controller
                         }
                         if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
                             $query->where('status', $request['search']['search_status']);
-                        }
-                        if (isset($request['search']['search_audio_category_id']) && !is_null($request['search']['search_audio_category_id'])) {
-                            $query->where('audio_category_id', $request['search']['search_audio_category_id']);
                         }
                         $query->get()->toArray();
                     })
@@ -95,34 +94,29 @@ class AudioController extends Controller
                         return $event->status == 1 ?'Active' : 'Inactive';
                     })
                     ->editColumn('action', function ($event) {
-                        $audios_view = checkPermission('audios_view');
-                        $audios_edit = checkPermission('audios_edit');
-                        $audios_status = checkPermission('audios_status');
-                        $audios_delete = checkPermission('audios_delete');
-                        $audio_episode_view = checkPermission('audio_episode_view');
+                        $pravachan_view = checkPermission('pravachan_view');
+                        $pravachan_edit = checkPermission('pravachan_edit');
+                        $pravachan_status = checkPermission('pravachan_status');
+                        $pravachan_delete = checkPermission('pravachan_delete');
                         $is_head = session('data')['is_head'] ?? false;
                         $actions = '<span style="white-space:nowrap;">';
-                        if ($audios_view) {
-                            $actions .= '<a href="audio/view/' . $event['id'] . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View Category Details" title="View"><i class="fa fa-eye"></i></a>';
+                        if ($pravachan_view) {
+                            $actions .= '<a href="pravachan/view/' . $event['id'] . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View Category Details" title="View"><i class="fa fa-eye"></i></a>';
                         }
-                        if ($audios_edit) {
-                            $actions .= ' <a href="audio/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
+                        if ($pravachan_edit) {
+                            $actions .= ' <a href="pravachan/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
                         }
-                        if ($audios_status) {
+                        if ($pravachan_status) {
                             if ($event->status == '1') {
-                                $actions .= ' <input type="checkbox" data-url="publish_audio" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery" checked>';
+                                $actions .= ' <input type="checkbox" data-url="publish_pravachan" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery" checked>';
                             } else {
-                                $actions .= ' <input type="checkbox" data-url="publish_audio" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery">';
+                                $actions .= ' <input type="checkbox" data-url="publish_pravachan" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery">';
                             }
                         }
-                        if ($audios_delete && $is_head){
+                        if ($pravachan_delete && $is_head){
                             $key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
                             $dataUrl =  $event->translations[$key_index]->title ?? '';
-                            $actions .= ' <a data-option="'.$dataUrl.'" data-url="audio_delete/'.$event->id.'" class="btn btn-danger btn-sm delete-data" title="delete"><i class="fa fa-trash"></i></a>';
-                        }
-                        if ($audio_episode_view && $event['has_episodes'] == 1) {
-                            $id = Crypt::encryptString($event->id);
-                            $actions .= ' <a href="audio_episodes?audioId=' . $id. '" class="btn btn-info btn-sm" title="Manage Episode"><i class="fa fa-archive"></i></a>';
+                            $actions .= ' <a data-option="'.$dataUrl.'" data-url="pravachan_delete/'.$event->id.'" class="btn btn-danger btn-sm delete-data" title="delete"><i class="fa fa-trash"></i></a>';
                         }
                         $actions .= '</span>';
                         return $actions;
@@ -157,12 +151,6 @@ class AudioController extends Controller
         }
 
         $data['translated_block'] = Audio::TRANSLATED_BLOCK;
-        $data['audios'] = Audio::with([
-            'translations' => function ($query) use ($localeLanguage) {
-                $query->where('locale', $localeLanguage);
-            },
-        ])->where('type',Audio::AUDIO)->where('status', 1)->get();
-        
         
         $data['gurus'] = Artist::with([
             'translations' => function ($query) use ($localeLanguage) {
@@ -175,18 +163,17 @@ class AudioController extends Controller
             },
         ])->where('status', 1)->get();
         
-        return view('backend/audio/add', $data);
+        return view('backend/pravachan/add', $data);
     }
-    
 
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  AddAudioRequest  $request
+     * @param  CreatePravachanRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AddAudioRequest $request)
+    public function store(CreatePravachanRequest $request)
     {
         try {
             DB::beginTransaction();
@@ -196,14 +183,14 @@ class AudioController extends Controller
                 $input[$value] = (array) json_decode($input[$value]);
             }
             $saveArray = Utils::flipTranslationArray($input, $translated_keys);
-            //Bhagvad Geeta category id
-            $input['audio_category_id'] = 1;
+            //Pravachan id
+            $input['audio_category_id'] = 3;
             $coverImage = $input['cover_image'] ?? '';
             $coverImageName = '';
             if (!empty($coverImage)){
                 $coverImageName = $coverImage->getClientOriginalName();
             }
-            $hasEpisodes = $input['has_episodes'] ?? 0;
+            $hasEpisodes = $input['has_episodes'] ?? "0";
             
             $audioData = [
                 'cover_image'          => $coverImageName,
@@ -216,7 +203,7 @@ class AudioController extends Controller
                 'narrator_id'          => $input['narrator_id'] ?? null,
                 'created_by'           => session('data')['id'] ?? 0,
                 'audio_category_id'    => $input['audio_category_id'] ?? 0,
-                'type'    => Audio::AUDIO,
+                'type'    => Audio::PRAVACHAN,
             ];
 
             // Prepare language-specific data
@@ -255,7 +242,7 @@ class AudioController extends Controller
             DB::rollBack();
             Log::error("Something Went Wrong. Error: ".$e->getMessage());
 
-            errorMessage("Something Went Wrong.");
+            errorMessage($e->getMessage());
         }
     }
 
@@ -270,10 +257,8 @@ class AudioController extends Controller
         $data['audio'] = Audio::with('translations')->findOrFail($id);
         $data['audioFile'] = $data['audio']->getMedia(Audio::AUDIO_FILE)->first()?? '';
         $data['audioCoverImage'] = $data['audio']->getMedia(Audio::AUDIO_COVER_IMAGE)->first()?? '';
-        $data['audioSrtFile'] = $data['audio']->getMedia(Audio::AUDIO_SRT_FILE)->first()?? '';
-        $data['audioCategory'] = AudioCategory::with('translations')->where('id', $data['audio']->audio_category_id)->first();
         
-        return view('backend/audio/view')->with($data);
+        return view('backend/pravachan/view')->with($data);
     }
 
     /**
@@ -290,11 +275,6 @@ class AudioController extends Controller
         } else {
             $localeLanguage = 'hi';
         }
-        $data['audios'] = Audio::with([
-            'translations' => function ($query) use ($localeLanguage) {
-                $query->where('locale', $localeLanguage);
-            },
-        ])->where('type',Audio::AUDIO)->where('status', 1)->get();
         $audio = Audio::find($id);
         $data['audio'] = $audio->toArray();
         foreach($data['audio']['translations'] as $trans) {
@@ -304,13 +284,10 @@ class AudioController extends Controller
             }
         }
         $data['translated_block'] = Audio::TRANSLATED_BLOCK;
-        $data['peopleAlsoReadIds'] = explode(",", $data['audio']['people_also_read_ids'] ?? '');
         $data['audioCoverImage'] = [];
         $data['audioFile'] = [];
-        $data['srtFile'] = [];
         $data['audioCoverImage'] = $audio->getMedia(Audio::AUDIO_COVER_IMAGE);
         $data['audioFile'] = $audio->getMedia(Audio::AUDIO_FILE);
-        $data['srtFile'] = $audio->getMedia(Audio::AUDIO_SRT_FILE);
 
         $data['gurus'] = Artist::with([
             'translations' => function ($query) use ($localeLanguage) {
@@ -323,22 +300,22 @@ class AudioController extends Controller
             },
         ])->where('status', 1)->get();
         
-        return view('backend/audio/edit',$data);
+        return view('backend/pravachan/edit',$data);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  UpdateAudioRequest  $request
+     * @param  UpdatePravachanRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAudioRequest $request)
+    public function update(UpdatePravachanRequest $request)
     {
         try {
             DB::beginTransaction();
             $input = $request->all();
-            //Bhagvad Geeta category id
-            $input['audio_category_id'] = 1;
+            //Pravachan id
+            $input['audio_category_id'] = 3;
             $translated_keys = array_keys(Audio::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
                 $input[$value] = (array) json_decode($input[$value]);
@@ -431,26 +408,7 @@ class AudioController extends Controller
             errorMessage("Something Went Wrong.");
         }
     }
-
-    /**
-     * @param $id
-     *
-     * Add Audio Episode form
-     * @return Application|Factory|View|string
-     */
-    public function addEpisodes($id)
-    {
-        $data['audio'] = Audio::with('translations')->find($id);
-        if ($data['audio']) {
-            $data['audioTitle'] = $data['audio']->translations()->first();
-            $data['translated_block'] = AudioEpisode::TRANSLATED_BLOCK;
-            $data['audioEpisodes'] = AudioEpisode::with('translations')->where('audio_id',$id)->get();
-           
-            return view('backend/audio/add_episodes', $data);
-        }
-
-        return '';
-    }
+    
 
     /**
      * @param  Request  $request
@@ -484,35 +442,4 @@ class AudioController extends Controller
             errorMessage("Something Went Wrong");
         }
     }
-
-    /**
-     * @param  Request  $request
-     *
-     * delete any media
-     * @return bool
-     */
-    public function deleteMedia(Request $request)
-    {
-        try {
-            DB::beginTransaction();
-
-            $input = $request->all();
-            if (! empty($input['id'])) {
-                $media = Media::find($input['id']);
-                if ($media->exists()) {
-                    $media->delete();
-
-                    DB::commit();
-                    return true;
-                }
-            }
-           
-            return false;
-        } catch (\Exception $e) {
-            DB::rollBack();
-            
-            Log::error("Something Went Wrong. Error: ".$e->getMessage());
-        }
-    }
-
 }

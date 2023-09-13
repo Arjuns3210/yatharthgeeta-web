@@ -39,28 +39,6 @@
                                                             <option value="1">Yes</option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-6 col-lg-6 col-sm-6 border-left text-center">
-                                                        <p class="font-weight-bold">Cover Image</p>
-                                                        <div class="shadow bg-white rounded d-inline-block mb-2">
-                                                            <div class="input-file">
-                                                                <label class="label-input-file">Choose Files &nbsp;&nbsp;&nbsp;<i class="ft-upload font-medium-1"></i><input type="file" name="cover_image" class="cover-images" id="coverImages" accept=".jpg, .jpeg, .png">
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <p id="files-area">
-                                                            <span id="coverImagesLists">
-                                                                <span id="cover-images-names"></span>
-                                                            </span>
-                                                        </p>
-                                                    </div>
-                                                    <div class="col-sm-6 mb-2">
-                                                        <label>Audio Category<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2 required" id="audio_category_id" name="audio_category_id">
-                                                            @foreach($audioCategories as $audioCategory)
-                                                                <option value="{{$audioCategory->id}}">{{$audioCategory->translations[0]->name ?? ''}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
                                                     <div class="col-md-6 mb-2">
                                                         <label>Duration (In Minute)<span style="color:#ff0000">*</span></label>
                                                         <input class="form-control required" type="number" id="duration" name="duration">
@@ -70,7 +48,7 @@
                                                         <input class="form-control required" type="number" id="sequence" name="sequence">
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
-                                                        <label>Language<span class="text-danger">*</span></label>
+                                                        <label>Media Language<span class="text-danger">*</span></label>
                                                         <select class="form-control select2 required" id="language_id" name="language_id">
                                                             <option value="">Select</option>
                                                             @foreach($languages as $language)
@@ -79,7 +57,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
-                                                        <label>People Also Read</label>
+                                                        <label>People Also Listen</label>
                                                         <select class="form-control select2 " id="people_also_read_ids" name="people_also_read_ids[]" multiple>
                                                         @foreach($audios as $audio)
                                                                 <option value="{{$audio->id}}">{{$audio->translations[0]->title ?? ''}}</option>
@@ -95,6 +73,20 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center">
+                                                        <p class="font-weight-bold">Cover Image</p>
+                                                        <div class="shadow bg-white rounded d-inline-block mb-2">
+                                                            <div class="input-file">
+                                                                <label class="label-input-file">Choose Files &nbsp;&nbsp;&nbsp;<i class="ft-upload font-medium-1"></i><input type="file" name="cover_image" class="cover-images" id="coverImages" accept=".jpg, .jpeg, .png">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <p id="files-area">
+                                                            <span id="coverImagesLists">
+                                                                <span id="cover-images-names"></span>
+                                                            </span>
+                                                        </p>
+                                                    </div>
                                                     <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center file-input-div">
                                                         <p class="font-weight-bold">Audio File (MP3)</p>
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
@@ -107,21 +99,6 @@
                                                         <p id="files-area">
                                                             <span id="audioFilesLists">
                                                                 <span id="audio-files-names"></span>
-                                                            </span>
-                                                        </p>
-                                                    </div>
-                                                    <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center file-input-div">
-                                                        <p class="font-weight-bold">Srt for lyrics</p>
-                                                        <div class="shadow bg-white rounded d-inline-block mb-2">
-                                                            <div class="input-file">
-                                                                <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
-                                                                    <input type="file"  class="srt-file" id="srtFiles" accept=".srt" name="srt_file">
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <p id="files-area">
-                                                            <span id="srtFilesLists">
-                                                                <span id="srt-files-names"></span>
                                                             </span>
                                                         </p>
                                                     </div>

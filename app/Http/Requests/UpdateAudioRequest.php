@@ -27,7 +27,6 @@ class UpdateAudioRequest extends FormRequest
     {
         return [
             'id'           => 'required',
-            'audio_category_id' => 'required',
             'has_episodes' => 'required',
             'duration'     => 'required|integer',
             'sequence'     => 'required|integer',

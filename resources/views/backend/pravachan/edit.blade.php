@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Edit Audio : {{$audio['translations'][0]['title'] ?? ''}} ({{ config('translatable.locales_name')[\App::getLocale()] }})</h5>
+                                    <h5 class="pt-2">Edit Pravachan : {{$audio['translations'][0]['title'] ?? ''}} ({{ config('translatable.locales_name')[\App::getLocale()] }})</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -15,7 +15,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form id="editAudioCategoryForm" method="post" action="audio/update?id={{$audio['id']}}">
+                            <form id="editPravachanCategoryForm" method="post" action="pravachan/update?id={{$audio['id']}}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -33,13 +33,6 @@
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
                                                     <input type="hidden" name="id" value="{{ $audio['id'] }}">
-                                                    <div class="col-sm-6 mb-2">
-                                                        <label>Has Episodes<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2" id="has_episodes" name="has_episodes">
-                                                            <option value="0" {{ ($audio['has_episodes'] == 0) ?'selected' : '' }}>No</option>
-                                                            <option value="1" {{ ($audio['has_episodes'] == 1) ?'selected' : '' }}>Yes</option>
-                                                        </select>
-                                                    </div>
                                                     <div class="col-md-6 mb-2">
                                                         <label>Duration (In Minute)<span style="color:#ff0000">*</span></label>
                                                         <input class="form-control required" type="number" id="duration" name="duration" value="{{$audio['duration']}}">
@@ -54,14 +47,6 @@
                                                             <option value="">Select</option>
                                                             @foreach($languages as $language)
                                                                 <option value="{{$language->id}}" {{($language->id ==$audio['language_id'] ) ? 'selected' : ''}}>{{$language->translations[0]->name ?? ''}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-6 mb-2">
-                                                        <label>People Also Listen</label>
-                                                        <select class="form-control select2" id="people_also_read_ids" name="people_also_read_ids[]" multiple>
-                                                            @foreach($audios as $data)
-                                                                <option value="{{$data->id}}" {{ in_array($data->id,$peopleAlsoReadIds) ? 'selected' : ''  }}>{{$data->translations[0]->title ?? ''}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -106,7 +91,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 col-lg-6 col-sm-6  text-center file-input-div">
-                                                        <p class="font-weight-bold">Audio File (MP3)</p>
+                                                        <p class="font-weight-bold">Pravachan File (MP3)</p>
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
                                                             <div class="input-file">
                                                                 <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
@@ -165,7 +150,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="pull-right">
-                                            <button type="button" class="btn btn-success" onclick="submitForm('editAudioCategoryForm','post')">Submit</button>
+                                            <button type="button" class="btn btn-success" onclick="submitForm('editPravachanCategoryForm','post')">Submit</button>
                                             <a href="{{URL::previous()}}" class="btn btn-sm btn-danger px-3 py-1"> Cancel</a>
                                         </div>
                                     </div>
@@ -180,19 +165,6 @@
     <script>
         $('.select2').select2();
         $(document).ready(function() {
-            let hasEpisodeValue = $('#has_episodes').val();
-            if (hasEpisodeValue == '1') {
-                $('.file-input-div').addClass('d-none');
-            } else {
-                $('.file-input-div').removeClass('d-none');
-            }
-            $('#has_episodes').change(function() {
-                if ($(this).val() == '1') {
-                    $('.file-input-div').addClass('d-none');
-                } else {
-                    $('.file-input-div').removeClass('d-none');
-                }
-            });
 
             const coverImageData = new DataTransfer();
 
@@ -241,7 +213,7 @@
 
             const audioFileData = new DataTransfer();
 
-            function handleAudioFileAttachmentChange() {
+            function handlePravachanFileAttachmentChange() {
                 const attachmentInput = document.getElementById('audioFiles');
 
                 attachmentInput.addEventListener('change', function (e) {
@@ -282,53 +254,8 @@
                 });
             }
 
-            handleAudioFileAttachmentChange();
-
-
-            const srtFileData = new DataTransfer();
-
-            function handleSrtFileAttachmentChange() {
-                const attachmentInput = document.getElementById('srtFiles');
-
-                attachmentInput.addEventListener('change', function (e) {
-                    if (this.files.length === 1) {
-                        const file = this.files[0];
-                        const fileBloc = $('<span/>', { class: 'file-block' });
-                        const fileName = $('<span/>', { class: 'name', text: file.name });
-
-                        fileBloc.append('<span class="file-delete srt-files-delete"><span>+</span></span>').
-                            append(fileName);
-
-                        // Clear existing uploaded documents
-                        $('#srtFilesLists > #srt-files-names').empty();
-
-                        $('#srtFilesLists > #srt-files-names').append(fileBloc);
-                        srtFileData.items.clear(); // Clear existing items
-                        srtFileData.items.add(file);
-                    } else {
-                        // Display an error message or take appropriate action for multiple files
-                        alert('Please upload only one document at a time.');
-                        // Reset the input field to clear selected files
-                        this.value = '';
-                        $('#srtFilesLists > #srt-files-names').empty();
-                        srtFileData.items.clear();
-                    }
-                });
-
-                $(document).on('click', 'span.srt-files-delete', function () {
-                    // Clear UI
-                    $('#srtFilesLists > #srt-files-names').empty();
-
-                    // Clear DataTransfer object (audioFileData)
-                    srtFileData.items.clear();
-
-                    // Reset the input field to clear selected files
-                    const input = document.getElementById('srtFiles');
-                    input.value = ''; // This should clear the selected file(s) in the input field
-                });
-            }
-
-            handleSrtFileAttachmentChange();
+            handlePravachanFileAttachmentChange();
+            
 
             $('.delete-cover-image').click(function () {
                 let mediaId = $(this).attr('data-id');
@@ -338,11 +265,6 @@
             $('.delete-audio-file').click(function () {
                 let mediaId = $(this).attr('data-id');
                 deleteDocuments(mediaId, '.audio-file-div-');
-            });
-
-            $('.delete-srt-file').click(function () {
-                let mediaId = $(this).attr('data-id');
-                deleteDocuments(mediaId, '.srt-file-div-');
             });
         });
     </script>
