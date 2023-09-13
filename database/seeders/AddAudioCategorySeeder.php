@@ -36,6 +36,16 @@ class AddAudioCategorySeeder extends Seeder
                 ],
             ],
             [
+                'sequence'     => 3,
+                'status' => 1,
+                'en'       => [
+                    'name' => 'Pravachan',
+                ],
+                'hi'       => [
+                    'name' => 'प्रवचन',
+                ],
+            ],
+            [
                 'sequence'     => 99,
                 'status' => 1,
                 'en'       => [
