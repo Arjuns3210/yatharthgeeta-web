@@ -23,9 +23,9 @@ class CreateBooksTable extends Migration
             $table->integer('pages');
             $table->integer('sequence');
             $table->integer('language_id')->unsigned();
-            $table->integer('audio_id')->unsigned()->comment('comma separated audio ids');
-            $table->integer('video_id')->unsigned()->comment('comma separated video ids');
-            $table->integer('related_id')->nullable()->comment('comma separated book ids');
+            $table->longText('audio_id')->nullable()->comment('comma separated audio ids');
+            $table->longText('video_id')->nullable()->comment('comma separated video ids');
+            $table->longText('related_id')->nullable()->comment('comma separated book ids');
             $table->enum('download_allowed', [1, 0])->default(0);
             $table->enum('visible_on_app', [0, 1])->default(1);
             $table->enum('status', [1, 0])->default(1);
@@ -33,8 +33,6 @@ class CreateBooksTable extends Migration
             $table->integer('updated_by')->default(0);
             $table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('artist_id')->references('id')->on('artists')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('audio_id')->references('id')->on('audios')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('video_id')->references('id')->on('videos')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('book_category_id')->references('id')->on('book_categories')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();

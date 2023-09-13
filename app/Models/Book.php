@@ -34,11 +34,11 @@ class Book extends Model implements HasMedia
 
     ];
 
-    public $translatedAttributes = ['name', 'highlight_descrption', 'description'];
+    public $translatedAttributes = ['name', 'short_description', 'description'];
 
     public const TRANSLATED_BLOCK = [
 	    'name' => 'input',
-        'highlight_descrption'=>'textarea',
+        'short_description'=>'textarea',
 	    'description' => 'textarea'
 
 	];

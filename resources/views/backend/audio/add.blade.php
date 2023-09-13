@@ -126,7 +126,7 @@
                                                         </p>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
                                             @foreach (config('translatable.locales') as $translated_data_tabs)
                                                 <div id="{{ $translated_data_tabs }}_block_details" class="tab-pane fade">
@@ -284,8 +284,8 @@
             }
 
             handleAudioFileAttachmentChange();
-            
-            
+
+
             const srtFileData = new DataTransfer();
 
             function handleSrtFileAttachmentChange() {

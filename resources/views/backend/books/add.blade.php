@@ -50,7 +50,7 @@
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Video<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2 required " id="related_id" name="related_id[]">
+                                                        <select class="form-control required " id="video_id" name="video_id[]">
                                                         @foreach($video as $video)
                                                                 <option value="{{$video->id}}">{{$video->translations[0]->title ?? ''}}</option>
                                                         @endforeach
@@ -58,7 +58,7 @@
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Audio<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2 required" id="related_id" name="related_id[]">
+                                                        <select class="form-control required" id="audio_id" name="audio_id[]">
                                                         @foreach($audio as $audio)
                                                                 <option value="{{$audio->id}}">{{$audio->translations[0]->title ?? ''}}</option>
                                                         @endforeach
@@ -66,7 +66,7 @@
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
                                                         <label>People Also Read</label>
-                                                        <select class="form-control select2 " id="related_id" name="related_id[]">
+                                                        <select class="form-control" id="related_id" name="related_id[]">
                                                         @foreach($books as $book)
                                                                 <option value="{{$book->id}}">{{$book->translations[0]->name ?? ''}}</option>
                                                         @endforeach
@@ -92,50 +92,59 @@
                                                 <hr>
                                                 <div class="row">
                                                     <div class="col-sm-6 border-right">
-                                                        <div class="col-md-6 col-lg-12 col-sm-6 text-center file-input-div mb-3">
-                                                            <p class="font-weight">BOOK PDF<span class="text-danger">*</span></p>
+                                                        <div class="col-md-6 col-lg-12 col-sm-6 text-center file-input-div">
+                                                            <p class="font-weight-bold">BOOK PDF<span class="text-danger">*</span></p>
                                                             <p style="color:blue;">Note : Upload {{config('global.dimensions.pdf')}}</p>
                                                             <div class="shadow bg-white rounded d-inline-block mb-2">
                                                                 <div class="input-file">
                                                                     <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
-                                                                        <input class="form-control required" type="file" accept=".pdf" id="pdf_file_name" name="pdf_file_name"  onchange="handleFileInputChange('pdf_file_name', 'pdf')">
+                                                                        <input type="file"  name="pdf_file_name"  class="audio-file" id="pdf_file_name" accept=".pdf" onchange="handleFileInputChange('pdf_file_name', 'pdf')">
                                                                     </label>
                                                                 </div>
                                                             </div>
+                                                            <p id="files-area">
+                                                                <span id="audioFilesLists">
+                                                                    <span id="audio-files-names"></span>
+                                                                </span>
+                                                            </p>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <div class="col-md-6 col-lg-12 col-sm-6 text-center file-input-div mb-3">
-                                                            <p class="font-weight">BOOK EPUB FILE</p>
+                                                        <div class="col-md-6 col-lg-12 col-sm-6 text-center file-input-div">
+                                                            <p class="font-weight-bold">BOOK EPUB FILE</p>
                                                             <p style="color:blue;">Note : Upload {{config('global.dimensions.epub')}}</p>
                                                             <div class="shadow bg-white rounded d-inline-block mb-2">
                                                                 <div class="input-file">
                                                                     <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
-                                                                        <input class="form-control mb-3" type="file" id="epub_file_name" name="epub_file_name" onchange="handleFileInputChange('epub_file_name', 'epub')"><br/>
+                                                                        <input type="file"  name="epub_file_name"  class="audio-file" id="epub_file_name" accept=".epub" onchange="handleFileInputChange('epub_file_name', 'epub')">
                                                                     </label>
                                                                 </div>
                                                             </div>
+                                                            <p id="files-area">
+                                                                <span id="srtFilesLists">
+                                                                    <span id="srt-files-names"></span>
+                                                                </span>
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <hr>
                                                 <div class="row">
-                                                    <div class="col-sm-6 offset-sm-3">
-                                                        <div class="col-md-6 col-lg-12 col-sm-6 text-center file-input-div mb-3">
-                                                            <p class="font-weight-bold">Cover Image</p>
-                                                            <div class="shadow bg-white rounded d-inline-block mb-2">
-                                                                <div class="input-file">
-                                                                    <label class="label-input-file">Choose Files &nbsp;&nbsp;&nbsp;<i class="ft-upload font-medium-1"></i><input type="file" name="cover_image" class="cover-images" id="cover_image" accept=".jpg, .jpeg, .png">
-                                                                    </label>
-                                                                </div>
+                                                    <div class="col-md-6 col-lg-12 col-sm-6 text-center">
+                                                        <p class="font-weight-bold">Cover Image</p>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
+                                                        <div class="shadow bg-white rounded d-inline-block mb-2">
+                                                            <div class="input-file">
+                                                                <label class="label-input-file">Choose Files &nbsp;&nbsp;&nbsp;<i class="ft-upload font-medium-1"></i>
+                                                                    <input type="file" name="cover_image" class="cover-images" id="cover_image" accept=".jpg, .jpeg, .png" onchange="handleFileInputChange('coverImages', 'image')">
+                                                                </label>
                                                             </div>
-                                                            <p id="files-area">
-                                                                <span id="coverImagesLists">
-                                                                    <span id="cover-images-names"></span>
-                                                                </span>
-                                                            </p>
-                                                            <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                         </div>
+                                                        <p id="files-area">
+                                                            <span id="coverImagesLists">
+                                                                <span id="cover-images-names"></span>
+                                                            </span>
+                                                        </p>
                                                     </div>
                                                 </div>
 
@@ -198,5 +207,153 @@
                     $('.file-input-div').removeClass('d-none');
                 }
             });
+
+            // $('.add_episode_item').click(function () {
+            //     var rowCount = $('.episodes-append-div .row').length - 1;
+            //     $.ajax({
+            //         type: 'GET',
+            //         url: 'prepare_episode_item/'+rowCount,
+            //         success: function (data) {
+            //             // Append the data to the container
+            //             var $newElements = $(data);
+            //             $('.episodes-append-div').append($newElements);
+
+            //             // Initialize Select2 on the newly added elements
+            //             $newElements.find('.select2').select2();
+            //         },
+            //     });
+            // });
+
+            const coverImageData = new DataTransfer();
+
+            function handleCoverImagesAttachmentChange() {
+                const attachmentInput = document.getElementById('cover_image');
+
+                attachmentInput.addEventListener('change', function (e) {
+                    if (this.files.length === 1) {
+                        const file = this.files[0];
+                        const fileBloc = $('<span/>', { class: 'file-block' });
+                        const fileName = $('<span/>', { class: 'name', text: file.name });
+
+                        fileBloc.append('<span class="file-delete cover-image-delete"><span>+</span></span>').
+                            append(fileName);
+
+                        // Clear existing uploaded documents
+                        $('#coverImagesLists > #cover-images-names').empty();
+
+                        $('#coverImagesLists > #cover-images-names').append(fileBloc);
+                        coverImageData.items.clear(); // Clear existing items
+                        coverImageData.items.add(file);
+                    } else {
+                        this.value = '';
+                        $('#coverImagesLists > #cover-images-names').empty();
+                        coverImageData.items.clear();
+                    }
+                });
+
+                $(document).on('click', 'span.cover-image-delete', function () {
+                    // Clear UI
+                    $('#coverImagesLists > #cover-images-names').empty();
+
+                    // Clear DataTransfer object (coverImageData)
+                    coverImageData.items.clear();
+
+                    // Reset the input field to clear selected files
+                    const input = document.getElementById('cover_image');
+                    input.value = ''; // This should clear the selected file(s) in the input field
+                });
+            }
+
+            handleCoverImagesAttachmentChange();
+
+            const audioFileData = new DataTransfer();
+
+            function handleAudioFileAttachmentChange() {
+                const attachmentInput = document.getElementById('pdf_file_name');
+
+                attachmentInput.addEventListener('change', function (e) {
+                    if (this.files.length === 1) {
+                        const file = this.files[0];
+                        const fileBloc = $('<span/>', { class: 'file-block' });
+                        const fileName = $('<span/>', { class: 'name', text: file.name });
+
+                        fileBloc.append('<span class="file-delete audio-files-delete"><span>+</span></span>').
+                            append(fileName);
+
+                        // Clear existing uploaded documents
+                        $('#audioFilesLists > #audio-files-names').empty();
+
+                        $('#audioFilesLists > #audio-files-names').append(fileBloc);
+                        audioFileData.items.clear(); // Clear existing items
+                        audioFileData.items.add(file);
+                    } else {
+                        this.value = '';
+                        $('#audioFilesLists > #audio-files-names').empty();
+                        audioFileData.items.clear();
+                    }
+                });
+
+                $(document).on('click', 'span.audio-files-delete', function () {
+                    // Clear UI
+                    $('#audioFilesLists > #audio-files-names').empty();
+
+                    // Clear DataTransfer object (audioFileData)
+                    audioFileData.items.clear();
+
+                    // Reset the input field to clear selected files
+                    const input = document.getElementById('pdf_file_name');
+                    input.value = ''; // This should clear the selected file(s) in the input field
+                });
+            }
+
+            handleAudioFileAttachmentChange();
+
+
+            const srtFileData = new DataTransfer();
+
+            function handleSrtFileAttachmentChange() {
+                const attachmentInput = document.getElementById('epub_file_name');
+
+                attachmentInput.addEventListener('change', function (e) {
+                    if (this.files.length === 1) {
+                        const file = this.files[0];
+                        const fileBloc = $('<span/>', { class: 'file-block' });
+                        const fileName = $('<span/>', { class: 'name', text: file.name });
+
+                        fileBloc.append('<span class="file-delete srt-files-delete"><span>+</span></span>').
+                            append(fileName);
+
+                        // Clear existing uploaded documents
+                        $('#srtFilesLists > #srt-files-names').empty();
+
+                        $('#srtFilesLists > #srt-files-names').append(fileBloc);
+                        srtFileData.items.clear(); // Clear existing items
+                        srtFileData.items.add(file);
+                    } else {
+                        this.value = '';
+                        $('#srtFilesLists > #srt-files-names').empty();
+                        srtFileData.items.clear();
+                    }
+                });
+
+                $(document).on('click', 'span.srt-files-delete', function () {
+                    // Clear UI
+                    $('#srtFilesLists > #srt-files-names').empty();
+
+                    // Clear DataTransfer object (audioFileData)
+                    srtFileData.items.clear();
+
+                    // Reset the input field to clear selected files
+                    const input = document.getElementById('epub_file_name');
+                    input.value = ''; // This should clear the selected file(s) in the input field
+                });
+            }
+
+            handleSrtFileAttachmentChange();
+        });
+
+        $(document).on('click', '.remove_episode_item', function () {
+            $(this).closest('.episode-master-div').remove();
+        });
     </script>
 </section>

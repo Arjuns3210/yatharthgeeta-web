@@ -40,7 +40,7 @@
                                                         <label>Book Category</label>
                                                         <select class="form-control mb-3" type="text" id="book_category_id" name="book_category_id">
                                                             @foreach($book_category as $book_category)
-                                                                <option value="{{$book_category->id}}">{{$book_category->name}}</option>
+                                                                <option value="{{$book_category->id}}" {{($book_category->id ==$books['book_category_id'] ) ? 'selected' : ''}}>{{$book_category->translations[0]->name ?? ''}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -49,33 +49,42 @@
                                                         <input class="form-control" type="text" id="pages" name="pages" value="{{$books->pages}}" oninput="filterNonNumeric(this)"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Audio Url<span class="text-danger">*</span></label>
-                                                        <?php $output = implode(',', json_decode($books['audio_id'])); ?>
-                                                        <input class="form-control required" type="text" id="audio_id" name="audio_id" value="{{$output}}"><br/>
+                                                        <label>Audio<span class="text-danger">*</span></label>
+                                                        <select class="form-control" type="text" id="audio_id" name="audio_id">
+                                                            @foreach($audio as $audios)
+                                                                <option value="{{$audios->id}}" {{($audios->id ==$books['audio_id'] ) ? 'selected' : ''}}>{{$audios->translations[0]->title ?? ''}}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Video Url<span class="text-danger">*</span></label>
-                                                        <?php $outputVideo = implode(',', json_decode($books['video_id'])); ?>
-                                                        <input class="form-control required" type="text" id="video_id" name="video_id" value="{{$outputVideo}}"><br/>
+                                                        <label>Video<span class="text-danger">*</span></label>
+                                                            <select class="form-control" type="text" id="video_id" name="video_id">
+                                                                @foreach($video as $videos)
+                                                                    <option value="{{$videos->id}}" {{($videos->id ==$books['video_id'] ) ? 'selected' : ''}}>{{$videos->translations[0]->title ?? ''}}</option>
+                                                                @endforeach
+                                                            </select>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Related Books Url<span class="text-danger">*</span></label>
-                                                        <?php $outputBook = implode(',', json_decode($books['related_id'])); ?>
-                                                        <input class="form-control required" type="text" id="related_id" name="related_id" value="{{$outputBook}}"><br/>
+                                                        <label>Related Books</label>
+                                                            <select class="form-control mb-3" type="text" id="related_id" name="related_id"><br/>
+                                                                @foreach($books as $book)
+                                                                    <option value="{{$books->id}}" {{($book->id ==$books['related_id'] ) ? 'selected' : ''}}>{{$book->translations[0]->name ?? ''}}</option>
+                                                                @endforeach
+                                                            </select>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Guru</label>
-                                                        <select class="form-control mb-3" type="text" id="artist_id" name="artist_id" value="{{$books->artist_id}}">
+                                                        <select class="form-control" type="text" id="artist_id" name="artist_id">
                                                         @foreach($artist as $artist)
-                                                            <option value="{{$artist->id}}">{{$artist->name}}</option>
+                                                            <option value="{{$artist->id}}" {{($artist->id ==$books['artist_id'] ) ? 'selected' : ''}}>{{$artist->translations[0]->name ?? ''}}</option>
                                                         @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Language</label>
-                                                        <select class="form-control mb-3" type="text" id="language_id" name="language_id" value="{{$books->language_id}}">
+                                                        <label>LANGUAGE</label>
+                                                        <select class="form-control" type="text" id="language_id" name="language_id">
                                                         @foreach($language as $language)
-                                                            <option value="{{$language->id}}">{{$language->name}}</option>
+                                                        <option value="{{$language->id}}" {{($language->id ==$books['language_id'] ) ? 'selected' : ''}}>{{$language->translations[0]->name ?? ''}}</option>
                                                         @endforeach
                                                         </select>
                                                     </div>
@@ -93,20 +102,20 @@
                                                                 </div>
                                                             </div>
                                                             <div class="mt-2">
-                                                                    <div class="d-flex mb-1  srt-file-div-{{$pdf_file->id}}">
-                                                                        <input type="text"
-                                                                                class="form-control input-sm bg-white document-border"
-                                                                                value="{{ $pdf_file->name }}"
-                                                                                readonly style="color: black !important;">
-                                                                        <a href="{{ $pdf_file->getFullUrl() }}"
-                                                                            class="btn btn-primary mx-2 px-2" target="_blank"><i
-                                                                                    class="fa ft-eye"></i></a>
-                                                                        <a href="javascript:void(0)"
-                                                                            class="btn btn-danger delete-srt-pdf_file  px-2"
-                                                                            data-url="{{ $pdf_file->getFullUrl() }}" data-id="{{ $pdf_file->id }}"><i
-                                                                                    class="fa ft-trash"></i></a>
-                                                                    </div>
-                                                                    <p style="color:blue;">Note : Upload {{config('global.dimensions.pdf')}}</p>
+                                                                <div class="d-flex mb-1  srt-file-div-{{$pdf_file->id}}">
+                                                                    <input type="text"
+                                                                            class="form-control input-sm bg-white document-border"
+                                                                            value="{{ $pdf_file->name }}"
+                                                                            readonly style="color: black !important;">
+                                                                    <a href="{{ $pdf_file->getFullUrl() }}"
+                                                                        class="btn btn-primary mx-2 px-2" target="_blank"><i
+                                                                                class="fa ft-eye"></i></a>
+                                                                    <a href="javascript:void(0)"
+                                                                        class="btn btn-danger delete-srt-pdf_file  px-2"
+                                                                        data-url="{{ $pdf_file->getFullUrl() }}" data-id="{{ $pdf_file->id }}"><i
+                                                                                class="fa ft-trash"></i></a>
+                                                                </div>
+                                                                <p style="color:blue;">Note : Upload {{config('global.dimensions.pdf')}}</p>
                                                             </div>
                                                         </div>
                                                     </div>
