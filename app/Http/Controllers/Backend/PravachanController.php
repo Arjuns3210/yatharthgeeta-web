@@ -3,24 +3,16 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AddAudioRequest;
 use App\Http\Requests\CreatePravachanRequest;
-use App\Http\Requests\UpdateAudioRequest;
 use App\Http\Requests\UpdatePravachanRequest;
 use App\Models\Artist;
 use App\Models\Audio;
-use App\Models\AudioCategory;
-use App\Models\AudioEpisode;
-use App\Models\AudioTranslation;
 use App\Models\Language;
-use App\Models\Media;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use App\Utils\Utils;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\DataTables;
@@ -397,10 +389,10 @@ class PravachanController extends Controller
                 $audio->episodes()->delete();
                 $audio->delete();
                 DB::commit();
-                successMessage('Audio Deleted successfully', []);
+                successMessage('Pravachan Deleted successfully', []);
             }
 
-            errorMessage('Audio not found', []);
+            errorMessage('Pravachan not found', []);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error("Something Went Wrong. Error: " . $e->getMessage());
