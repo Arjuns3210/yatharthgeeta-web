@@ -284,52 +284,6 @@
 
             handleAudioFileAttachmentChange();
 
-
-            const srtFileData = new DataTransfer();
-
-            function handleSrtFileAttachmentChange() {
-                const attachmentInput = document.getElementById('srtFiles');
-
-                attachmentInput.addEventListener('change', function (e) {
-                    if (this.files.length === 1) {
-                        const file = this.files[0];
-                        const fileBloc = $('<span/>', { class: 'file-block' });
-                        const fileName = $('<span/>', { class: 'name', text: file.name });
-
-                        fileBloc.append('<span class="file-delete srt-files-delete"><span>+</span></span>').
-                            append(fileName);
-
-                        // Clear existing uploaded documents
-                        $('#srtFilesLists > #srt-files-names').empty();
-
-                        $('#srtFilesLists > #srt-files-names').append(fileBloc);
-                        srtFileData.items.clear(); // Clear existing items
-                        srtFileData.items.add(file);
-                    } else {
-                        // Display an error message or take appropriate action for multiple files
-                        alert('Please upload only one document at a time.');
-                        // Reset the input field to clear selected files
-                        this.value = '';
-                        $('#srtFilesLists > #srt-files-names').empty();
-                        srtFileData.items.clear();
-                    }
-                });
-
-                $(document).on('click', 'span.srt-files-delete', function () {
-                    // Clear UI
-                    $('#srtFilesLists > #srt-files-names').empty();
-
-                    // Clear DataTransfer object (audioFileData)
-                    srtFileData.items.clear();
-
-                    // Reset the input field to clear selected files
-                    const input = document.getElementById('srtFiles');
-                    input.value = ''; // This should clear the selected file(s) in the input field
-                });
-            }
-
-            handleSrtFileAttachmentChange();
-
             $('.delete-cover-image').click(function () {
                 let mediaId = $(this).attr('data-id');
                 deleteDocuments(mediaId, '.cover-image-div-');
@@ -338,11 +292,6 @@
             $('.delete-audio-file').click(function () {
                 let mediaId = $(this).attr('data-id');
                 deleteDocuments(mediaId, '.audio-file-div-');
-            });
-
-            $('.delete-srt-file').click(function () {
-                let mediaId = $(this).attr('data-id');
-                deleteDocuments(mediaId, '.srt-file-div-');
             });
         });
     </script>

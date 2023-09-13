@@ -18,17 +18,6 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4 text-center">
-                            <img src="{{ asset('backend/img/dashboard/guru1.png') }}" class="img-fluid">
-                        </div>
-                        <div class="col-4 text-center">
-                            <img src="{{ asset('backend/img/dashboard/om_logo.png') }}" class="img-fluid">
-                        </div>
-                        <div class="col-4 text-center">
-                            <img src="{{ asset('backend/img/dashboard/guru2.png') }}" class="img-fluid">
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="col-xl-3 col-lg-6 col-12">
                             <div class="card">
                                 <div class="card-content" style="height:150px;">
