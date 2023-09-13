@@ -33,12 +33,97 @@
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-bordered">
                                                     <tr>
+                                                        <td><strong>Book Category</strong></td>
+                                                        <td>{{ $book_category['name'] }}</td>
+                                                    </tr>
+                                                    <tr>
                                                         <td><strong>Number of Pages</strong></td>
                                                         <td>{{ $books['pages'] }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Link</strong></td>
-                                                        <td>{{ $books['link'] }}</td>
+                                                        <td><strong>Book Pdf</strong></td>
+                                                        <td>
+                                                            @if(!empty($pdf_file))
+                                                            <div class="d-flex mb-1 ">
+                                                                <input type="text"
+                                                                       class="form-control input-sm bg-white document-border"
+                                                                       value="{{ $pdf_file->name ?? ''}}"
+                                                                       readonly
+                                                                       style="color: black !important;">
+                                                                <a href="{{$pdf_file->getFullUrl() ?? ''}}"
+                                                                   class="btn btn-primary mx-2 px-2"
+                                                                   target="_blank"><i class="fa ft-eye"></i></a>
+                                                            </div>
+                                                        @else
+                                                            -
+                                                        @endif
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Book Epub File</strong></td>
+                                                        <td>
+                                                            @if(!empty($epub_file))
+                                                            <div class="d-flex mb-1 ">
+                                                                <input type="text"
+                                                                       class="form-control input-sm bg-white document-border"
+                                                                       value="{{ $epub_file->name ?? ''}}"
+                                                                       readonly
+                                                                       style="color: black !important;">
+                                                                <a href="{{$epub_file->getFullUrl() ?? ''}}"
+                                                                   class="btn btn-primary mx-2 px-2"
+                                                                   target="_blank"><i class="fa fa-download" aria-hidden="true"></i></a>
+                                                            </div>
+                                                        @else
+                                                            -
+                                                        @endif
+                                                        </td>
+                                                    </tr>
+                                                    @php
+                                                    $audio_id_array = json_decode($books['audio_id']);
+                                                    @endphp
+                                                    <tr>
+                                                        <td><strong>Audio Url</strong></td>
+                                                        <td>
+                                                            <ul>
+                                                                @foreach ($audio_id_array as $audio_id)
+                                                                    <li> {{ $audio_id }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    @php
+                                                    $video_id_array = json_decode($books['video_id']);
+                                                    @endphp
+                                                    <tr>
+                                                        <td><strong>Video Url</strong></td>
+                                                        <td>
+                                                            <ul>
+                                                                @foreach ($video_id_array as $video_id)
+                                                                    <li> {{ $video_id }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    @php
+                                                    $related_id_array = json_decode($books['related_id']);
+                                                    @endphp
+                                                    <tr>
+                                                        <td><strong>Related Books</strong></td>
+                                                        <td>
+                                                            <ul>
+                                                                @foreach ($related_id_array as $related_id)
+                                                                    <li> {{ $related_id }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Guru</strong></td>
+                                                        <td>{{ $artist['name'] }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Language</strong></td>
+                                                        <td>{{ $language['name'] }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Sequence</strong></td>
@@ -62,7 +147,7 @@
                                                         <table class="table table-striped table-bordered">
                                                             <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                                     <tr>
-                                                                        <td><strong>{{ucfirst($translated_block_fields_key)}}</strong></td>
+                                                                        <td><strong>{{ucfirst(str_replace('_',' ',$translated_block_fields_key))}}</strong></td>
                                                                         <td><?php echo $books[$translated_block_fields_key.'_'.$translated_data_tabs] ?? '' ?></td>
                                                                     </tr>
                                                             <?php } ?>

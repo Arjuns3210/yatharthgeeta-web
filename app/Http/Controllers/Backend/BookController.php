@@ -3,8 +3,13 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Artist;
+use App\Models\Audio;
 use App\Models\Book;
+use App\Models\BookCategory;
 use App\Models\BookTranslation;
+use App\Models\Language;
+use App\Models\Video;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
@@ -99,26 +104,24 @@ class BookController extends Controller
             }
         }
 
-        //Update Status
-
     public function updateStatus(Request $request)
-    {
-        try {
-            $msg_data = array();
-            $book = Book::find($request->id);
-            $book->status = $request->status;
-            $book->save();
-            if ($request->status == 1) {
-                successMessage('Enable', $msg_data);
-            } else {
-                successMessage('Disable', $msg_data);
+        {
+            try {
+                $msg_data = array();
+                $event = Book::find($request->id);
+                $event->status = $request->status;
+                $event->save();
+                if ($request->status == 1) {
+                    successMessage(trans('message.enable'), $msg_data);
+                } else {
+                    errorMessage(trans('message.disable'), $msg_data);
+                }
+                errorMessage('Event not found', []);
+            } catch (\Exception $e) {
+                errorMessage(trans('auth.something_went_wrong'));
             }
-            errorMessage('Book not found', []);
-        } catch (\Exception $e) {
-            errorMessage('something_went_wrong');
-        }
 
-    }
+        }
 
     /**
      * Show the form for creating a new resource.
@@ -127,7 +130,18 @@ class BookController extends Controller
      */
     public function create()
     {
+        $localeLanguage = \App::getLocale();
         $data['translated_block'] = Book::TRANSLATED_BLOCK;
+        $data['books'] = Book::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->where('status', 1)->get();
+        $data['book_category'] = BookCategory::all();
+        $data['language'] = Language::all();
+        $data['artist'] = Artist::all();
+        $data['audio'] = Audio::all();
+        $data['video'] = Video::all();
         return view('backend/books/add', $data);
     }
 
@@ -141,6 +155,18 @@ class BookController extends Controller
     {
         {
             $input = $request->all();
+            if ($input['video_id']) {
+                $video_id_array = explode(',', $input['video_id']);
+                $input['video_id'] = json_encode($video_id_array);
+            }
+            if ($input['audio_id']) {
+                $audio_id_array = explode(',', $input['audio_id']);
+                $input['audio_id'] = json_encode($audio_id_array);
+            }
+            if ($input['related_id']) {
+                $related_id_array = explode(',', $input['related_id']);
+                $input['related_id'] = json_encode($related_id_array);
+            }
             $translated_keys = array_keys(Book::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
                 $input[$value] = (array) json_decode($input[$value]);
@@ -148,6 +174,8 @@ class BookController extends Controller
             $saveArray = Utils::flipTranslationArray($input, $translated_keys);
             $data = Book::create($saveArray);
             storeMedia($data, $input['cover_image'], Book::COVER_IMAGE);
+            storeMedia($data, $input['pdf_file_name'], Book::PDF_FILE);
+            storeMedia($data, $input['epub_file_name'], Book::EPUB_FILE);
             successMessage('Data Saved successfully', []);
         }
     }
@@ -161,6 +189,9 @@ class BookController extends Controller
     public function view($id)
     {
         $data['books'] = Book::find($id);
+        $data['book_category'] = BookCategory::where('id', $data['books']->book_category_id)->first();
+        $data['language'] = Language::where('id', $data['books']->language_id)->first();
+        $data['artist'] = Artist::where('id', $data['books']->artist_id)->first();
         foreach($data['books']['translations'] as $trans) {
             $translated_keys = array_keys(Book::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
@@ -169,6 +200,8 @@ class BookController extends Controller
         }
         $data['translated_block'] = Book::TRANSLATED_BLOCK;
         $data['media'] = $data['books']->getMedia(Book::COVER_IMAGE)[0];
+        $data['pdf_file'] = $data['books']->getMedia(Book::PDF_FILE)->first()?? '';
+        $data['epub_file'] = $data['books']->getMedia(Book::EPUB_FILE)->first()?? '';
         return view('backend/books/view',$data);
     }
 
@@ -181,6 +214,9 @@ class BookController extends Controller
     public function edit($id)
     {
         $data['books'] = Book::find($id);
+        $data['language'] = Language::all();
+        $data['book_category'] = BookCategory::all();
+        $data['artist'] = Artist::all();
         foreach($data['books']['translations'] as $trans) {
             $translated_keys = array_keys(Book::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
@@ -189,6 +225,8 @@ class BookController extends Controller
         }
         $data['translated_block'] = Book::TRANSLATED_BLOCK;
         $data['media'] =$data['books']->getMedia(Book::COVER_IMAGE)[0];
+        $data['pdf_file'] = $data['books']->getMedia(Book::PDF_FILE)->first()?? '';
+        $data['epub_file'] = $data['books']->getMedia(Book::EPUB_FILE)->first()?? '';
         return view('backend/books/edit', $data);
     }
 
@@ -206,6 +244,18 @@ class BookController extends Controller
         if (!$data) {
             errorMessage('Book Not Found', []);
         }
+        if ($input['video_id']) {
+            $video_id_array = explode(',', $input['video_id']);
+            $input['video_id'] = json_encode($video_id_array);
+        }
+        if ($input['audio_id']) {
+            $audio_id_array = explode(',', $input['audio_id']);
+            $input['audio_id'] = json_encode($audio_id_array);
+        }
+        if ($input['related_id']) {
+            $related_id_array = explode(',', $input['related_id']);
+            $input['related_id'] = json_encode($related_id_array);
+        }
         $translated_keys = array_keys(Book::TRANSLATED_BLOCK);
         foreach ($translated_keys as $value)
         {
@@ -213,9 +263,18 @@ class BookController extends Controller
         }
         $book = Utils::flipTranslationArray($input, $translated_keys);
         $data->update($book);
+
         if(!empty($input['cover_image'])){
             $data->clearMediaCollection(Book::COVER_IMAGE);
             storeMedia($data, $input['cover_image'], Book::COVER_IMAGE);
+        }
+        if(!empty($input['pdf_file_name'])){
+            $data->clearMediaCollection(Book::PDF_FILE);
+            storeMedia($data, $input['pdf_file_name'], Book::PDF_FILE);
+        }
+        if(!empty($input['epub_file_name'])){
+            $data->clearMediaCollection(Book::EPUB_FILE);
+            storeMedia($data, $input['epub_file_name'], Book::EPUB_FILE);
         }
         successMessage('Data Updated successfully', []);
     }

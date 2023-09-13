@@ -113,6 +113,32 @@ class AshramController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
+        $working_days_data = [
+            "monday_open"     => $input['monday_open'] ?? "off",
+            "monday_start_time"    => !empty($input['monday_open']) ? $input['monday_start_time'] ?? '' :'',
+            "monday_end_time"      => !empty($input['monday_open']) ? $input['monday_end_time'] ?? '' :'',
+            "tuesday_open"    => $input['tuesday_open'] ?? "off",
+            "tuesday_start_time"   => !empty($input['tuesday_open']) ? $input['tuesday_start_time'] ?? '' :'',
+            "tuesday_end_time"     => !empty($input['tuesday_open']) ? $input['tuesday_end_time'] ?? '' :'',
+            "wednesday_open"  => $input['wednesday_open'] ?? "off",
+            "wednesday_start_time" => !empty($input['wednesday_open']) ? $input['wednesday_start_time'] ?? '' :'',
+            "wednesday_end_time"   => !empty($input['wednesday_open']) ? $input['wednesday_end_time'] ?? '' :'',
+            "thursday_open"   => $input['thursday_open'] ?? "off",
+            "thursday_start_time"  => !empty($input['thursday_open']) ? $input['thursday_start_time'] ?? '' :'',
+            "thursday_end_time"    => !empty($input['thursday_open']) ? $input['thursday_end_time'] ?? '' :'',
+            "friday_open"     => $input['friday_open'] ?? "off",
+            "friday_start_time"    => !empty($input['friday_open']) ? $input['friday_start_time'] ?? '' :'',
+            "friday_end_time"      => !empty($input['friday_open']) ? $input['friday_end_time'] ?? '' :'',
+            "saturday_open"   => $input['saturday_open'] ?? "off",
+            "saturday_start_time"  => !empty($input['saturday_open']) ? $input['saturday_start_time'] ?? '' :'',
+            "saturday_end_time"    => !empty($input['saturday_open']) ? $input['saturday_end_time'] ?? '' :'',
+            "sunday_open"   => $input['sunday_open'] ?? "off",
+            "sunday_start_time"  => !empty($input['sunday_open']) ? $input['sunday_start_time'] ?? '' :'',
+            "sunday_end_time"    => !empty($input['sunday_open']) ? $input['sunday_end_time'] ?? '' :''
+        ];
+
+        $input['working_days'] = json_encode($working_days_data);
+
         if ($input['phone']) {
             $phone_array = explode(',', $input['phone']);
             $input['phone'] = json_encode($phone_array);
@@ -161,6 +187,8 @@ class AshramController extends Controller
     public function edit($id)
     {
         $data['ashram'] = Location::find($id);
+        $working_days_data = json_decode($data['ashram']['working_days'],true);
+        $data['working_days'] = $working_days_data;
         foreach($data['ashram']['translations'] as $trans) {
             $translated_keys = array_keys(Location::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
@@ -188,6 +216,31 @@ class AshramController extends Controller
     {
         $data = Location::find($_GET['id']);
         $input=$request->all();
+        $working_days_data = [
+            "monday_open"     => $input['monday_open'] ?? "off",
+            "monday_start_time"    => !empty($input['monday_open']) ? $input['monday_start_time'] ?? '' :'',
+            "monday_end_time"      => !empty($input['monday_open']) ? $input['monday_end_time'] ?? '' :'',
+            "tuesday_open"    => $input['tuesday_open'] ?? "off",
+            "tuesday_start_time"   => !empty($input['tuesday_open']) ? $input['tuesday_start_time'] ?? '' :'',
+            "tuesday_end_time"     => !empty($input['tuesday_open']) ? $input['tuesday_end_time'] ?? '' :'',
+            "wednesday_open"  => $input['wednesday_open'] ?? "off",
+            "wednesday_start_time" => !empty($input['wednesday_open']) ? $input['wednesday_start_time'] ?? '' :'',
+            "wednesday_end_time"   => !empty($input['wednesday_open']) ? $input['wednesday_end_time'] ?? '' :'',
+            "thursday_open"   => $input['thursday_open'] ?? "off",
+            "thursday_start_time"  => !empty($input['thursday_open']) ? $input['thursday_start_time'] ?? '' :'',
+            "thursday_end_time"    => !empty($input['thursday_open']) ? $input['thursday_end_time'] ?? '' :'',
+            "friday_open"     => $input['friday_open'] ?? "off",
+            "friday_start_time"    => !empty($input['friday_open']) ? $input['friday_start_time'] ?? '' :'',
+            "friday_end_time"      => !empty($input['friday_open']) ? $input['friday_end_time'] ?? '' :'',
+            "saturday_open"   => $input['saturday_open'] ?? "off",
+            "saturday_start_time"  => !empty($input['saturday_open']) ? $input['saturday_start_time'] ?? '' :'',
+            "saturday_end_time"    => !empty($input['saturday_open']) ? $input['saturday_end_time'] ?? '' :'',
+            "sunday_open"   => $input['sunday_open'] ?? "off",
+            "sunday_start_time"  => !empty($input['sunday_open']) ? $input['sunday_start_time'] ?? '' :'',
+            "sunday_end_time"    => !empty($input['sunday_open']) ? $input['sunday_end_time'] ?? '' :''
+        ];
+
+        $input['working_days'] = json_encode($working_days_data);
         if ($input['phone']) {
             $phone_array = explode(',', $input['phone']);
             $input['phone'] = json_encode($phone_array);

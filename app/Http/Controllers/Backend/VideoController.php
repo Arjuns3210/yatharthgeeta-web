@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
+use App\Models\Artist;
+use App\Models\Language;
 use App\Models\Video;
+use App\Models\VideoCategory;
 use App\Models\VideoTraslation;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Utils\Utils;
@@ -126,6 +129,9 @@ class VideoController extends Controller
     public function create()
     {
         $data['translated_block'] = Video::TRANSLATED_BLOCK;
+        $data['language'] = Language::all();
+        $data['artist'] = Artist::all();
+        $data['video_category'] = VideoCategory::all();
         return view('backend/videos/add',$data);
     }
 
@@ -157,6 +163,9 @@ class VideoController extends Controller
     public function view($id)
     {
         $data['videos'] = Video::find($id);
+        $data['language'] = Language::where('id', $data['videos']->language_id)->first();
+        $data['artist'] = Artist::where('id', $data['videos']->artist_id)->first();
+        $data['video_category'] = VideoCategory::where('id', $data['videos']->video_category_id)->first();
         foreach($data['videos']['translations'] as $trans) {
             $translated_keys = array_keys(Video::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
@@ -176,7 +185,15 @@ class VideoController extends Controller
      */
     public function edit($id)
     {
+        $localeLanguage = \App::getLocale();
         $data['videos'] = Video::find($id);
+        $data['language'] = Language::all();
+        $data['artist'] = Artist::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->where('status', 1)->get();
+        $data['video_category'] = VideoCategory::all();
         foreach($data['videos']['translations'] as $trans) {
             $translated_keys = array_keys(Video::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
@@ -184,6 +201,17 @@ class VideoController extends Controller
             }
         }
         $data['translated_block'] = Video::TRANSLATED_BLOCK;
+        $data['artist'] = Artist::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->get();
+
+        $data['language'] = Language::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->where('status', 1)->get();
         $data['media'] =$data['videos']->getMedia(Video::COVER_IMAGE)[0];
         return view('backend/videos/edit',$data);
     }
@@ -197,6 +225,7 @@ class VideoController extends Controller
      */
     public function update(Request $request)
     {
+        $localeLanguage = \App::getLocale();
         $data = Video::find($_GET['id']);
         $input=$request->all();
         if (!$data) {

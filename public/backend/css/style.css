@@ -249,3 +249,6 @@ input.largerCheckbox {
     width: 23px;
     height: 29px;
 }
+.date-input{
+    padding-left: 33px;
+}

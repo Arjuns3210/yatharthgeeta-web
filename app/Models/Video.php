@@ -19,6 +19,9 @@ class Video extends Model implements HasMedia
 
     public $fillable = [
         'cover_image',
+        'language_id',
+        'artist_id',
+        'video_category_id',
         'views',
         'duration',
         'link',
