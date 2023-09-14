@@ -36,7 +36,7 @@ class HomeCollectionMapping extends Model implements HasMedia
         self::AUDIO  => 'Audio',
         self::VIDEO  => 'Video',
         self::SHLOK  => 'Shlok',
-        self::ARTIST => 'Artist',
+        self::ARTIST => 'Guru',
     ];
     public $appends = ['multiple_collection_image'];
 
@@ -46,6 +46,6 @@ class HomeCollectionMapping extends Model implements HasMedia
         /** @var Media $media */
         $media = $this->getMedia(self::MULTIPLE_COLLECTION_IMAGE)->first();
         
-        return ! empty($media) ? $media->getFullUrl() : '21312';
+        return ! empty($media) ? $media->getFullUrl() : asset('backend/img/dashboard/om_logo.png');
     }
 }

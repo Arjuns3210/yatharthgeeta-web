@@ -32,7 +32,7 @@
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Collection Type<span class="text-danger">*</span></label>
                                                         <select class="form-control select2 required" id="collection_type" name="collection_type">
-                                                            <option value="{{$collection->type}}" >{{$collection->type}}</option>
+                                                            <option value="{{$collection->type}}" >{{\App\Models\HomeCollection::COLLECTION_TYPES[$collection->type]}}</option>
                                                         </select>
                                                         <input type="hidden" value="{{$collection->id}}" name="id">
                                                     </div>
@@ -116,7 +116,7 @@
                                                                                 <div class="col-md-3 mt-1">
                                                                                     <select class="select2 mapped-to"  name="mapped_to[]" style="width: 100% !important;" >
                                                                                         @foreach($mappingCollectionType as $key => $type)
-                                                                                            <option value = "{{$key}}" {{($collectionDetail->mapped_to == $key) ? 'selected' : ''}}>{{ $type }}</option>
+                                                                                            <option value = "{{$key}}" {{($collectionDetail->mapped_to == $key) ? 'selected' : ''}}>{{ \App\Models\HomeCollectionMapping::MAPPING_COLLECTION_TYPES[$key] }}</option>
                                                                                         @endforeach
                                                                                     </select>
                                                                                 </div>
@@ -241,7 +241,7 @@
                                                 @if($collection->type == \App\Models\HomeCollection::ARTIST)
                                                 <div class="row div_artis">
                                                     <div class="col-sm-6 mb-2">
-                                                        <label>Artis<span class="text-danger">*</span></label>
+                                                        <label>Guru<span class="text-danger">*</span></label>
                                                         <select class="form-control select2 " id="artist_id" name="artist_id[]" multiple>
                                                             @foreach($artists as $artist)
                                                                 <option value="{{$artist->id}}" {{(in_array($artist->id,$mappedIds))? 'selected':''}}>{{$artist->translations[0]->name ?? ''}}</option>

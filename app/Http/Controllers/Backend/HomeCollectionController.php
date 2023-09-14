@@ -67,7 +67,7 @@ class HomeCollectionController extends Controller
                     })
                     ->editColumn('type', function ($event) {
                         
-                        return $event->type ?? '';
+                        return HomeCollection::COLLECTION_TYPES[$event->type] ?? '';
                     })
                     ->editColumn('sequence', function ($event) {
 
@@ -140,7 +140,7 @@ class HomeCollectionController extends Controller
             'translations' => function ($query) use ($localeLanguage) {
                 $query->where('locale', $localeLanguage);
             },
-        ])->where('status', 1)->get();
+        ])->where('type',Audio::AUDIO)->where('status', 1)->get();
         
         $data['videos'] = Video::with([
             'translations' => function ($query) use ($localeLanguage) {
@@ -319,7 +319,7 @@ class HomeCollectionController extends Controller
             'translations' => function ($query) use ($localeLanguage) {
                 $query->where('locale', $localeLanguage);
             },
-        ])->where('status', 1)->get();
+        ])->where('type',Audio::AUDIO)->where('status', 1)->get();
 
         $data['videos'] = Video::with([
             'translations' => function ($query) use ($localeLanguage) {
@@ -556,7 +556,7 @@ class HomeCollectionController extends Controller
                 'translations' => function ($query) use ($localeLanguage) {
                     $query->where('locale', $localeLanguage);
                 },
-            ])->where('status', 1)->get();
+            ])->where('type',Audio::AUDIO)->where('status', 1)->get();
         }
         if ($type == HomeCollectionMapping::VIDEO) {
 

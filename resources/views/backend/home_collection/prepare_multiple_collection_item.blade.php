@@ -12,7 +12,7 @@
         <div class="col-md-3 mt-1">
             <select class="select2 mapped-to"  name="mapped_to[]" style="width: 100% !important;" >
                 @foreach($mappingCollectionType ?? [] as $key => $type)
-                    <option value = "{{$key}}">{{ $type }}</option>
+                    <option value = "{{$key}}">{{ \App\Models\HomeCollectionMapping::MAPPING_COLLECTION_TYPES[$key] }}</option>
                 @endforeach
             </select>
         </div>
