@@ -268,7 +268,7 @@ class HomeCollectionController extends Controller
             DB::rollBack();
             Log::error("Something Went Wrong. Error: ".$e->getMessage());
 
-            errorMessage("Something Went Wrong.");
+            errorMessage($e->getMessage());
         }
     }
 

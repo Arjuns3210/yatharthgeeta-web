@@ -2,12 +2,12 @@
 
 namespace App\Http\Requests;
 
-use App\Models\HomeCollection;
+use App\Models\ExploreCollection;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class UpdateHomeCollectionRequest extends FormRequest
+class UpdateExploreCollectionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,38 +28,24 @@ class UpdateHomeCollectionRequest extends FormRequest
     {
         $ruleData = [
             'id'              => 'required',
-            'collection_type' => 'required|in:Single,Multiple,Book,Audio,Video,Shlok,Artist',
+            'collection_type' => 'required|in:Book,Audio,Quote,Mantra',
             'language_id'     => 'required|integer',
             'title'           => 'required|max:255',
             'description'     => 'required|max:255',
             'sequence'        => 'required|integer',
-            'display_in_column'=> 'required|integer',
         ];
         $collectionType = $this->input('collection_type');
-        if ($collectionType == HomeCollection::SINGLE_COLLECTION_IMAGE) {
-            $ruleData['single_image'] = 'nullable|mimes:jpeg,jpg,png,gif';
-        }
-        if ($collectionType == HomeCollection::BOOK) {
+        if ($collectionType == ExploreCollection::BOOK) {
             $ruleData['book_id'] = 'required';
         }
-        if ($collectionType == HomeCollection::AUDIO) {
+        if ($collectionType == ExploreCollection::AUDIO) {
             $ruleData['audio_id'] = 'required';
         }
-        if ($collectionType == HomeCollection::VIDEO) {
-            $ruleData['video_id'] = 'required';
+        if ($collectionType == ExploreCollection::QUOTES) {
+            $ruleData['quote_id'] = 'required';
         }
-        if ($collectionType == HomeCollection::SHLOK) {
-            $ruleData['shlok_id'] = 'required';
-        }
-        if ($collectionType == HomeCollection::SHLOK) {
-            $ruleData['artist_id'] = 'required';
-        }
-        if ($collectionType == HomeCollection::MULTIPLE) {
-            $ruleData['img_file.*'] = 'required|mimes:jpeg,png,jpg,gif';
-            $ruleData['img_clickable.*'] = 'required';
-            $ruleData['mapped_to.*'] = 'required';
-            $ruleData['mapped_ids'] = 'required|array';
-            $ruleData['mapped_ids.*'] = 'required|array';
+        if ($collectionType == ExploreCollection::MANTRA) {
+            $ruleData['mantra_id'] = 'required';
         }
 
         return $ruleData;

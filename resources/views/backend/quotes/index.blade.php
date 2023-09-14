@@ -25,6 +25,10 @@
                                 <div class="card-body">
                                     <div class="row mb-2" id="listing-filter-data" style="display: none;">
                                         <div class="col-md-4">
+                                            <label>Title</label>
+                                            <input class="form-control mb-3" type="text" id="search_title" name="search_title">
+                                        </div>
+                                        <div class="col-md-4">
                                             <label>Sequence</label>
                                             <input class="form-control mb-3" type="text" id="search_sequence" name="search_sequence">
                                         </div>
@@ -46,6 +50,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
+                                                    <th id="title" data-orderable="false" data-searchable="false">Title</th>
                                                     <th id="image" data-orderable="false" data-searchable="false">Quote Image</th>
                                                     <th id="sequence" data-orderable="false" data-searchable="false">Sequence</th>
                                                     @if($data['quotes_status'] || $data['quotes_edit'] || $data['quotes_view'] || $data['quotes_delete'])

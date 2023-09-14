@@ -17,6 +17,7 @@ class CreateQuotesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('quote_category_id');
             $table->foreign('quote_category_id')->references('id')->on('quote_categories')->onDelete('cascade');
+            $table->string('title')->nullable();
 			$table->unsignedInteger('language_id');
             $table->foreign('language_id')->references('id')->on('languages')->onDelete('cascade');
             $table->integer('artist_id')->default(0);
@@ -27,8 +28,8 @@ class CreateQuotesTable extends Migration
             $table->enum('share_allowed', ['Y', 'N'])->default('Y');
 			$table->integer('created_by')->default(0);
             $table->integer('updated_by')->default(0);
+            $table->softDeletes();
             $table->timestamps();
-			$table->softDeletes();
         });
     }
 

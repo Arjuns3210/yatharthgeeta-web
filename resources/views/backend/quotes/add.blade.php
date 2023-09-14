@@ -20,6 +20,10 @@
                     			@csrf
                         		<div class="row">
                                     <div class="col-sm-6">
+                                        <label>Title<span class="text-danger">*</span></label>
+                                        <input class="form-control required" type="text" id="title" name="title"><br/>
+                                    </div>
+                                    <div class="col-sm-6">
                                         <label>Image<span class="text-danger">*</span></label>
                                         <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="image" name="image" onchange="handleFileInputChange('image')"><br/>
                                     </div>
