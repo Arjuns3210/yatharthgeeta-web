@@ -60,6 +60,10 @@ class LoginController extends Controller
                 \Log::error("Backend: Account Suspended - "."email: ".$email.", password: ".$request->password);
                 return redirect()->back()->withErrors(array("msg"=>"Your account is deactivated."));
             }
+            if($response[0]['login_allowed'] != 1 ) {
+                \Log::error("Backend: Not allowed to login - "."email: ".$email.", password: ".$request->password);
+                return redirect()->back()->withErrors(array("msg"=>"Your are not allowed to login"));
+            }
 
             \Log::info("Backend: Login Successful!");
             $data=array(
