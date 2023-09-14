@@ -31,7 +31,6 @@ class AddAudioEpisodeRequest extends FormRequest
             'main_shlok'   => 'required',
             'explanation_shlok'   => 'required',
             'audio_file' => 'required|mimes:mp3,wav',
-            'srt_file'   => 'required',
         ];
     }
 

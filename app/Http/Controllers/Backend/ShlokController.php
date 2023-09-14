@@ -208,7 +208,7 @@ class ShlokController extends Controller
 
             successMessage('Data Updated successfully', []);
         } catch (\Exception $e) {
-            errorMessage($e->getMessage());
+            errorMessage("Something Went Wrong.");
         }
     }
 

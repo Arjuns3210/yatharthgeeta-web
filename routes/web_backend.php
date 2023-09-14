@@ -185,6 +185,17 @@ Route::group(['middleware' => ['customAuth']], function () {
     Route::get('get_mapped_listing/{type}', 'HomeCollectionController@getMappedListing');
     Route::get('prepare_multiple_collection_item/{count}','HomeCollectionController@prepareMultipleCollectionItem');
 
+    //Home Collection
+    Route::get('explore_collection', 'ExploreCollectionController@index');
+    Route::post('explore_collection/fetch', 'ExploreCollectionController@fetch');
+    Route::get('explore_collection/add', 'ExploreCollectionController@create');
+    Route::post('explore_collection/save', 'ExploreCollectionController@store');
+    Route::get('explore_collection/edit/{id}', 'ExploreCollectionController@edit');
+    Route::post('explore_collection/update', 'ExploreCollectionController@update');
+    Route::post('explore_collection/publish', 'ExploreCollectionController@updateStatus');
+    Route::get('explore_collection/view/{id}', 'ExploreCollectionController@show');
+    Route::get('explore_collection/delete/{id}', 'ExploreCollectionController@destroy');
+
     //manage role
 	Route::get('roles', 'RoleController@roles');
 	Route::post('role/fetch', 'RoleController@roleData')->name('role/fetch');

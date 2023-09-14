@@ -136,6 +136,9 @@ class QuoteController extends Controller
                 $query = Quote::orderBy('updated_at','desc');
                 return DataTables::of($query)
                     ->filter(function ($query) use ($request) {
+                        if (isset($request['search']['search_title']) && !is_null($request['search']['search_title'])) {
+                            $query->where('title', 'like', "%" . $request['search']['search_title'] . "%");
+                        }
                         if (isset($request['search']['search_sequence']) && !is_null($request['search']['search_sequence'])) {
                             $query->where('sequence', 'like', "%" . $request['search']['search_sequence'] . "%");
                         }
@@ -143,6 +146,9 @@ class QuoteController extends Controller
                             $query->where('quotes.status', 'like', "%" . $request['search']['search_status'] . "%");
                         }
                         $query->get()->toArray();
+                    })
+                    ->editColumn('title', function ($event) {
+                        return $event->title;
                     })
                     ->editColumn('image', function ($event) {
                         $media = $event->getMedia(Quote::IMAGE)->first();
