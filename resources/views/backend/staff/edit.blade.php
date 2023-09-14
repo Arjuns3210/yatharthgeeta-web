@@ -24,7 +24,11 @@
                         				<select class="select2 required" id="role_id" name="role_id" style="width: 100% !important;">
                                             <option value="">Select</option>
                                             @foreach($data['roles'] as $roles)
-                                                <option value="{{$roles->id}}">{{$roles->role_name}}</option>
+                                                @if($roles->id == $data['data']->role_id)
+                                                    <option value="{{$roles->id}}" selected>{{$roles->role_name}}</option>
+                                                @else
+                                                    <option value="{{$roles->id}}">{{$roles->role_name}}</option>
+                                                @endif
                                             @endforeach
                                         </select><br/>
                         			</div>
