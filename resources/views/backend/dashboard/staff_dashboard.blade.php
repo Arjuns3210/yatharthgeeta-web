@@ -24,11 +24,11 @@
                                     <div class="card-body">
                                         <div class="media">
                                             <div class="media-body text-left">
-                                                <h3 class="mb-1 success">{{ $users_total }}</h3>
+                                                <h3 class="mb-1 warning">{{ $users_total }}</h3>
                                                 <span>Total Users</span><br><br><br>
                                             </div>
                                             <div class="media-right align-self-center">
-                                                <i class="ft-users success font-large-2 float-right"></i>
+                                                <i class="ft-users warning font-large-2 float-right"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -41,11 +41,11 @@
                                     <div class="card-body">
                                         <div class="media">
                                             <div class="media-body text-left">
-                                                <h3 class="mb-1 success">{{ $books_total }}</h3>
+                                                <h3 class="mb-1 warning">{{ $books_total }}</h3>
                                                 <span>Total Books</span><br><br><br>
                                             </div>
                                             <div class="media-right align-self-center">
-                                                <i class="fa fa-book success font-large-2 float-right"></i>
+                                                <i class="fa fa-book warning font-large-2 float-right"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -58,11 +58,11 @@
                                     <div class="card-body">
                                         <div class="media">
                                             <div class="media-body text-left">
-                                                <h3 class="mb-1 success">{{ $audios_total }}</h3>
+                                                <h3 class="mb-1 warning">{{ $audios_total }}</h3>
                                                 <span>Total Audio</span><br><br><br>
                                             </div>
                                             <div class="media-right align-self-center">
-                                                <i class="fa fa-file-audio-o success font-large-2 float-right"></i>
+                                                <i class="fa fa-file-audio-o warning font-large-2 float-right"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -75,11 +75,11 @@
                                     <div class="card-body">
                                         <div class="media">
                                             <div class="media-body text-left">
-                                                <h3 class="mb-1 success">{{ $videos_total }}</h3>
+                                                <h3 class="mb-1 warning">{{ $videos_total }}</h3>
                                                 <span>Total Video</span><br><br><br>
                                             </div>
                                             <div class="media-right align-self-center">
-                                                <i class="fa fa-film success font-large-2 float-right"></i>
+                                                <i class="fa fa-film warning font-large-2 float-right"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -109,11 +109,11 @@
                                     <div class="card-body">
                                         <div class="media">
                                             <div class="media-body text-left">
-                                                <h3 class="mb-1 danger">3</h3>
+                                                <h3 class="mb-1 warning">3</h3>
                                                 <span>Total Shlokas</span><br><br>
                                             </div>
                                             <div class="media-right align-self-center">
-                                                <i class="fa fa-bars danger font-large-2" aria-hidden="true"></i>
+                                                <i class="fa fa-bars warning font-large-2" aria-hidden="true"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -126,11 +126,11 @@
                                     <div class="card-body">
                                         <div class="media">
                                             <div class="media-body text-left">
-                                                <h3 class="mb-1 success">{{ $mantras_total }}</h3>
+                                                <h3 class="mb-1 warning">{{ $mantras_total }}</h3>
                                                 <span>Total Mantras</span><br><br><br>
                                             </div>
                                             <div class="media-right align-self-center">
-                                                <i class="fa fa-server success font-large-2 float-right"></i>
+                                                <i class="fa fa-server warning font-large-2 float-right"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -143,17 +143,18 @@
                                     <div class="card-body">
                                         <div class="media">
                                             <div class="media-body text-left">
-                                                <h3 class="mb-1 primary">{{ $greetings_total }}</h3>
+                                                <h3 class="mb-1 warning">{{ $greetings_total }}</h3>
                                                 <span>Total Quote</span><br><br>
                                             </div>
                                             <div class="media-right align-self-center">
-                                                <i class="fa fa-newspaper-o font-large-2 primary" aria-hidden="true"></i>
+                                                <i class="fa fa-newspaper-o font-large-2 warning" aria-hidden="true"></i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </section>
             </div>
