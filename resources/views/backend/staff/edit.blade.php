@@ -21,7 +21,7 @@
                                 <div class="row">
                         			<div class="col-sm-6">
                         				<label>Role<span class="text-danger">*</span></label>
-                        				<select class="select2 required" id="role_id" name="role_id" style="width: 100% !important;">
+                        				<select class="select2 required" id="role_id" name="role_id" style="width: 100% !important;" disabled>
                                             <option value="">Select</option>
                                             @foreach($data['roles'] as $roles)
                                                 @if($roles->id == $data['data']->role_id)
