@@ -35,10 +35,9 @@ class CustomAuth
                 $role_permissions = 0;
             }
             $permissions = DB::select("SELECT codename FROM permissions where status = '1' and id in (".$role_permissions.")");
-            
-            // if(session('data')['force_pwd_change_flag'] == 1 || session('data')['pwd_expiry_date'] <= $currentDate){
-            //     return redirect('webadmin/password_expired');
-            // }
+            if(session('data')['force_pwd_change_flag'] == 1 || (!empty(session('data')['pwd_expiry_date'])&&session('data')['pwd_expiry_date'] <= $currentDate)){
+                return redirect('webadmin/password_expired');
+            }
             $langauge = explode('-', explode(',', $request->header('Accept-Language'))[0]);
             Session::flash('permissions', $permissions);
             if(in_array($langauge[0], config('translatable.locales'))) {
