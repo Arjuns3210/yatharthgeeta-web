@@ -309,7 +309,7 @@ class ExploreCollectionController extends Controller
             DB::rollBack();
             Log::error("Something Went Wrong. Error: ".$e->getMessage());
 
-            errorMessage($e->getMessage());
+            errorMessage("Something Went Wrong.");
         }
     }
 
