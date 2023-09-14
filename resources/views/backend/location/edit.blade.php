@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Edit Ashram: {{$ashram['name']}} ({{ config('translatable.locales_name')[\App::getLocale()] }})</h5>
+                                    <h5 class="pt-2">Edit Location: {{$location['name']}} ({{ config('translatable.locales_name')[\App::getLocale()] }})</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -15,7 +15,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form id="editAshramForm" method="post" action="ashram/update?id={{$ashram['id']}}">
+                            <form id="editLocationForm" method="post" action="location/update?id={{$location['id']}}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -33,47 +33,47 @@
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
                                                     <div class="col-sm-6">
-                                                        <label>Ashram Status<span class="text-danger">*</span></label>
+                                                        <label>Location Status<span class="text-danger">*</span></label>
                                                         <select class="form-control" id="status" name="status">
-                                                            <option value="1" <?php echo $ashram['status'] == 1 ? 'selected' : '' ?>>Active</option>
-                                                            <option value="0" <?php echo $ashram['status'] == 0 ? 'selected' : '' ?>>Inactive</option>
+                                                            <option value="1" <?php echo $location['status'] == 1 ? 'selected' : '' ?>>Active</option>
+                                                            <option value="0" <?php echo $location['status'] == 0 ? 'selected' : '' ?>>Inactive</option>
                                                         </select><br>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Type</label>
                                                         <select class="form-control" id="type" name="type">
-                                                            <option value="ashram" <?php echo $ashram['type'] == 'ashram' ? 'selected' : '' ?>>Ashram</option>
-                                                            <option value="others" <?php echo $ashram['type'] == 'others' ? 'selected' : '' ?>>Others</option>
+                                                            <option value="ashram" <?php echo $location['type'] == 'ashram' ? 'selected' : '' ?>>Ashram</option>
+                                                            <option value="others" <?php echo $location['type'] == 'others' ? 'selected' : '' ?>>Others</option>
                                                         </select><br>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Email<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="email" name="email" value="{{$ashram['email']}}"><br/>
+                                                        <input class="form-control required" type="text" id="email" name="email" value="{{$location['email']}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Contact (add More no by comma)<span class="text-danger">*</span></label>
-                                                        <?php $output = implode(',', json_decode($ashram['phone'])); ?>
+                                                        <?php $output = implode(',', json_decode($location['phone'])); ?>
                                                         <input class="form-control required" type="text" id="phone" name="phone" value="{{$output}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Address<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="location" name="location" value="{{$ashram['location']}}"><br/>
+                                                        <input class="form-control required" type="text" id="location" name="location" value="{{$location['location']}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)" value="{{$ashram['sequence']}}"><br/>
+                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)" value="{{$location['sequence']}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6" hidden>
                                                         <label>Latitude<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="latitude" name="latitude" oninput="filterNonNumeric(this)" value="{{$ashram['latitude']}}"><br/>
+                                                        <input class="form-control required" type="text" id="latitude" name="latitude" oninput="filterNonNumeric(this)" value="{{$location['latitude']}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6" hidden>
                                                         <label>Longitude<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="longitude" name="longitude" oninput="filterNonNumeric(this)" value="{{$ashram['longitude']}}"><br/>
+                                                        <input class="form-control required" type="text" id="longitude" name="longitude" oninput="filterNonNumeric(this)" value="{{$location['longitude']}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Goolge Address<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="google_address" name="google_address" value="{{$ashram['google_address']}}"><br/>
+                                                        <input class="form-control required" type="text" id="google_address" name="google_address" value="{{$location['google_address']}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Image</label>
@@ -82,7 +82,7 @@
                                                         @if(isset($media))
                                                         <div class="main-del-section" style="position: relative; border: 1px solid #999; border-radius: 5px; padding: 5px; margin-right: 10px; display: inline-block;">
                                                             <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="auto">
-                                                            <span class="delimg bg-danger text-center" id="{{$ashram['id']}}" data-url="ashram/delete_img?id={{$ashram['id']}}" style="padding: 0 5px; position: absolute; top: -8px; right: -8px; border-radius: 50%; cursor: pointer;"><i class="fa fa-times text-light"></i></span>
+                                                            <span class="delimg bg-danger text-center" id="{{$location['id']}}" data-url="location/delete_img?id={{$location['id']}}" style="padding: 0 5px; position: absolute; top: -8px; right: -8px; border-radius: 50%; cursor: pointer;"><i class="fa fa-times text-light"></i></span>
                                                         </div>
                                                         @endif
                                                     </div>
@@ -197,7 +197,7 @@
                                                             <?php if($translated_block_fields_value == 'input') { ?>
                                                                 <div class="col-md-6 mb-3">
                                                                     <label>{{$translated_block_fields_key}}</label>
-                                                                    <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" value="{{$ashram[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}">
+                                                                    <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" value="{{$location[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}">
                                                                 </div>
                                                             <?php
                                                         } ?>
@@ -208,7 +208,7 @@
                                                             <?php if($translated_block_fields_value == 'textarea') { ?>
                                                                 <div class="col-md-6 mb-3">
                                                                     <label>{{$translated_block_fields_key}}</label>
-                                                                    <textarea class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">{{$ashram[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}</textarea>
+                                                                    <textarea class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">{{$location[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}</textarea>
                                                                 </div>
                                                             <?php } ?>
                                                         <?php } ?>
@@ -222,7 +222,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="pull-right">
-                                            <button type="button" class="btn btn-success" onclick="submitForm('editAshramForm','post')">Submit</button>
+                                            <button type="button" class="btn btn-success" onclick="submitForm('editLocationForm','post')">Submit</button>
                                             <a href="{{URL::previous()}}" class="btn btn-sm btn-danger px-3 py-1"> Cancel</a>
                                         </div>
                                     </div>
@@ -241,8 +241,8 @@
     let geocoder; // Define a geocoder to convert lat/lng to address
 
     function initMap() {
-        var lati = parseInt("<?php echo $ashram['latitude']?>");
-        var lang = parseInt("<?php echo $ashram['longitude']?>");
+        var lati = parseInt("<?php echo $location['latitude']?>");
+        var lang = parseInt("<?php echo $location['longitude']?>");
         map = new google.maps.Map(document.getElementById("map"), {
             center: { lat: lati, lng: lang },
             zoom: 10,

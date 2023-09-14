@@ -38,15 +38,15 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('/resetPassword', 'AdminController@resetPassword');
 
 
-	//Ashram
-	Route::get('ashram', 'AshramController@index');
-	Route::get('ashram/add', 'AshramController@create');
-	Route::get('ashram/edit/{id}', 'AshramController@edit');
-	Route::post('ashram/update', 'AshramController@update');
-	Route::post('ashram/fetch', 'AshramController@fetch');
-	Route::get('ashram/view/{id}', 'AshramController@show');
-	Route::post('ashram/save', 'AshramController@store');
-	Route::post('ashram/delete_img', 'AshramController@deleteImage');
+	//Location
+	Route::get('location', 'LocationController@index');
+	Route::get('location/add', 'LocationController@create');
+	Route::get('location/edit/{id}', 'LocationController@edit');
+	Route::post('location/update', 'LocationController@update');
+	Route::post('location/fetch', 'LocationController@fetch');
+	Route::get('location/view/{id}', 'LocationController@show');
+	Route::post('location/save', 'LocationController@store');
+	Route::post('location/delete_img', 'LocationController@deleteImage');
 
 	//Guru's
 	Route::get('guru', 'ArtistController@index');
@@ -91,6 +91,17 @@ Route::group(['middleware' => ['customAuth']], function () {
     Route::post('publish_audio_episode', 'AudioEpisodeController@updateStatus');
     Route::get('audio_episode_delete/{id}', 'AudioEpisodeController@destroy');
 
+    //pravachan
+    Route::get('pravachans', 'PravachanController@index');
+    Route::get('pravachan/add', 'PravachanController@create');
+    Route::post('pravachan/fetch', 'PravachanController@fetch');
+    Route::post('pravachan/save', 'PravachanController@store');
+    Route::get('pravachan/edit/{id}', 'PravachanController@edit');
+    Route::post('pravachan/update', 'PravachanController@update');
+    Route::get('pravachan/view/{id}', 'PravachanController@show');
+    Route::post('publish_pravachan', 'PravachanController@updateStatus');
+    Route::get('pravachan_delete/{id}', 'PravachanController@destroy');
+    
     //Banner
     Route::get('banners', 'BannerController@index');
     Route::post('banners/fetch', 'BannerController@fetch');
@@ -210,8 +221,9 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::get('customer', 'CustomerController@index');
 	Route::post('customer/fetch', 'CustomerController@fetch');
 	Route::get('customer/view/{id}', 'CustomerController@show');
-	Route::get('customer/edit/{id}', 'CustomerController@edit');
-	Route::post('customer/update', 'CustomerController@update');
+	Route::get('customer/verify/{id}', 'CustomerController@isVerify');
+	Route::get('customer/change_password/{id}', 'CustomerController@changePassword');
+	Route::post('customer/changePassword', 'CustomerController@changeCustomerPassword');
     Route::post('customer/publish', 'CustomerController@updateStatus');
 
     //general settings

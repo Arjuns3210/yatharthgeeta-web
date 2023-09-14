@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Add Ashram</h5>
+                                    <h5 class="pt-2">Add Location</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -15,7 +15,7 @@
                             </div>
                         </div>
                     	<div class="card-body">
-                    		<form id="saveAshram" method="post" action="ashram/save">
+                    		<form id="saveLocation" method="post" action="location/save">
                     			@csrf
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -33,7 +33,7 @@
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
                                                     <div class="col-sm-6">
-                                                        <label>Ashram Status<span class="text-danger">*</span></label>
+                                                        <label>Location Status<span class="text-danger">*</span></label>
                                                         <select class="form-control" id="status" name="status">
                                                             <option value="1">Active</option>
                                                             <option value="0">Inactive</option>
@@ -184,7 +184,7 @@
                         		<div class="row">
                         			<div class="col-sm-12">
                         				<div class="pull-right">
-                        					<button type="button" class="btn btn-success" onclick="submitForm('saveAshram','post')">Submit</button>
+                        					<button type="button" class="btn btn-success" onclick="submitForm('saveLocation','post')">Submit</button>
                                             <a href="{{URL::previous()}}" class="btn btn-sm btn-danger px-3 py-1"> Cancel</a>
                         				</div>
                         			</div>

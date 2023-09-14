@@ -531,6 +531,63 @@ $(document).on('click', '.delete-data', function (event) {
         }
     });
 });
+//for is verify
+$(document).on('click', '.verify-data', function (event) {
+    var ib = $(this).attr('data-id');
+    var url = $(this).attr('data-url');
+    var main_id = $(this).attr('id');
+    var message = "Are you sure you want to Verify ?";
+
+    bootbox.confirm({
+        message: message,
+        buttons: {
+            confirm: {
+                label: 'Yes, I confirm',
+                className: 'btn-primary'
+            },
+            cancel: {
+                label: 'Cancel',
+                className: 'btn-danger'
+            }
+        },
+        callback: function (result) {
+            if (result) {
+                $.ajax({
+                    type: 'get',
+                    url: url,
+                    data: {
+                        'ib': ib,
+                        '_token': $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    success: function (data) {
+                        var response = JSON.parse(data);
+                        if (response['success'] == 0) {
+                            $.activeitNoty({
+                                type: 'danger',
+                                icon: 'fa fa-minus',
+                                message: response['message'],
+                                container: 'floating',
+                                timer: 3000
+                            });
+                        } else {
+                            $.activeitNoty({
+                                type: 'success',
+                                icon: 'fa fa-check',
+                                message: response['message'],
+                                container: 'floating',
+                                timer: 3000
+                            });
+                            $('#' + main_id).closest('.map_vendor_section').remove();
+                            setTimeout(function () {
+                                location.reload();
+                            }, 2000);
+                        }
+                    }
+                });
+            }
+        }
+    });
+});
 
 /**
  * -- CKEditor Textarea box

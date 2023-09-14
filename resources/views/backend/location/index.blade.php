@@ -12,12 +12,12 @@
                                     <div class="card-header">
                                         <div class="row">
                                             <div class="col-12 col-sm-7">
-                                                <h5 class="pt-2">Manage Ashram</h5>
+                                                <h5 class="pt-2">Manage Location</h5>
                                             </div>
                                             <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                                 <button class="btn btn-sm btn-outline-danger px-3 py-1 mr-2" id="listing-filter-toggle"><i class="fa fa-filter"></i> Filter</button>
-                                                @if($data['ashram_add'])
-                                                    <a href="ashram/add" class="btn btn-sm btn-outline-primary px-3 py-1 src_data"><i class="fa fa-plus"></i> Add Ashram</a>
+                                                @if($data['location_add'])
+                                                    <a href="location/add" class="btn btn-sm btn-outline-primary px-3 py-1 src_data"><i class="fa fa-plus"></i> Add Location</a>
                                                 @endif
                                             </div>
                                         </div>
@@ -51,14 +51,14 @@
                                             </div>
                                         </div>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered table-striped datatable" id="dataTable" width="100%" cellspacing="0" data-url="ashram/fetch">
+                                            <table class="table table-bordered table-striped datatable" id="dataTable" width="100%" cellspacing="0" data-url="location/fetch">
                                                 <thead>
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
                                                     <th id="name_{{ \App::getLocale()}}" data-orderable="false" data-searchable="false">Name ({{ config('translatable.locales_name')[\App::getLocale()] }})</th>
                                                     <th id="title_{{ \App::getLocale()}}" data-orderable="false" data-searchable="false">Title ({{ config('translatable.locales_name')[\App::getLocale()] }})</th>
                                                     <th id="location" data-orderable="false" data-searchable="false">Address</th>
-                                                    @if($data['ashram_edit'] || $data['ashram_view'] || $data['ashram_status'])
+                                                    @if($data['location_edit'] || $data['location_view'] || $data['location_status'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
                                                     @endif
                                                 </tr>

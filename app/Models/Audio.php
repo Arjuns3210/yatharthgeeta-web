@@ -18,6 +18,7 @@ class Audio extends Model implements HasMedia
     public $table = 'audios';
     
     public $fillable = [
+        'type',
         'audio_category_id',
         'cover_image',
         'file_name',
@@ -44,6 +45,9 @@ class Audio extends Model implements HasMedia
     const AUDIO_FILE = 'audio_file';
     const AUDIO_COVER_IMAGE = 'audio_cover_image';
     const AUDIO_SRT_FILE = 'audio_srt_file';
+    
+    const AUDIO = 'audio';
+    const PRAVACHAN = 'pravachan';
     /**
      * The attributes that should be casted to native types.
      *

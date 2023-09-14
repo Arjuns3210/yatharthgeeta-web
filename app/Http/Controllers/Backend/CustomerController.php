@@ -18,10 +18,10 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $data['customer_edit'] = checkPermission('customer_edit');
+        $data['customer_verify'] = checkPermission('customer_verify');
         $data['customer_view'] = checkPermission('customer_view');
         $data['customer_status'] = checkPermission('customer_status');
-        $data['customer_delete'] = checkPermission('customer_delete');
+        $data['customer_change_password'] = checkPermission('customer_change_password');
         return view('backend/customer/index',['data' =>$data]);
     }
 
@@ -54,16 +54,21 @@ class CustomerController extends Controller
                         return  $event->phone;
                     })
                     ->editColumn('action', function ($event) {
-                        $customer_edit = checkPermission('customer_edit');
+                        $customer_verify = checkPermission('customer_verify');
                         $customer_view = checkPermission('customer_view');
                         $customer_status = checkPermission('customer_status');
-                        $customer_delete = checkPermission('customer_delete');
+                        $customer_change_password = checkPermission('customer_change_password');
                         $actions = '<span style="white-space:nowrap;">';
                         if ($customer_view) {
                             $actions .= '<a href="customer/view/' . $event->id . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View customer Details" title="View"><i class="fa fa-eye"></i></a>';
                         }
-                        if ($customer_edit) {
-                            $actions .= ' <a href="customer/edit/' . $event->id . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
+                        if ($customer_change_password) {
+                            $actions .= ' <a href="customer/change_password/' . $event->id . '" class="btn btn-success btn-sm modal_src_data" data-size="large" data-title="Change Customer Password" title="Change Password"><i class="fa fa-key"></i></a>';
+                        }
+                        if ($customer_verify) {
+                            if($event->is_verified == 'N'){
+                                $actions .= ' <a data-option="" data-url="customer/verify/' . $event->id . '" class="btn btn-success btn-sm verify-data" title="Verify"><i class="fa fa-check" aria-hidden="true"></i></a>';
+                            }
                         }
                         if ($customer_status) {
                             if ($event->status == '1') {
@@ -123,33 +128,12 @@ class CustomerController extends Controller
         return view('backend/customer/view',$data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function isVerify(Request $request,$id)
     {
-        $data['data'] = User::find($id);
-		return view('backend/customer/edit',$data);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request)
-    {
-        $data = User::find($_GET['id']);
-        $input=$request->all();
-        $input['is_verified'] = $request->is_verified ? 'Y': 'N';
-        // print_r($input);exit;
+        $data = User::find($id);
+        $input['is_verified'] = 'Y';
         $data->update($input);
-        successMessage('Data Saved successfully', []);
+        successMessage('Customer Verify Successfully',[]);
     }
 
     public function updateStatus(Request $request)
@@ -170,14 +154,26 @@ class CustomerController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Customer $customer)
+    public function changePassword($id) {
+        $data['customer'] = User::find($id);
+        return view('backend/customer/change_password',$data);
+    }
+
+    public function changeCustomerPassword(Request $request)
     {
-        //
+        $msg_data = array();
+        $users = User::find($_GET['id']);
+        if ($request->new_password != $request->confirm_password) {
+            errorMessage('Password not matched!', $msg_data);
+        }
+
+        if ($users->password == md5($users->email . $request->new_password)) {
+            errorMessage(__('change_password.new_password_cannot_same_current_password'), $msg_data);
+        }
+
+        $users->password = md5($users->email . $request->new_password);
+        $users->save();
+        successMessage('Password updated successfully!', $msg_data);
+        //return back()->with('success','Password updated successfully!');
     }
 }
