@@ -29,7 +29,7 @@ class CustomerController extends Controller
     {
         if ($request->ajax()) {
             try {
-                $query = User::orderBy('updated_at','desc');
+                $query = User::orderBy('updated_at','desc')->withTrashed();;
                 // print_r($query->get());exit;
                 return DataTables::of($query)
                     ->filter(function ($query) use ($request) {
@@ -45,15 +45,31 @@ class CustomerController extends Controller
                         $query->get();
                     })
                     ->editColumn('name', function ($event) {
-                        return $event->name;
+                        $isDeleted = isRecordDeleted($event->deleted_at);
+                        if (!$isDeleted) {
+                            return $event->name;
+                        } else {
+                            return '<span class="text-danger text-center">' . $event->name . '</span>';
+                        }
                     })
                     ->editColumn('email', function ($event) {
-                        return $event->email;
+                        $isDeleted = isRecordDeleted($event->deleted_at);
+                        if (!$isDeleted) {
+                            return $event->email;
+                        } else {
+                            return '<span class="text-danger text-center">' . $event->email . '</span>';
+                        }
                     })
                     ->editColumn('phone', function ($event) {
-                        return  $event->phone;
+                        $isDeleted = isRecordDeleted($event->deleted_at);
+                        if (!$isDeleted) {
+                            return $event->phone;
+                        } else {
+                            return '<span class="text-danger text-center">' . $event->phone . '</span>';
+                        }
                     })
                     ->editColumn('action', function ($event) {
+                        $isDeleted = isRecordDeleted($event->deleted_at);
                         $customer_verify = checkPermission('customer_verify');
                         $customer_view = checkPermission('customer_view');
                         $customer_status = checkPermission('customer_status');
@@ -62,22 +78,27 @@ class CustomerController extends Controller
                         if ($customer_view) {
                             $actions .= '<a href="customer/view/' . $event->id . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View customer Details" title="View"><i class="fa fa-eye"></i></a>';
                         }
-                        if ($customer_change_password) {
-                            $actions .= ' <a href="customer/change_password/' . $event->id . '" class="btn btn-success btn-sm modal_src_data" data-size="large" data-title="Change Customer Password" title="Change Password"><i class="fa fa-key"></i></a>';
-                        }
-                        if ($customer_verify) {
-                            if($event->is_verified == 'N'){
-                                $actions .= ' <a data-option="" data-url="customer/verify/' . $event->id . '" class="btn btn-success btn-sm verify-data" title="Verify"><i class="fa fa-check" aria-hidden="true"></i></a>';
-                            }
-                        }
-                        if ($customer_status) {
-                            if ($event->status == '1') {
-                                $actions .= ' <input type="checkbox" data-url="customer/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery" checked>';
-                            } else {
-                                $actions .= ' <input type="checkbox" data-url="customer/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery">';
-                            }
-                        }
+                        if(!$isDeleted){
 
+                            if ($customer_change_password) {
+                                $actions .= ' <a href="customer/change_password/' . $event->id . '" class="btn btn-success btn-sm modal_src_data" data-size="large" data-title="Change Customer Password" title="Change Password"><i class="fa fa-key"></i></a>';
+                            }
+                            if ($customer_verify) {
+                                if($event->is_verified == 'N'){
+                                    $actions .= ' <a data-option="" data-url="customer/verify/' . $event->id . '" class="btn btn-success btn-sm verify-data" title="Verify"><i class="fa fa-check" aria-hidden="true"></i></a>';
+                                }
+                            }
+                            if ($customer_status) {
+                                if ($event->status == '1') {
+                                    $actions .= ' <input type="checkbox" data-url="customer/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery" checked>';
+                                } else {
+                                    $actions .= ' <input type="checkbox" data-url="customer/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery">';
+                                }
+                            }
+                        }else{
+                            $actions .= ' <span class="bg-danger text-center p-1 text-white" style="border-radius:20px !important;">Deleted</span>';
+                        }
+                        $actions .= '</span>';
                         return $actions;
                     })
                     ->addIndexColumn()
@@ -124,7 +145,7 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        $data['customer'] = User::find($id);
+        $data['customer'] = User::withTrashed()->find($id);
         return view('backend/customer/view',$data);
     }
 
