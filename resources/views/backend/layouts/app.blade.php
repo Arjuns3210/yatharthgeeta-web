@@ -188,9 +188,27 @@
                             </ul>
                         </li>
                         @endif
-                        <li class="nav-item">
-                            <a href="general_settings"><i class="fa fa-cog" aria-hidden="true"></i><span data-i18n="" class="menu-title">General Settings</span></a>
+
+                        <li class="has-sub nav-item">
+                            <a href="javascript:;" class="dropdown-parent"><i class="icon-user-following"></i><span data-i18n="" class="menu-title">General Settings</span></a>
+                            <ul class="menu-content">
+                                <li class="{{ $lastParam ==  'general_settings' ? 'active' : '' }}">
+                                    <a href="general_settings" class="menu-item"><i class="fa fa-cog" aria-hidden="true"></i>Settings</a>
+                                </li>
+                                <li class="{{ $lastParam ==  'about_us' ? 'active' : '' }}">
+                                    <a href="about_us" class="menu-item"><i class="fa fa-info-circle"></i>About Us</a>
+                                </li>
+                                <li class="{{ $lastParam ==  'terms' ? 'active' : '' }}">
+                                    <a href="terms" class="menu-item"><i class="fa fa-file-text-o"></i>Terms and Condition</a>
+                                </li>
+                                <li class="{{ $lastParam ==  'privacy_policy' ? 'active' : '' }}">
+                                    <a href="privacy_policy" class="menu-item"><i class="fa fa-shield"></i>Privacy Policy</a>
+                                </li>
+                            </ul>
                         </li>
+                        {{-- <li class="nav-item">
+                            <a href="general_settings"><i class="fa fa-cog" aria-hidden="true"></i><span data-i18n="" class="menu-title">General Settings</span></a>
+                        </li> --}}
                         <li class="nav-item">
                             <a href="customer"><i class="fa fa-user" aria-hidden="true"></i><span data-i18n="" class="menu-title">Customer</span></a>
                         </li>
