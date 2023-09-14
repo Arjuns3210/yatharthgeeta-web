@@ -49,24 +49,24 @@
                                                         <input class="form-control" type="text" id="pages" name="pages" oninput="filterNonNumeric(this)"><br/>
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
-                                                        <label>Video<span class="text-danger">*</span></label>
-                                                        <select class="form-control required " id="video_id" name="video_id[]">
+                                                        <label>Video</label>
+                                                        <select class="form-control" id="video_id" name="video_id">
                                                         @foreach($video as $video)
-                                                                <option value="{{$video->id}}">{{$video->translations[0]->title ?? ''}}</option>
+                                                                <option value="{{$video->id}}">{{$video->title}}</option>
                                                         @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
-                                                        <label>Audio<span class="text-danger">*</span></label>
-                                                        <select class="form-control required" id="audio_id" name="audio_id[]">
+                                                        <label>Audio</label>
+                                                        <select class="form-control" id="audio_id" name="audio_id">
                                                         @foreach($audio as $audio)
-                                                                <option value="{{$audio->id}}">{{$audio->translations[0]->title ?? ''}}</option>
+                                                                <option value="{{$audio->id}}">{{$audio->title}}</option>
                                                         @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
                                                         <label>People Also Read</label>
-                                                        <select class="form-control" id="related_id" name="related_id[]">
+                                                        <select class="form-control select2" id="related_id" name="related_id[]" multiple>
                                                         @foreach($books as $book)
                                                                 <option value="{{$book->id}}">{{$book->translations[0]->name ?? ''}}</option>
                                                         @endforeach
@@ -131,7 +131,7 @@
                                                 <hr>
                                                 <div class="row">
                                                     <div class="col-md-6 col-lg-12 col-sm-6 text-center">
-                                                        <p class="font-weight-bold">Cover Image</p>
+                                                        <p class="font-weight-bold">Cover Image<span class="text-danger">*</span></p>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
                                                             <div class="input-file">
@@ -207,22 +207,6 @@
                     $('.file-input-div').removeClass('d-none');
                 }
             });
-
-            // $('.add_episode_item').click(function () {
-            //     var rowCount = $('.episodes-append-div .row').length - 1;
-            //     $.ajax({
-            //         type: 'GET',
-            //         url: 'prepare_episode_item/'+rowCount,
-            //         success: function (data) {
-            //             // Append the data to the container
-            //             var $newElements = $(data);
-            //             $('.episodes-append-div').append($newElements);
-
-            //             // Initialize Select2 on the newly added elements
-            //             $newElements.find('.select2').select2();
-            //         },
-            //     });
-            // });
 
             const coverImageData = new DataTransfer();
 
@@ -350,6 +334,7 @@
             }
 
             handleSrtFileAttachmentChange();
+
         });
 
         $(document).on('click', '.remove_episode_item', function () {

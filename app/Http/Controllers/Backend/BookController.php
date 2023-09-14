@@ -137,6 +137,7 @@ class BookController extends Controller
                 $query->where('locale', $localeLanguage);
             },
         ])->where('status', 1)->get();
+
         $data['book_category'] = BookCategory::all();
         $data['language'] = Language::all();
         $data['artist'] = Artist::all();
@@ -154,18 +155,7 @@ class BookController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        if ($input['audio_id']) {
-            $audio_array = ($input['audio_id']);
-            $input['audio_id'] = json_encode($audio_array);
-        }
-        if ($input['video_id']) {
-            $video_array = ($input['video_id']);
-            $input['video_id'] = json_encode($video_array);
-        }
-        if ($input['related_id']) {
-            $related_array = ($input['related_id']);
-            $input['related_id'] = json_encode($related_array);
-        }
+        $input['related_id'] = implode(',',$input['related_id'] ?? []);
         $translated_keys = array_keys(Book::TRANSLATED_BLOCK);
         foreach ($translated_keys as $value) {
             $input[$value] = (array) json_decode($input[$value]);
@@ -174,7 +164,9 @@ class BookController extends Controller
         $data = Book::create($saveArray);
         storeMedia($data, $input['cover_image'], Book::COVER_IMAGE);
         storeMedia($data, $input['pdf_file_name'], Book::PDF_FILE);
-        storeMedia($data, $input['epub_file_name'], Book::EPUB_FILE);
+        if(!empty($input['epub_file_name'])){
+            storeMedia($data, $input['epub_file_name'], Book::EPUB_FILE);
+        }
         successMessage('Data Saved successfully', []);
     }
 
@@ -186,23 +178,13 @@ class BookController extends Controller
      */
     public function view($id)
     {
-        $data['books'] = Book::find($id);
-        $data['book_category'] = BookCategory::where('id', $data['books']->book_category_id)->first();
-        $data['language'] = Language::where('id', $data['books']->language_id)->first();
-        $data['artist'] = Artist::where('id', $data['books']->artist_id)->first();
-        $data['audio'] = Audio::where('id', $data['books']->audio_id)->first();
-        $data['video'] = Video::where('id', $data['books']->video_id)->first();
-        foreach($data['books']['translations'] as $trans) {
-            $translated_keys = array_keys(Book::TRANSLATED_BLOCK);
-            foreach ($translated_keys as $value) {
-                $data['books'][$value.'_'.$trans['locale']] = $trans[$value];
-            }
-        }
-        $data['translated_block'] = Book::TRANSLATED_BLOCK;
+        $data['books']= Book::with('artist', 'language', 'audio', 'video' )->find($id);
+        $data['book'] = Book::whereIn('id', explode(',', $data['books']->related_id))->get();
         $data['media'] = $data['books']->getMedia(Book::COVER_IMAGE)[0];
         $data['pdf_file'] = $data['books']->getMedia(Book::PDF_FILE)->first()?? '';
         $data['epub_file'] = $data['books']->getMedia(Book::EPUB_FILE)->first()?? '';
-        return view('backend/books/view',$data);
+        $data['translated_block'] = Book::TRANSLATED_BLOCK;
+        return view('backend/books/view', $data);
     }
 
     /**
@@ -214,37 +196,50 @@ class BookController extends Controller
     public function edit($id)
     {
         $localeLanguage = \App::getLocale();
-        $data['books'] = Book::find($id);
-        foreach($data['books']['translations'] as $trans) {
+        $data['books'] = Book::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                $query->where('locale', $localeLanguage);
+            },
+        ])->get();
+        $data['book'] = Book::find($id);
+        foreach($data['book']['translations'] as $trans) {
             $translated_keys = array_keys(Book::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
-                $data['books'][$value.'_'.$trans['locale']] = str_replace("<br/>", "\r\n", $trans[$value]);
+                $data['book'][$value.'_'.$trans['locale']] = str_replace("<br/>", "\r\n", $trans[$value]);
             }
         }
         $data['translated_block'] = Book::TRANSLATED_BLOCK;
+        $data['book_category'] =  BookCategory::with([
+                'translations' => function ($query) use ($localeLanguage) {
+                        $query->where('locale', $localeLanguage);
+                    },
+                ])->where('status', 1)->get();
         $data['artist'] = Artist::with([
             'translations' => function ($query) use ($localeLanguage) {
-                $query->where('locale', $localeLanguage);
-            },
-        ])->get();
-        $data['book_category'] = BookCategory::with([
-            'translations' => function ($query) use ($localeLanguage) {
-                $query->where('locale', $localeLanguage);
-            },
-        ])->get();
-        $data['audio'] = Audio::with([
-            'translations' => function ($query) use ($localeLanguage) {
-                $query->where('locale', $localeLanguage);
-            },
-        ])->get();
+                    $query->where('locale', $localeLanguage);
+                },
+            ])->get();
         $data['video'] = Video::with([
             'translations' => function ($query) use ($localeLanguage) {
-                $query->where('locale', $localeLanguage);
-            },
-        ])->get();
-        $data['media'] =$data['books']->getMedia(Book::COVER_IMAGE)[0];
-        $data['pdf_file'] = $data['books']->getMedia(Book::PDF_FILE)->first()?? '';
-        $data['epub_file'] = $data['books']->getMedia(Book::EPUB_FILE)->first()?? '';
+                    $query->where('locale', $localeLanguage);
+                },
+            ])->get();
+        $data['audio'] = Audio::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                    $query->where('locale', $localeLanguage);
+                },
+            ])->get();
+        $data['language'] = Language::with([
+            'translations' => function ($query) use ($localeLanguage) {
+                    $query->where('locale', $localeLanguage);
+                },
+            ])->get();
+        $data['peopleAlsoReadIds'] = explode(",", $data['book']['related_id'] ?? '');
+        $data['media'] =$data['book']->getMedia(Book::COVER_IMAGE)[0];
+        $data['pdf_file'] = $data['book']->getMedia(Book::PDF_FILE)->first()?? '';
+        if(!empty($data['book'])){
+            $data['epub_file'] = $data['book']->getMedia(Book::EPUB_FILE)[0];
+        }
         return view('backend/books/edit', $data);
     }
 
@@ -262,23 +257,15 @@ class BookController extends Controller
         if (!$data) {
             errorMessage('Book Not Found', []);
         }
-        if ($input['video_id']) {
-            $video_id_array = explode(',', $input['video_id']);
-            $input['video_id'] = json_encode($video_id_array);
-        }
-        if ($input['audio_id']) {
-            $audio_id_array = explode(',', $input['audio_id']);
-            $input['audio_id'] = json_encode($audio_id_array);
-        }
-        if ($input['related_id']) {
-            $related_id_array = explode(',', $input['related_id']);
-            $input['related_id'] = json_encode($related_id_array);
-        }
+        $input['related_id'] = implode(',',$input['related_id'] ?? []);
+        // $input['audio_id'] = implode(',',$input['audio_id'] ?? []);
+        // $input['video_id'] = implode(',',$input['video_id'] ?? []);
         $translated_keys = array_keys(Book::TRANSLATED_BLOCK);
         foreach ($translated_keys as $value)
         {
             $input[$value] = (array) json_decode($input[$value]);
         }
+        $data['translated_block'] = Book::TRANSLATED_BLOCK;
         $book = Utils::flipTranslationArray($input, $translated_keys);
         $data->update($book);
 

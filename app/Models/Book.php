@@ -43,17 +43,8 @@ class Book extends Model implements HasMedia
 
 	];
 
-    protected $casts = [
-        'id' => 'integer',
-        'status' => 'boolean',
-        'audio_id' => 'json',
-        'video_id' => 'json',
-        'related_id' => 'json'
-
-    ];
 
     const COVER_IMAGE= 'cover_image';
-
     const PDF_FILE = 'pdf_file';
     const EPUB_FILE = 'epub_file';
 
@@ -61,4 +52,28 @@ class Book extends Model implements HasMedia
     {
         return $this->hasMany(\App\Models\BookTranslation::class);
     }
+
+    public function category()
+    {
+        return $this->belongsTo(BookCategory::class);
+    }
+
+    public function artist()
+    {
+        return $this->belongsTo(Artist::class);
+    }
+
+    public function language()
+    {
+        return $this->belongsTo(Language::class);
+    }
+    public function audio()
+    {
+        return $this->belongsTo(Audio::class);
+    }
+    public function video()
+    {
+        return $this->belongsTo(Video::class);
+    }
+
 }

@@ -33,10 +33,6 @@
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-bordered">
                                                     <tr>
-                                                        <td><strong>Book Category</strong></td>
-                                                        <td>{{ $book_category['name'] }}</td>
-                                                    </tr>
-                                                    <tr>
                                                         <td><strong>Number of Pages</strong></td>
                                                         <td>{{ $books['pages'] }}</td>
                                                     </tr>
@@ -78,52 +74,36 @@
                                                         @endif
                                                         </td>
                                                     </tr>
-                                                    @php
-                                                    $audio_id_array = json_decode($books['audio_id']);
-                                                    @endphp
                                                     <tr>
-                                                        <td><strong>Audio Url</strong></td>
-                                                        <td>
-                                                            <ul>
-                                                                @foreach ($audio_id_array as $audio_id)
-                                                                    <li> {{ $audio_id }}</li>
-                                                                @endforeach
-                                                            </ul>
-                                                        </td>
+                                                        <td><strong>Audio</strong></td>
+                                                        <td>{{$books->audio['title']}}</td>
                                                     </tr>
-                                                    @php
-                                                    $video_id_array = json_decode($books['video_id']);
-                                                    @endphp
                                                     <tr>
-                                                        <td><strong>Video Url</strong></td>
-                                                        <td>
-                                                            <ul>
-                                                                @foreach ($video_id_array as $video_id)
-                                                                    <li> {{ $video_id }}</li>
-                                                                @endforeach
-                                                            </ul>
-                                                        </td>
+                                                        <td><strong>Video</strong></td>
+                                                        <td>{{$books->video['title']}}</td>
                                                     </tr>
-                                                    @php
-                                                    $related_id_array = json_decode($books['related_id']);
-                                                    @endphp
                                                     <tr>
                                                         <td><strong>Related Books</strong></td>
                                                         <td>
-                                                            <ul>
-                                                                @foreach ($related_id_array as $related_id)
-                                                                    <li> {{ $related_id }}</li>
+                                                            @if(empty($book))
+                                                                @foreach ($book as $related_id)
+                                                                    <li> {{ $related_id->name }}</li>
                                                                 @endforeach
-                                                            </ul>
+                                                            @else
+                                                               -
+                                                             @endif
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Guru</strong></td>
-                                                        <td>{{ $artist['name'] }}</td>
+                                                        <td>{{ $books->artist['name'] }}</td>
                                                     </tr>
+                                                    {{-- @php
+                                                        print_r(artist['name']);exit;
+                                                    @endphp --}}
                                                     <tr>
                                                         <td><strong>Language</strong></td>
-                                                        <td>{{ $language['name'] }}</td>
+                                                        <td>{{ $books->language['name'] }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Sequence</strong></td>
@@ -135,7 +115,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Cover Image </strong></td>
-                                                        <td><img src="{{$media->getFullUrl() ?? ''}}" width="200px" height="200px" alt=""></td>
+                                                        <td><img src="{{ $media-> getFullUrl() ?? ''}}" width="200px" height="200px" alt=""></td>
                                                     </tr>
                                                 </table>
                                             </div>
