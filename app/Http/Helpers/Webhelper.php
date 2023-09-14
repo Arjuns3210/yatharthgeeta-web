@@ -114,3 +114,22 @@ if (! function_exists('storeMedia')) {
             config('app.media_disc'));
     }
 }
+
+/**
+ *   created by : Arjun Singh
+ *   Created On : 14-Sept-2023
+ *   Uses : To display globally records deleted or not
+ *   @param $key
+ *   @return Response
+ */
+if (!function_exists('isRecordDeleted')) {
+    function isRecordDeleted($value = NULL)
+    {
+        if ($value == NULL) {
+            $isDeleted = false;
+        } else {
+            $isDeleted = true;
+        }
+        return $isDeleted;
+    }
+}
