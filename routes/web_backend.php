@@ -218,6 +218,21 @@ Route::group(['middleware' => ['customAuth']], function () {
     Route::get('general_settings', 'GeneralSettingController@index');
     Route::post('updateSettingInfo', 'GeneralSettingController@updateSetting');
 
+    //about us
+    Route::get('about_us', 'AboutUsController@index');
+    Route::post('about_us/update', 'AboutUsController@update');
+    Route::post('updateSettingInfo', 'AboutUsController@updateSetting');
+
+    //terms and condition
+    Route::get('terms', 'TermsAndConditionController@index');
+    Route::post('terms/update', 'TermsAndConditionController@update');
+    Route::post('updateSettingInfo', 'TermsAndConditionController@updateSetting');
+
+    //privacy policy
+    Route::get('privacy_policy', 'PrivacyPolicyController@index');
+    Route::post('privacy_policy/update', 'PrivacyPolicyController@update');
+    Route::post('updateSettingInfo', 'PrivacyPolicyController@updateSetting');
+
     //Shlok
     Route::get('shloks', 'ShlokController@index')->name('shloks.index');
     Route::post('shloks/fetch', 'ShlokController@fetch');
