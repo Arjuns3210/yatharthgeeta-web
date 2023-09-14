@@ -33,7 +33,7 @@
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
                                                     <div class="col-sm-6">
-                                                        <label>Duration (In Minutes)</label>
+                                                        <label>Duration (In Minutes)<span class="text-danger">*</span></label>
                                                         <input class="form-control" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
@@ -45,7 +45,7 @@
                                                         <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)"><br/>
                                                     </div>
                                                     <div class="col-sm-6 mb-3">
-                                                        <label>LANGUAGE</label>
+                                                        <label>LANGUAGE<span class="text-danger">*</span></label>
                                                         <select class="form-control" type="text" id="language_id" name="language_id">
                                                         @foreach($language as $language)
                                                             <option value="{{$language->id}}">{{$language->name}}</option>
@@ -53,7 +53,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6 mb-3">
-                                                        <label>Video Category</label>
+                                                        <label>Video Category<span class="text-danger">*</span></label>
                                                         <select class="form-control" type="text" id="video_category_id" name="video_category_id">
                                                         @foreach($video_category as $video_category)
                                                             <option value="{{$video_category->id}}">{{$video_category->name}}</option>
@@ -61,7 +61,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Guru</label>
+                                                        <label>Guru<span class="text-danger">*</span></label>
                                                         <select class="form-control" type="text" id="artist_id" name="artist_id">
                                                         @foreach($artist as $artist)
                                                             <option value="{{$artist->id}}">{{$artist->name}}</option>
@@ -83,7 +83,7 @@
                                                         <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                             <?php if($translated_block_fields_value == 'input') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}}</label>
+                                                                    <label>{{$translated_block_fields_key}}<span class="text-danger">*</span></label>
                                                                     <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">
                                                                 </div>
                                                             <?php } ?>
@@ -93,7 +93,7 @@
                                                         <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                             <?php if($translated_block_fields_value == 'textarea') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}}</label>
+                                                                    <label>{{$translated_block_fields_key}}<span class="text-danger">*</span></label>
                                                                     <textarea class="translation_block form-control required" rows="5" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}"></textarea>
                                                                 </div>
                                                             <?php } ?>
