@@ -4,12 +4,9 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddAudioEpisodeRequest;
-use App\Http\Requests\AddAudioRequest;
 use App\Http\Requests\UpdateAudioEpisodeRequest;
-use App\Http\Requests\UpdateAudioRequest;
 use App\Models\Audio;
 use App\Models\AudioEpisode;
-use App\Models\AudioTranslation;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -189,7 +186,7 @@ class AudioEpisodeController extends Controller
             DB::rollBack();
             Log::error("Something Went Wrong. Error: ".$e->getMessage());
 
-            errorMessage($e->getMessage());
+            errorMessage("Something Went Wrong.");
         }
     }
 
@@ -272,7 +269,7 @@ class AudioEpisodeController extends Controller
             DB::rollBack();
             Log::error("Something Went Wrong. Error: ".$e->getMessage());
 
-            errorMessage($e->getMessage());
+            errorMessage("Something Went Wrong.");
         }
     }
 

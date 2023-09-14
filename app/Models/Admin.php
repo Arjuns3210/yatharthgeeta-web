@@ -23,6 +23,7 @@ class Admin extends Model
         'password',
         'address',
         'role_id',
+        'is_head',
         'login_allowed',
         'status',
         'force_pwd_change_flag',

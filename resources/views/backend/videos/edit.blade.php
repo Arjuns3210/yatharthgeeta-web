@@ -33,7 +33,7 @@
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
                                                     <div class="col-sm-6">
-                                                        <label>Duration (In Minutes)</label>
+                                                        <label>Duration (In Minutes)<span class="text-danger">*</span></label>
                                                         <input class="form-control" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)" value="{{$videos->duration}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
@@ -45,7 +45,7 @@
                                                         <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)" value="{{$videos->sequence}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6 mb-3">
-                                                        <label>LANGUAGE</label>
+                                                        <label>LANGUAGE<span class="text-danger">*</span></label>
                                                         <select class="form-control" type="text" id="language_id" name="language_id">
                                                         @foreach($language as $language)
                                                         <option value="{{$language->id}}" {{($language->id ==$videos['language_id'] ) ? 'selected' : ''}}>{{$language->translations[0]->name ?? ''}}</option>
@@ -53,7 +53,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6 mb-3">
-                                                        <label>Video Category</label>
+                                                        <label>Video Category<span class="text-danger">*</span></label>
                                                         <select class="form-control" type="text" id="video_category_id" name="video_category_id">
                                                         @foreach($video_category as $video_category)
                                                             <option value="{{$video_category->id}}" {{($video_category->id ==$videos['video_category_id'] ) ? 'selected' : ''}}>{{$video_category->translations[0]->name ?? ''}}</option>
@@ -61,7 +61,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Guru</label>
+                                                        <label>Guru<span class="text-danger">*</span></label>
                                                         <select class="form-control" type="text" id="artist_id" name="artist_id">
                                                         @foreach($artist as $artist)
                                                             <option value="{{$artist->id}}" {{($artist->id ==$videos['artist_id'] ) ? 'selected' : ''}}>{{$artist->translations[0]->name ?? ''}}</option>
@@ -69,7 +69,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Cover Image</label>
+                                                        <label>Cover Image<span class="text-danger">*</span></label>
                                                         <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('cover_image')" value="{{$videos['cover_image']}}"><br/>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p><br>
                                                         <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="100px" alt="">
@@ -85,7 +85,7 @@
 
                                                             <?php if($translated_block_fields_value == 'input') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}}</label>
+                                                                    <label>{{$translated_block_fields_key}}<span class="text-danger">*</span></label>
                                                                     <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" value="{{$videos[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}">
                                                                 </div>
                                                             <?php
@@ -96,7 +96,7 @@
                                                         <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                             <?php if($translated_block_fields_value == 'textarea') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}}</label>
+                                                                    <label>{{$translated_block_fields_key}}<span class="text-danger">*</span></label>
                                                                     <textarea class="translation_block form-control required" rows="5" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">{{$videos[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}</textarea>
                                                                 </div>
                                                             <?php } ?>

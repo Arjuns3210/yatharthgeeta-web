@@ -32,6 +32,7 @@ class CreateHomeCollectionRequest extends FormRequest
             'title'           => 'required|max:255',
             'description'     => 'required|max:255',
             'sequence'        => 'required|integer',
+            'display_in_column'        => 'required|integer',
         ];
         $collectionType = $this->input('collection_type');
         if ($collectionType == HomeCollection::SINGLE_COLLECTION_IMAGE) {

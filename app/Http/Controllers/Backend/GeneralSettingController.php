@@ -25,7 +25,7 @@ class GeneralSettingController extends Controller
         $msg_data = array();
         $msg = "Data Saved Successfully";
         if (isset($param) && !empty($param)) {
-            try {				
+            try {
                 switch ($param) {
                     case 'general':
                         GeneralSetting::where("type", 'system_email')->update(["value" => $request->system_email]);
@@ -68,13 +68,13 @@ class GeneralSettingController extends Controller
                         break;
                     default:
                         throw new \Exception("Invalid Paramter passed");
-                }				
+                }
                 successMessage($msg, $msg_data);
                 //return redirect('webadmin/generalSetting');
                 //return redirect()->back()->withErrors(array("msg"=>$msg));
             } catch (\Exception $e) {
                 \Log::error("General Setting Submit. Error: " . $e->getMessage());
-                errorMessage('Something Went Wrong', $msg_data);	
+                errorMessage('Something Went Wrong', $msg_data);
             }
         } else {
             errorMessage('Something Went Wrong', $msg_data);

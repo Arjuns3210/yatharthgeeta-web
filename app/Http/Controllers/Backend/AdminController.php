@@ -317,6 +317,7 @@ class AdminController extends Controller
         $admins->password = md5($email . $request->new_password);
         $admins->save();
 
+        session()->forget('data');
         return response()->json(['success' => true]);
         // return redirect('webadmin/');
     }

@@ -84,7 +84,7 @@ class StaffController extends Controller
                         $actions = '<span style="white-space:nowrap;">';
 
                         if ($staff_view) {
-                            $actions .= '<a href="staff/view/' . $event->id . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View Staff Details" title="View"><i class="fa fa-eye"></i></a>';
+                            $actions .= '<a href="staff/view/' . $event->id . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View Staff Details" title="View"><i class="fa fa-eye"></i></a>';
                         }
                         if ($staff_edit) {
                             $actions .= ' <a href="staff/edit/' . $event->id . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';

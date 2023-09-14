@@ -12,6 +12,7 @@ class Quote extends Model implements HasMedia
 {
     use HasFactory,InteractsWithMedia,SoftDeletes;
     protected $fillable = [
+        'title',
         'image',
         'sequence',
 		'status',

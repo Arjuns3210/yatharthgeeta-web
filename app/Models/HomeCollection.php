@@ -52,7 +52,7 @@ class HomeCollection extends Model implements HasMedia
         self::AUDIO    => 'Audio',
         self::VIDEO    => 'Video',
         self::SHLOK    => 'Shlok',
-        self::ARTIST   => 'Artist',
+        self::ARTIST   => 'Guru',
     ];
 
     function language()

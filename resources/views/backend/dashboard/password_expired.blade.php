@@ -34,7 +34,7 @@
                                                                 </div>
                                                             </div>
                                                             @enderror
-                                                            <input class="form-control" type="txet" name="id" value="{{$data['id']}}">
+                                                            <input class="form-control" type="hidden" name="id" value="{{$data['id']}}">
                                                         </div>  
                                                         <div class="col-md-12">
                                                             <label>New Password<span class="text-danger">*</span></label>
