@@ -23,9 +23,9 @@ class CreateBooksTable extends Migration
             $table->integer('pages');
             $table->integer('sequence');
             $table->integer('language_id')->unsigned();
-            $table->integer('audio_id')->unsigned()->comment('comma separated audio ids');
-            $table->integer('video_id')->unsigned()->comment('comma separated video ids');
-            $table->integer('related_id')->nullable()->comment('comma separated book ids');
+            $table->integer('audio_id')->unsigned()->nullable();
+            $table->integer('video_id')->unsigned()->nullable();
+            $table->text('related_id')->nullable()->comment('comma separated book ids');
             $table->enum('download_allowed', [1, 0])->default(0);
             $table->enum('visible_on_app', [0, 1])->default(1);
             $table->enum('status', [1, 0])->default(1);
