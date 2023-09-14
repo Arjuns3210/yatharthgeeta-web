@@ -133,14 +133,14 @@
                         <li class="has-sub nav-item">
                             <a href="javascript:;" class="dropdown-parent"><i class="ft-grid"></i><span data-i18n="" class="menu-title">Home Master</span></a>
                             <ul class="menu-content">
-                                <li class="{{ $lastParam ==  'books' ? 'active' : '' }}">
-                                    <a href="books" class="menu-item"><i class="fa fa-book" aria-hidden="true"></i>Books</a>
-                                </li>
                                 <li class="{{ ($lastParam ==  'audios' || $lastParam ==  'audio_episodes') ? 'active' : '' }}">
                                     <a href="audios" class="menu-item"><i class="fa fa-volume-up" aria-hidden="true"></i>Audio</a>
                                 </li>
                                 <li class="{{ $lastParam ==  'videos' ? 'active' : '' }}">
                                     <a href="videos" class="menu-item"><i class="fa fa-video-camera" aria-hidden="true"></i>Videos</a>
+                                </li>
+                                <li class="{{ $lastParam ==  'books' ? 'active' : '' }}">
+                                    <a href="books" class="menu-item"><i class="fa fa-book" aria-hidden="true"></i>Books</a>
                                 </li>
                                 <li class="{{ $lastParam ==  'shloks' ? 'active' : '' }}">
                                     <a href="shloks" class="menu-item"><i class="fa fa-bookmark" aria-hidden="true"></i>Shloks</a>
