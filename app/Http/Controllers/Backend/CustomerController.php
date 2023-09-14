@@ -76,7 +76,7 @@ class CustomerController extends Controller
                         $customer_change_password = checkPermission('customer_change_password');
                         $actions = '<span style="white-space:nowrap;">';
                         if ($customer_view) {
-                            $actions .= '<a href="customer/view/' . $event->id . '" class="btn btn-primary btn-sm modal_src_data" data-size="large" data-title="View customer Details" title="View"><i class="fa fa-eye"></i></a>';
+                            $actions .= '<a href="customer/view/' . $event->id . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View customer Details" title="View"><i class="fa fa-eye"></i></a>';
                         }
                         if(!$isDeleted){
 
