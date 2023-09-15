@@ -37,6 +37,9 @@ class Video extends Model implements HasMedia
 	    'description' => 'textarea'
 
 	];
+    protected $attributes = [
+        'video_category_id' => 1
+    ];
 
     const COVER_IMAGE= 'cover_image';
 

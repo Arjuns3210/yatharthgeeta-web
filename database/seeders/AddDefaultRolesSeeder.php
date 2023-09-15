@@ -15,9 +15,17 @@ class AddDefaultRolesSeeder extends Seeder
     public function run()
     {
         $role = [
-            'role_name' => 'Admin',
-            'permission' => []
+            [
+                'role_name' => 'Admin',
+                'permission' => []
+            ],
+            [
+                'role_name' => 'Staff',
+                'permission' => []
+            ]
         ];
-        Role::firstOrCreate($role);
+        foreach ($role as $data){
+            Role::create($data);
+        }
     }
 }

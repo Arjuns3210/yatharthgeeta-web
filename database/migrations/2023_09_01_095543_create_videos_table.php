@@ -17,7 +17,7 @@ class CreateVideosTable extends Migration
             $table->increments('id');
             $table->integer('language_id')->unsigned();
             $table->integer('artist_id')->unsigned()->nullable();
-            $table->integer('video_category_id')->unsigned();
+            $table->integer('video_category_id')->unsigned()->nullable();
             $table->longText('cover_image');
             $table->integer('views')->nullable();
             $table->integer('duration');

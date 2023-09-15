@@ -32,8 +32,8 @@ class StaffController extends Controller
         $data['staff_view'] = checkPermission('staff_view');
         $data['staff_edit'] = checkPermission('staff_edit');
         $data['staff_status'] = checkPermission('staff_status');
-
-        return view('backend/staff/index', ["data" => $data]);
+        $roles = Role::where('status', 1)->get();
+        return view('backend/staff/index', ["data" => $data], ['roles' => $roles]);
     }
 
     /**
@@ -81,10 +81,14 @@ class StaffController extends Controller
                         $staff_view = checkPermission('staff_view');
                         $staff_edit = checkPermission('staff_edit');
                         $staff_status = checkPermission('staff_status');
+                        $customer_change_password = checkPermission('customer_change_password');
                         $actions = '<span style="white-space:nowrap;">';
 
                         if ($staff_view) {
                             $actions .= '<a href="staff/view/' . $event->id . '" class="btn btn-primary btn-sm src_data" data-size="large" data-title="View Staff Details" title="View"><i class="fa fa-eye"></i></a>';
+                        }
+                        if ($customer_change_password) {
+                            $actions .= ' <a href="staff/change_password/' . $event->id . '" class="btn btn-success btn-sm src_data" data-size="large" data-title="Change Staff Password" title="Change Password"><i class="fa fa-key"></i></a>';
                         }
                         if ($staff_edit) {
                             $actions .= ' <a href="staff/edit/' . $event->id . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
@@ -115,7 +119,7 @@ class StaffController extends Controller
     }
 
     public function add() {
-        $data['role'] = Role::all();
+        $data['role'] = Role::where('status', 1)->get();
 
         return view('backend/staff/add',["data"=>$data]);
     }
@@ -234,5 +238,28 @@ class StaffController extends Controller
             Log::error("Something Went Wrong. Error: " . $e->getMessage());
             errorMessage(trans('auth.something_went_wrong'));
         }
+    }
+
+    public function changePassword($id) {
+        $data['staff'] = Admin::find($id);
+        return view('backend/staff/change_password',$data);
+    }
+
+    public function changeStaffPassword(Request $request)
+    {
+        $msg_data = array();
+        $admin = Admin::find($_GET['id']);
+        if ($request->new_password != $request->confirm_password) {
+            errorMessage('Password not matched!', $msg_data);
+        }
+
+        if ($admin->password == md5($admin->email . $request->new_password)) {
+            errorMessage(__('change_password.new_password_cannot_same_current_password'), $msg_data);
+        }
+
+        $admin->password = md5($admin->email . $request->new_password);
+        $admin->save();
+        successMessage('Password updated successfully!', $msg_data);
+        //return back()->with('success','Password updated successfully!');
     }
 }

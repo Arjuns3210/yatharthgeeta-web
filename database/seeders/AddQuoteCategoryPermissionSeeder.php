@@ -15,7 +15,7 @@ class AddQuoteCategoryPermissionSeeder extends Seeder
     public function run()
     {
         $parent_permission = [
-            'name' => 'quoteCategory',
+            'name' => 'Quote Category',
             'codename' => 'quoteCategory',
             'parent_status' => 'parent',
             'description' => '',

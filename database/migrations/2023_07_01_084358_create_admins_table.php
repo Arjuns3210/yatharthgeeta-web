@@ -28,6 +28,9 @@ class CreateAdminsTable extends Migration
             $table->enum('on_leave', [1, 0])->default(0);
             $table->enum('login_allowed', [1, 0])->default(1);
             $table->enum('status', [1, 0])->default(1);
+            $table->enum('sms_notification', [1, 0])->default(1);
+            $table->enum('email_notification', [1, 0])->default(1);
+            $table->enum('whatsapp_notification', [1, 0])->default(1);
             $table->enum('force_pwd_change_flag', [1, 0])->default(1);
             $table->date('pwd_expiry_date')->nullable();
             $table->integer('created_by')->default(0);
