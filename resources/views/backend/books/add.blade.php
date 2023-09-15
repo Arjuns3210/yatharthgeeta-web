@@ -34,7 +34,7 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <label>SEQUENCE<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)"><br/>
+                                                        <input class="form-control required integer-validation" type="number" id="sequence" name="sequence"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Book Category<span class="text-danger">*</span></label>
@@ -46,7 +46,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Number of Pages<span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" id="pages" name="pages" oninput="filterNonNumeric(this)"><br/>
+                                                        <input class="form-control integer-validation" type="number" id="pages" name="pages"><br/>
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Video</label>

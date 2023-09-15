@@ -17,7 +17,7 @@
                                         <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                             <button class="btn btn-sm btn-outline-danger px-3 py-1 mr-2" id="listing-filter-toggle"><i class="fa fa-filter"></i> Filter</button>
                                             @if($data['mantra_add'])
-                                                <a href="mantras/add" class="btn btn-sm btn-outline-primary px-3 py-1 src_data"><i class="fa fa-plus"></i> Add mantra</a>
+                                                <a href="mantras/add" class="btn btn-sm btn-outline-primary px-3 py-1 src_data"><i class="fa fa-plus"></i> Add Mantra</a>
                                             @endif
                                         </div>
                                     </div>
@@ -30,7 +30,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label>Sequence</label>
-                                            <input class="form-control mb-3" type="text" id="search_sequence" name="search_sequence" oninput="onlyNumericNegative(this)">
+                                            <input class="form-control mb-3" type="number" id="search_sequence" name="search_sequence">
                                         </div>
                                         <div class="col-md-4">
                                             <label>Status</label>
@@ -50,7 +50,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
-                                                    <th id="sanskrit_title" data-orderable="false" data-searchable="false">Sanskrit Title</th>
+                                                    <th id="sanskrit_title" data-orderable="false" data-searchable="false">Sanskrit Mantra</th>
                                                     <th id="sequence" data-orderable="false" data-searchable="false">Sequence</th>
                                                     @if($data['mantra_status'] || $data['mantra_edit'] || $data['mantra_view'] || $data['mantra_delete'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>

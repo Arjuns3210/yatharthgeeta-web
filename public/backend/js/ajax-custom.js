@@ -32,11 +32,11 @@ $(document).ready(function () {
     });
 
     // remove alert messages for empty input fields
-    $(document).on('keyup', '.required', function (event) {
+    $(document).on('keyup',  '.required,.numeric-validation,.integer-validation,.url-validation', function (event) {
         $(this).removeClass('border-danger');
     });
 
-    $(document).on('change', '.required', function (event) {
+    $(document).on('change',  '.required,.numeric-validation,.integer-validation,.url-validation', function (event) {
         $(this).removeClass('border-danger');
         $(this).siblings('.select2-container').find('.selection').find('.select2-selection').removeClass('border-danger');
     });
@@ -226,6 +226,33 @@ function submitForm(form_id, form_method, errorOverlay = '') {
         if(here.val() == '') {
             here.addClass('border-danger');
             here.siblings('.select2-container').find('.selection').find('.select2-selection').addClass('border-danger');
+            can++;
+        }
+    });
+    $('#' + form_id).find(".integer-validation").each(function() {
+        var here = $(this);
+        var value = here.val();
+        // Regular expression pattern for integers
+        var integerPattern = /^-?\d+$/;
+        // Check if the parsed value is an integer
+        if (isNaN(value) || !integerPattern.test(value)) {
+            here.addClass('border-danger');
+            can++;
+        }
+    });
+    $('#' + form_id).find(".numeric-validation").each(function() {
+        var here = $(this);
+        var value = here.val();
+        if (isNaN(value)) {
+            here.addClass('border-danger');
+            can++;
+        }
+    });
+    $('#' + form_id).find(".url-validation").each(function() {
+        var here = $(this);
+        var urlPattern = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
+        if (here.val()  && !urlPattern.test(here.val())) { 
+            here.addClass('border-danger');
             can++;
         }
     });
@@ -688,22 +715,6 @@ function validateNumberInput(input) {
     }
 }
 
-function filterNonNumeric(input) {
-    var regex = /^\d+$/;
-    var inputValue = input.value.trim();
-
-    if (!regex.test(inputValue)) {
-        input.value = inputValue.replace(/\D/g, '');
-    }
-}
-function onlyNumericNegative(input) {
-    var regex = /^-?\d*\.?$/;
-    var inputValue = input.value.trim();
-    if (!regex.test(inputValue)) {
-        input.value = inputValue.replace(/\D/g, '');
-    }
-
-}
 
 function validateNameInput(input) {
     var regex = /^[A-Za-z\s]+$/;
@@ -743,13 +754,6 @@ function handleFileInputChange(id, type = null) {
     }
 }
 
-function onlyNumericNegative(input) {
-    var regex = /^-?\d*\.?$/;
-    var inputValue = input.value.trim();
-    if (!regex.test(inputValue)) {
-        input.value = inputValue.replace(/\D/g, '');
-    }
-}
 
 function deleteDocuments (mediaId, removeClassName) {
     bootbox.confirm({

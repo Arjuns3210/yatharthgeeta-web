@@ -15,7 +15,7 @@ class AddAboutUsPermissionSeeder extends Seeder
     public function run()
     {
         $parent_permission = [
-            'name' => 'about_us',
+            'name' => 'About Us',
             'codename' => 'about_us',
             'parent_status' => 'parent',
             'description' => '',
