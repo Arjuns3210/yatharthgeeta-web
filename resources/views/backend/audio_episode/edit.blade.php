@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Edit Audio Episode : {{ $audioEpisode['title_en'] ?? '' }} ({{ config('translatable.locales_name')[\App::getLocale()] }})</h5>
+                                    <h5 class="pt-2">Edit Audio Episode : {{ $audioEpisode["chapter_name_".\Illuminate\Support\Facades\App::getLocale()] ?? '' }} ({{ config('translatable.locales_name')[\App::getLocale()] }})</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -70,7 +70,7 @@
                                                                 <div class="d-flex mb-1  audio-file-div-{{$data->id}}">
                                                                     <input type="text"
                                                                            class="form-control input-sm bg-white document-border"
-                                                                           value="{{ $data->name }}"
+                                                                           value="{{ $data->file_name }}"
                                                                            readonly style="color: black !important;">
                                                                     <a href="{{ $data->getFullUrl() }}"
                                                                        class="btn btn-primary mx-2 px-2" target="_blank"><i
@@ -102,7 +102,7 @@
                                                                 <div class="d-flex mb-1  srt-file-div-{{$file->id}}">
                                                                     <input type="text"
                                                                            class="form-control input-sm bg-white document-border"
-                                                                           value="{{ $file->name }}"
+                                                                           value="{{ $file->file_name }}"
                                                                            readonly style="color: black !important;">
                                                                     <a href="{{ $file->getFullUrl() }}"
                                                                        class="btn btn-primary mx-2 px-2" target="_blank"><i
@@ -125,16 +125,12 @@
                                                             <div class="col-md-6 mb-3">
                                                                 @if ($translated_block_fields_value == 'input')
                                                                     <label>{{ str_replace('_',' ',$translated_block_fields_key) }}</label>
-                                                                    <input class="translation_block form-control required" type="text" id="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" name="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" value="{{ $audioEpisode[$translated_block_fields_key.'_'.$translated_data_tabs] ?? '' }}">
+                                                                    <input class="translation_block form-control required {{(in_array($translated_block_fields_key,['chapter_number','verses_number']) ? 'integer-validation' : '')}}" type="{{(in_array($translated_block_fields_key,['chapter_number','verses_number']) ? 'number' : 'text')}}" id="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" name="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" value="{{ $audioEpisode[$translated_block_fields_key.'_'.$translated_data_tabs] ?? '' }}">
                                                                 @elseif ($translated_block_fields_value == 'textarea')
                                                                     <label>{{ $translated_block_fields_key }}</label>
                                                                     <textarea class="translation_block form-control required" id="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" name="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}">{{ $audioEpisode[$translated_block_fields_key.'_'.$translated_data_tabs] ?? '' }}</textarea>
                                                                 @endif
                                                             </div>
-                                                            @if($loop->first)
-                                                                <div class="col-md-6 mb-3">
-                                                                </div>
-                                                            @endif
                                                         @endforeach
                                                     </div>
                                                 </div>

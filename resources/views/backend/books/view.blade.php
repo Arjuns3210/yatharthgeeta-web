@@ -43,7 +43,7 @@
                                                             <div class="d-flex mb-1 ">
                                                                 <input type="text"
                                                                        class="form-control input-sm bg-white document-border"
-                                                                       value="{{ $pdf_file->name ?? ''}}"
+                                                                       value="{{ $pdf_file->file_name ?? ''}}"
                                                                        readonly
                                                                        style="color: black !important;">
                                                                 <a href="{{$pdf_file->getFullUrl() ?? ''}}"
@@ -62,7 +62,7 @@
                                                             <div class="d-flex mb-1 ">
                                                                 <input type="text"
                                                                        class="form-control input-sm bg-white document-border"
-                                                                       value="{{ $epub_file->name ?? ''}}"
+                                                                       value="{{ $epub_file->file_name ?? ''}}"
                                                                        readonly
                                                                        style="color: black !important;">
                                                                 <a href="{{$epub_file->getFullUrl() ?? ''}}"

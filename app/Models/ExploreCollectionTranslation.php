@@ -4,18 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AudioEpisodeTranslation extends Model
+class ExploreCollectionTranslation extends Model
 {
 
     public $timestamps = false;
 
     public $fillable = [
-        'audio_episode_id',
+        'explore_collection_id',
         'locale',
-        'chapter_name',
-        'verses_name',
-        'chapter_number',
-        'verses_number',
+        'title',
+        'description',
     ];
 
     /**
@@ -25,15 +23,11 @@ class AudioEpisodeTranslation extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'audio_id' => 'integer',
+        'explore_collection_id' => 'integer',
         'locale' => 'string',
         'title' => 'string',
-        'verses' => 'string',
-        'chapters' => 'string',
+        'description' => 'string'
     ];
+    
 
-    public function audioEpisode()
-    {
-        return $this->belongsTo(AudioEpisode::class);
-    }
 }

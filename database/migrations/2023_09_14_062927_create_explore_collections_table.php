@@ -15,8 +15,6 @@ class CreateExploreCollectionsTable extends Migration
     {
         Schema::create('explore_collections', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->string('description');
             $table->enum('type', ['Book', 'Audio', 'Quote', 'Mantra'])->default('Book');
             $table->longText('mapped_ids')->nullable();
             $table->integer('sequence')->nullable();

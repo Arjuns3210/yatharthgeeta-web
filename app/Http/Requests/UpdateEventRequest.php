@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Models\ExploreCollection;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class CreateExploreCollectionRequest extends FormRequest
+class UpdateEventRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,7 +15,7 @@ class CreateExploreCollectionRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return true; // Adjust as needed based on your authorization logic
     }
 
     /**
@@ -26,26 +25,26 @@ class CreateExploreCollectionRequest extends FormRequest
      */
     public function rules()
     {
-        $ruleData = [
-            'collection_type' => 'required|in:Book,Audio,Quote,Mantra',
-            'language_id'     => 'required|integer',
-            'sequence'        => 'required|integer',
+        return [
+            'id'               => 'required',
+            'event_start_date' => 'required|date',
+            'event_start_time' => 'required',
+            'event_end_date'   => 'required|date|after_or_equal:event_start_date',
+            'event_end_time'   => 'required|after_or_equal:event_start_time',
         ];
-        $collectionType = $this->input('collection_type');
-        if ($collectionType == ExploreCollection::BOOK) {
-            $ruleData['book_id'] = 'required';
-        }
-        if ($collectionType == ExploreCollection::AUDIO) {
-            $ruleData['audio_id'] = 'required';
-        }
-        if ($collectionType == ExploreCollection::QUOTES) {
-            $ruleData['quote_id'] = 'required';
-        }
-        if ($collectionType == ExploreCollection::MANTRA) {
-            $ruleData['mantra_id'] = 'required';
-        }
+    }
 
-        return $ruleData;
+    /**
+     * Custom message for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'event_end_date.after_or_equal' => 'Event Start date cannot be greater than Event end  date.',
+            'event_end_time.after_or_equal' => 'Event Start time cannot be greater than Event end  time.',
+        ];
     }
 
     /**

@@ -77,7 +77,7 @@
                                                                 <div class="d-flex mb-1  cover-image-div-{{$image->id}}">
                                                                     <input type="text"
                                                                            class="form-control input-sm bg-white document-border"
-                                                                           value="{{ $image->name }}"
+                                                                           value="{{ $image->file_name }}"
                                                                            readonly style="color: black !important;">
                                                                     <a href="{{ $image->getFullUrl() }}"
                                                                        class="btn btn-primary mx-2 px-2" target="_blank"><i
@@ -109,7 +109,7 @@
                                                                 <div class="d-flex mb-1  audio-file-div-{{$data->id}}">
                                                                     <input type="text"
                                                                            class="form-control input-sm bg-white document-border"
-                                                                           value="{{ $data->name }}"
+                                                                           value="{{ $data->file_name }}"
                                                                            readonly style="color: black !important;">
                                                                     <a href="{{ $data->getFullUrl() }}"
                                                                        class="btn btn-primary mx-2 px-2" target="_blank"><i
@@ -131,7 +131,7 @@
                                                         @foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value)
                                                             <div class="col-md-6 mb-3">
                                                                 @if ($translated_block_fields_value == 'input')
-                                                                    <label>{{ $translated_block_fields_key }}</label>
+                                                                    <label>{{($translated_block_fields_key == 'title' ? 'Pravachan ' :'')}}{{ $translated_block_fields_key }}<span class="text-danger">*</span></label>
                                                                     <input class="translation_block form-control required" type="text" id="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" name="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" value="{{ $audio[$translated_block_fields_key.'_'.$translated_data_tabs] ?? '' }}">
                                                                 @elseif ($translated_block_fields_value == 'textarea')
                                                                     <label>{{ $translated_block_fields_key }}</label>

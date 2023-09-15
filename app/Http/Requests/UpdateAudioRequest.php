@@ -32,6 +32,7 @@ class UpdateAudioRequest extends FormRequest
             'sequence'     => 'required|integer',
             'language_id'  => 'required',
             'author_id'  => 'required',
+            'cover_image'   => 'nullable|mimes:jpeg,jpg,png,gif',
         ];
     }
 

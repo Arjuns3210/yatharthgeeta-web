@@ -82,7 +82,7 @@
                                                                 <div class="d-flex mb-1 ">
                                                                     <input type="text"
                                                                            class="form-control input-sm bg-white document-border"
-                                                                           value="{{ $image->name}}"
+                                                                           value="{{ $image->file_name}}"
                                                                            readonly
                                                                            style="color: black !important;">
                                                                     <a href="{{$image->getFullUrl()}}"

@@ -30,8 +30,6 @@ class UpdateHomeCollectionRequest extends FormRequest
             'id'              => 'required',
             'collection_type' => 'required|in:Single,Multiple,Book,Audio,Video,Shlok,Artist',
             'language_id'     => 'required|integer',
-            'title'           => 'required|max:255',
-            'description'     => 'required|max:255',
             'sequence'        => 'required|integer',
             'display_in_column'=> 'required|integer',
         ];

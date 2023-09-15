@@ -30,8 +30,6 @@ class UpdateExploreCollectionRequest extends FormRequest
             'id'              => 'required',
             'collection_type' => 'required|in:Book,Audio,Quote,Mantra',
             'language_id'     => 'required|integer',
-            'title'           => 'required|max:255',
-            'description'     => 'required|max:255',
             'sequence'        => 'required|integer',
         ];
         $collectionType = $this->input('collection_type');
