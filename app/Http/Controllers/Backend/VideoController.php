@@ -150,7 +150,10 @@ class VideoController extends Controller
         }
         $saveArray = Utils::flipTranslationArray($input, $translated_keys);
         $data = Video::create($saveArray);
-        storeMedia($data, $input['cover_image'], Video::COVER_IMAGE);
+        //store video cover image
+        if (! empty($input['cover_image']) && $data) {
+            storeMedia($data, $input['cover_image'], Video::COVER_IMAGE);
+        }
         successMessage('Data Saved successfully', []);
     }
 

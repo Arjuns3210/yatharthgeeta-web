@@ -37,7 +37,7 @@
                                                         <input class="form-control numeric-validation" type="number" id="duration" name="duration" value="{{$videos->duration}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Video Link<span class="text-danger">*</span></label>
+                                                        <label>YouTube Video Link<span class="text-danger">*</span></label>
                                                         <input class="form-control required url-validation" type="text" id="link" name="link" value="{{$videos->link}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
@@ -46,33 +46,56 @@
                                                     </div>
                                                     <div class="col-sm-6 mb-3">
                                                         <label>LANGUAGE<span class="text-danger">*</span></label>
-                                                        <select class="form-control" type="text" id="language_id" name="language_id">
+                                                        <select class="form-control required" type="text" id="language_id" name="language_id">
                                                         @foreach($language as $language)
                                                         <option value="{{$language->id}}" {{($language->id ==$videos['language_id'] ) ? 'selected' : ''}}>{{$language->translations[0]->name ?? ''}}</option>
                                                         @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-6 mb-3">
-                                                        <label>Video Category<span class="text-danger">*</span></label>
-                                                        <select class="form-control" type="text" id="video_category_id" name="video_category_id">
-                                                        @foreach($video_category as $video_category)
-                                                            <option value="{{$video_category->id}}" {{($video_category->id ==$videos['video_category_id'] ) ? 'selected' : ''}}>{{$video_category->translations[0]->name ?? ''}}</option>
-                                                        @endforeach
-                                                        </select>
-                                                    </div>
                                                     <div class="col-sm-6">
                                                         <label>Guru<span class="text-danger">*</span></label>
-                                                        <select class="form-control" type="text" id="artist_id" name="artist_id">
+                                                        <select class="form-control required" type="text" id="artist_id" name="artist_id">
                                                         @foreach($artist as $artist)
                                                             <option value="{{$artist->id}}" {{($artist->id ==$videos['artist_id'] ) ? 'selected' : ''}}>{{$artist->translations[0]->name ?? ''}}</option>
                                                         @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-6">
+                                                    {{-- <div class="col-sm-6">
                                                         <label>Cover Image<span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('cover_image')" value="{{$videos['cover_image']}}"><br/>
+                                                        <input class="form-control required" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('cover_image')" value="{{$videos['cover_image']}}"><br/>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p><br>
                                                         <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="100px" alt="">
+                                                    </div> --}}
+                                                    <div class="col-sm-6">
+                                                        <div class="col-md-6 col-lg-12 col-sm-6 text-center file-input-div">
+                                                            <p class="font-weight-bold">COVER IMAGE <span class="text-danger">*</span></p>
+                                                            <div class="shadow bg-white rounded d-inline-block mb-2">
+                                                                <div class="input-file">
+                                                                    <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
+                                                                        <input class="form-control" accept=".jpg,.jpeg,.png" type="file" id="cover_image" name="cover_image" onchange="handleFileInputChange('cover_image')"><br/>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <p id="files-area">
+                                                                <span id="coverImagesLists">
+                                                                    <span id="cover-images-names"></span>
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="d-flex mb-1  media-div-{{$media->id}}">
+                                                            <input type="text"
+                                                                    class="form-control input-sm bg-white document-border"
+                                                                    value="{{ $media->name }}"
+                                                                    readonly style="color: black !important;">
+                                                            <a href="{{ $media->getFullUrl() }}"
+                                                                class="btn btn-primary mx-2 px-2" target="_blank"><i
+                                                                        class="fa ft-eye"></i></a>
+                                                            <a href="javascript:void(0)"
+                                                                class="btn btn-danger delete-media  px-2"
+                                                                data-url="{{ $media->getFullUrl() }}" data-id="{{ $media->id }}"><i
+                                                                        class="fa ft-trash"></i></a>
+                                                        </div>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -85,7 +108,11 @@
 
                                                             <?php if($translated_block_fields_value == 'input') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}}<span class="text-danger">*</span></label>
+                                                                    @if( formatName($translated_block_fields_key) == 'title')
+                                                                        <label>Video Name<span class="text-danger">*</span></label>
+                                                                    @else
+                                                                        <label>{{formatName($translated_block_fields_key)}}<span class="text-danger">*</span></label>
+                                                                    @endif
                                                                     <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" value="{{$videos[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}">
                                                                 </div>
                                                             <?php
@@ -123,4 +150,52 @@
             </div>
         </div>
     </div>
+    <script>
+        const coverImageData = new DataTransfer();
+
+            function handleCoverImagesAttachmentChange() {
+                const attachmentInput = document.getElementById('cover_image');
+
+                    attachmentInput.addEventListener('change', function (e) {
+                        if (this.files.length === 1) {
+                            const file = this.files[0];
+                            const fileBloc = $('<span/>', { class: 'file-block' });
+                            const fileName = $('<span/>', { class: 'name', text: file.name });
+
+                            fileBloc.append('<span class="file-delete cover-image-delete"><span>+</span></span>').
+                                append(fileName);
+
+                                // Clear existing uploaded documents
+                                $('#coverImagesLists > #cover-images-names').empty();
+
+                                $('#coverImagesLists > #cover-images-names').append(fileBloc);
+                                coverImageData.items.clear(); // Clear existing items
+                                coverImageData.items.add(file);
+                        } else {
+                            this.value = '';
+                            $('#coverImagesLists > #cover-images-names').empty();
+                            coverImageData.items.clear();
+                        }
+                });
+
+                $(document).on('click', 'span.cover-image-delete', function () {
+                    // Clear UI
+                $('#coverImagesLists > #cover-images-names').empty();
+
+                    // Clear DataTransfer object (coverImageData)
+                    coverImageData.items.clear();
+
+                    // Reset the input field to clear selected files
+                        const input = document.getElementById('cover_image');
+                         input.value = ''; // This should clear the selected file(s) in the input field
+            });
+        }
+
+        handleCoverImagesAttachmentChange();
+        $('.delete-media').click(function () {
+                let mediaId = $(this).attr('data-id');
+                deleteDocuments(mediaId, '.media-div-');
+            });
+
+    </script>
 </section>
