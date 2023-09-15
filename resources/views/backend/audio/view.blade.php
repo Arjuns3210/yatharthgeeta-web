@@ -75,10 +75,6 @@
                                                                             <td></td>
                                                                         @endif
                                                                     </tr>
-                                                                    <tr>
-                                                                        <td><strong>Date Time</strong></td>
-                                                                        <td>{{\Carbon\Carbon::parse($audio->created_at)->format('d-m-Y')}}</td>
-                                                                    </tr>
                                                                 </table>
                                                             </div>
                                                         </div>
@@ -94,8 +90,8 @@
                                                                 <div class="table-responsive">
                                                                     <table class="table table-striped table-bordered">
                                                                             <tr>
-                                                                                <td><strong>Title</strong></td>
-                                                                                <td>{{ $data->title ?? '' }}</td>
+                                                                                <td><strong>Audio Title</strong></td>
+                                                                                <td>{{ $data->audio_title ?? '' }}</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td><strong>Description</strong></td>

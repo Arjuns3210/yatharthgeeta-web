@@ -19,6 +19,7 @@ use App\Models\Mantra;
 use App\Models\Quote;
 use App\Models\Shlok;
 use App\Models\Video;
+use App\Utils\Utils;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -132,7 +133,7 @@ class ExploreCollectionController extends Controller
         } else {
             $localeLanguage = 'hi';
         }
-        $data['translated_block'] = [];
+        $data['translated_block'] = ExploreCollection::TRANSLATED_BLOCK;
         $data['collection_types'] = ExploreCollection::EXPLORE_COLLECTION_TYPES;
         $data['books'] = Book::with([
             'translations' => function ($query) use ($localeLanguage) {
@@ -191,7 +192,12 @@ class ExploreCollectionController extends Controller
             if ($input['type'] == ExploreCollection::MANTRA && ! empty($input['mantra_id'])) {
                 $input['mapped_ids'] = implode(",", $input['mantra_id']);
             }
-            ExploreCollection::create($input);
+            $translated_keys = array_keys(ExploreCollection::TRANSLATED_BLOCK);
+            foreach ($translated_keys as $value) {
+                $input[$value] = (array) json_decode($input[$value]);
+            }
+            $saveArray = Utils::flipTranslationArray($input, $translated_keys);
+            ExploreCollection::create($saveArray);
             
             DB::commit();
 
@@ -200,7 +206,7 @@ class ExploreCollectionController extends Controller
             DB::rollBack();
             Log::error("Something Went Wrong. Error: ".$e->getMessage());
 
-            errorMessage("Something Went Wrong.");
+            errorMessage($e->getMessage());
         }
     }
 
@@ -212,10 +218,9 @@ class ExploreCollectionController extends Controller
      */
     public function show($id)
     {
-        $data['collection'] = HomeCollection::find($id);
-        $data['singleImage'] = $data['collection']->getMedia(HomeCollection::SINGLE_COLLECTION_IMAGE)->first();
-
-        return view('backend/home_collection/view')->with($data);
+        $data['collection'] = ExploreCollection::find($id);
+        
+        return view('backend/explore_collection/view')->with($data);
     }
 
     /**
@@ -237,7 +242,7 @@ class ExploreCollectionController extends Controller
         } else {
             $localeLanguage = 'hi';
         }
-        $data['translated_block'] = [];
+        $data['translated_block'] = ExploreCollection::TRANSLATED_BLOCK;
         $data['collection_types'] = ExploreCollection::EXPLORE_COLLECTION_TYPES;
         $data['books'] = Book::with([
             'translations' => function ($query) use ($localeLanguage) {
@@ -261,8 +266,14 @@ class ExploreCollectionController extends Controller
             },
         ])->where('status', 1)->get();
 
-        $data['collection'] = $exploreCollection;
-        $data['mappedIds'] = explode(',',$data['collection']->mapped_ids ?? '');
+        $data['mappedIds'] = explode(',',$exploreCollection->mapped_ids ?? '');
+        $data['collection'] = $exploreCollection->toArray();
+        foreach($data['collection']['translations'] as $trans) {
+            $translated_keys = array_keys(ExploreCollection::TRANSLATED_BLOCK);
+            foreach ($translated_keys as $value) {
+                $data['collection'][$value.'_'.$trans['locale']] = $trans[$value];
+            }
+        }
         
         return view('backend/explore_collection/edit',$data);
     }
@@ -300,7 +311,12 @@ class ExploreCollectionController extends Controller
                 $input['mapped_ids'] = implode(",", $input['mantra_id']);
             }
             if (!empty($collection)){
-                $collection->update($input);
+                $translated_keys = array_keys(ExploreCollection::TRANSLATED_BLOCK);
+                foreach ($translated_keys as $value) {
+                    $input[$value] = (array) json_decode($input[$value]);
+                }
+                $saveArray = Utils::flipTranslationArray($input, $translated_keys);
+                $collection->update($saveArray);
             }
 
             DB::commit();

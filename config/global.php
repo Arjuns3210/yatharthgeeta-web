@@ -2,11 +2,11 @@
 
 return [
 	'dimensions' => [
-		'image' => '200X200 pixel and .jpg, .png, or jpeg formate image',
-		'pdf' => 'Only PDF formate',
-		'epub' => 'Only EPUB formate'
-	],
-	'TRIGGER_FPWD_EMAIL' => true,
+		'image' => '200X200 pixel and .jpg, .png, or jpeg format image',
+		'pdf' => 'Only PDF format',
+		'epub' => 'Only EPUB format'
+    ],
+    'TRIGGER_FPWD_EMAIL' => true,
 ];
 
 ?>

@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">View Audio Episode : {{$audioEpisode->translations[0]->title ?? ''}} ({{ config('translatable.locales_name')[\App::getLocale()] }})</h5>
+                                    <h5 class="pt-2">View Audio Episode : {{$audioEpisode->translations[0]->chapter_name ?? ''}} ({{ config('translatable.locales_name')[\App::getLocale()] }})</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -74,7 +74,7 @@
                                                                            <div class="d-flex mb-1 ">
                                                                                <input type="text"
                                                                                       class="form-control input-sm bg-white document-border"
-                                                                                      value="{{ $audioEpisodeSrtFile->name ?? ''}}"
+                                                                                      value="{{ $audioEpisodeSrtFile->file_name ?? ''}}"
                                                                                       readonly
                                                                                       style="color: black !important;">
                                                                                <a href="{{$audioEpisodeSrtFile->getFullUrl() ?? ''}}"
@@ -85,10 +85,6 @@
                                                                                -
                                                                                @endif
                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td><strong>Date Time</strong></td>
-                                                                        <td>{{\Carbon\Carbon::parse($audioEpisode->created_at)->format('d-m-Y')}}</td>
                                                                     </tr>
                                                                    
                                                                 </table>
@@ -106,11 +102,6 @@
                                                             <div class="col-12">
                                                                 <div class="table-responsive">
                                                                     <table class="table table-striped table-bordered">
-                                                                        <tr>
-                                                                            <td><strong>Audio Episode Title</strong>
-                                                                            </td>
-                                                                            <td>{{ $translateData->title ?? ''}}</td>
-                                                                        </tr>
                                                                         <tr>
                                                                             <td><strong>Chapter Number</strong>
                                                                             </td>

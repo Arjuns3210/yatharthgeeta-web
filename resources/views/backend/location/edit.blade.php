@@ -65,11 +65,11 @@
                                                     </div>
                                                     <div class="col-sm-6" hidden>
                                                         <label>Latitude<span class="text-danger">*</span></label>
-                                                        <input class="form-control required integer-validation" type="number" id="latitude" name="latitude"  value="{{$location['latitude']}}"><br/>
+                                                        <input class="form-control required" type="number" id="latitude" name="latitude"  value="{{$location['latitude']}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6" hidden>
                                                         <label>Longitude<span class="text-danger">*</span></label>
-                                                        <input class="form-control required integer-validation" type="number" id="longitude" name="longitude"  value="{{$location['longitude']}}"><br/>
+                                                        <input class="form-control required" type="number" id="longitude" name="longitude"  value="{{$location['longitude']}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Goolge Address<span class="text-danger">*</span></label>

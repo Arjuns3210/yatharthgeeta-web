@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,13 +13,11 @@ class HomeCollection extends Model implements HasMedia
 {
     use SoftDeletes;
     use HasFactory;
-    use InteractsWithMedia;
+    use InteractsWithMedia,Translatable;
 
     public $table = 'home_collections';
 
     public $fillable = [
-        'title',
-        'description',
         'type',
         'sequence',
         'is_scrollable',
@@ -55,6 +54,18 @@ class HomeCollection extends Model implements HasMedia
         self::ARTIST   => 'Guru',
     ];
 
+    const DISPLAY_IN_COLUMN = [
+        1,
+        2,
+        3,
+        4,
+    ];
+    public $translatedAttributes = ['title', 'description'];
+    public const TRANSLATED_BLOCK = [
+        'title' => 'input',
+        'description' => 'textarea'
+    ];
+    
     function language()
     {
 

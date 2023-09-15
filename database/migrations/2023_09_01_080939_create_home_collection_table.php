@@ -15,8 +15,6 @@ class CreateHomeCollectionTable extends Migration
     {
         Schema::create('home_collections', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->string('description');
             $table->enum('type', ['Single', 'Multiple', 'Book', 'Audio', 'Video', 'Shlok', 'Artist'])->default('Single');
             $table->integer('sequence')->nullable();
             $table->enum('is_scrollable', [0, 1])->default(0);

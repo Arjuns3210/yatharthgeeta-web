@@ -9,11 +9,13 @@ use App\Models\Artist;
 use App\Models\Audio;
 use App\Models\Book;
 use App\Models\BookCategory;
+use App\Models\ExploreCollection;
 use App\Models\HomeCollection;
 use App\Models\HomeCollectionMapping;
 use App\Models\Language;
 use App\Models\Shlok;
 use App\Models\Video;
+use App\Utils\Utils;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -127,7 +129,7 @@ class HomeCollectionController extends Controller
         } else {
             $localeLanguage = 'hi';
         }
-        $data['translated_block'] = [];
+        $data['translated_block'] = HomeCollection::TRANSLATED_BLOCK;
         $data['collection_types'] = HomeCollection::COLLECTION_TYPES;
 
         $data['books'] = Book::with([
@@ -189,7 +191,12 @@ class HomeCollectionController extends Controller
                 $input['is_scrollable'] = '0';
             }
             $input['created_by'] = session('data')['id'] ?? 0;
-            $collection = HomeCollection::create($input);
+            $translated_keys = array_keys(HomeCollection::TRANSLATED_BLOCK);
+            foreach ($translated_keys as $value) {
+                $input[$value] = (array) json_decode($input[$value]);
+            }
+            $saveArray = Utils::flipTranslationArray($input, $translated_keys);
+            $collection = HomeCollection::create($saveArray);
             if (! empty($collection) && $input['type'] == HomeCollection::SINGLE && ! empty($input['single_image'])) {
                 storeMedia($collection, $input['single_image'], HomeCollection::SINGLE_COLLECTION_IMAGE);
             }
@@ -306,7 +313,7 @@ class HomeCollectionController extends Controller
         } else {
             $localeLanguage = 'hi';
         }
-        $data['translated_block'] = [];
+        $data['translated_block'] = HomeCollection::TRANSLATED_BLOCK;
         $data['collection_types'] = HomeCollection::COLLECTION_TYPES;
 
         $data['books'] = Book::with([
@@ -345,7 +352,6 @@ class HomeCollectionController extends Controller
             },
         ])->where('status', 1)->get();
         
-        $data['collection'] = $collection;
         $data['collectionDetails'] = $collectionDetails;
         $data['mappedIds'] = explode(',',$data['collectionDetails']->mapped_ids ?? '');
        $data['singleImage'] = $collection->getMedia(HomeCollection::SINGLE_COLLECTION_IMAGE);
@@ -355,7 +361,14 @@ class HomeCollectionController extends Controller
             $collection->load('homeCollectionDetails');
             $data['multipleCollectionData'] = $collection->homeCollectionDetails;
         }
-        
+        $data['collection'] = $collection->toArray();
+        foreach($data['collection']['translations'] as $trans) {
+            $translated_keys = array_keys(HomeCollection::TRANSLATED_BLOCK);
+            foreach ($translated_keys as $value) {
+                $data['collection'][$value.'_'.$trans['locale']] = $trans[$value];
+            }
+        }
+
         return view('backend/home_collection/edit',$data);
     }
 
@@ -379,7 +392,12 @@ class HomeCollectionController extends Controller
             $input['updated_by'] = session('data')['id'] ?? 0;
             $collection = HomeCollection::find($input['id']);
             if (!empty($collection)){
-                $collection->update($input);
+                $translated_keys = array_keys(HomeCollection::TRANSLATED_BLOCK);
+                foreach ($translated_keys as $value) {
+                    $input[$value] = (array) json_decode($input[$value]);
+                }
+                $saveArray = Utils::flipTranslationArray($input, $translated_keys);
+                $collection->update($saveArray);
             }
             if (! empty($collection) && $input['type'] == HomeCollection::SINGLE && ! empty($input['single_image'])) {
                 $collection->clearMediaCollection(HomeCollection::SINGLE_COLLECTION_IMAGE);

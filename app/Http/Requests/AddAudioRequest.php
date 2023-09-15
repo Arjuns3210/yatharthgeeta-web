@@ -28,10 +28,23 @@ class AddAudioRequest extends FormRequest
         return [
             'has_episodes' => 'required',
             'audio_file'   => 'required_if:has_episodes,==,0',
+            'cover_image'   => 'required|mimes:jpeg,jpg,png,gif',
             'duration'     => 'required|integer',
             'sequence'     => 'required|integer',
             'language_id'  => 'required',
             'author_id'  => 'required',
+        ];
+    }
+
+    /**
+     * Custom message for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'audio_file.required_if' => 'Audio file field is required',
         ];
     }
 

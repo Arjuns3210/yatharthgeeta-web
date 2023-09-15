@@ -46,7 +46,7 @@
                                                                 <div class="d-flex mb-1  event-image-div-{{$image->id}}">
                                                                     <input type="text"
                                                                            class="form-control input-sm bg-white document-border"
-                                                                           value="{{ $image->name }}"
+                                                                           value="{{ $image->file_name }}"
                                                                            readonly style="color: black !important;">
                                                                     <a href="{{ $image->getFullUrl() }}"
                                                                        class="btn btn-primary mx-2 px-2" target="_blank"><i
