@@ -81,7 +81,7 @@ class CustomerController extends Controller
                         if(!$isDeleted){
 
                             if ($customer_change_password) {
-                                $actions .= ' <a href="customer/change_password/' . $event->id . '" class="btn btn-success btn-sm modal_src_data" data-size="large" data-title="Change Customer Password" title="Change Password"><i class="fa fa-key"></i></a>';
+                                $actions .= ' <a href="customer/change_password/' . $event->id . '" class="btn btn-success btn-sm src_data" data-size="large" data-title="Change Customer Password" title="Change Password"><i class="fa fa-key"></i></a>';
                             }
                             if ($customer_verify) {
                                 if($event->is_verified == 'N'){
