@@ -46,7 +46,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)" value="{{$event_image->sequence}}"><br/>
+                                                        <input class="form-control required integer-validation" type="text" id="sequence" name="sequence" value="{{$event_image->sequence}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="100px" alt="">

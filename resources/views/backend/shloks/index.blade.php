@@ -30,7 +30,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label>Sequence</label>
-                                            <input class="form-control mb-3" type="text" id="search_sequence" name="search_sequence" oninput="onlyNumericNegative(this)">
+                                            <input class="form-control mb-3" type="number" id="search_sequence" name="search_sequence">
                                         </div>
                                         <div class="col-md-4">
                                             <label>Status</label>

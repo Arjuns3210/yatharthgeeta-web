@@ -17,13 +17,13 @@ class Mantra extends Model
         'status'
     ];
 
-    public $translatedAttributes = ['title', 'description'];
+    public $translatedAttributes = ['name', 'meaning'];
 
     public const TRANSLATED_BLOCK = [
-	    'title' => 'textarea',
-	    'description' => 'textarea'
+	    'name' => 'textarea',
+	    'meaning' => 'textarea'
 	];
-    
+
 
 
     public function mantraTranslations()

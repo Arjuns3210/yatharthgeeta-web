@@ -32,18 +32,12 @@
                                             @endforeach
                                         </select><br/>
                         			</div>
-                                    <div class="col-sm-6 d-flex" style="margin-top:30px">
-                                        <input type="checkbox" class="largerCheckbox" id="is_head" name="is_head" value="{{$data['data']->is_head}}" {{ $data['data']->is_head == 1 ? 'checked' :'' }}>
-                                        <div class="ml-2">
-                                            <label class="" for="is_head">Is Head ?</label>
-                                        </div>
-                                    </div>
-								</div><br/>
-                        		<div class="row">
                                     <div class="col-sm-6">
                                         <label>Admin Name<span class="text-danger">*</span></label>
                                         <input class="form-control required" type="text" id="admin_name" name="admin_name" value="{{$data['data']->admin_name}}"><br/>
                                     </div>
+								</div>
+                        		<div class="row">
                                     <div class="col-sm-6">
                                         <label>Nick Name<span class="text-danger">*</span></label>
                                         <input class="form-control required" type="text" id="nick_name" name="nick_name" value="{{$data['data']->nick_name}}"><br/>
@@ -54,7 +48,7 @@
                                     </dl>
                                     <div class="col-sm-6">
                                         <label>Phone<span class="text-danger">*</span></label>
-                                        <input class="form-control required" type="text" id="phone" name="phone" value="{{$data['data']->phone}}"><br/>
+                                        <input class="form-control required" type="text" id="phone" name="phone" maxlength="10" value="{{$data['data']->phone}}"><br/>
                                     </div>
                         			<div class="col-sm-6">
                         				<label>Address<span class="text-danger">*</span></label>

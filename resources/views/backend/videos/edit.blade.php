@@ -34,15 +34,15 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <label>Duration (In Minutes)<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)" value="{{$videos->duration}}"><br/>
+                                                        <input class="form-control numeric-validation" type="number" id="duration" name="duration" value="{{$videos->duration}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>YouTube Video Link<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="link" name="link" value="{{$videos->link}}"><br/>
+                                                        <input class="form-control required url-validation" type="text" id="link" name="link" value="{{$videos->link}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)" value="{{$videos->sequence}}"><br/>
+                                                        <input class="form-control required integer-validation" type="number" id="sequence" name="sequence"  value="{{$videos->sequence}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6 mb-3">
                                                         <label>LANGUAGE<span class="text-danger">*</span></label>
