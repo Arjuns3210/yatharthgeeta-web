@@ -24,7 +24,7 @@
                                                         <span class="align-middle">General</span>
                                                     </a>
                                                 </li>
-                                                <li class="nav-item">
+                                                {{-- <li class="nav-item">
                                                     <a class="nav-link" id="about_us-tab" data-toggle="tab" href="#about_us" role="tab" aria-controls="about_us" aria-selected="false">
                                                         <i class="ft-info mr-1 align-middle"></i>
                                                         <span class="align-middle">About Us</span>
@@ -42,7 +42,7 @@
                                                         <i class="ft-globe mr-1 align-middle"></i>
                                                         <span class="align-middle">Privacy Policy</span>
                                                     </a>
-                                                </li>
+                                                </li> --}}
                                                 <li class="nav-item">
                                                     <a class="nav-link" id="social-links-tab" data-toggle="tab" href="#social-links" role="tab" aria-controls="social-links" aria-selected="false">
                                                         <i class="ft-twitter mr-1 align-middle"></i>
@@ -86,24 +86,24 @@
                                                                                 <input type="text" id="system_contact_no" name="system_contact_no" class="form-control required" placeholder="Contact No" value="{{$data['system_contact_no']}}" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46'>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-12 form-group">
+                                                                        {{-- <div class="col-12 form-group">
                                                                             <label for="meta_title">Meta Title</label>
                                                                             <div class="controls">
                                                                                 <input type="text" id="meta_title" name="meta_title"  value="{{$data['meta_title']}}" class="form-control required"  placeholder="" aria-invalid="false">
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="col-12 form-group">
+                                                                        </div> --}}
+                                                                        {{-- <div class="col-12 form-group">
                                                                             <label for="meta_keywords">Meta Keywords</label>
                                                                             <div class="controls">
                                                                                 <input type="text" id="meta_keywords" name="meta_keywords" value="{{$data['meta_keywords']}}" class="form-control required" placeholder="" aria-invalid="false">
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="col-12 form-group">
+                                                                        </div> --}}
+                                                                        {{-- <div class="col-12 form-group">
                                                                             <label for="meta_description">Meta Description</label>
                                                                             <div class="controls">
                                                                                 <input type="text" id="meta_description" name="meta_description" value="{{$data['meta_description']}}" class="form-control required" placeholder="" aria-invalid="false">
                                                                             </div>
-                                                                        </div>
+                                                                        </div> --}}
                                                                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">
                                                                             <button type="button" class="btn btn-success mr-sm-2 mb-1" onclick="submitForm('generalForm','post')">Save Changes</button>
                                                                             {{-- <button type="reset" class="btn btn-danger mb-1">Cancel</button> --}}
@@ -111,7 +111,7 @@
                                                                     </div>
                                                                 </form>
                                                             </div>
-                                                            <div class="tab-pane" id="about_us" role="tabpanel" aria-labelledby="about_us-tab">
+                                                            {{-- <div class="tab-pane" id="about_us" role="tabpanel" aria-labelledby="about_us-tab">
                                                                 <form id="aboutusForm" method="post" action="updateSettingInfo?param=aboutus">
                                                                 <!-- <form id="aboutusForm" method="post" action="updateSettingInfo/aboutus"> -->
 
@@ -124,11 +124,11 @@
                                                                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">
                                                                             <button type="button" class="btn btn-success mr-sm-2 mb-1 " onclick="submitEditor('aboutusForm')">Save Changes</button>
                                                                             {{-- <button type="reset" class="btn btn-danger mb-1">Cancel</button> --}}
-                                                                        </div>
+                                                                        {{-- </div>
                                                                     </div>
                                                                 </form>
-                                                            </div>
-                                                            <div class="tab-pane" id="contact_tab" role="tabpanel" aria-labelledby="contact_tab-tab">
+                                                            </div> --}}
+                                                            {{-- <div class="tab-pane" id="contact_tab" role="tabpanel" aria-labelledby="contact_tab-tab">
                                                                 <form id="contact_data" method="post" action="updateSettingInfo?param=contact_data">
                                                                     <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
                                                                     <div class="row">
@@ -155,8 +155,8 @@
                                                                         </div>
                                                                     </div>
                                                                 </form>
-                                                            </div>
-                                                            <div class="tab-pane" id="terms" role="tabpanel" aria-labelledby="terms-tab">
+                                                            </div> --}}
+                                                            {{-- <div class="tab-pane" id="terms" role="tabpanel" aria-labelledby="terms-tab">
                                                                 <form id="tncForm" method="post" action="updateSettingInfo?param=tnc">
                                                                 @csrf
                                                                     <div class="row">
@@ -169,9 +169,9 @@
                                                                         </div>
                                                                     </div>
                                                                 </form>
-                                                            </div>
+                                                            </div> --}}
 
-                                                            <div class="tab-pane" id="privacy" role="tabpanel" aria-labelledby="privacy-tab">
+                                                            {{-- <div class="tab-pane" id="privacy" role="tabpanel" aria-labelledby="privacy-tab">
                                                                 <form id="privacyForm" method="post" action="updateSettingInfo?param=privacy">
                                                                 @csrf
                                                                     <div class="row">
@@ -182,10 +182,10 @@
                                                                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">
                                                                             <button type="button" class="btn btn-success mr-sm-2 mb-1" onclick="submitEditor('privacyForm')">Save Changes</button>
                                                                             {{-- <button type="reset" class="btn btn-danger mb-1">Cancel</button> --}}
-                                                                        </div>
+                                                                        {{-- </div>
                                                                     </div>
                                                                 </form>
-                                                            </div>
+                                                            </div> --}}
 
                                                             <!-- Social Links Tab -->
                                                             <div class="tab-pane" id="social-links" role="tabpanel" aria-labelledby="social-links-tab">
@@ -278,7 +278,10 @@
     </div>
 </div>
 <script src="../backend/vendors/ckeditor5/ckeditor.js"></script>
-<script>
+{{-- <script>
+    loadCKEditor('about_us_editor');
+</script> --}}
+{{-- <script>
     $('#privacy-tab').on('click',function(){
         loadCKEditor('privacy_policy_editor');
     });
@@ -295,6 +298,6 @@
         loadCKEditor('return_policy_editor');
 
     });
-</script>
+</script> --}}
 
 @endsection

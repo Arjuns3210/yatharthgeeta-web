@@ -400,6 +400,32 @@ function submitEditor(form_id) {
     if (window.FormData) {
         formdata = new FormData(form[0]);
     }
+    if($('.translation_block').length > 0) {
+        translation_block_key = [];
+        translation_block_lang = [];
+        trans = {};
+        var i=0;
+        arr = [];
+        $('.translation_block').each(function() {
+            arr = (($(this).prop('id')).split('_'));
+            translation_block_key[i] = ($(this).prop('id')).replace("_"+arr[arr.length-1], "");;
+            translation_block_lang[i] = arr[arr.length-1];
+            i++;
+        });
+        keys = translation_block_key.filter(onlyUnique);
+        lang = translation_block_lang.filter(onlyUnique);
+        translated_data = [];
+
+        for(i=0; i < keys.length; i++) {
+            test = {};
+            for(j=0; j < lang.length; j++) {
+                test[lang[j]] = nl2br($('#'+keys[i]+'_'+lang[j]).val());
+            }
+            trans[keys[i]] = test;
+            formdata.append(keys[i], JSON.stringify(test));
+        }
+        console.log(trans);
+    }
     $.ajax({
         url: form.attr('action'),
         type: 'post',

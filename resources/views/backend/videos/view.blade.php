@@ -48,7 +48,7 @@
                                                         <td>{{ $language['name'] }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Link</strong></td>
+                                                        <td><strong>Guru</strong></td>
                                                         <td>{{ $artist['name'] }}</td>
                                                     </tr>
                                                     <tr>

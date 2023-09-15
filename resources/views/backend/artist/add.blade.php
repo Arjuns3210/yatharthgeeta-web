@@ -57,7 +57,7 @@
                                                         <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                             <?php if($translated_block_fields_value == 'input') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{formatName($translated_block_fields_key)}}</label>
+                                                                    <label>{{formatName($translated_block_fields_key)}}<span class="text-danger">*</span></label>
                                                                     <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">
                                                                 </div>
                                                             <?php } ?>
@@ -67,7 +67,7 @@
                                                         <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                             <?php if($translated_block_fields_value == 'textarea') { ?>
                                                                 <div class="col-md-12 mb-3">
-                                                                    <label>{{formatName($translated_block_fields_key)}}</label>
+                                                                    <label>{{formatName($translated_block_fields_key)}}<span class="text-danger">*</span></label>
                                                                     <textarea class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}"></textarea>
                                                                 </div>
                                                             <?php } ?>

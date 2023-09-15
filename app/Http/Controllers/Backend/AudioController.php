@@ -268,11 +268,9 @@ class AudioController extends Controller
      */
     public function show($id)
     {
-        $data['audio'] = Audio::with('translations')->findOrFail($id);
+        $data['audio'] = Audio::find($id);
         $data['audioFile'] = $data['audio']->getMedia(Audio::AUDIO_FILE)->first()?? '';
         $data['audioCoverImage'] = $data['audio']->getMedia(Audio::AUDIO_COVER_IMAGE)->first()?? '';
-        $data['audioSrtFile'] = $data['audio']->getMedia(Audio::AUDIO_SRT_FILE)->first()?? '';
-        $data['audioCategory'] = AudioCategory::with('translations')->where('id', $data['audio']->audio_category_id)->first();
         
         return view('backend/audio/view')->with($data);
     }
@@ -295,7 +293,9 @@ class AudioController extends Controller
             'translations' => function ($query) use ($localeLanguage) {
                 $query->where('locale', $localeLanguage);
             },
-        ])->where('type',Audio::AUDIO)->where('status', 1)->get();
+        ])->where('type',Audio::AUDIO)->where('status', 1)
+            ->where('id','!=',$id)
+            ->get();
         $audio = Audio::find($id);
         $data['audio'] = $audio->toArray();
         foreach($data['audio']['translations'] as $trans) {
@@ -308,10 +308,8 @@ class AudioController extends Controller
         $data['peopleAlsoReadIds'] = explode(",", $data['audio']['people_also_read_ids'] ?? '');
         $data['audioCoverImage'] = [];
         $data['audioFile'] = [];
-        $data['srtFile'] = [];
         $data['audioCoverImage'] = $audio->getMedia(Audio::AUDIO_COVER_IMAGE);
         $data['audioFile'] = $audio->getMedia(Audio::AUDIO_FILE);
-        $data['srtFile'] = $audio->getMedia(Audio::AUDIO_SRT_FILE);
 
         $data['gurus'] = Artist::with([
             'translations' => function ($query) use ($localeLanguage) {
@@ -402,7 +400,7 @@ class AudioController extends Controller
             DB::rollBack();
             Log::error("Something Went Wrong. Error: ".$e->getMessage());
 
-            errorMessage($e->getMessage());
+            errorMessage("Something Went Wrong.");
         }
     }
 

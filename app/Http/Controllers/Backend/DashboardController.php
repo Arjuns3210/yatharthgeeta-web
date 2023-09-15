@@ -57,7 +57,9 @@ class DashboardController extends Controller
             ];
         }
         $data['user_data'] = array_reverse($result);
-
+        if(session('data')['role_id'] != 1){
+            return view('backend/dashboard/staff_dashboard', $data);
+        }
         return view('backend/dashboard/index', $data);
     }
 
