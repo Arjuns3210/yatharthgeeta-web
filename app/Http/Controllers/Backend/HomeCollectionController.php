@@ -162,12 +162,6 @@ class HomeCollectionController extends Controller
             },
         ])->get();
         
-        $data['languages'] = Language::with([
-            'translations' => function ($query) use ($localeLanguage) {
-                $query->where('locale', $localeLanguage);
-            },
-        ])->where('status', 1)->get(); 
-        
         $data['mappingCollectionType'] = HomeCollectionMapping::MAPPING_COLLECTION_TYPES;
 
         return view('backend/home_collection/add',$data);
@@ -345,12 +339,7 @@ class HomeCollectionController extends Controller
                 $query->where('locale', $localeLanguage);
             },
         ])->get();
-
-        $data['languages'] = Language::with([
-            'translations' => function ($query) use ($localeLanguage) {
-                $query->where('locale', $localeLanguage);
-            },
-        ])->where('status', 1)->get();
+        
         
         $data['collectionDetails'] = $collectionDetails;
         $data['mappedIds'] = explode(',',$data['collectionDetails']->mapped_ids ?? '');

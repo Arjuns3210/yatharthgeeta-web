@@ -42,14 +42,6 @@
                                                         <input type="hidden" value="{{$collection['id']}}" name="id">
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
-                                                        <label>Language<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2 required" id="language_id" name="language_id">
-                                                            @foreach($languages as $language)
-                                                                <option value="{{$language->id}}" {{ ($collection['id'] == $language->id) ? 'selected'  : '' }}>{{$language->translations[0]->name ?? ''}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-6 mb-2">
                                                         <label>Sequence<span class="text-danger">*</span></label>
                                                         <input class="form-control required integer-validation" type="text" id="sequence" name="sequence"  value="{{$collection['sequence'] ?? ''}}"><br/>
                                                     </div>
@@ -61,7 +53,7 @@
                                                             @endforeach
                                                         </select><br/>
                                                     </div>
-                                                    <div class="col-sm-6 mb-2">
+                                                    <div class="col-sm-6 mb-2 mt-4">
                                                         <div class="custom-switch">
                                                             <input type="checkbox" class="custom-control-input" id="is_scrollable" name="is_scrollable" {{($collection['is_scrollable'] == 1) ? 'checked' : ''}}>
                                                             <label class="custom-control-label" for="is_scrollable">Is Scrollable</label>

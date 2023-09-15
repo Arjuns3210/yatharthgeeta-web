@@ -151,11 +151,6 @@ class ExploreCollectionController extends Controller
                 $query->where('locale', $localeLanguage);
             },
         ])->where('status', 1)->get();
-        $data['languages'] = Language::with([
-            'translations' => function ($query) use ($localeLanguage) {
-                $query->where('locale', $localeLanguage);
-            },
-        ])->where('status', 1)->get(); 
         
 
         return view('backend/explore_collection/add',$data);

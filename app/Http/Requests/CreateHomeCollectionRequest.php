@@ -28,7 +28,6 @@ class CreateHomeCollectionRequest extends FormRequest
     {
         $ruleData = [
             'collection_type' => 'required|in:Single,Multiple,Book,Audio,Video,Shlok,Artist',
-            'language_id'     => 'required|integer',
             'sequence'        => 'required|integer',
             'display_in_column'        => 'required|integer',
         ];
