@@ -196,7 +196,11 @@
 
                                                             <?php if($translated_block_fields_value == 'input') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}}<span class="text-danger">*</span></label>
+                                                                    @if( formatName($translated_block_fields_key) == 'title')
+                                                                    <label>Short Description<span class="text-danger">*</span></label>
+                                                                    @else
+                                                                    <label>{{formatName($translated_block_fields_key)}}<span class="text-danger">*</span></label>
+                                                                    @endif
                                                                     <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" value="{{$location[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}">
                                                                 </div>
                                                             <?php
@@ -207,8 +211,17 @@
                                                         <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                             <?php if($translated_block_fields_value == 'textarea') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}}<span class="text-danger">*</span></label>
+                                                                    @if( formatName($translated_block_fields_key) == 'do' || formatName($translated_block_fields_key) == 'dont')
+                                                                    <label>{{formatName($translated_block_fields_key)}}</label>
+                                                                    <textarea class="translation_block form-control" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">{{$location[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}</textarea>
+                                                                    @else
+                                                                    @if( formatName($translated_block_fields_key) == 'description')
+                                                                    <label>Long Description<span class="text-danger">*</span></label>
+                                                                    @else
+                                                                    <label>{{formatName($translated_block_fields_key)}}<span class="text-danger">*</span></label>
+                                                                    @endif
                                                                     <textarea class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">{{$location[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}</textarea>
+                                                                    @endif  
                                                                 </div>
                                                             <?php } ?>
                                                         <?php } ?>
@@ -223,7 +236,7 @@
                                     <div class="col-sm-12">
                                         <div class="pull-right">
                                             <button type="button" class="btn btn-success" onclick="submitForm('editLocationForm','post')">Submit</button>
-                                            <a href="{{URL::previous()}}" class="btn btn-sm btn-danger px-3 py-1"> Cancel</a>
+                                            <a href="{{URL::previous()}}" class="btn btn-danger px-3 py-1"> Cancel</a>
                                         </div>
                                     </div>
                                 </div>
