@@ -76,21 +76,19 @@
                                                             </span>
                                                         </p>
                                                     </div>
-                                                    {{-- <div class="col-sm-6">
-                                                        <label>Cover Image<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="cover_image" name="cover_image" onchange="handleFileInputChange('cover_image')"><br/>
-                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
-                                                    </div> --}}
                                                 </div>
                                             </div>
-
                                             <?php foreach (config('translatable.locales') as $translated_data_tabs) { ?>
                                                 <div id="<?php echo $translated_data_tabs ?>_block_details" class="tab-pane fade">
                                                     <div class="row">
                                                         <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                             <?php if($translated_block_fields_value == 'input') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}}<span class="text-danger">*</span></label>
+                                                                    @if( formatName($translated_block_fields_key) == 'title')
+                                                                        <label>Video Name<span class="text-danger">*</span></label>
+                                                                    @else
+                                                                        <label>{{formatName($translated_block_fields_key)}}<span class="text-danger">*</span></label>
+                                                                    @endif
                                                                     <input class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">
                                                                 </div>
                                                             <?php } ?>
@@ -127,4 +125,47 @@
             </div>
         </div>
     </div>
+    <script>
+         const coverImageData = new DataTransfer();
+
+            function handleCoverImagesAttachmentChange() {
+            const attachmentInput = document.getElementById('cover_image');
+
+            attachmentInput.addEventListener('change', function (e) {
+                 if (this.files.length === 1) {
+                    const file = this.files[0];
+                    const fileBloc = $('<span/>', { class: 'file-block' });
+                    const fileName = $('<span/>', { class: 'name', text: file.name });
+
+                    fileBloc.append('<span class="file-delete cover-image-delete"><span>+</span></span>').
+                        append(fileName);
+
+            // Clear existing uploaded documents
+            $('#coverImagesLists > #cover-images-names').empty();
+
+            $('#coverImagesLists > #cover-images-names').append(fileBloc);
+            coverImageData.items.clear(); // Clear existing items
+            coverImageData.items.add(file);
+        } else {
+            this.value = '';
+            $('#coverImagesLists > #cover-images-names').empty();
+            coverImageData.items.clear();
+        }
+    });
+
+    $(document).on('click', 'span.cover-image-delete', function () {
+        // Clear UI
+        $('#coverImagesLists > #cover-images-names').empty();
+
+        // Clear DataTransfer object (coverImageData)
+        coverImageData.items.clear();
+
+        // Reset the input field to clear selected files
+        const input = document.getElementById('cover_image');
+        input.value = ''; // This should clear the selected file(s) in the input field
+    });
+}
+
+handleCoverImagesAttachmentChange();
+    </script>
 </section>

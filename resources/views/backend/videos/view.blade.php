@@ -69,7 +69,11 @@
                                                         <table class="table table-striped table-bordered">
                                                             <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                                     <tr>
-                                                                        <td><strong>{{ucfirst($translated_block_fields_key)}}</strong></td>
+                                                                        @if( formatName($translated_block_fields_key) == 'title')
+                                                                            <td><strong>Video Name</strong></td>
+                                                                        @else
+                                                                        <td><strong>{{formatName(ucfirst($translated_block_fields_key))}}</strong></td>
+                                                                        @endif
                                                                         <td><?php echo $videos[$translated_block_fields_key.'_'.$translated_data_tabs] ?? '' ?></td>
                                                                     </tr>
                                                             <?php } ?>

@@ -25,7 +25,7 @@
                                 <div class="card-body">
                                     <div class="row mb-2" id="listing-filter-data" style="display: none;">
                                         <div class="col-md-4">
-                                            <label>Title</label>
+                                            <label>Video Name</label>
                                             <input class="form-control mb-3" type="text" id="search_title" name="search_title">
                                         </div>
                                         <div class="col-md-4">
@@ -50,7 +50,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
-                                                    <th id="title_{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Title ({{ config('translatable.locales_name')[\App::getLocale()] }})</th>
+                                                    <th id="title_{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Video Name ({{ config('translatable.locales_name')[\App::getLocale()] }})</th>
                                                     <th id="sequence" data-orderable="false" data-searchable="false">Sequence</th>
                                                     @if($data['videos_status'] || $data['videos_edit'] || $data['videos_view'] || $data['videos_delete'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
