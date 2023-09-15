@@ -170,6 +170,8 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::post('staff/update', 'StaffController@update');
 	Route::post('publish/staff', 'StaffController@updateStatus');
 	Route::get('staff/view/{id}', 'StaffController@view');
+	Route::get('staff/change_password/{id}', 'StaffController@changePassword');
+    Route::post('staff/changePassword', 'StaffController@changeStaffPassword');
 
 	//Home Collection
 	Route::get('home_collection', 'HomeCollectionController@index');
