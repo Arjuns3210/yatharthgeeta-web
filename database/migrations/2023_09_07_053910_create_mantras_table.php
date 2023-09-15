@@ -20,7 +20,7 @@ class CreateMantrasTable extends Migration
             $table->string('reference_url', 255)->default('yatharthgeeta.com');
             $table->integer('sequence');
             $table->enum('status', [1, 0])->default(1);
-            $table->enum('share_allowed', ['Y', 'N'])->default('Y');
+            $table->enum('share_allowed', ['Y', 'N'])->default('N');
             $table->enum('visible_on_app', [0, 1])->default(1);
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->default(0);
