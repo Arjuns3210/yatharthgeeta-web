@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Change Customer Password</h5>
+                                    <h5 class="pt-2">Change Password</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{ URL::previous() }}" class="btn btn-sm btn-primary px-3 py-1"><i
@@ -20,7 +20,7 @@
                                 <div class="tab-pane fade mt-2 show active" role="tabpanel">
                                     <div class="row">
                                         <div class="col-12">
-                                            <form method="post" id="changePwdForm" action="customer/changePassword?id={{$customer['id']}}">
+                                            <form method="post" id="changePwdForm" action="staff/changePassword?id={{$staff['id']}}">
                                                 @csrf
                                                 <div class="row">
                                                     <div class="col-md-6">
