@@ -34,10 +34,10 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <label>Duration (In Minutes)<span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)" value="{{$videos->duration}}"><br/>
+                                                        <input class="form-control required" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)" value="{{$videos->duration}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Video Link<span class="text-danger">*</span></label>
+                                                        <label>YouTube Video Link<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="link" name="link" value="{{$videos->link}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
@@ -46,23 +46,15 @@
                                                     </div>
                                                     <div class="col-sm-6 mb-3">
                                                         <label>LANGUAGE<span class="text-danger">*</span></label>
-                                                        <select class="form-control" type="text" id="language_id" name="language_id">
+                                                        <select class="form-control required" type="text" id="language_id" name="language_id">
                                                         @foreach($language as $language)
                                                         <option value="{{$language->id}}" {{($language->id ==$videos['language_id'] ) ? 'selected' : ''}}>{{$language->translations[0]->name ?? ''}}</option>
                                                         @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-6 mb-3">
-                                                        <label>Video Category<span class="text-danger">*</span></label>
-                                                        <select class="form-control" type="text" id="video_category_id" name="video_category_id">
-                                                        @foreach($video_category as $video_category)
-                                                            <option value="{{$video_category->id}}" {{($video_category->id ==$videos['video_category_id'] ) ? 'selected' : ''}}>{{$video_category->translations[0]->name ?? ''}}</option>
-                                                        @endforeach
-                                                        </select>
-                                                    </div>
                                                     <div class="col-sm-6">
                                                         <label>Guru<span class="text-danger">*</span></label>
-                                                        <select class="form-control" type="text" id="artist_id" name="artist_id">
+                                                        <select class="form-control required" type="text" id="artist_id" name="artist_id">
                                                         @foreach($artist as $artist)
                                                             <option value="{{$artist->id}}" {{($artist->id ==$videos['artist_id'] ) ? 'selected' : ''}}>{{$artist->translations[0]->name ?? ''}}</option>
                                                         @endforeach
@@ -70,7 +62,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Cover Image<span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('cover_image')" value="{{$videos['cover_image']}}"><br/>
+                                                        <input class="form-control required" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('cover_image')" value="{{$videos['cover_image']}}"><br/>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p><br>
                                                         <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="100px" alt="">
                                                     </div>

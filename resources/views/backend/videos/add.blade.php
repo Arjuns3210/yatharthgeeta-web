@@ -34,10 +34,10 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <label>Duration (In Minutes)<span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)"><br/>
+                                                        <input class="form-control required" type="text" id="duration" name="duration" oninput="filterNonNumeric(this)"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Video Link<span class="text-danger">*</span></label>
+                                                        <label>YouTube Video Link<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="link" name="link"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
@@ -46,35 +46,42 @@
                                                     </div>
                                                     <div class="col-sm-6 mb-3">
                                                         <label>LANGUAGE<span class="text-danger">*</span></label>
-                                                        <select class="form-control" type="text" id="language_id" name="language_id">
+                                                        <select class="form-control required" type="text" id="language_id" name="language_id">
                                                         @foreach($language as $language)
                                                             <option value="{{$language->id}}">{{$language->name}}</option>
                                                         @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-6 mb-3">
-                                                        <label>Video Category<span class="text-danger">*</span></label>
-                                                        <select class="form-control" type="text" id="video_category_id" name="video_category_id">
-                                                        @foreach($video_category as $video_category)
-                                                            <option value="{{$video_category->id}}">{{$video_category->name}}</option>
-                                                        @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-6">
+                                                    <div class="col-sm-6 mb">
                                                         <label>Guru<span class="text-danger">*</span></label>
-                                                        <select class="form-control" type="text" id="artist_id" name="artist_id">
+                                                        <select class="form-control required" type="text" id="artist_id" name="artist_id">
                                                         @foreach($artist as $artist)
                                                             <option value="{{$artist->id}}">{{$artist->name}}</option>
                                                         @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-6">
+                                                    <div class="col-md-6 col-lg-6 col-sm-6 text-center">
+                                                        <p class="font-weight-bold">Cover Image<span class="text-danger">*</span></p>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
+                                                        <div class="shadow bg-white rounded d-inline-block mb-2">
+                                                            <div class="input-file">
+                                                                <label class="label-input-file">Choose Files &nbsp;&nbsp;&nbsp;<i class="ft-upload font-medium-1"></i>
+                                                                    <input type="file" name="cover_image" class="cover-images" id="cover_image" accept=".jpg, .jpeg, .png" onchange="handleFileInputChange('coverImages', 'image')">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <p id="files-area">
+                                                            <span id="coverImagesLists">
+                                                                <span id="cover-images-names"></span>
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                    {{-- <div class="col-sm-6">
                                                         <label>Cover Image<span class="text-danger">*</span></label>
                                                         <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="cover_image" name="cover_image" onchange="handleFileInputChange('cover_image')"><br/>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
-
                                             </div>
 
                                             <?php foreach (config('translatable.locales') as $translated_data_tabs) { ?>

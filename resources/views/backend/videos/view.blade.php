@@ -32,16 +32,12 @@
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-bordered">
                                                     <tr>
-                                                        <td><strong>Duration</strong></td>
+                                                        <td><strong>Duration (In Minutes)</strong></td>
                                                         <td>{{ $videos['duration'] }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Link</strong></td>
+                                                        <td><strong>YouTube Video Link</strong></td>
                                                         <td>{{ $videos['link'] }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><strong>Video Category</strong></td>
-                                                        <td>{{ $video_category['name'] }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Language</strong></td>
