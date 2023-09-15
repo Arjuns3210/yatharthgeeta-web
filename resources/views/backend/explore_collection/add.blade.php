@@ -41,15 +41,6 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
-                                                        <label>Language<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2 required" id="language_id" name="language_id">
-                                                            <option value="">Select</option>
-                                                            @foreach($languages as $language)
-                                                                <option value="{{$language->id}}">{{$language->translations[0]->name ?? ''}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-6 mb-2">
                                                             <label>Sequence<span class="text-danger">*</span></label>
                                                             <input class="form-control required integer-validation" type="text" id="sequence" name="sequence" ><br/>
                                                         </div>
@@ -61,7 +52,7 @@
                                                                 @endforeach
                                                             </select><br/>
                                                         </div>
-                                                    <div class="col-sm-6 mb-4">
+                                                    <div class="col-sm-6 mb-4 mt-4">
                                                             <div class="custom-switch">
                                                                 <input type="checkbox" class="custom-control-input" id="is_scrollable" name="is_scrollable">
                                                                 <label class="custom-control-label" for="is_scrollable">Is Scrollable</label>

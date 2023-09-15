@@ -29,7 +29,6 @@ class UpdateExploreCollectionRequest extends FormRequest
         $ruleData = [
             'id'              => 'required',
             'collection_type' => 'required|in:Book,Audio,Quote,Mantra',
-            'language_id'     => 'required|integer',
             'sequence'        => 'required|integer',
         ];
         $collectionType = $this->input('collection_type');
