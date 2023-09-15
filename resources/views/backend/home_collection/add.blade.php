@@ -56,7 +56,7 @@
                                                         </div>
                                                         <div class="col-sm-12 pl-0 pr-0">
                                                             <label>Sequence<span class="text-danger">*</span></label>
-                                                            <input class="form-control required" type="text" id="sequence" name="sequence" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode ==46'><br/>
+                                                            <input class="form-control required integer-validation" type="number" id="sequence" name="sequence"><br/>
                                                         </div>
                                                         <div class="col-sm-12 pl-0 pr-0">
                                                             <label>Display in columns<span class="text-danger">*</span></label>

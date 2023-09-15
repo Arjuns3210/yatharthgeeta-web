@@ -35,11 +35,11 @@
                                                     <input type="hidden" name="id" value="{{ $audioEpisode['id'] }}">
                                                         <div class="col-sm-6">
                                                             <label>Duration (In Minute)<span style="color:#ff0000">*</span></label>
-                                                            <input class="form-control required" type="number" id="duration" name="duration" value="{{$audioEpisode['duration']}}"><br/>
+                                                            <input class="form-control required numeric-validation" type="number" id="duration" name="duration" value="{{$audioEpisode['duration']}}"><br/>
                                                         </div>
                                                         <div class="col-sm-6">
                                                             <label>sequence<span style="color:#ff0000">*</span></label>
-                                                            <input class="form-control required" type="number"    id="sequence" name="sequence" value="{{$audioEpisode['sequence']}}"><br/>
+                                                            <input class="form-control required integer-validation" type="number"    id="sequence" name="sequence" value="{{$audioEpisode['sequence']}}"><br/>
                                                         </div>
                                                     <div class="col-sm-6">
                                                         <label>Main Shlok<span class="text-danger">*</span></label>

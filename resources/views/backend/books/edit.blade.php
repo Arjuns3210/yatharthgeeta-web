@@ -34,7 +34,7 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="sequence" name="sequence" value="{{$books->sequence}}" oninput="onlyNumericNegative(this)"><br/>
+                                                        <input class="form-control required integer-validation" type="number" id="sequence" name="sequence" value="{{$books->sequence}}" ><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Book Category</label>
@@ -46,7 +46,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Number of Pages<span class="text-danger">*</span></label>
-                                                        <input class="form-control" type="text" id="pages" name="pages" value="{{$books->pages}}" oninput="filterNonNumeric(this)"><br/>
+                                                        <input class="form-control integer-validation" type="number" id="pages" name="pages" value="{{$books->pages}}" ><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Audio Url<span class="text-danger">*</span></label>

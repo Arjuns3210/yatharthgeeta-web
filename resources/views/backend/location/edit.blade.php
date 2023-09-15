@@ -61,15 +61,15 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)" value="{{$location['sequence']}}"><br/>
+                                                        <input class="form-control required integer-validation" type="number" id="sequence" name="sequence"  value="{{$location['sequence']}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6" hidden>
                                                         <label>Latitude<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="latitude" name="latitude" oninput="filterNonNumeric(this)" value="{{$location['latitude']}}"><br/>
+                                                        <input class="form-control required integer-validation" type="number" id="latitude" name="latitude"  value="{{$location['latitude']}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6" hidden>
                                                         <label>Longitude<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="longitude" name="longitude" oninput="filterNonNumeric(this)" value="{{$location['longitude']}}"><br/>
+                                                        <input class="form-control required integer-validation" type="number" id="longitude" name="longitude"  value="{{$location['longitude']}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Goolge Address<span class="text-danger">*</span></label>

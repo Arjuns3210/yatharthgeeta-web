@@ -35,11 +35,11 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <label>Duration (In Minute)<span style="color:#ff0000">*</span></label>
-                                                        <input class="form-control required" type="number" id="duration" name="duration"><br/>
+                                                        <input class="form-control required numeric-validation" type="number" id="duration" name="duration"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>sequence<span style="color:#ff0000">*</span></label>
-                                                        <input class="form-control required" type="number"    id="sequence" name="sequence"><br/>
+                                                        <input class="form-control required integer-validation" type="number"    id="sequence" name="sequence"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Main Shlok<span class="text-danger">*</span></label>

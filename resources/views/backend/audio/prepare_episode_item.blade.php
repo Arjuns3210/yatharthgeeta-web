@@ -1,7 +1,7 @@
 <div class="row episode-master-div mb-2">
     <div class="col-sm-4">
         <label>Duration<span style="color:#ff0000">*</span></label>
-        <input class="form-control required" type="text"
+        <input class="form-control required numeric-validation" type="number"
                id="episode_duration" name="episode_duration[]"><br/>
     </div>
     <div class="col-sm-4">
