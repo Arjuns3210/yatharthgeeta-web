@@ -14,6 +14,16 @@ use Session;
 use Carbon\Carbon;
 use App\Models\Admin;
 use App\Models\Role;
+use Illuminate\Support\Str;
+use App\Models\EmailNotification;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rules;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Facades\Password;
+
 
 class LoginController extends Controller
 {
@@ -52,16 +62,16 @@ class LoginController extends Controller
             $response = Admin::with('role')->where([['email', $email],['password', md5($email.$request->password)]])->get();
 
             if(!count($response)) {
-                \Log::error("Backend: User not found - "."email: ".$email.", password: ".$request->password);
+                \Log::error("Backend: User not found - "."email: ".$email);
                 return redirect()->back()->withErrors(array("msg"=>"Invalid login credentials"));
             }
 
             if($response[0]['status'] != 1 ) {
-                \Log::error("Backend: Account Suspended - "."email: ".$email.", password: ".$request->password);
+                \Log::error("Backend: Account Suspended - "."email: ".$email);
                 return redirect()->back()->withErrors(array("msg"=>"Your account is deactivated."));
             }
             if($response[0]['login_allowed'] != 1 ) {
-                \Log::error("Backend: Not allowed to login - "."email: ".$email.", password: ".$request->password);
+                \Log::error("Backend: Not allowed to login - "."email: ".$email);
                 return redirect()->back()->withErrors(array("msg"=>"Your are not allowed to login"));
             }
 
@@ -151,8 +161,8 @@ class LoginController extends Controller
         
         if(config('global.TRIGGER_FPWD_EMAIL'))
         Mail::send('backend/auth/email-forgot', ['body' => $content], function ($message) use ($email) {
-            $message->from(env('MAIL_FROM_ADDRESS', 'noreplycrm@indianagroup.com'), env('MAIL_FROM_NAME', 'Indiana CRM Team'));
-            $message->to($email, 'Indiana Team')->subject('Forgot Password - Indiana Team');
+            $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+            $message->to($email, 'Yatharthgeeta Team')->subject('Forgot Password - Yatharthgeeta Team');
         });
         
         Log::info('Reset Password Mail Send Successfully');
