@@ -38,8 +38,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="sequence" name="sequence" oninput="onlyNumericNegative(this)"
-                                                        value="{{$data['sequence']}}"><br/>
+                                                        <input class="form-control required integer-validation" type="number" id="sequence" name="sequence" value="{{$data['sequence']}}"><br/>
                                                     </div>
                                                 </div>
                                             </div>

@@ -35,11 +35,11 @@
                                                     <input type="hidden" name="id" value="{{ $audio['id'] }}">
                                                     <div class="col-md-6 mb-2">
                                                         <label>Duration (In Minute)<span style="color:#ff0000">*</span></label>
-                                                        <input class="form-control required" type="number" id="duration" name="duration" value="{{$audio['duration']}}">
+                                                        <input class="form-control required numeric-validation" type="number" id="duration" name="duration" value="{{$audio['duration']}}">
                                                     </div>
                                                     <div class="col-md-6 mb-2">
                                                         <label>Sequence<span style="color:#ff0000">*</span></label>
-                                                        <input class="form-control required" type="number" id="sequence" name="sequence" value="{{$audio['sequence']}}">
+                                                        <input class="form-control required integer-validation" type="number" id="sequence" name="sequence" value="{{$audio['sequence']}}">
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Media Language<span class="text-danger">*</span></label>

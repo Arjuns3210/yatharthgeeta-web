@@ -56,10 +56,7 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text"
-                                                            id="shlok_sequence" name="shlok_sequence"
-                                                            oninput="onlyNumericNegative(this)"
-                                                            value="{{ $shloks->sequence }}">
+                                                        <input class="form-control required integer-validation" type="number"  id="shlok_sequence" name="shlok_sequence"  value="{{ $shloks->sequence }}">
                                                     </div>
                                                 </div>
                                             </div>
