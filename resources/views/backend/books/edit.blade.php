@@ -108,7 +108,7 @@
                                                                 <div class="d-flex mb-1  pdf_file-div-{{$pdf_file->id}}">
                                                                     <input type="text"
                                                                             class="form-control input-sm bg-white document-border"
-                                                                            value="{{ $pdf_file->name }}"
+                                                                            value="{{ $pdf_file->file_name }}"
                                                                             readonly style="color: black !important;">
                                                                     <a href="{{ $pdf_file->getFullUrl() }}"
                                                                         class="btn btn-primary mx-2 px-2" target="_blank"><i
@@ -136,7 +136,7 @@
                                                                     <div class="d-flex mb-1  epub_file-div-{{$epub_file->id}}">
                                                                         <input type="text"
                                                                                 class="form-control input-sm bg-white document-border"
-                                                                                value="{{ $epub_file->name }}"
+                                                                                value="{{ $epub_file->file_name }}"
                                                                                 readonly style="color: black !important;">
                                                                         <a href="{{ $epub_file->getFullUrl() }}"
                                                                             class="btn btn-primary mx-2 px-2" target="_blank"><i
@@ -171,7 +171,7 @@
                                                     <div class="d-flex mb-1  media-div-{{$media->id}}">
                                                         <input type="text"
                                                                 class="form-control input-sm bg-white document-border"
-                                                                value="{{ $media->name }}"
+                                                                value="{{ $media->file_name }}"
                                                                 readonly style="color: black !important;">
                                                         <a href="{{ $media->getFullUrl() }}"
                                                             class="btn btn-primary mx-2 px-2" target="_blank"><i

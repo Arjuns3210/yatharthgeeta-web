@@ -19,6 +19,16 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-sm-12">
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#data_details">Details</a>
+                                            </li>
+                                            @foreach (config('translatable.locales') as $translated_tabs)
+                                                <li class="nav-item">
+                                                    <a class="nav-link" data-toggle="tab" href="#{{ $translated_tabs }}_block_details">{{ config('translatable.locales_name')[$translated_tabs] }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
                                         <div class="tab-content">
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
@@ -39,31 +49,24 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Collection Title<span class="text-danger">*</span></label>
-                                                        <textarea class="ckeditor form-control required" id="" rows="13" name="title"></textarea>
-                                                        <br/>
-                                                    </div>
-                                                    <div class="col-sm-6 mt-2">
-                                                        <div class="col-sm-12 pl-0 pr-0">
-                                                            <label>Short Description</label>
-                                                            <input class="form-control" type="text" id="description" name="description"><br/>
-                                                        </div>
-                                                        <div class="col-sm-12 pl-0 pr-0">
+                                                    <div class="col-sm-6 mb-2">
                                                             <label>Sequence<span class="text-danger">*</span></label>
-                                                            <input class="form-control required" type="text" id="sequence" name="sequence" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode ==46'><br/>
+                                                            <input class="form-control required integer-validation" type="text" id="sequence" name="sequence" ><br/>
                                                         </div>
-                                                        <div class="col-sm-12 pl-0 pr-0">
+                                                    <div class="col-sm-6 mb-2"  >
                                                             <label>Display in columns<span class="text-danger">*</span></label>
-                                                            <input class="form-control required" type="text" id="display_in_column" name="display_in_column" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode ==46'><br/>
+                                                            <select class="form-control select2 required" id="display_in_column" name="display_in_column">
+                                                                @foreach(\App\Models\ExploreCollection::DISPLAY_IN_COLUMN as $key => $type)
+                                                                    <option value="{{$type}}">{{$type}}</option>
+                                                                @endforeach
+                                                            </select><br/>
                                                         </div>
-                                                        <div class="col-sm-12 pl-0 pr-0 mt-2">
+                                                    <div class="col-sm-6 mb-4">
                                                             <div class="custom-switch">
                                                                 <input type="checkbox" class="custom-control-input" id="is_scrollable" name="is_scrollable">
                                                                 <label class="custom-control-label" for="is_scrollable">Is Scrollable</label>
                                                             </div>
                                                         </div>
-                                                    </div>
                                                 </div>
                                                 
                                                 <div class="row div_book">
@@ -107,6 +110,24 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @foreach (config('translatable.locales') as $translated_data_tabs)
+                                                <div id="{{ $translated_data_tabs }}_block_details" class="tab-pane fade">
+                                                    <div class="row">
+                                                        @foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value)
+                                                            <div class="col-md-6 mb-3">
+                                                                @if ($translated_block_fields_value == 'input')
+                                                                    <label>{{ $translated_block_fields_key }}<span class="text-danger">*</span></label>
+                                                                    <input class="translation_block form-control required" type="text" id="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" name="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}">
+                                                                @endif
+                                                                @if ($translated_block_fields_value == 'textarea')
+                                                                    <label>{{ $translated_block_fields_key }}<span class="text-danger">*</span></label>
+                                                                    <textarea class="translation_block form-control required" type="text" id="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" name="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}"></textarea>
+                                                                @endif
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>

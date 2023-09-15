@@ -71,10 +71,6 @@
                                                                             <td></td>
                                                                         @endif
                                                                     </tr>
-                                                                    <tr>
-                                                                        <td><strong>Date Time</strong></td>
-                                                                        <td>{{\Carbon\Carbon::parse($audio->created_at)->format('d-m-Y')}}</td>
-                                                                    </tr>
                                                                 </table>
                                                             </div>
                                                         </div>

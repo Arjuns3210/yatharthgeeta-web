@@ -74,7 +74,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center">
-                                                        <p class="font-weight-bold">Cover Image</p>
+                                                        <p class="font-weight-bold">Cover Image <span class="text-danger">*</span></p>
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
                                                             <div class="input-file">
                                                                 <label class="label-input-file">Choose Files &nbsp;&nbsp;&nbsp;<i class="ft-upload font-medium-1"></i><input type="file" name="cover_image" class="cover-images" id="coverImages" accept=".jpg, .jpeg, .png">
@@ -111,7 +111,7 @@
                                                         @foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value)
                                                             <div class="col-md-6 mb-3">
                                                                 @if ($translated_block_fields_value == 'input')
-                                                                    <label>{{ $translated_block_fields_key }}<span class="text-danger">*</span></label>
+                                                                    <label>{{($translated_block_fields_key == 'title' ? 'Audio ' :'')}}{{ $translated_block_fields_key }}<span class="text-danger">*</span></label>
                                                                     <input class="translation_block form-control required" type="text" id="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" name="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}">
                                                                 @endif
                                                                 @if ($translated_block_fields_value == 'textarea')

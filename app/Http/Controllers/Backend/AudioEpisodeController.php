@@ -70,9 +70,13 @@ class AudioEpisodeController extends Controller
                         }
                         $query->get()->toArray();
                     })
-                    ->editColumn('title'.\App::getLocale(), function ($event) {
+                    ->editColumn('chapter_name'.\App::getLocale(), function ($event) {
                         $key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
-                        return $event->translations[$key_index]->title ?? '';
+                        return $event->translations[$key_index]->chapter_name ?? '';
+                    })
+                    ->editColumn('chapter_number'.\App::getLocale(), function ($event) {
+                        $key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
+                        return $event->translations[$key_index]->chapter_number ?? '';
                     })
                     ->editColumn('duration', function ($event) {
                         return $event->duration ??'';
@@ -117,7 +121,7 @@ class AudioEpisodeController extends Controller
                         return $actions;
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['title'.\App::getLocale(),'duration', 'chapters','verses', 'action'])->setRowId('id')->make(true);
+                    ->rawColumns(['chapter_name'.\App::getLocale(),'chapter_number'.\App::getLocale(),'duration', 'chapters','verses', 'action'])->setRowId('id')->make(true);
             } catch (\Exception $e) {
                 \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                 return response([

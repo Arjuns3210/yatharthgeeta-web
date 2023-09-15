@@ -7,71 +7,68 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Edit Collection:
-                                        {{$collection->title}}</h5>
+                                    <h5 class="pt-2">Edit Home Collection:
+                                        {{$collection['title']}} ({{ config('translatable.locales_name')[\App::getLocale()] }})</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
                                 </div>
                             </div>
                         </div>
-                        <!-- <hr class="mb-0"> -->
                     	<div class="card-body">
                             <form id="updateHomeCollection" method="post" action="home_collection/update">
                                 @csrf
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        {{--                                        <ul class="nav nav-tabs">--}}
-                                        {{--                                            <li class="nav-item">--}}
-                                        {{--                                                <a class="nav-link active" data-toggle="tab" href="#data_details">Details</a>--}}
-                                        {{--                                            </li>--}}
-                                        {{--                                        </ul>--}}
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#data_details">Details</a>
+                                            </li>
+                                            @foreach (config('translatable.locales') as $translated_tabs)
+                                                <li class="nav-item">
+                                                    <a class="nav-link" data-toggle="tab" href="#{{ $translated_tabs }}_block_details">{{ config('translatable.locales_name')[$translated_tabs] }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
                                         <div class="tab-content">
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Collection Type<span class="text-danger">*</span></label>
                                                         <select class="form-control select2 required" id="collection_type" name="collection_type">
-                                                            <option value="{{$collection->type}}" >{{\App\Models\HomeCollection::COLLECTION_TYPES[$collection->type]}}</option>
+                                                            <option value="{{$collection['type']}}" >{{\App\Models\HomeCollection::COLLECTION_TYPES[$collection['type']]}}</option>
                                                         </select>
-                                                        <input type="hidden" value="{{$collection->id}}" name="id">
+                                                        <input type="hidden" value="{{$collection['id']}}" name="id">
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Language<span class="text-danger">*</span></label>
                                                         <select class="form-control select2 required" id="language_id" name="language_id">
                                                             @foreach($languages as $language)
-                                                                <option value="{{$language->id}}" {{ ($collection->id == $language->id) ? 'selected'  : '' }}>{{$language->translations[0]->name ?? ''}}</option>
+                                                                <option value="{{$language->id}}" {{ ($collection['id'] == $language->id) ? 'selected'  : '' }}>{{$language->translations[0]->name ?? ''}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Collection Title<span class="text-danger">*</span></label>
-                                                        <textarea class="ckeditor form-control required" id="" rows="13" name="title">{!! $collection->title ?? '' !!}</textarea>
-                                                        <br/>
+                                                    <div class="col-sm-6 mb-2">
+                                                        <label>Sequence<span class="text-danger">*</span></label>
+                                                        <input class="form-control required integer-validation" type="number" id="sequence" name="sequence" value="{{$collection['sequence'] ?? ''}}"><br/>
                                                     </div>
-                                                    <div class="col-sm-6 mt-2">
-                                                        <div class="col-sm-12 pl-0 pr-0">
-                                                            <label>Short Description</label>
-                                                            <input class="form-control" type="text" id="description" name="description" value="{{$collection->description ?? ''}}"><br/>
-                                                        </div>
-                                                        <div class="col-sm-12 pl-0 pr-0">
-                                                            <label>Sequence<span class="text-danger">*</span></label>
-                                                            <input class="form-control required integer-validation" type="number" id="sequence" name="sequence" value="{{$collection->sequence ?? ''}}"><br/>
-                                                        </div>
-                                                        <div class="col-sm-12 pl-0 pr-0">
-                                                            <label>Display in columns<span class="text-danger">*</span></label>
-                                                            <input class="form-control required" type="text" id="display_in_column" name="display_in_column" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode ==46' value="{{$collection->display_in_column ?? ''}}"><br/>
-                                                        </div>
-                                                        <div class="col-sm-12 pl-0 pr-0 mt-2">
-                                                            <div class="custom-switch">
-                                                                <input type="checkbox" class="custom-control-input" id="is_scrollable" name="is_scrollable" {{($collection->is_scrollable == 1) ? 'checked' : ''}}>
-                                                                <label class="custom-control-label" for="is_scrollable">Is Scrollable</label>
-                                                            </div>
+                                                    <div class="col-sm-6 mb-2">
+                                                        <label>Display in columns<span class="text-danger">*</span></label>
+                                                        <select class="form-control select2 required" id="display_in_column" name="display_in_column">
+                                                            @foreach(\App\Models\HomeCollection::DISPLAY_IN_COLUMN as $key => $type)
+                                                                <option value="{{$type}}" {{( $collection['display_in_column'] == $type) ? 'selected' :''}}>{{$type}}</option>
+                                                            @endforeach
+                                                        </select><br/>
+                                                    </div>
+                                                    <div class="col-sm-6 mb-4">
+                                                        <div class="custom-switch">
+                                                            <input type="checkbox" class="custom-control-input" id="is_scrollable" name="is_scrollable" {{($collection['is_scrollable'] == 1) ? 'checked' : ''}}>
+                                                            <label class="custom-control-label" for="is_scrollable">Is Scrollable</label>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                @if($collection->type == \App\Models\HomeCollection::MULTIPLE)
+                                                @if($collection['type'] == \App\Models\HomeCollection::MULTIPLE)
                                                     <div class="row div_multiple">
                                                         <div class="col-md-12 ">
                                                             <fieldset class="scheduler-border mb-3">
@@ -167,7 +164,7 @@
                                                         </div>
                                                     </div>
                                                 @endif
-                                                @if($collection->type == \App\Models\HomeCollection::SINGLE)
+                                                @if($collection['type'] == \App\Models\HomeCollection::SINGLE)
                                                     <div class="row div_single">
                                                         <div class="col-sm-6 mb-2">
                                                             <label>Image</label>
@@ -176,7 +173,7 @@
                                                                 <div class="d-flex mb-1  cover-image-div-{{$image->id}}">
                                                                     <input type="text"
                                                                            class="form-control input-sm bg-white document-border"
-                                                                           value="{{ $image->name }}"
+                                                                           value="{{ $image->file_name }}"
                                                                            readonly style="color: black !important;">
                                                                     <a href="{{ $image->getFullUrl() }}"
                                                                        class="btn btn-primary mx-2 px-2" target="_blank"><i
@@ -190,7 +187,7 @@
                                                         </div>
                                                     </div>
                                                 @endif
-                                                @if($collection->type == \App\Models\HomeCollection::BOOK)
+                                                @if($collection['type'] == \App\Models\HomeCollection::BOOK)
                                                     <div class="row div_book">
                                                         <div class="col-sm-6 mb-2">
                                                             <label>Book<span class="text-danger">*</span></label>
@@ -202,19 +199,19 @@
                                                         </div>
                                                     </div>
                                                 @endif
-                                                @if($collection->type == \App\Models\HomeCollection::AUDIO)
+                                                @if($collection['type'] == \App\Models\HomeCollection::AUDIO)
                                                     <div class="row div_audio">
                                                         <div class="col-sm-6 mb-2">
                                                             <label>Audio<span class="text-danger">*</span></label>
                                                             <select class="form-control select2 " id="audio_id" name="audio_id[]" multiple>
                                                                 @foreach($audios as $audio)
-                                                                    <option value="{{$audio->id}}" {{(in_array($book->id,$mappedIds))? 'selected':''}}>{{$audio->translations[0]->title ?? ''}}</option>
+                                                                    <option value="{{$audio->id}}" {{(in_array($audio->id,$mappedIds))? 'selected':''}}>{{$audio->translations[0]->title ?? ''}}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
                                                 @endif
-                                                @if($collection->type == \App\Models\HomeCollection::VIDEO)
+                                                @if($collection['type'] == \App\Models\HomeCollection::VIDEO)
                                                     <div class="row div_video">
                                                         <div class="col-sm-6 mb-2">
                                                             <label>Video<span class="text-danger">*</span></label>
@@ -226,7 +223,7 @@
                                                         </div>
                                                     </div>
                                                 @endif
-                                                @if($collection->type == \App\Models\HomeCollection::SHLOK)
+                                                @if($collection['type'] == \App\Models\HomeCollection::SHLOK)
                                                     <div class="row div_sholk">
                                                         <div class="col-sm-6 mb-2">
                                                             <label>Shlok<span class="text-danger">*</span></label>
@@ -238,7 +235,7 @@
                                                         </div>
                                                     </div>
                                                 @endif
-                                                @if($collection->type == \App\Models\HomeCollection::ARTIST)
+                                                @if($collection['type'] == \App\Models\HomeCollection::ARTIST)
                                                 <div class="row div_artis">
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Guru<span class="text-danger">*</span></label>
@@ -251,6 +248,23 @@
                                                 </div>
                                                 @endif
                                             </div>
+                                            @foreach (config('translatable.locales') as $translated_data_tabs)
+                                                <div id="{{ $translated_data_tabs }}_block_details" class="tab-pane fade">
+                                                    <div class="row">
+                                                        @foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value)
+                                                            <div class="col-md-6 mb-3">
+                                                                @if ($translated_block_fields_value == 'input')
+                                                                    <label>{{ $translated_block_fields_key }}<span class="text-danger">*</span></label>
+                                                                    <input class="translation_block form-control required" type="text" id="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" name="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" value="{{ $collection[$translated_block_fields_key.'_'.$translated_data_tabs] ?? '' }}">
+                                                                @elseif ($translated_block_fields_value == 'textarea')
+                                                                    <label>{{ $translated_block_fields_key }}</label>
+                                                                    <textarea class="translation_block form-control required" id="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" name="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}">{{ $collection[$translated_block_fields_key.'_'.$translated_data_tabs] ?? '' }}</textarea>
+                                                                @endif
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>

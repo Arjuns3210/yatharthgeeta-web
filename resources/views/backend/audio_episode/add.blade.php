@@ -91,17 +91,13 @@
                                                             <div class="col-md-6 mb-3">
                                                                 @if ($translated_block_fields_value == 'input')
                                                                     <label>{{ str_replace('_',' ',$translated_block_fields_key) }}<span class="text-danger">*</span></label>
-                                                                    <input class="translation_block form-control required" type="text" id="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" name="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}">
+                                                                    <input class="translation_block form-control required {{(in_array($translated_block_fields_key,['chapter_number','verses_number']) ? 'integer-validation' : '')}}" type="{{(in_array($translated_block_fields_key,['chapter_number','verses_number']) ? 'number' : 'text')}}" id="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" name="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}">
                                                                 @endif
                                                                 @if ($translated_block_fields_value == 'textarea')
                                                                     <label>{{ $translated_block_fields_key }}<span class="text-danger">*</span></label>
                                                                     <textarea class="translation_block form-control required" type="text" id="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" name="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}"></textarea>
                                                                 @endif
                                                             </div>
-                                                            @if($loop->first)
-                                                                <div class="col-md-6 mb-3">
-                                                                </div>  
-                                                            @endif
                                                         @endforeach
                                                     </div>
                                                 </div>

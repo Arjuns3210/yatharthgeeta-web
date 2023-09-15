@@ -125,3 +125,72 @@
         </div>
     </div>
 </section>
+<script>
+    $(document).ready(function() {
+        // Attach event listener to the start date input
+        $('#event_start_date').change(function() {
+            var startDate = new Date($('#event_start_date').val());
+            var endDate = new Date($('#event_end_date').val());
+
+            // Check if start date is greater than end date
+            if (startDate > endDate) {
+                $.activeitNoty({
+                    type: 'danger',
+                    icon: 'fa fa-minus',
+                    message: 'Event Start date cannot be greater than end Event date.' ,
+                    container: 'floating',
+                    timer: 3000
+                });
+                $('#event_start_date').val('');
+            }
+        });
+
+        // Attach event listener to the end date input
+        $('#event_end_date').change(function() {
+            var startDate = new Date($('#event_start_date').val());
+            var endDate = new Date($('#event_end_date').val());
+
+            // Check if start date is greater than end date
+            if (startDate > endDate) {
+                $.activeitNoty({
+                    type: 'danger',
+                    icon: 'fa fa-minus',
+                    message: 'Event Start date cannot be greater than Event end date.' ,
+                    container: 'floating',
+                    timer: 3000
+                });
+                $('#event_end_date').val('');
+            }
+        });
+
+        $('#event_start_time').change(function() {
+            var startTime = $('#event_start_time').val();
+            var endTime = $('#event_end_time').val();
+            if (endTime !='' && startTime > endTime) {
+                $.activeitNoty({
+                    type: 'danger',
+                    icon: 'fa fa-minus',
+                    message: 'Event Start time cannot be greater than Event end time.' ,
+                    container: 'floating',
+                    timer: 3000
+                });
+                $('#event_start_time').val('');
+            }
+        });
+        $('#event_end_time').change(function() {
+            var startTime = $('#event_start_time').val();
+            var endTime = $('#event_end_time').val();
+            if (startTime != '' && startTime > endTime) {
+                $.activeitNoty({
+                    type: 'danger',
+                    icon: 'fa fa-minus',
+                    message: 'Event Start time cannot be greater than Event end time.' ,
+                    container: 'floating',
+                    timer: 3000
+                });
+                $('#event_end_time').val('');
+            }
+        });
+    });
+    
+</script>

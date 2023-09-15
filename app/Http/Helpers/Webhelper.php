@@ -1,15 +1,5 @@
 <?php
 
-use App\Models\DisplayMsg;
-use App\Models\User;
-use App\Models\Vendor;
-use App\Models\VendorDevice;
-use App\Models\CustomerDevice;
-use Illuminate\Support\Facades\Http;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Illuminate\Support\Facades\Storage;
-use Image as thumbimage;
 
 if(!function_exists('formatName')){
     function formatName($unformatted_name = '',$reverse_format = false)
@@ -110,8 +100,10 @@ if (! function_exists('storeMedia')) {
 
     function storeMedia($model, $file, $collectionName)
     {
-        $model->addMedia($file)->toMediaCollection($collectionName,
-            config('app.media_disc'));
+        // Replace spaces and specified symbols with underscores
+        $fileName = preg_replace('/[!@#$%^ ]/', '_', $file->getClientOriginalName());
+        
+        $model->addMedia($file)->usingFileName($fileName)->toMediaCollection($collectionName, config('app.media_disc'));
     }
 }
 
