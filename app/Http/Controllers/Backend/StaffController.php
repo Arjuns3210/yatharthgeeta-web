@@ -115,7 +115,7 @@ class StaffController extends Controller
     }
 
     public function add() {
-        $data['role'] = Role::all();
+        $data['role'] = Role::where('status', 1)->get();
 
         return view('backend/staff/add',["data"=>$data]);
     }
