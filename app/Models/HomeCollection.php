@@ -22,7 +22,6 @@ class HomeCollection extends Model implements HasMedia
         'sequence',
         'is_scrollable',
         'display_in_column',
-        'language_id',
         'status',
         'created_by',
         'updated_by',
