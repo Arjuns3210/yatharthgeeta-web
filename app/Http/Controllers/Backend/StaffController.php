@@ -32,8 +32,8 @@ class StaffController extends Controller
         $data['staff_view'] = checkPermission('staff_view');
         $data['staff_edit'] = checkPermission('staff_edit');
         $data['staff_status'] = checkPermission('staff_status');
-
-        return view('backend/staff/index', ["data" => $data]);
+        $roles = Role::where('status', 1)->get();
+        return view('backend/staff/index', ["data" => $data], ['roles' => $roles]);
     }
 
     /**
@@ -115,7 +115,7 @@ class StaffController extends Controller
     }
 
     public function add() {
-        $data['role'] = Role::all();
+        $data['role'] = Role::where('status', 1)->get();
 
         return view('backend/staff/add',["data"=>$data]);
     }

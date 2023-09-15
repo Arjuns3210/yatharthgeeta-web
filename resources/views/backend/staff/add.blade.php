@@ -28,18 +28,12 @@
                                             @endforeach
                                         </select><br/>
                         			</div>
-                                    <div class="col-sm-6 d-flex" style="margin-top:30px">
-                                        <input type="checkbox" class="largerCheckbox" id="is_head" name="is_head" value="0">
-                                        <div class="ml-2">
-                                            <label class="" for="is_head">Is Head ?</label>
-                                        </div>
-                                    </div>
-								</div><br/>
-                        		<div class="row">
-                        			<div class="col-sm-6">
+                                    <div class="col-sm-6">
                         				<label>Name<span class="text-danger">*</span></label>
                         				<input class="form-control required" type="text" id="admin_name" name="admin_name"><br/>
                         			</div>
+								</div>
+                        		<div class="row">
                                     <div class="col-sm-6">
                                         <label>Nick Name<span class="text-danger">*</span></label>
                                         <input class="form-control required" type="text" id="nick_name" name="nick_name"><br/>
@@ -50,7 +44,7 @@
                         			</div>
                                     <div class="col-sm-6">
                                         <label>Phone<span class="text-danger">*</span></label>
-                                        <input class="form-control required" type="text" id="phone" name="phone"><br/>
+                                        <input class="form-control required" type="text" id="phone" name="phone" maxlength="10"><br/>
                                     </div>
                         			<div class="col-sm-6">
                         				<label>Password<span class="text-danger">*</span></label>

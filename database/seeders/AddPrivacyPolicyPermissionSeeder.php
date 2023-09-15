@@ -15,7 +15,7 @@ class AddPrivacyPolicyPermissionSeeder extends Seeder
     public function run()
     {
         $parent_permission = [
-            'name' => 'privacy_policy',
+            'name' => 'Privacy Policy',
             'codename' => 'privacy_policy',
             'parent_status' => 'parent',
             'description' => '',
