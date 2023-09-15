@@ -11,8 +11,8 @@ class MantraTranslation extends Model
     public $timestamps = false;
     public $fillable = [
         'mantra_id',
-        'title',
-        'description'
+        'name',
+        'meaning'
 
     ];
 
