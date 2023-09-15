@@ -72,10 +72,21 @@
                                                         <label>Sequence<span class="text-danger">*</span></label>
                                                         <input class="form-control required integer-validation" type="number" id="sequence" name="sequence"><br/>
                                                     </div>
-                                                    <div class="col-sm-6">
-                                                        <label>Cover<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" accept=".jpg,.jpeg,.png" type="file" id="cover" name="cover" onchange="handleFileInputChange('cover')"><br/>
+                                                    <div class="col-md-6 col-lg-12 col-sm-6 mt-2 text-center">
+                                                        <p class="font-weight-bold">Cover<span class="text-danger">*</span></p>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
+                                                        <div class="shadow bg-white rounded d-inline-block mb-2">
+                                                            <div class="input-file">
+                                                                <label class="label-input-file">Choose Files &nbsp;&nbsp;&nbsp;<i class="ft-upload font-medium-1"></i>
+                                                                    <input type="file" name="cover" class="cover-images" id="cover" accept=".jpg, .jpeg, .png" onchange="handleFileInputChange('coverImages', 'image')">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <p id="files-area">
+                                                            <span id="coverImagesLists">
+                                                                <span id="cover-images-names"></span>
+                                                            </span>
+                                                        </p>
                                                     </div>
                                                 </div>
 
@@ -124,4 +135,47 @@
             </div>
         </div>
     </div>
+    <script>
+        const coverImageData = new DataTransfer();
+
+        function handleCoverImagesAttachmentChange() {
+            const attachmentInput = document.getElementById('cover');
+
+            attachmentInput.addEventListener('change', function (e) {
+                if (this.files.length === 1) {
+                    const file = this.files[0];
+                    const fileBloc = $('<span/>', { class: 'file-block' });
+                    const fileName = $('<span/>', { class: 'name', text: file.name });
+
+                    fileBloc.append('<span class="file-delete cover-image-delete"><span>+</span></span>').
+                        append(fileName);
+
+                    // Clear existing uploaded documents
+                    $('#coverImagesLists > #cover-images-names').empty();
+
+                    $('#coverImagesLists > #cover-images-names').append(fileBloc);
+                    coverImageData.items.clear(); // Clear existing items
+                    coverImageData.items.add(file);
+                } else {
+                    this.value = '';
+                    $('#coverImagesLists > #cover-images-names').empty();
+                    coverImageData.items.clear();
+                }
+            });
+
+            $(document).on('click', 'span.cover-image-delete', function () {
+                // Clear UI
+                $('#coverImagesLists > #cover-images-names').empty();
+
+                // Clear DataTransfer object (coverImageData)
+                coverImageData.items.clear();
+
+                // Reset the input field to clear selected files
+                const input = document.getElementById('cover');
+                input.value = ''; // This should clear the selected file(s) in the input field
+            });
+        }
+
+        handleCoverImagesAttachmentChange();
+    </script>
 </section>
