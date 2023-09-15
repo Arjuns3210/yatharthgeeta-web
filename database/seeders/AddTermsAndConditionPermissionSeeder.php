@@ -15,7 +15,7 @@ class AddTermsAndConditionPermissionSeeder extends Seeder
     public function run()
     {
         $parent_permission = [
-            'name' => 'terms',
+            'name' => 'Terms and Conditions',
             'codename' => 'terms',
             'parent_status' => 'parent',
             'description' => '',

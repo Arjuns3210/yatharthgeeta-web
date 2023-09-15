@@ -15,7 +15,7 @@ class AddGeneralSettingsPermissionSeeder extends Seeder
     public function run()
     {
         $parent_permission = [
-            'name' => 'GeneralSettings',
+            'name' => 'General Settings',
             'codename' => 'general_settings',
             'parent_status' => 'parent',
             'description' => '',

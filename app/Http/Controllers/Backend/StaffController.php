@@ -32,8 +32,8 @@ class StaffController extends Controller
         $data['staff_view'] = checkPermission('staff_view');
         $data['staff_edit'] = checkPermission('staff_edit');
         $data['staff_status'] = checkPermission('staff_status');
-
-        return view('backend/staff/index', ["data" => $data]);
+        $roles = Role::all();
+        return view('backend/staff/index', ["data" => $data], ['roles' => $roles]);
     }
 
     /**

@@ -43,6 +43,10 @@
                                                     <td><span><span> {{ $data->phone }}</span></td>
                                                 </tr>
                                                 <tr>
+                                                    <td><strong>Address</strong></td>
+                                                    <td><span><span> {{ $data->address }}</span></td>
+                                                </tr>
+                                                <tr>
                                                     <td><strong>Staff Status</strong></td>
                                                     <td>{{displayStatus($data->status)}}</td>
                                                 </tr>
