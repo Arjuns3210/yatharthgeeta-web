@@ -215,7 +215,11 @@
                                                                     <label>{{formatName($translated_block_fields_key)}}</label>
                                                                     <textarea class="translation_block form-control" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">{{$location[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}</textarea>
                                                                     @else
-                                                                    <label>{{$translated_block_fields_key}}<span class="text-danger">*</span></label>
+                                                                    @if( formatName($translated_block_fields_key) == 'description')
+                                                                    <label>Long Description<span class="text-danger">*</span></label>
+                                                                    @else
+                                                                    <label>{{formatName($translated_block_fields_key)}}<span class="text-danger">*</span></label>
+                                                                    @endif
                                                                     <textarea class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">{{$location[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}</textarea>
                                                                     @endif  
                                                                 </div>

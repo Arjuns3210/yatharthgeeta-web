@@ -75,7 +75,7 @@
                                                         <input class="form-control required" type="text" id="google_address" name="google_address"><br/>
                                                     </div>
                                                     <div class="col-md-6 col-lg-6 col-sm-6 text-center">
-                                                        <p class="font-weight-bold">Quote Image<span class="text-danger">*</span></p>
+                                                        <p class="font-weight-bold">Image<span class="text-danger">*</span></p>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
                                                             <div class="input-file">
@@ -188,7 +188,11 @@
                                                                     <label>{{formatName($translated_block_fields_key)}}</label>
                                                                     <textarea class="translation_block form-control" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}"></textarea>
                                                                     @else
+                                                                    @if( formatName($translated_block_fields_key) == 'description')
+                                                                    <label>Long Description<span class="text-danger">*</span></label>
+                                                                    @else
                                                                     <label>{{formatName($translated_block_fields_key)}}<span class="text-danger">*</span></label>
+                                                                    @endif
                                                                     <textarea class="translation_block form-control required" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}"></textarea>
                                                                     @endif
                                                                 </div>
