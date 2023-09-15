@@ -45,7 +45,10 @@
                                                 <label>Role</label>
                                                 <select class="form-control mb-3 select2" id="search_role" name="search_role" style="width: 100% !important;">
                                                     <option value="">Select</option>
-                                                  
+                                                    @foreach($roles as $role)
+                                                        <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                                                    @endforeach
+
                                                 </select>
                                             </div>
                                             <div class="col-md-4">

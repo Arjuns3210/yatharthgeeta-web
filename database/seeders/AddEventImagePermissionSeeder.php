@@ -15,7 +15,7 @@ class AddEventImagePermissionSeeder extends Seeder
     public function run()
     {
         $parent_permission = [
-            'name' => 'Event_Image',
+            'name' => 'Event Image',
             'codename' => 'event_image',
             'parent_status' => 'parent',
             'description' => '',

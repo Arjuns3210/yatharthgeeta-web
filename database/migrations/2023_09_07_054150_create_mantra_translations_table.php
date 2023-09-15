@@ -17,8 +17,8 @@ class CreateMantraTranslationsTable extends Migration
             $table->increments('id');
             $table->integer('mantra_id')->unsigned();
             $table->string('locale')->index();
-            $table->longText('title');
-            $table->longText('description');
+            $table->longText('name');
+            $table->longText('meaning');
             $table->foreign('mantra_id')->references('id')->on('mantras')->onDelete('cascade')->onUpdate('cascade');
             $table->unique(['mantra_id','locale']);
         });

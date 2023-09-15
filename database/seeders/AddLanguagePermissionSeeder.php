@@ -15,7 +15,7 @@ class AddLanguagePermissionSeeder extends Seeder
     public function run()
     {
         $parent_permission = [
-            'name' => 'language ',
+            'name' => 'Language ',
             'codename' => 'language',
             'parent_status' => 'parent',
             'description' => '',
