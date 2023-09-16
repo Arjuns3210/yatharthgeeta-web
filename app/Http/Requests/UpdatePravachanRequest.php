@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Audio;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
@@ -25,13 +26,28 @@ class UpdatePravachanRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $ruleData = [
             'id'           => 'required',
             'duration'     => 'required|integer',
             'sequence'     => 'required|integer',
             'language_id'  => 'required',
             'author_id'  => 'required',
         ];
+        
+        $pravachanId = $this->input('id');
+        $pravachan = Audio::find($pravachanId);
+        if (! empty($pravachan)) {
+            $audioCoverImage = $pravachan->getMedia(Audio::AUDIO_COVER_IMAGE)->first();
+            if (empty($audioCoverImage)) {
+                $ruleData['cover_image'] = 'required|mimes:jpeg,jpg,png,gif';
+            }
+            $audioFile = $pravachan->getMedia(Audio::AUDIO_FILE)->first();
+            if (empty($audioFile)) {
+                $ruleData['audio_file'] = 'required|mimes:mp3,wav';
+            }
+        }
+        
+        return $ruleData;
     }
 
     /**

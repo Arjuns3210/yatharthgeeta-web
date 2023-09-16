@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\backend;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Artist;
 use App\Models\Audio;
 use App\Models\Book;
 use App\Models\BookCategory;
-use App\Models\BookTranslation;
 use App\Models\Language;
 use App\Models\Video;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;

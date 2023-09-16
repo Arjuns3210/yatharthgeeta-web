@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\AudioEpisode;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
@@ -25,14 +26,24 @@ class UpdateAudioEpisodeRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $ruleData = [
             'id'         => 'required|integer',
             'duration'   => 'required|integer',
             'sequence'   => 'required|integer',
             'main_shlok'   => 'required',
             'explanation_shlok'   => 'required',
-            'audio_file' => 'nullable|mimes:mp3,wav',
         ];
+
+        $audioEpisodeId = $this->input('id');
+        $audioEpisode = AudioEpisode::find($audioEpisodeId);
+        if (! empty($audioEpisode)) {
+            $audioFile = $audioEpisode->getMedia(AudioEpisode::EPISODE_AUDIO_FILE)->first();
+            if (empty($audioFile)) {
+                $ruleData['audio_file'] = 'required|mimes:mp3,wav';
+            }
+        }
+        
+        return $ruleData;
     }
 
     /**
