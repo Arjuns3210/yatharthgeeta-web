@@ -145,9 +145,9 @@
                                 <li class="{{ $lastParam ==  'books' ? 'active' : '' }}">
                                     <a href="books" class="menu-item"><i class="fa fa-book" aria-hidden="true"></i>Books</a>
                                 </li>
-                                <li class="{{ $lastParam ==  'shloks' ? 'active' : '' }}">
+                                <!-- <li class="{{ $lastParam ==  'shloks' ? 'active' : '' }}">
                                     <a href="shloks" class="menu-item"><i class="fa fa-bookmark" aria-hidden="true"></i>Shloks</a>
-                                </li>
+                                </li> -->
                                 <li class="{{ $lastParam ==  'home_collection' ? 'active' : '' }}">
                                     <a href="home_collection" class="menu-item"><i class="fa fa-list-alt"></i>Home Collection</a>
                                 </li>

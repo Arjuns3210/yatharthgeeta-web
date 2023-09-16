@@ -83,7 +83,8 @@ class LoginController extends Controller
                 "role_id"=>$response[0]['role_id'],
                 "force_pwd_change_flag" => $response[0]['force_pwd_change_flag'],
                 "pwd_expiry_date" => $response[0]['pwd_expiry_date'],
-                "permissions"=>$response[0]['role']['permission']
+                "permissions"=>$response[0]['role']['permission'],
+                "is_head"=>$response[0]['is_head']
             );
             $request->session()->put('data',$data);
             return redirect('webadmin/dashboard');

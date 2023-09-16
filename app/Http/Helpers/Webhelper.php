@@ -81,6 +81,10 @@ if (!function_exists('checkPermission')) {
     function checkPermission($name)
     {
         if (session('data')['role_id'] == 1) {
+            \Log::info(session('data'));
+            if(strpos($name, 'delete') !== false && session('data')['is_head'] == false) {
+                return false;
+            }
             return true;
         }
         $permissions = Session::get('permissions');
