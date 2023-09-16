@@ -37,19 +37,11 @@
                                                         <input class="form-control required integer-validation" type="number" id="sequence" name="sequence"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Book Category<span class="text-danger">*</span></label>
-                                                        <select class="form-control mb-3" type="text" id="book_category_id" name="book_category_id">
-                                                            @foreach($book_category as $book_category)
-                                                                <option value="{{$book_category->id}}">{{$book_category->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-6">
                                                         <label>Number of Pages<span class="text-danger">*</span></label>
-                                                        <input class="form-control integer-validation" type="number" id="pages" name="pages"><br/>
+                                                        <input class="form-control required integer-validation" type="number" id="pages" name="pages"><br/>
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
-                                                        <label>Video</label>
+                                                        <label>Available Video</label>
                                                         <select class="form-control" id="video_id" name="video_id">
                                                         @foreach($video as $video)
                                                                 <option value="{{$video->id}}">{{$video->title}}</option>
@@ -57,7 +49,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
-                                                        <label>Audio</label>
+                                                        <label>Available Audio</label>
                                                         <select class="form-control" id="audio_id" name="audio_id">
                                                         @foreach($audio as $audio)
                                                                 <option value="{{$audio->id}}">{{$audio->title}}</option>
@@ -73,16 +65,16 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6 mb-3">
-                                                        <label>GURU</label>
-                                                        <select class="form-control" type="text" id="artist_id" name="artist_id">
+                                                        <label>GURU<span class="text-danger">*</span></label>
+                                                        <select class="form-control required" type="text" id="artist_id" name="artist_id">
                                                         @foreach($artist as $artist)
                                                             <option value="{{$artist->id}}">{{$artist->name}}</option>
                                                         @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>LANGUAGE</label>
-                                                        <select class="form-control" type="text" id="language_id" name="language_id">
+                                                        <label>LANGUAGE<span class="text-danger">*</span></label>
+                                                        <select class="form-control required" type="text" id="language_id" name="language_id">
                                                         @foreach($language as $language)
                                                             <option value="{{$language->id}}">{{$language->name}}</option>
                                                         @endforeach
@@ -136,7 +128,7 @@
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
                                                             <div class="input-file">
                                                                 <label class="label-input-file">Choose Files &nbsp;&nbsp;&nbsp;<i class="ft-upload font-medium-1"></i>
-                                                                    <input type="file" name="cover_image" class="cover-images" id="cover_image" accept=".jpg, .jpeg, .png" onchange="handleFileInputChange('coverImages', 'image')">
+                                                                    <input type="file" name="cover_image" class="cover-images" id="cover_image" accept=".jpg, .jpeg, .png" onchange="handleFileInputChange('cover_image', 'image')">
                                                                 </label>
                                                             </div>
                                                         </div>

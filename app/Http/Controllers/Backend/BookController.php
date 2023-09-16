@@ -13,6 +13,8 @@ use App\Models\Video;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
+use App\Http\Requests\AddBookRequest;
+use App\Http\Requests\UpdateBookRequest;
 use Yajra\DataTables\DataTables;
 
 class BookController extends Controller
@@ -152,7 +154,7 @@ class BookController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddBookRequest $request)
     {
         $input = $request->all();
         $input['related_id'] = implode(',',$input['related_id'] ?? []);
@@ -180,9 +182,21 @@ class BookController extends Controller
     {
         $data['books']= Book::with('artist', 'language', 'audio', 'video' )->find($id);
         $data['book'] = Book::whereIn('id', explode(',', $data['books']->related_id))->get();
-        $data['media'] = $data['books']->getMedia(Book::COVER_IMAGE)[0];
-        $data['pdf_file'] = $data['books']->getMedia(Book::PDF_FILE)->first()?? '';
+        if(!empty($data['books'])){
+            $data['media'] = $data['books']->getMedia(Book::COVER_IMAGE)->first()?? '';
+        }
+        if(!empty($data['books'])){
+            $data['pdf_file'] = $data['books']->getMedia(Book::PDF_FILE)->first()?? '';
+        }
+        if(!empty($data['books'])){
+        }
         $data['epub_file'] = $data['books']->getMedia(Book::EPUB_FILE)->first()?? '';
+        foreach($data['books']['translations'] as $trans) {
+            $translated_keys = array_keys(Book::TRANSLATED_BLOCK);
+            foreach ($translated_keys as $value) {
+                $data['books'][$value.'_'.$trans['locale']] = $trans[$value];
+            }
+        }
         $data['translated_block'] = Book::TRANSLATED_BLOCK;
         return view('backend/books/view', $data);
     }
@@ -235,10 +249,15 @@ class BookController extends Controller
                 },
             ])->get();
         $data['peopleAlsoReadIds'] = explode(",", $data['book']['related_id'] ?? '');
-        $data['media'] =$data['book']->getMedia(Book::COVER_IMAGE)[0];
-        $data['pdf_file'] = $data['book']->getMedia(Book::PDF_FILE)->first()?? '';
+
         if(!empty($data['book'])){
-            $data['epub_file'] = $data['book']->getMedia(Book::EPUB_FILE)[0];
+            $data['media'] =$data['book']->getMedia(Book::COVER_IMAGE)->first()?? '';
+        }
+        if(!empty($data['book'])){
+            $data['pdf_file'] = $data['book']->getMedia(Book::PDF_FILE)->first()?? '';
+        }
+        if(!empty($data['book'])){
+            $data['epub_file'] = $data['book']->getMedia(Book::EPUB_FILE)->first()?? '';
         }
         return view('backend/books/edit', $data);
     }
@@ -250,7 +269,7 @@ class BookController extends Controller
      * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UpdateBookRequest $request)
     {
         $data = Book::find($_GET['id']);
         $input=$request->all();
@@ -265,7 +284,6 @@ class BookController extends Controller
         {
             $input[$value] = (array) json_decode($input[$value]);
         }
-        $data['translated_block'] = Book::TRANSLATED_BLOCK;
         $book = Utils::flipTranslationArray($input, $translated_keys);
         $data->update($book);
 

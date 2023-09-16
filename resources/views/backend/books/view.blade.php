@@ -75,17 +75,17 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Audio</strong></td>
+                                                        <td><strong>Available Audio</strong></td>
                                                         <td>{{$books->audio['title']}}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Video</strong></td>
+                                                        <td><strong>Available Video</strong></td>
                                                         <td>{{$books->video['title']}}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Related Books</strong></td>
+                                                        <td><strong>People Also Read</strong></td>
                                                         <td>
-                                                            @if(empty($book))
+                                                            @if(!empty($book))
                                                                 @foreach ($book as $related_id)
                                                                     <li> {{ $related_id->name }}</li>
                                                                 @endforeach
@@ -127,7 +127,11 @@
                                                         <table class="table table-striped table-bordered">
                                                             <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                                     <tr>
-                                                                        <td><strong>{{ucfirst(str_replace('_',' ',$translated_block_fields_key))}}</strong></td>
+                                                                        @if( formatName($translated_block_fields_key) == 'name')
+                                                                            <td><strong>Book Name</strong></td>
+                                                                        @else
+                                                                        <td><strong>{{formatName(ucfirst(str_replace('_',' ',$translated_block_fields_key)))}}</strong></td>
+                                                                        @endif                                                                        
                                                                         <td><?php echo $books[$translated_block_fields_key.'_'.$translated_data_tabs] ?? '' ?></td>
                                                                     </tr>
                                                             <?php } ?>
