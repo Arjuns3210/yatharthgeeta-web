@@ -71,7 +71,7 @@
                                                         <input class="form-control required" type="text" id="longitude" name="longitude" value="72.88494229316711"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Goolge Address<span class="text-danger">*</span></label>
+                                                        <label>Google Address<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="text" id="google_address" name="google_address"><br/>
                                                     </div>
                                                     <div class="col-md-6 col-lg-6 col-sm-6 text-center">
