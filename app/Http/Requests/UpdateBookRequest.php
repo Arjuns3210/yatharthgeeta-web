@@ -38,6 +38,18 @@ class UpdateBookRequest extends FormRequest
     }
 
     /**
+     * Custom message for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'pdf_file_name.required' => 'PDF file field is required',
+        ];
+    }
+
+    /**
      * Handle a failed validation attempt.
      *
      * @param  \Illuminate\Contracts\Validation\Validator  $validator

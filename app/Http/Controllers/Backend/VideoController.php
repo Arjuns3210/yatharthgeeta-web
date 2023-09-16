@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateVideoRequest;
+use App\Http\Requests\UpdateVideoRequest;
 use App\Models\Artist;
 use App\Models\Language;
 use App\Models\Video;
@@ -140,7 +142,7 @@ class VideoController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(CreateVideoRequest $request)
     {
         $input = $request->all();
         $translated_keys = array_keys(Video::TRANSLATED_BLOCK);
@@ -225,7 +227,7 @@ class VideoController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function update(Request $request)
+    public function update(UpdateVideoRequest $request)
     {
         $localeLanguage = \App::getLocale();
         $data = Video::find($_GET['id']);
