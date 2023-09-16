@@ -1,4 +1,4 @@
-@extends('backend.layouts.applogin')
+@extends('backend.layouts.apppassword')
 @section('title', 'Reset Password Email')
 @section('content')
     <div class="wrapper">

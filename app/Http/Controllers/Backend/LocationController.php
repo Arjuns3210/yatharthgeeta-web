@@ -6,6 +6,8 @@ use Yajra\DataTables\DataTables;
 use App\Models\Location;
 use App\Models\LocationTranslation;
 use App\Utils\Utils;
+use App\Http\Requests\AddLocationRequest;
+use App\Http\Requests\UpdateLocationRequest;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -109,7 +111,7 @@ class LocationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddLocationRequest $request)
     {
         $input = $request->all();
         $working_days_data = [
@@ -211,7 +213,7 @@ class LocationController extends Controller
      * @param  \App\Models\location  $location
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UpdateLocationRequest $request)
     {
         $data = Location::find($_GET['id']);
         $input=$request->all();

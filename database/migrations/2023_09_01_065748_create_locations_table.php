@@ -11,7 +11,7 @@ class CreateLocationsTable extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type')->default('ashram');
-            $table->json('phone')->nullable();
+            $table->longText('phone')->nullable();
             $table->string('email');
             $table->string('image');
             $table->text('working_days')->nullable();
