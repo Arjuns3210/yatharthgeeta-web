@@ -36,7 +36,7 @@
                                                         <label>Sequence<span class="text-danger">*</span></label>
                                                         <input class="form-control required  integer-validation" type="number" id="sequence" name="sequence" value="{{$book->sequence}}" ><br/>
                                                     </div>
-                                                    <div class="col-sm-6">
+                                                    <!-- <div class="col-sm-6">
                                                         <label>Book Category</label>
                                                         <select class="form-control mb-3" type="text" id="book_category_id" name="book_category_id">
                                                             @foreach($book_category as $book_cat)
@@ -44,13 +44,13 @@
                                                                     {{$book_cat->id ==$book['book_category_id'] ? 'selected' : ''}}>{{$book_cat->name ?? ''}}</option>
                                                             @endforeach
                                                         </select>
-                                                    </div>
+                                                    </div> -->
                                                     <div class="col-sm-6">
                                                         <label>Number of Pages<span class="text-danger">*</span></label>
                                                         <input class="form-control integer-validation" type="number" id="pages" name="pages" value="{{$book->pages}}" ><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Audio<span class="text-danger">*</span></label>
+                                                        <label>Available Audio<span class="text-danger">*</span></label>
                                                         <select class="form-control required" type="text" id="audio_id" name="audio_id">
                                                             @foreach($audio as $audios)
                                                                 <option value="{{$audios->id}}" {{$audios->id ==$book['audio_id'] ? 'selected' : ''}}>{{$audios->title ?? ''}}</option>
@@ -58,7 +58,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6 mb-3 ">
-                                                        <label>Video<span class="text-danger">*</span></label>
+                                                        <label>Available Video<span class="text-danger">*</span></label>
                                                             <select class="form-control required" type="text" id="video_id" name="video_id">
                                                                 @foreach($video as $videos)
                                                                     <option value="{{$videos->id}}" {{$videos->id ==$book['video_id'] ? 'selected' : '' }}>{{$videos->title ?? ''}}</option>
@@ -66,7 +66,7 @@
                                                             </select>
                                                     </div>
                                                     <div class="col-sm-6 mb-3">
-                                                        <label>Related Books</label>
+                                                        <label>People Also Read</label>
                                                         <select class="form-control select2" id="related_id" name="related_id[]" multiple>
                                                             @foreach($books as $related)
                                                             <option value="{{ $related->id }}" {{ in_array($related->id, $peopleAlsoReadIds) ? 'selected' : '' }}>
@@ -104,6 +104,12 @@
                                                                     </label>
                                                                 </div>
                                                             </div>
+                                                            <p id="files-area">
+                                                                <span id="audioFilesLists">
+                                                                    <span id="audio-files-names"></span>
+                                                                </span>
+                                                            </p>
+                                                            @if(!empty($epub_file))
                                                             <div class="mt-2">
                                                                 <div class="d-flex mb-1  pdf_file-div-{{$pdf_file->id}}">
                                                                     <input type="text"
@@ -118,9 +124,11 @@
                                                                         data-url="{{ $pdf_file->getFullUrl() }}" data-id="{{ $pdf_file->id }}"><i
                                                                                 class="fa ft-trash"></i></a>
                                                                 </div>
-                                                                <p style="color:blue;">Note : Upload {{config('global.dimensions.pdf')}}</p>
                                                             </div>
+                                                            @endif
+                                                            <p style="color:blue;">Note : Upload {{config('global.dimensions.pdf')}}</p>
                                                         </div>
+                                                       
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="col-md-6 col-lg-12 col-sm-6 text-center file-input-div">
@@ -132,19 +140,25 @@
                                                                     </label>
                                                                 </div>
                                                             </div>
+                                                            <p id="files-area">
+                                                                <span id="srtFilesLists">
+                                                                    <span id="srt-files-names"></span>
+                                                                </span>
+                                                            </p>
                                                             @if(!empty($epub_file))
                                                             <div class="mt-2">
-                                                                    <div class="d-flex mb-1  epub_file-div-{{$epub_file->id}}">
+                                                                    <div class="d-flex mb-1  epub_file-div-{{$epub_file->id ?? ''}}">
+                                                                      
                                                                         <input type="text"
                                                                                 class="form-control input-sm bg-white document-border"
-                                                                                value="{{ $epub_file->file_name }}"
+                                                                                value="{{ $epub_file->file_name ?? '' }}"
                                                                                 readonly style="color: black !important;">
-                                                                        <a href="{{ $epub_file->getFullUrl() }}"
+                                                                        <a href="{{ $epub_file->getFullUrl() ?? '' }}"
                                                                             class="btn btn-primary mx-2 px-2" target="_blank"><i
                                                                                     class="fa ft-eye"></i></a>
                                                                         <a href="javascript:void(0)"
                                                                             class="btn btn-danger delete-epub_file  px-2"
-                                                                            data-url="{{ $epub_file->getFullUrl() }}" data-id="{{ $epub_file->id }}"><i
+                                                                            data-url="{{ $epub_file->getFullUrl() ?? '' }}" data-id="{{ $epub_file->id ?? '' }}"><i
                                                                                     class="fa ft-trash"></i></a>
                                                                     </div>
                                                             </div>
@@ -295,7 +309,7 @@
             const audioFileData = new DataTransfer();
 
             function handleAudioFileAttachmentChange() {
-                const attachmentInput = document.getElementById('epub_file_name');
+                const attachmentInput = document.getElementById('pdf_file_name');
 
                 attachmentInput.addEventListener('change', function (e) {
                     if (this.files.length === 1) {
@@ -330,12 +344,54 @@
                     audioFileData.items.clear();
 
                     // Reset the input field to clear selected files
-                    const input = document.getElementById('epub_file_name');
+                    const input = document.getElementById('pdf_file_name');
                     input.value = ''; // This should clear the selected file(s) in the input field
                 });
             }
 
             handleAudioFileAttachmentChange();
+
+            const srtFileData = new DataTransfer();
+
+            function handleSrtFileAttachmentChange() {
+                const attachmentInput = document.getElementById('epub_file_name');
+
+                attachmentInput.addEventListener('change', function (e) {
+                    if (this.files.length === 1) {
+                        const file = this.files[0];
+                        const fileBloc = $('<span/>', { class: 'file-block' });
+                        const fileName = $('<span/>', { class: 'name', text: file.name });
+
+                        fileBloc.append('<span class="file-delete srt-files-delete"><span>+</span></span>').
+                            append(fileName);
+
+                        // Clear existing uploaded documents
+                        $('#srtFilesLists > #srt-files-names').empty();
+
+                        $('#srtFilesLists > #srt-files-names').append(fileBloc);
+                        srtFileData.items.clear(); // Clear existing items
+                        srtFileData.items.add(file);
+                    } else {
+                        this.value = '';
+                        $('#srtFilesLists > #srt-files-names').empty();
+                        srtFileData.items.clear();
+                    }
+                });
+
+                $(document).on('click', 'span.srt-files-delete', function () {
+                    // Clear UI
+                    $('#srtFilesLists > #srt-files-names').empty();
+
+                    // Clear DataTransfer object (audioFileData)
+                    srtFileData.items.clear();
+
+                    // Reset the input field to clear selected files
+                    const input = document.getElementById('epub_file_name');
+                    input.value = ''; // This should clear the selected file(s) in the input field
+                });
+            }
+
+            handleSrtFileAttachmentChange();
 
             $('.delete-media').click(function () {
                 let mediaId = $(this).attr('data-id');

@@ -9,7 +9,7 @@
     <title>Admin</title>
     <link rel="shortcut icon" type="image/x-icon" href="../backend/img/logo.png">
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900%7CMontserrat:300,400,500,600,700,800,900" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{asset('backend/css/mypcot.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="../backend/css/mypcot.min.css">
     <link rel="stylesheet" type="text/css" href="../backend/fonts/feather/style.min.css">
     <link rel="stylesheet" type="text/css" href="../backend/fonts/simple-line-icons/style.css">
     <link rel="stylesheet" type="text/css" href="../backend/fonts/font-awesome/css/font-awesome.min.css">
@@ -37,6 +37,9 @@
     <script src="../backend/vendors/js/datepicker.min.js"></script>
 </head>
 <body class="vertical-layout vertical-menu 2-columns" data-menu="vertical-menu" data-col="2-columns" id="container">
+    <div class="loader-overlay">
+        <div class="loader mx-auto"></div>
+    </div>
     <nav class="navbar navbar-expand-lg navbar-light header-navbar navbar-fixed mt-2">
         <div class="container-fluid navbar-wrapper">
             <div class="navbar-header d-flex pull-left">

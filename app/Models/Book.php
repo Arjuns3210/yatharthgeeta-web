@@ -48,6 +48,10 @@ class Book extends Model implements HasMedia
     const PDF_FILE = 'pdf_file';
     const EPUB_FILE = 'epub_file';
 
+    protected $attributes = [
+        'book_category_id' => 1
+    ];
+
     public function bookTranslations()
     {
         return $this->hasMany(\App\Models\BookTranslation::class);
