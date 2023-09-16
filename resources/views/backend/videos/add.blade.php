@@ -38,7 +38,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>YouTube Video Link<span class="text-danger">*</span></label>
-                                                        <input class="form-control required url-validation" type="text" id="link" name="link"><br/>
+                                                        <input class="form-control required youtube-url-validation" type="text" id="link" name="link"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>

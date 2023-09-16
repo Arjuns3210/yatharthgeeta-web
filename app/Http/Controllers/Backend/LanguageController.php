@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateLanguageRequest;
+use App\Http\Requests\UpdateLanguageRequest;
 use Illuminate\Http\Request;
 use App\Models\Language;
 use Yajra\DataTables\DataTables;
@@ -127,7 +129,7 @@ class LanguageController extends Controller
         return view('backend/language/add',$data);
     }
 
-    public function store(Request $request)
+    public function store(CreateLanguageRequest $request)
     {
         $input = $request->all();
         $translated_keys = array_keys(Language::TRANSLATED_BLOCK);
@@ -136,6 +138,7 @@ class LanguageController extends Controller
         }
         $saveArray = Utils::flipTranslationArray($input, $translated_keys);
         $data = Language::create($saveArray);
+        
         successMessage('Data Saved successfully', []);
     }
 
@@ -152,8 +155,10 @@ class LanguageController extends Controller
 		return view('backend/language/edit',$data);
     }
 
-    public function update(Request $request)
+    public function update(UpdateLanguageRequest $request)
     {
+        try {
+            DB::beginTransaction();
         $data = Language::find($_GET['id']);
         $input=$request->all();
         if (!$data) {
@@ -166,7 +171,14 @@ class LanguageController extends Controller
         }
         $language = Utils::flipTranslationArray($input, $translated_keys);
         $data->update($language);
+            DB::commit();
         successMessage('Data Saved successfully', []);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("Something Went Wrong. Error: ".$e->getMessage());
+
+            errorMessage("Something Went Wrong.");
+        }
     }
 
     public function destroy($id)

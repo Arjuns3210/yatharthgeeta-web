@@ -76,11 +76,11 @@
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Audio</strong></td>
-                                                        <td>{{$books->audio['title']}}</td>
+                                                        <td>{{$books->audio->translations[0]->title ?? '-'}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Video</strong></td>
-                                                        <td>{{$books->video['title']}}</td>
+                                                        <td>{{$books->video->translations[0]->title ?? '-'}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Related Books</strong></td>
@@ -98,9 +98,6 @@
                                                         <td><strong>Guru</strong></td>
                                                         <td>{{ $books->artist['name'] }}</td>
                                                     </tr>
-                                                    {{-- @php
-                                                        print_r(artist['name']);exit;
-                                                    @endphp --}}
                                                     <tr>
                                                         <td><strong>Language</strong></td>
                                                         <td>{{ $books->language['name'] }}</td>
@@ -115,7 +112,11 @@
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Cover Image </strong></td>
-                                                        <td><img src="{{ $media-> getFullUrl() ?? ''}}" width="200px" height="200px" alt=""></td>
+                                                        <td>
+                                                            @if(!empty($media))
+                                                                <img src="{{ $media-> getFullUrl() ?? ''}}" width="200px" height="200px" alt="">
+                                                            @endif  
+                                                        </td>
                                                     </tr>
                                                 </table>
                                             </div>
