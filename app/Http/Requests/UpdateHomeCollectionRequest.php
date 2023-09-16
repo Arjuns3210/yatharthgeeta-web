@@ -33,7 +33,7 @@ class UpdateHomeCollectionRequest extends FormRequest
             'display_in_column'=> 'required|integer',
         ];
         $collectionType = $this->input('collection_type');
-        if ($collectionType == HomeCollection::SINGLE_COLLECTION_IMAGE) {
+        if ($collectionType == HomeCollection::SINGLE) {
             $ruleData['single_image'] = 'nullable|mimes:jpeg,jpg,png,gif';
         }
         if ($collectionType == HomeCollection::BOOK) {

@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class AddBookRequest extends FormRequest
+class CreateVideoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,27 +26,12 @@ class AddBookRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'       => 'required',
-            'pdf_file_name'  => 'required|mimes:pdf',
+            'duration'       => 'required|integer',
             'cover_image'=> 'required|mimes:jpeg,jpg,png',
-            'pages'      => 'required|integer',
-            'sequence'   => 'required|integer',
-            'language_id'=> 'required',
-            'artist_id'       => 'required',
+            'sequence'   => 'required|integer'
         ];
     }
 
-    /**
-     * Custom message for validation
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            'pdf_file_name.required' => 'PDF file field is required',
-        ];
-    }
 
     /**
      * Handle a failed validation attempt.
