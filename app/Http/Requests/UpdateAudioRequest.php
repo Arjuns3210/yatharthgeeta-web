@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Audio;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
@@ -25,7 +26,7 @@ class UpdateAudioRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $ruleData = [
             'id'           => 'required',
             'has_episodes' => 'required',
             'duration'     => 'required|integer',
@@ -34,6 +35,22 @@ class UpdateAudioRequest extends FormRequest
             'author_id'  => 'required',
             'cover_image'   => 'nullable|mimes:jpeg,jpg,png,gif',
         ];
+
+        $audioId = $this->input('id');
+        $hasEpisode = $this->input('has_episodes');
+        $audio = Audio::find($audioId);
+        if (! empty($audio)) {
+            $audioCoverImage = $audio->getMedia(Audio::AUDIO_COVER_IMAGE)->first();
+            if (empty($audioCoverImage)) {
+                $ruleData['cover_image'] = 'required|mimes:jpeg,jpg,png,gif';
+            }
+            $audioFile = $audio->getMedia(Audio::AUDIO_FILE)->first();
+            if ($hasEpisode == 0 && empty($audioFile)) {
+                $ruleData['audio_file'] = 'required|mimes:mp3,wav';
+            }
+        }
+        
+        return $ruleData;
     }
 
     /**
