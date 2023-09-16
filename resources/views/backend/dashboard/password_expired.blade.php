@@ -1,4 +1,4 @@
-@extends('backend.layouts.applogin')
+@extends('backend.layouts.apppassword')
 @section('title', 'Login')
 @section('content')
 <div class="wrapper">

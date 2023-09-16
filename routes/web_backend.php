@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 // Login
 Route::get('/', 'LoginController@index')->name('login');
 Route::post('login', 'LoginController@login');
-Route::get('/forgot-password', 'LoginController@forgotPassword')->name('password.request');
-Route::post('/forgot-password', 'LoginController@forgotPasswordStore')->name('password.email');
+Route::get('forgot-password', 'LoginController@forgotPassword')->name('password.request');
+Route::post('forgot-password', 'LoginController@forgotPasswordStore')->name('password.email');
 Route::get('/reset-password/{token}/{email}', 'LoginController@passwordReset')->name('password.reset')->middleware('signed');
 Route::post('/reset-password', 'LoginController@passwordUpdate')->name('password.update');
 
