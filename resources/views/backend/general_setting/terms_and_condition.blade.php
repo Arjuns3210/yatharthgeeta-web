@@ -13,7 +13,7 @@
                                         <h4 class="card-title text-center">Terms and Condition</h4>
                                     </div>
                                     <div class="card-body">
-                                        <form id="editTerms" method="post" action="about_us/update?type={{$data['type']}}">
+                                        <form id="editTerms" method="post" action="terms/update">
                                             @csrf
                                             <div class="row">
                                                 <div class="col-sm-12">
