@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\backend;
+namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Artist;
 use App\Models\Language;
 use App\Models\Video;
 use App\Models\VideoCategory;
-use App\Models\VideoTraslation;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Yajra\DataTables\DataTables;
 
 
@@ -18,7 +17,7 @@ class VideoController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -138,8 +137,8 @@ class VideoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -149,6 +148,7 @@ class VideoController extends Controller
             $input[$value] = (array) json_decode($input[$value]);
         }
         $saveArray = Utils::flipTranslationArray($input, $translated_keys);
+        $saveArray['link'] = explode('&', $saveArray['link'])[0] ?? $saveArray['link'];
         $data = Video::create($saveArray);
         //store video cover image
         if (! empty($input['cover_image']) && $data) {
@@ -222,9 +222,8 @@ class VideoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Video  $video
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return Response
      */
     public function update(Request $request)
     {
@@ -240,6 +239,7 @@ class VideoController extends Controller
             $input[$value] = (array) json_decode($input[$value]);
         }
         $video = Utils::flipTranslationArray($input, $translated_keys);
+        $video['link'] = explode('&', $video['link'])[0] ?? $video['link'];
         $data->update($video);
         if(!empty($input['cover_image'])){
             $data->clearMediaCollection(Video::COVER_IMAGE);

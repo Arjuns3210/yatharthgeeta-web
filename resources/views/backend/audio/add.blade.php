@@ -88,7 +88,7 @@
                                                         </p>
                                                     </div>
                                                     <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center file-input-div">
-                                                        <p class="font-weight-bold">Audio File (MP3)</p>
+                                                        <p class="font-weight-bold">Audio File (MP3) <span class="text-danger">*</span></p>
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
                                                             <div class="input-file">
                                                                 <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>

@@ -12,7 +12,7 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-12 col-sm-7">
-                                            <h5 class="pt-2">Manage book List</h5>
+                                            <h5 class="pt-2">Manage Book List</h5>
                                         </div>
                                         <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                             <button class="btn btn-sm btn-outline-danger px-3 py-1 mr-2" id="listing-filter-toggle"><i class="fa fa-filter"></i> Filter</button>

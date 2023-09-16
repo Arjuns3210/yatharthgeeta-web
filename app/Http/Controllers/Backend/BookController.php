@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\backend;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Artist;
 use App\Models\Audio;
 use App\Models\Book;
 use App\Models\BookCategory;
-use App\Models\BookTranslation;
 use App\Models\Language;
 use App\Models\Video;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -180,7 +178,7 @@ class BookController extends Controller
     {
         $data['books']= Book::with('artist', 'language', 'audio', 'video' )->find($id);
         $data['book'] = Book::whereIn('id', explode(',', $data['books']->related_id))->get();
-        $data['media'] = $data['books']->getMedia(Book::COVER_IMAGE)[0];
+        $data['media'] = $data['books']->getMedia(Book::COVER_IMAGE)->first()?? '';
         $data['pdf_file'] = $data['books']->getMedia(Book::PDF_FILE)->first()?? '';
         $data['epub_file'] = $data['books']->getMedia(Book::EPUB_FILE)->first()?? '';
         $data['translated_block'] = Book::TRANSLATED_BLOCK;
@@ -238,7 +236,7 @@ class BookController extends Controller
         $data['media'] =$data['book']->getMedia(Book::COVER_IMAGE)[0];
         $data['pdf_file'] = $data['book']->getMedia(Book::PDF_FILE)->first()?? '';
         if(!empty($data['book'])){
-            $data['epub_file'] = $data['book']->getMedia(Book::EPUB_FILE)[0];
+            $data['epub_file'] = $data['book']->getMedia(Book::EPUB_FILE)->first()?? '';;
         }
         return view('backend/books/edit', $data);
     }

@@ -32,11 +32,11 @@ $(document).ready(function () {
     });
 
     // remove alert messages for empty input fields
-    $(document).on('keyup',  '.required,.numeric-validation,.integer-validation,.url-validation', function (event) {
+    $(document).on('keyup',  '.required,.numeric-validation,.integer-validation,.youtube-url-validation', function (event) {
         $(this).removeClass('border-danger');
     });
 
-    $(document).on('change',  '.required,.numeric-validation,.integer-validation,.url-validation', function (event) {
+    $(document).on('change',  '.required,.numeric-validation,.integer-validation,.youtube-url-validation', function (event) {
         $(this).removeClass('border-danger');
         $(this).siblings('.select2-container').find('.selection').find('.select2-selection').removeClass('border-danger');
     });
@@ -248,10 +248,10 @@ function submitForm(form_id, form_method, errorOverlay = '') {
             can++;
         }
     });
-    $('#' + form_id).find(".url-validation").each(function() {
+    $('#' + form_id).find(".youtube-url-validation").each(function() {
         var here = $(this);
-        var urlPattern = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
-        if (here.val()  && !urlPattern.test(here.val())) { 
+        var urlPattern = /^https:\/\/www\.youtube\.com\/watch\?v=/;
+        if (here.val() && !urlPattern.test(here.val())) {
             here.addClass('border-danger');
             can++;
         }

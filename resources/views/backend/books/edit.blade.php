@@ -132,6 +132,7 @@
                                                                     </label>
                                                                 </div>
                                                             </div>
+                                                            @if(!empty($epub_file))
                                                             <div class="mt-2">
                                                                     <div class="d-flex mb-1  epub_file-div-{{$epub_file->id}}">
                                                                         <input type="text"
@@ -146,8 +147,9 @@
                                                                             data-url="{{ $epub_file->getFullUrl() }}" data-id="{{ $epub_file->id }}"><i
                                                                                     class="fa ft-trash"></i></a>
                                                                     </div>
-                                                                    <p style="color:blue;">Note : Upload {{config('global.dimensions.epub')}}</p>
                                                             </div>
+                                                            @endif
+                                                            <p style="color:blue;">Note : Upload {{config('global.dimensions.epub')}}</p>
                                                         </div>
                                                     </div>
                                                 </div>
