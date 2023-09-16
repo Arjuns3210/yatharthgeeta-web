@@ -13,7 +13,7 @@
                                         <h4 class="card-title text-center">Privacy Policy</h4>
                                     </div>
                                     <div class="card-body">
-                                        <form id="editPrivacyPolicy" method="post" action="privacy_policy/update?type={{$data['type']}}">
+                                        <form id="editPrivacyPolicy" method="post" action="privacy_policy/update">
                                             @csrf
                                             <div class="row">
                                                 <div class="col-sm-12">

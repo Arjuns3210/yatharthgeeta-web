@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Quote;
+use App\Http\Requests\AddQuoteRequest;
+use App\Http\Requests\UpdateQuoteRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Utils\Utils;
@@ -46,7 +48,7 @@ class QuoteController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function store(Request $request)
+    public function store(AddQuoteRequest $request)
     {
 		$input = $request->all();
         $input['language_id'] = Language::where('language_code','hi')->first()->id;
@@ -65,17 +67,12 @@ class QuoteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        $data['quotes'] = Quote::find($id);
-        $data['media'] = $data['quotes']->getMedia(Quote::IMAGE)[0];
-        if (!empty($data['quotes']->getMedia(Quote::IMAGE))) {
-            $media = $data['quotes']->getMedia(Quote::IMAGE);
-            if (isset($media[0])) {
-                $data['media'] = $media[0];
-            }
-        }
-		return view('backend/quotes/view')->with($data);
-    }
+  {
+      $data['quotes'] = Quote::find($id);
+      $data['media'] = $data['quotes']->getMedia(Quote::IMAGE)->first() ?? '';
+      
+	  return view('backend/quotes/view')->with($data);
+  }
 
     /**
      * Show the form for editing the specified resource.
@@ -84,17 +81,12 @@ class QuoteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        $data['quotes'] = Quote::find($id);
-        $data['media']= $data['quotes']->getMedia( Quote::IMAGE)[0];
-        if (!empty($data['quotes']->getMedia(Quote::IMAGE))) {
-            $media = $data['quotes']->getMedia(Quote::IMAGE);
-            if (isset($media[0])) {
-                $data['media'] = $media[0];
-            }
-        }
-		return view('backend/quotes/edit')->with($data);
-    }
+  {
+      $data['quotes'] = Quote::find($id);
+      $data['media']= $data['quotes']->getMedia( Quote::IMAGE)->first() ?? '';
+      
+      return view('backend/quotes/edit')->with($data);
+  }
 
     /**
      * Update the specified resource in storage.
@@ -103,7 +95,7 @@ class QuoteController extends Controller
      * @param  \App\Models\Quote  $quote
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UpdateQuoteRequest $request)
     {
         $data = Quote::find($_GET['id']);
         $input=$request->all();

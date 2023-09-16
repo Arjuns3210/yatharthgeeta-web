@@ -13,7 +13,7 @@
                                         <h4 class="card-title text-center">About Us</h4>
                                     </div>
                                     <div class="card-body">
-                                        <form id="editAboutUs" method="post" action="about_us/update?type={{$data['type']}}">
+                                        <form id="editAboutUs" method="post" action="about_us/update">
                                             @csrf
                                             <div class="row">
                                                 <div class="col-sm-12">
