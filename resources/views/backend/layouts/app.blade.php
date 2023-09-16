@@ -37,6 +37,9 @@
     <script src="../backend/vendors/js/datepicker.min.js"></script>
 </head>
 <body class="vertical-layout vertical-menu 2-columns" data-menu="vertical-menu" data-col="2-columns" id="container">
+    <div class="loader-overlay">
+        <div class="loader mx-auto"></div>
+    </div>
     <nav class="navbar navbar-expand-lg navbar-light header-navbar navbar-fixed mt-2">
         <div class="container-fluid navbar-wrapper">
             <div class="navbar-header d-flex pull-left">

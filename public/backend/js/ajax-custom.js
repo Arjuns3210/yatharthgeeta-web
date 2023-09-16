@@ -22,6 +22,7 @@ if(localStorage.getItem("dataurl") != undefined) {
     localStorage.removeItem("dataurl");
 }
 $(document).ready(function () {
+    $('.loader-overlay').hide();
     $('.select2').select2();
     $('#listing-filter-toggle').on('click', function () {
         $('#listing-filter-data').toggle();
@@ -215,6 +216,7 @@ function onlyUnique(value, index, array) {
 }
 
 function submitForm(form_id, form_method, errorOverlay = '') {
+    $('.loader-overlay').show();
     var form = $('#' + form_id);
     var formdata = false;
     if (window.FormData) {
@@ -256,6 +258,9 @@ function submitForm(form_id, form_method, errorOverlay = '') {
             can++;
         }
     });
+    if(can > 0) {
+        $('.loader-overlay').hide();
+    }
     if(can == 0) {
         if($('.translation_block').length > 0) {
             translation_block_key = [];
@@ -281,7 +286,6 @@ function submitForm(form_id, form_method, errorOverlay = '') {
                 trans[keys[i]] = test;
                 formdata.append(keys[i], JSON.stringify(test));
             }
-            console.log(trans);
         }
         formdata.append("key", JSON.stringify(["a","b","c"]));
         $.ajax({
@@ -294,6 +298,7 @@ function submitForm(form_id, form_method, errorOverlay = '') {
             processData: false,
             success: function (data) {
                 var response = JSON.parse(data);
+                $('.loader-overlay').hide();
                 if (response['success'] == 0) {
                     if (errorOverlay) {
                         $(form).find('.form-error').html('<span class="text-danger">*' + response['message'] + '</span>');
