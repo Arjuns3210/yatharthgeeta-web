@@ -28,7 +28,6 @@ class CreateExploreCollectionRequest extends FormRequest
     {
         $ruleData = [
             'collection_type' => 'required|in:Book,Audio,Quote,Mantra',
-            'language_id'     => 'required|integer',
             'sequence'        => 'required|integer',
         ];
         $collectionType = $this->input('collection_type');
