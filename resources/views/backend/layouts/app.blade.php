@@ -9,7 +9,7 @@
     <title>Admin</title>
     <link rel="shortcut icon" type="image/x-icon" href="../backend/img/logo.png">
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900%7CMontserrat:300,400,500,600,700,800,900" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{asset('backend/css/mypcot.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="../backend/css/mypcot.min.css">
     <link rel="stylesheet" type="text/css" href="../backend/fonts/feather/style.min.css">
     <link rel="stylesheet" type="text/css" href="../backend/fonts/simple-line-icons/style.css">
     <link rel="stylesheet" type="text/css" href="../backend/fonts/font-awesome/css/font-awesome.min.css">
