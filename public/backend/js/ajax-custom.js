@@ -394,7 +394,7 @@ function submitModalForm(form_id, form_method, errorOverlay = '') {
 
 //FOR CkEditor data pass to server - added by sagar - START
 function submitEditor(form_id) {
-    var content = theEditor.getData();
+    //var content = theEditor[1].getData();
     var form = $('#' + form_id);
     var formdata = false;
     if (window.FormData) {
@@ -415,11 +415,12 @@ function submitEditor(form_id) {
         keys = translation_block_key.filter(onlyUnique);
         lang = translation_block_lang.filter(onlyUnique);
         translated_data = [];
-
+        k=0;
         for(i=0; i < keys.length; i++) {
             test = {};
             for(j=0; j < lang.length; j++) {
-                test[lang[j]] = nl2br($('#'+keys[i]+'_'+lang[j]).val());
+                test[lang[j]] = theEditor[k].getData();
+                k++;
             }
             trans[keys[i]] = test;
             formdata.append(keys[i], JSON.stringify(test));
@@ -428,12 +429,15 @@ function submitEditor(form_id) {
     }
     $.ajax({
         url: form.attr('action'),
-        type: 'post',
-        dataType: 'html',
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-        data: form.serialize() + '&editiorData=' + content,
+        url: form.attr('action'),
+        type: 'POST',
+        dataType: 'html',
+        data: formdata ? formdata : form.serialize(),
+        cache: false,
+        contentType: false,
+        processData: false,
         success: function (data) {
-            //console.log(data);
             var response = JSON.parse(data);
             if (response['success'] == 0) {
                 $.activeitNoty({
@@ -451,6 +455,9 @@ function submitEditor(form_id) {
                     container: 'floating',
                     timer: 3000
                 });
+                setTimeout(function () {
+                    location.reload();
+                }, 2000);
             }
         }
     });
@@ -645,7 +652,7 @@ $(document).on('click', '.verify-data', function (event) {
 /**
  * -- CKEditor Textarea box
 */
-let theEditor;
+let theEditor = [];
 function loadCKEditor(id) {
     $('.ck-editor').remove();
     ClassicEditor.create(document.querySelector('#' + id), {
@@ -660,7 +667,7 @@ function loadCKEditor(id) {
         }
     })
         .then(editor => {
-            theEditor = editor;
+            theEditor.push(editor);
         })
         .catch(error => {
             console.log(error);
