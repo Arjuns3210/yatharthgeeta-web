@@ -31,8 +31,7 @@ class UpdateBookRequest extends FormRequest
             'sequence'     => 'required|integer',
             'language_id'  => 'required',
             'artist_id'       => 'required',
-            'pdf_file_name'   => 'required',
-            'cover_image'   => 'nullable|mimes:jpeg,jpg,png',
+            'cover_image'   => 'nullable|mimes:jpeg,jpg,png,gif',
            
             
         ];
