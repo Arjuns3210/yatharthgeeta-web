@@ -75,7 +75,7 @@
                                                         <input class="form-control required" type="text" id="google_address" name="google_address"><br/>
                                                     </div>
                                                     <div class="col-md-6 col-lg-6 col-sm-6 text-center">
-                                                        <p class="font-weight-bold">Quote Image<span class="text-danger">*</span></p>
+                                                        <p class="font-weight-bold">Image<span class="text-danger">*</span></p>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
                                                             <div class="input-file">
