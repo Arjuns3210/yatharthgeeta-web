@@ -30,7 +30,7 @@ class UpdateQuoteRequest extends FormRequest
 			'id' => 'required',
             'title' => 'required',
             'sequence' => 'required|integer',
-			'image'   => 'required|mimes:jpeg,jpg,png',
+			'image'   => 'nullable|mimes:jpeg,jpg,png',
         ];
 		
 		$quoteId = $this->input('id');
