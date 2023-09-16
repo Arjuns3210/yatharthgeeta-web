@@ -26,7 +26,8 @@ class CreatePravachanRequest extends FormRequest
     public function rules()
     {
         return [
-            'audio_file'   => 'required_if:has_episodes,==,0',
+            'audio_file'   => 'required|mimes:mp3,wav',
+            'cover_image'   => 'required|mimes:jpeg,jpg,png,gif',
             'duration'     => 'required|integer',
             'sequence'     => 'required|integer',
             'language_id'  => 'required',

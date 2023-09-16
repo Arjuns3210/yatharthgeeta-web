@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\backend;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Artist;
 use App\Models\Audio;
 use App\Models\Book;
 use App\Models\BookCategory;
-use App\Models\BookTranslation;
 use App\Models\Language;
 use App\Models\Video;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddBookRequest;
@@ -181,15 +179,9 @@ class BookController extends Controller
     public function view($id)
     {
         $data['books']= Book::with('artist', 'language', 'audio', 'video' )->find($id);
-        $data['book'] = Book::whereIn('id', explode(',', $data['books']->related_id))->get();
-        if(!empty($data['books'])){
-            $data['media'] = $data['books']->getMedia(Book::COVER_IMAGE)->first()?? '';
-        }
-        if(!empty($data['books'])){
-            $data['pdf_file'] = $data['books']->getMedia(Book::PDF_FILE)->first()?? '';
-        }
-        if(!empty($data['books'])){
-        }
+        $data['book'] = Book::whereIn('id', explode(',', $data['books']->related_id))->get();        
+        $data['media'] = $data['books']->getMedia(Book::COVER_IMAGE)->first()?? '';
+        $data['pdf_file'] = $data['books']->getMedia(Book::PDF_FILE)->first()?? '';
         $data['epub_file'] = $data['books']->getMedia(Book::EPUB_FILE)->first()?? '';
         foreach($data['books']['translations'] as $trans) {
             $translated_keys = array_keys(Book::TRANSLATED_BLOCK);

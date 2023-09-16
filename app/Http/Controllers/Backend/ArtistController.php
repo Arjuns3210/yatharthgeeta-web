@@ -8,6 +8,7 @@ use App\Models\ArtistTranslation;
 use App\Models\Location;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
+use App\Http\Requests\AddArtistRequest;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ArtistController extends Controller
@@ -104,7 +105,7 @@ class ArtistController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddArtistRequest $request)
     {
         $input = $request->all();
         $translated_keys = array_keys(Artist::TRANSLATED_BLOCK);
