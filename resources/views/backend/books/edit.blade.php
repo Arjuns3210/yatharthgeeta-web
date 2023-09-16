@@ -109,7 +109,7 @@
                                                                     <span id="audio-files-names"></span>
                                                                 </span>
                                                             </p>
-                                                            @if(!empty($epub_file))
+                                                            @if(!empty($pdf_file))
                                                             <div class="mt-2">
                                                                 <div class="d-flex mb-1  pdf_file-div-{{$pdf_file->id}}">
                                                                     <input type="text"
@@ -184,21 +184,23 @@
                                                             </span>
                                                         </p>
                                                     </div>
+                                                    @if(!empty($media))
                                                     <div class="d-flex mb-1  media-div-{{$media->id}}">
                                                         <input type="text"
                                                                 class="form-control input-sm bg-white document-border"
                                                                 value="{{ $media->file_name }}"
                                                                 readonly style="color: black !important;">
-                                                        <a href="{{ $media->getFullUrl() }}"
-                                                            class="btn btn-primary mx-2 px-2" target="_blank"><i
-                                                                    class="fa ft-eye"></i></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="btn btn-danger delete-media  px-2"
-                                                            data-url="{{ $media->getFullUrl() }}" data-id="{{ $media->id }}"><i
-                                                                    class="fa ft-trash"></i></a>
-                                                    </div>
-                                                    <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
+                                                                <a href="{{ $media->getFullUrl() }}"
+                                                                class="btn btn-primary mx-2 px-2" target="_blank"><i
+                                                                class="fa ft-eye"></i></a>
+                                                                <a href="javascript:void(0)"
+                                                                class="btn btn-danger delete-media  px-2"
+                                                                data-url="{{ $media->getFullUrl() }}" data-id="{{ $media->id }}"><i
+                                                                class="fa ft-trash"></i></a>
+                                                            </div>
+                                                            <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                 </div>
+                                                @endif
                                             </div>
 
                                             <?php foreach (config('translatable.locales') as $translated_data_tabs) { ?>

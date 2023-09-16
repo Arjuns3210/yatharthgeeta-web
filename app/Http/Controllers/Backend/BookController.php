@@ -162,8 +162,12 @@ class BookController extends Controller
         }
         $saveArray = Utils::flipTranslationArray($input, $translated_keys);
         $data = Book::create($saveArray);
-        storeMedia($data, $input['cover_image'], Book::COVER_IMAGE);
-        storeMedia($data, $input['pdf_file_name'], Book::PDF_FILE);
+        if(!empty($input['cover_image'])){
+            storeMedia($data, $input['cover_image'], Book::COVER_IMAGE);
+        }
+        if(!empty($input['pdf_file_name'])){
+            storeMedia($data, $input['pdf_file_name'], Book::PDF_FILE);
+        }
         if(!empty($input['epub_file_name'])){
             storeMedia($data, $input['epub_file_name'], Book::EPUB_FILE);
         }
