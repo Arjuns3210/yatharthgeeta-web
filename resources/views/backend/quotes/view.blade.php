@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">View Quote Details</h5>
+                                    <h5 class="pt-2">View Quote Details : {{$quotes['title']}} </h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -27,8 +27,12 @@
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-bordered">
                                                     <tr>
-                                                        <td><strong>Quote Image</strong></td>
-                                                        <td><img src="{{$media->getFullUrl() ?? ''}}" width="200px" alt=""></td>
+														<td><strong>Quote Image</strong></td>
+                                                        <td>
+															@if(!empty($media))
+																<img src="{{$media->getFullUrl() ?? ''}}" width="200px" alt="">
+															@endif
+														</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Quote Sequence</strong></td>

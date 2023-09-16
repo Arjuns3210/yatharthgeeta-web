@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Edit Quotes</h5>
+                                    <h5 class="pt-2">Edit Quotes : {{$quotes['title']}}</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -44,6 +44,7 @@
                                             </span>
                                         </p>
                                     </div>
+									@if(!empty($media))
                                     <div class="d-flex mb-1  media-div-{{$media->id}}">
                                         <input type="text"
                                                 class="form-control input-sm bg-white document-border"
@@ -57,6 +58,7 @@
                                             data-url="{{ $media->getFullUrl() }}" data-id="{{ $media->id }}"><i
                                                     class="fa ft-trash"></i></a>
                                     </div>
+									@endif
                                     <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                 </div>
                         		<hr>
