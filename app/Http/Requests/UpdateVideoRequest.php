@@ -26,7 +26,9 @@ class UpdateVideoRequest extends FormRequest
     public function rules()
     {
         return [
-            'cover_image'=> 'nullable|mimes:jpeg,jpg,png',
+            'id'           => 'required',
+            'sequence'     => 'required|integer',
+            'cover_image'   => 'nullable|mimes:jpeg,jpg,png,gif'
         ];
     }
 

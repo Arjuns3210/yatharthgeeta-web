@@ -26,7 +26,9 @@ class CreateVideoRequest extends FormRequest
     public function rules()
     {
         return [
+            'duration'       => 'required|integer',
             'cover_image'=> 'required|mimes:jpeg,jpg,png',
+            'sequence'   => 'required|integer'
         ];
     }
 
