@@ -18,6 +18,7 @@ class Location extends Model implements HasMedia
 
     public $fillable = [
         'type',
+        'status',
         'phone',
         'email',
         'image',

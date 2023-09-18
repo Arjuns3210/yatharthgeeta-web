@@ -33,13 +33,6 @@
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
                                                     <div class="col-sm-6">
-                                                        <label>Location Status<span class="text-danger">*</span></label>
-                                                        <select class="form-control" id="status" name="status">
-                                                            <option value="1">Active</option>
-                                                            <option value="0">Inactive</option>
-                                                        </select><br>
-                                                    </div>
-                                                    <div class="col-sm-6">
                                                         <label>Type<span class="text-danger">*</span></label>
                                                         <select class="form-control" id="type" name="type">
                                                             <option value="ashram">Ashram</option>

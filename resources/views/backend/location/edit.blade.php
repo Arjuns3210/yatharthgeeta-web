@@ -33,13 +33,6 @@
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
                                                     <div class="col-sm-6">
-                                                        <label>Location Status<span class="text-danger">*</span></label>
-                                                        <select class="form-control" id="status" name="status">
-                                                            <option value="1" <?php echo $location['status'] == 1 ? 'selected' : '' ?>>Active</option>
-                                                            <option value="0" <?php echo $location['status'] == 0 ? 'selected' : '' ?>>Inactive</option>
-                                                        </select><br>
-                                                    </div>
-                                                    <div class="col-sm-6">
                                                         <label>Type</label>
                                                         <select class="form-control" id="type" name="type">
                                                             <option value="ashram" <?php echo $location['type'] == 'ashram' ? 'selected' : '' ?>>Ashram</option>

@@ -9,6 +9,7 @@ use App\Utils\Utils;
 use App\Http\Requests\AddLocationRequest;
 use App\Http\Requests\UpdateLocationRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class LocationController extends Controller
@@ -75,6 +76,13 @@ class LocationController extends Controller
                         if ($location_edit) {
                             $actions .= ' <a href="location/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
                         }
+                        if ($location_status) {
+                            if ($event->status == '1') {
+                                $actions .= ' <input type="checkbox" data-url="location/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery" checked>';
+                            } else {
+                                $actions .= ' <input type="checkbox" data-url="location/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery">';
+                            }
+                        }
                         $actions .= '</span>';
                         return $actions;
                     })
@@ -103,6 +111,33 @@ class LocationController extends Controller
         $data['translated_block'] = Location::TRANSLATED_BLOCK;
 
         return view('backend/location/add',$data);
+    }
+
+    public function updateStatus(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $msg_data = array();
+            $input = $request->all();
+            $input['updated_by'] = session('data')['id'];
+            $location = Location::where('id',$input['id'])->first();
+
+            if ($location->exists()) {
+                $location->update($input);
+                DB::commit();
+                if ($request->status == 1) {
+                    successMessage(trans('message.enable'), $msg_data);
+                } else {
+                    errorMessage(trans('message.disable'), $msg_data);
+                }
+            }
+            errorMessage('Location not found', []);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("Something Went Wrong. Error: " . $e->getMessage());
+            errorMessage(trans('auth.something_went_wrong'));
+        }
     }
 
     /**

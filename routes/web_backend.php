@@ -48,6 +48,8 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::get('location/view/{id}', 'LocationController@show');
 	Route::post('location/save', 'LocationController@store');
 	Route::post('location/delete_img', 'LocationController@deleteImage');
+	Route::post('location/publish', 'LocationController@updateStatus');
+
 
 	//Guru's
 	Route::get('guru', 'ArtistController@index');
