@@ -53,7 +53,7 @@
                                                         <input class="form-control required" type="date" id="event_visible_date" name="event_visible_date"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Media Location<span class="text-danger">*</span></label>
+                                                        <label>Location<span class="text-danger">*</span></label>
                                                         <select class="form-control required mb-3" type="text" id="location_id" name="location_id">
                                                         @foreach($location as $location)
                                                             <option value="{{$location->id}}">{{$location->name}}</option>

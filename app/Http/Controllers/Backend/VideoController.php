@@ -222,7 +222,9 @@ class VideoController extends Controller
                 $query->where('locale', $localeLanguage);
             },
         ])->where('status', 1)->get();
-        $data['media'] =$data['videos']->getMedia(Video::COVER_IMAGE)[0];
+        if(!empty($data['videos'])){
+            $data['media'] =$data['videos']->getMedia(Video::COVER_IMAGE)->first()?? '';
+        }
         return view('backend/videos/edit',$data);
     }
 

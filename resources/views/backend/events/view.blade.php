@@ -52,7 +52,7 @@
                                                         <td>{{ $event['event_visible_date'] }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Media Location</strong></td>
+                                                        <td><strong>Location</strong></td>
                                                         <td>{{ $location['name'] }}</td>
                                                     </tr>
                                                     <tr>

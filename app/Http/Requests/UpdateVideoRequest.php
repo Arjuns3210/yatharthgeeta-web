@@ -28,7 +28,7 @@ class UpdateVideoRequest extends FormRequest
         return [
             'id'           => 'required',
             'sequence'     => 'required|integer',
-            'cover_image'   => 'required|mimes:jpeg,jpg,png,gif'
+            'cover_image'   => 'nullable|mimes:jpeg,jpg,png,gif'
         ];
     }
 
