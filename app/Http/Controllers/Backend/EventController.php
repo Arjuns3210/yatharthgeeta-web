@@ -25,7 +25,6 @@ class EventController extends Controller
         $data['event_view'] = checkPermission('event_view');
         $data['event_add'] = checkPermission('event_add');
         $data['event_edit'] = checkPermission('event_edit');
-        $event_images= checkPermission('event_image_add');
         $data['event_status'] = checkPermission('event_status');
         $data['event_delete'] = checkPermission('event_delete');
         return view('backend/events/index',["data"=>$data]);
@@ -68,7 +67,7 @@ class EventController extends Controller
                             $event_view = checkPermission('event_view');
                             $event_add = checkPermission('event_add');
                             $event_edit = checkPermission('event_edit');
-                            $event_images=checkPermission('event_image_add');
+                            //$event_images=checkPermission('event_image_add');
                             $event_status = checkPermission('event_status');
                             $event_delete = checkPermission('event_delete');
                             $actions = '<span style="white-space:nowrap;">';
@@ -78,7 +77,7 @@ class EventController extends Controller
                             if ($event_edit) {
                                 $actions .= ' <a href="events/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
                             }
-                            if ($event_images) {
+                            if ($event_edit) {
                                 $actions .= ' <a href="event_images/add/'.$event['id'].'" class="btn btn-info btn-sm src_data" title="Gallery"><i class="fa fa-picture-o"></i></a>';
                             }
                             if ($event_delete) {
@@ -182,7 +181,7 @@ class EventController extends Controller
         $data['translated_block'] = Event::TRANSLATED_BLOCK;
         $data['coverImage'] = $data['event']->getMedia(Event::EVENT_COVER)->first();
         $data['eventImages'] = $data['event']->getMedia(Event::EVENT_IMAGES);
-        
+
         return view('backend/events/view',$data);
     }
 
