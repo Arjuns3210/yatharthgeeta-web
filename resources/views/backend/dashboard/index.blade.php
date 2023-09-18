@@ -109,7 +109,7 @@
                                     <div class="card-body">
                                         <div class="media">
                                             <div class="media-body text-left">
-                                                <h3 class="mb-1 warning">{{ $shlok_total}}</h3>
+                                                <h3 class="mb-1 warning">{{ $shlok_total ?? '0'}}</h3>
                                                 <span>Total Shlokas</span><br><br>
                                             </div>
                                             <div class="media-right align-self-center">
