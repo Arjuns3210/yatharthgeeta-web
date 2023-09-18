@@ -65,7 +65,7 @@
                                                     <div class="row div_book">
                                                         <div class="col-sm-6 mb-2">
                                                             <label>Book<span class="text-danger">*</span></label>
-                                                            <select class="form-control select2 " id="book_id" name="book_id[]" multiple>
+                                                            <select class="form-control select2 required" id="book_id" name="book_id[]" multiple>
                                                                 @foreach($books as $book)
                                                                     <option value="{{$book->id}}" {{(in_array($book->id,$mappedIds))? 'selected':''}}>{{$book->translations[0]->name ?? ''}}</option>
                                                                 @endforeach
@@ -76,8 +76,8 @@
                                                 @if($collection['type'] == \App\Models\ExploreCollection::AUDIO)
                                                     <div class="row div_audio">
                                                         <div class="col-sm-6 mb-2">
-                                                            <label>Audio<span class="text-danger">*</span></label>
-                                                            <select class="form-control select2 " id="audio_id" name="audio_id[]" multiple>
+                                                            <label>Pravachan<span class="text-danger">*</span></label>
+                                                            <select class="form-control select2 required" id="audio_id" name="audio_id[]" multiple>
                                                                 @foreach($audios as $audio)
                                                                     <option value="{{$audio->id}}" {{(in_array($audio->id,$mappedIds))? 'selected':''}}>{{$audio->translations[0]->title ?? ''}}</option>
                                                                 @endforeach
@@ -89,7 +89,7 @@
                                                     <div class="row">
                                                         <div class="col-sm-6 mb-2">
                                                             <label>Quotes<span class="text-danger">*</span></label>
-                                                            <select class="form-control select2 " id="quote_id" name="quote_id[]" multiple>
+                                                            <select class="form-control select2 required" id="quote_id" name="quote_id[]" multiple>
                                                                 @foreach($quotes as $quote)
                                                                     <option value="{{$quote->id}}" {{(in_array($quote->id,$mappedIds))? 'selected':''}}>{{$quote->title ?? ''}}</option>
                                                                 @endforeach
@@ -101,7 +101,7 @@
                                                     <div class="row">
                                                         <div class="col-sm-6 mb-2">
                                                             <label>Mantra<span class="text-danger">*</span></label>
-                                                            <select class="form-control select2 " id="mantra_id" name="mantra_id[]" multiple>
+                                                            <select class="form-control select2 required" id="mantra_id" name="mantra_id[]" multiple>
                                                                 @foreach($mantras as $mantra)
                                                                     <option value="{{$mantra->id}}" {{(in_array($mantra->id,$mappedIds))? 'selected':''}}>{{$mantra->translations[0]->title ?? ''}}</option>
                                                                 @endforeach
