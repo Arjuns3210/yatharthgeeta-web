@@ -48,7 +48,14 @@
                                                     @foreach($roles as $role)
                                                         <option value="{{ $role->id }}">{{ $role->role_name }}</option>
                                                     @endforeach
-
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label>Status</label>
+                                                <select class="form-control mb-3" type="text" id="search_status" name="search_status">
+                                                    <option value="">All</option>
+                                                    <option value="1">Active</option>
+                                                    <option value="0">Inactive</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-4">

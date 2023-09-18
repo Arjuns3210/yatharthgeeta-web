@@ -24,7 +24,12 @@
                                     <div class="row mb-2" id="listing-filter-data" style="display: none;">
                                         <div class="col-md-4">
                                             <label>Role</label>
-                                            <input class="form-control mb-3" type="text" id="search_name" name="search_name">
+                                            <select class="form-control mb-3 select2" id="search_role" name="search_role" style="width: 100% !important;">
+                                                <option value="">Select</option>
+                                                @foreach($roles as $role)
+                                                    <option value="{{ $role->role_name }}">{{ $role->role_name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="col-md-4">
                                             <label>&nbsp;</label><br/>
