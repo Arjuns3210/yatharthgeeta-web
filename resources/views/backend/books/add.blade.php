@@ -90,7 +90,7 @@
                                                             <div class="shadow bg-white rounded d-inline-block mb-2">
                                                                 <div class="input-file">
                                                                     <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
-                                                                        <input type="file"  name="pdf_file_name"  class="audio-file" id="pdf_file_name" accept=".pdf" onchange="handleFileInputChange('pdf_file_name', 'pdf')">
+                                                                        <input type="file"  name="pdf_file_name"  class="audio-file required" id="pdf_file_name" accept=".pdf" onchange="handleFileInputChange('pdf_file_name', 'pdf')">
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -128,7 +128,7 @@
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
                                                             <div class="input-file">
                                                                 <label class="label-input-file">Choose Files &nbsp;&nbsp;&nbsp;<i class="ft-upload font-medium-1"></i>
-                                                                    <input type="file" name="cover_image" class="cover-images" id="cover_image" accept=".jpg, .jpeg, .png" onchange="handleFileInputChange('cover_image', 'image')">
+                                                                    <input type="file" name="cover_image" class="cover-images required" id="cover_image" accept=".jpg, .jpeg, .png" onchange="handleFileInputChange('cover_image', 'image')">
                                                                 </label>
                                                             </div>
                                                         </div>
