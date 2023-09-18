@@ -810,3 +810,80 @@ function deleteDocuments (mediaId, removeClassName) {
         },
     });
 }
+
+async function lineChartDashboard() {
+    var $primary = "#F77E17";
+    var $secondary = "#414091";
+    var userCount, Monthdata;
+
+    await $.ajax({
+        url: "admin_dashboard_chart",
+        type: "POST",
+        data: {
+            _token: $('meta[name="csrf-token"]').attr("content"),
+        },
+        dataType: "json",
+        success: function (result) {
+            Monthdata = result.map(a => a.month);
+            userCount = result.map(a => a.count);
+        },
+        failure: function () {
+            console.log("Inside failure");
+        },
+    });
+
+    var themeColors = [$primary, $secondary];
+    var lineChartOptions = {
+        chart: {
+            height: 350,
+            width: "98%",
+            type: "bar",
+            zoom: {
+                enabled: false,
+            },
+        },
+        colors: themeColors,
+        dataLabels: {
+            enabled: false,
+        },
+        stroke: {
+            curve: "straight",
+        },
+        series: [
+            {
+                name: "User Added",
+                data: userCount,
+            },
+        ],
+        grid: {
+            row: {
+                colors: ["#F5F5F5", "transparent"],
+                opacity: 0.5,
+            },
+        },
+        xaxis: {
+            categories: Monthdata,
+            title: {
+                text: 'Users Registered in Last 6 Months',
+                style: {
+                    fontSize: '15px',
+                }
+            },
+        },
+        yaxis: {
+            tickAmount: 4,
+            title: {
+                text: 'Number of Users',
+                style: {
+                    fontSize: '15px',
+                }
+            },
+        },
+    };
+
+    var lineChart = new ApexCharts(
+        document.querySelector("#line-chart2"),
+        lineChartOptions
+    );
+    lineChart.render();
+}

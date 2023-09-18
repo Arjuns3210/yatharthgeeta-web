@@ -246,6 +246,10 @@ class AdminController extends Controller
     public function passwordExpired()
     {
         $data['data'] = session('data');
+        if (empty($data['data'])) {
+
+            return redirect()->route('login');
+        }
 
         return view('backend/dashboard/password_expired',$data);
     }

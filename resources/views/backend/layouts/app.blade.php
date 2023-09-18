@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="../backend/vendors/css/datatables/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="../backend/css/style.css">
     <link rel="stylesheet" type="text/css" href="../backend/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="../backend/css/apexcharts.css">
     <!-- added by nikunj -->
     <link rel="stylesheet" type="text/css" href="../backend/css/datepicker.css">
     <script src="../backend/js/jquery-3.2.1.min.js"></script>
@@ -247,5 +248,6 @@
 <script src="../backend/js/ajax-custom.js"></script>
 <script src="../backend/js/mypcot.min.js"></script>
 <script src="../backend/js/select2.min.js"></script>
+<script src="../backend/vendors/js/apexcharts.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 </html>
