@@ -119,10 +119,6 @@
                                                                     <a href="{{ $pdf_file->getFullUrl() }}"
                                                                         class="btn btn-primary mx-2 px-2" target="_blank"><i
                                                                                 class="fa ft-eye"></i></a>
-                                                                    <a href="javascript:void(0)"
-                                                                        class="btn btn-danger delete-pdf_file  px-2"
-                                                                        data-url="{{ $pdf_file->getFullUrl() }}" data-id="{{ $pdf_file->id }}"><i
-                                                                                class="fa ft-trash"></i></a>
                                                                 </div>
                                                             </div>
                                                             @endif
@@ -193,10 +189,6 @@
                                                                 <a href="{{ $media->getFullUrl() }}"
                                                                 class="btn btn-primary mx-2 px-2" target="_blank"><i
                                                                 class="fa ft-eye"></i></a>
-                                                                <a href="javascript:void(0)"
-                                                                class="btn btn-danger delete-media  px-2"
-                                                                data-url="{{ $media->getFullUrl() }}" data-id="{{ $media->id }}"><i
-                                                                class="fa ft-trash"></i></a>
                                                             </div>
                                                             <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                 </div>
