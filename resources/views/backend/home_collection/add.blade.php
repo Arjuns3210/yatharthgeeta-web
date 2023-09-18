@@ -82,23 +82,23 @@
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-md-3 mt-1">
-                                                                        <input type="file" class="form-control" id="img_file_1" name="img_file[]" accept=".jpg,.jpeg,.png"><br/>
+                                                                        <input type="file" class="form-control multiple-type-fields" id="img_file_1" name="img_file[]" accept=".jpg,.jpeg,.png"><br/>
                                                                     </div>
                                                                     <div class="col-md-2 mt-1">
-                                                                        <select class="select2" id="img_clickable_1" name="img_clickable[]" style="width: 100% !important;">
+                                                                        <select class="select2 multiple-type-fields" id="img_clickable_1" name="img_clickable[]" style="width: 100% !important;">
                                                                             <option value = "0">No</option>
                                                                             <option value = "1">Yes</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-md-3 mt-1">
-                                                                        <select class="select2 mapped-to" id="mapped_to" name="mapped_to[]" style="width: 100% !important;" >
+                                                                        <select class="select2 mapped-to multiple-type-fields" id="mapped_to" name="mapped_to[]" style="width: 100% !important;" >
                                                                             @foreach($mappingCollectionType as $key => $type)
                                                                                 <option value = "{{$key}}">{{ \App\Models\HomeCollectionMapping::MAPPING_COLLECTION_TYPES[$key] }}</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-md-3 mt-1">
-                                                                        <select class="select2  mapped-ids" id="mapped_ids" name="mapped_ids[0][]" multiple style="width: 100% !important;" >
+                                                                        <select class="select2  mapped-ids multiple-type-fields" id="mapped_ids" name="mapped_ids[0][]" multiple style="width: 100% !important;" >
                                                                             @foreach($books as $key => $book)
                                                                                 <option value="{{$book->id}}">{{$book->translations[0]->name ?? ''}}</option>
                                                                             @endforeach
@@ -115,14 +115,14 @@
                                                 </div>
                                                 <div class="row div_single">
                                                     <div class="col-sm-6 mb-2">
-                                                        <label>Image</label>
-                                                        <input type="file" class=" form-control" id="single_image" name="single_image" accept=".jpg,.jpeg,.png"><br/>
+                                                        <label>Image <span class="text-danger">*</span></label>
+                                                        <input type="file" class=" form-control required single-type-filed" id="single_image" name="single_image" accept=".jpg,.jpeg,.png"><br/>
                                                     </div>
                                                 </div>
                                                 <div class="row div_book">
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Book<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2 " id="book_id" name="book_id[]" multiple>
+                                                        <select class="form-control select2 book-type-filed" id="book_id" name="book_id[]" multiple>
                                                             @foreach($books as $book)
                                                                 <option value="{{$book->id}}">{{$book->translations[0]->name ?? ''}}</option>
                                                             @endforeach
@@ -132,7 +132,7 @@
                                                 <div class="row div_audio">
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Audio<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2 " id="audio_id" name="audio_id[]" multiple>
+                                                        <select class="form-control select2 audio-type-filed" id="audio_id" name="audio_id[]" multiple>
                                                             @foreach($audios as $audio)
                                                                 <option value="{{$audio->id}}">{{$audio->translations[0]->title ?? ''}}</option>
                                                             @endforeach
@@ -142,7 +142,7 @@
                                                 <div class="row div_video">
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Video<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2 " id="video_id" name="video_id[]" multiple>
+                                                        <select class="form-control select2 video-type-filed" id="video_id" name="video_id[]" multiple>
                                                             @foreach($videos as $video)
                                                                 <option value="{{$video->id}}">{{$video->translations[0]->title ?? ''}}</option>
                                                             @endforeach
@@ -152,7 +152,7 @@
                                                 <div class="row div_sholk">
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Shlok<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2 " id="shlok_id" name="shlok_id[]" multiple>
+                                                        <select class="form-control select2 shlok-type-filed" id="shlok_id" name="shlok_id[]" multiple>
                                                             @foreach($shloks as $sholk)
                                                                 <option value="{{$sholk->id}}">{{$sholk->translations[0]->title ?? ''}}</option>
                                                             @endforeach
@@ -162,7 +162,7 @@
                                                 <div class="row div_artis">
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Guru<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2 " id="artist_id" name="artist_id[]" multiple>
+                                                        <select class="form-control select2 artis-type-filed" id="artist_id" name="artist_id[]" multiple>
                                                             @foreach($artists as $artist)
                                                                 <option value="{{$artist->id}}">{{$artist->translations[0]->name ?? ''}}</option>
                                                             @endforeach
@@ -219,32 +219,41 @@
         $('#collection_type').change(function () {
             // Hide all divs initially
             $('.div_single, .div_multiple, .div_book, .div_audio, .div_video, .div_sholk, .div_artis').hide();
+            $('.single-type-filed, .multiple-type-fileds, .book-type-filed, .audio-type-filed, .video-type-filed, .shlok-type-filed, .artis-type-filed').removeClass('required');
 
             // Show the relevant div based on the selected value
             switch ($('#collection_type').val()) {
                 case 'Multiple':
                     $('.div_multiple').show();
+                    $('.multiple-type-fields').addClass('required');
                     break;
                 case 'Single':
                     $('.div_single').show();
+                    $('.single-type-filed').addClass('required');
                     break;
                 case 'Book':
                     $('.div_book').show();
+                    $('.book-type-filed').addClass('required');
                     break;
                 case 'Audio':
                     $('.div_audio').show();
+                    $('.audio-type-filed').addClass('required');
                     break;
                 case 'Video':
                     $('.div_video').show();
+                    $('.video-type-filed').addClass('required');
                     break;
                 case 'Shlok':
                     $('.div_sholk').show();
+                    $('.shlok-type-filed').addClass('required');
                     break;
                 case 'Artist':
                     $('.div_artis').show();
+                    $('.artis-type-filed').addClass('required');
                     break;
                 default:
                     $('.div_single').show();
+                    $('.single-type-filed').addClass('required');
             }
         });
     });

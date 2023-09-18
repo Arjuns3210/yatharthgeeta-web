@@ -97,13 +97,13 @@
                                                                                 </div>
                                                                                 <div class="col-md-2 mt-1">
                                                                                     <input type="hidden" name="collection_details_ids[]" value="{{$collectionDetail->id}}">
-                                                                              <select class="select2"  name="img_clickable[]" style="width: 100% !important;">
+                                                                              <select class="select2 required"  name="img_clickable[]" style="width: 100% !important;">
                                                                                         <option value = "0" {{ ($collectionDetail->is_clickable == 0) ? 'selected':'' }}>No</option>
                                                                                         <option value = "1" {{ ($collectionDetail->is_clickable == 1) ? 'selected':'' }}>Yes</option>
                                                                                     </select>
                                                                                 </div>
                                                                                 <div class="col-md-3 mt-1">
-                                                                                    <select class="select2 mapped-to"  name="mapped_to[]" style="width: 100% !important;" >
+                                                                                    <select class="select2 mapped-to required"  name="mapped_to[]" style="width: 100% !important;" >
                                                                                         @foreach($mappingCollectionType as $key => $type)
                                                                                             <option value = "{{$key}}" {{($collectionDetail->mapped_to == $key) ? 'selected' : ''}}>{{ \App\Models\HomeCollectionMapping::MAPPING_COLLECTION_TYPES[$key] }}</option>
                                                                                         @endforeach
@@ -113,7 +113,7 @@
                                                                                     @php
                                                                                     $detailsMappedIds = explode(",",$collectionDetail->mapped_ids ?? '');
                                                                                     @endphp
-                                                                                    <select class="select2  mapped-ids"
+                                                                                    <select class="select2  mapped-ids required"
                                                                                             name="mapped_ids[{{$detailsKey}}][]"
                                                                                             multiple
                                                                                             style="width: 100% !important;">
@@ -179,7 +179,7 @@
                                                     <div class="row div_book">
                                                         <div class="col-sm-6 mb-2">
                                                             <label>Book<span class="text-danger">*</span></label>
-                                                            <select class="form-control select2 " id="book_id" name="book_id[]" multiple>
+                                                            <select class="form-control select2 required" id="book_id" name="book_id[]" multiple>
                                                                 @foreach($books as $book)
                                                                     <option value="{{$book->id}}" {{(in_array($book->id,$mappedIds))? 'selected':''}}>{{$book->translations[0]->name ?? ''}}</option>
                                                                 @endforeach
@@ -191,7 +191,7 @@
                                                     <div class="row div_audio">
                                                         <div class="col-sm-6 mb-2">
                                                             <label>Audio<span class="text-danger">*</span></label>
-                                                            <select class="form-control select2 " id="audio_id" name="audio_id[]" multiple>
+                                                            <select class="form-control select2 required" id="audio_id" name="audio_id[]" multiple>
                                                                 @foreach($audios as $audio)
                                                                     <option value="{{$audio->id}}" {{(in_array($audio->id,$mappedIds))? 'selected':''}}>{{$audio->translations[0]->title ?? ''}}</option>
                                                                 @endforeach
@@ -203,7 +203,7 @@
                                                     <div class="row div_video">
                                                         <div class="col-sm-6 mb-2">
                                                             <label>Video<span class="text-danger">*</span></label>
-                                                            <select class="form-control select2 " id="video_id" name="video_id[]" multiple>
+                                                            <select class="form-control select2 required" id="video_id" name="video_id[]" multiple>
                                                                 @foreach($videos as $video)
                                                                     <option value="{{$video->id}}" {{(in_array($video->id,$mappedIds))? 'selected':''}}>{{$video->translations[0]->title ?? ''}}</option>
                                                                 @endforeach
@@ -215,7 +215,7 @@
                                                     <div class="row div_sholk">
                                                         <div class="col-sm-6 mb-2">
                                                             <label>Shlok<span class="text-danger">*</span></label>
-                                                            <select class="form-control select2 " id="shlok_id" name="shlok_id[]" multiple>
+                                                            <select class="form-control select2 required" id="shlok_id" name="shlok_id[]" multiple>
                                                                 @foreach($shloks as $sholk)
                                                                     <option value="{{$sholk->id}}" {{(in_array($sholk->id,$mappedIds))? 'selected':''}}>{{$sholk->translations[0]->title ?? ''}}</option>
                                                                 @endforeach
@@ -227,7 +227,7 @@
                                                 <div class="row div_artis">
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Guru<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2 " id="artist_id" name="artist_id[]" multiple>
+                                                        <select class="form-control select2 required" id="artist_id" name="artist_id[]" multiple>
                                                             @foreach($artists as $artist)
                                                                 <option value="{{$artist->id}}" {{(in_array($artist->id,$mappedIds))? 'selected':''}}>{{$artist->translations[0]->name ?? ''}}</option>
                                                             @endforeach
