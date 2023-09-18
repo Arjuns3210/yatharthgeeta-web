@@ -53,16 +53,16 @@
                                                         <input class="form-control required" type="date" id="event_visible_date" name="event_visible_date" value="{{$event->event_visible_date}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Location</label>
-                                                        <select class="form-control mb-3" type="text" id="location_id" name="location_id">
+                                                        <label>Location<span class="text-danger">*</span></label>
+                                                        <select class="form-control required mb-3" type="text" id="location_id" name="location_id">
                                                         @foreach($location as $location)
                                                             <option value="{{$location->id}}">{{$location->name}}</option>
                                                         @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Guru</label>
-                                                        <select class="form-control mb-3" type="text" id="artist_id" name="artist_id">
+                                                        <label>Guru<span class="text-danger">*</span></label>
+                                                        <select class="form-control required mb-3" type="text" id="artist_id" name="artist_id">
                                                         @foreach($artist as $artist)
                                                             <option value="{{$artist->id}}">{{$artist->name}}</option>
                                                         @endforeach
@@ -78,7 +78,7 @@
                                                             <div class="shadow bg-white rounded d-inline-block mb-2">
                                                                 <div class="input-file">
                                                                     <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
-                                                                        <input class="form-control" accept=".jpg,.jpeg,.png" type="file" id="cover" name="cover" onchange="handleFileInputChange('cover_image')"><br/>
+                                                                        <input class="form-control" accept=".jpg,.jpeg,.png" type="file" id="cover" name="cover" onchange="handleFileInputChange('cover')"><br/>
                                                                     </label>
                                                                 </div>
                                                             </div>

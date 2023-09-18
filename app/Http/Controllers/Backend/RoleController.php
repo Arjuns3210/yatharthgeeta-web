@@ -23,8 +23,8 @@ class RoleController extends Controller
     {
         $data['role_permission'] = checkPermission('role_permission');
         $data['roles'] = Role::all();
-
-        return view('backend/role/index', ["data" => $data]);
+        $roles = Role::all();
+        return view('backend/role/index', ["data" => $data],['roles' => $roles]);
     }
 
     /**
@@ -39,8 +39,8 @@ class RoleController extends Controller
                 $query = Role::select('*');
                 return DataTables::of($query)
                     ->filter(function ($query) use ($request) {
-                        if ($request['search']['search_name'] && !is_null($request['search']['search_name'])) {
-                            $query->where('role_name', 'like', "%" . $request['search']['search_name'] . "%");
+                        if (isset($request['search']['search_role']) && !is_null($request['search']['search_role'])) {
+                            $query->where('role_name', $request['search']['search_role']);
                         }
                         $query->get();
                     })

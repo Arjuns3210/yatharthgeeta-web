@@ -84,7 +84,7 @@
                                                         </select><br>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>LANGUAGE</label>
+                                                        <label>Media LANGUAGE</label>
                                                         <select class="form-control" type="text" id="language_id" name="language_id">
                                                         @foreach($language as $language)
                                                         <option value="{{$language->id}}" {{($language->id ==$book['language_id'] ) ? 'selected' : ''}}>{{$language->translations[0]->name ?? ''}}</option>
@@ -124,7 +124,7 @@
                                                             @endif
                                                             <p style="color:blue;">Note : Upload {{config('global.dimensions.pdf')}}</p>
                                                         </div>
-                                                       
+
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="col-md-6 col-lg-12 col-sm-6 text-center file-input-div">
@@ -144,7 +144,7 @@
                                                             @if(!empty($epub_file))
                                                             <div class="mt-2">
                                                                     <div class="d-flex mb-1  epub_file-div-{{$epub_file->id ?? ''}}">
-                                                                      
+
                                                                         <input type="text"
                                                                                 class="form-control input-sm bg-white document-border"
                                                                                 value="{{ $epub_file->file_name ?? '' }}"
@@ -214,7 +214,11 @@
                                                         <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                             <?php if($translated_block_fields_value == 'textarea') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{$translated_block_fields_key}}</label>
+                                                                    @if( formatName($translated_block_fields_key) == 'description')
+                                                                        <label>Long Description<span class="text-danger">*</span></label>
+                                                                    @else
+                                                                        <label>{{formatName(str_replace('_',' ',$translated_block_fields_key))}}<span class="text-danger">*</span></label>
+                                                                    @endif
                                                                     <textarea class="translation_block form-control required" rows="5" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}">{{$book[$translated_block_fields_key.'_'.$translated_data_tabs] ?? ''}}</textarea>
                                                                 </div>
                                                             <?php } ?>

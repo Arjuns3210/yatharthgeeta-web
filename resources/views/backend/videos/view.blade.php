@@ -40,7 +40,7 @@
                                                         <td>{{ $videos['link'] }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Language</strong></td>
+                                                        <td><strong>Media Language</strong></td>
                                                         <td>{{ $language['name'] }}</td>
                                                     </tr>
                                                     <tr>

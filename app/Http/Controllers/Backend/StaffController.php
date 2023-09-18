@@ -63,6 +63,9 @@ class StaffController extends Controller
                         if ($request['search']['search_role'] && !is_null($request['search']['search_role'])) {
                             $query->where('role_id', $request['search']['search_role']);
                         }
+                        if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
+                            $query->where('status', $request['search']['search_status']);
+                        }
                         $query->get();
                     })
                     ->editColumn('admin_name', function ($event) {
@@ -225,11 +228,10 @@ class StaffController extends Controller
             if ($staff->exists()) {
                 $staff->update($input);
                 DB::commit();
-
-                if ($input['status'] == 1) {
-                    successMessage('Published', $msg_data);
+                if ($request->status == 1) {
+                    successMessage(trans('message.enable'), $msg_data);
                 } else {
-                    successMessage('Unpublished', $msg_data);
+                    errorMessage(trans('message.disable'), $msg_data);
                 }
             }
             errorMessage('Staff not found', []);

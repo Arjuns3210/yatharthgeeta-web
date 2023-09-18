@@ -32,6 +32,7 @@ class UpdateAudioEpisodeRequest extends FormRequest
             'sequence'   => 'required|integer',
             'main_shlok'   => 'required',
             'explanation_shlok'   => 'required',
+            'audio_file'=>'nullable|mimes:mp3,wav'
         ];
 
         $audioEpisodeId = $this->input('id');

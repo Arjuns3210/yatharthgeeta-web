@@ -55,6 +55,7 @@
                                                                                 'audio/mpeg', // MP3
                                                                                 'audio/ogg',  // Ogg
                                                                                 'audio/wav',  // WAV
+                                                                                'audio/x-wav',  // WAV
                                                                             ];
                                                                             @endphp
                                                                             @if (in_array($audioFile->mime_type ??'' , $allowedMimeTypes))
@@ -91,7 +92,7 @@
                                                                     <table class="table table-striped table-bordered">
                                                                             <tr>
                                                                                 <td><strong>Audio Title</strong></td>
-                                                                                <td>{{ $data->audio_title ?? '' }}</td>
+                                                                                <td>{{ $data->title ?? '' }}</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td><strong>Description</strong></td>
