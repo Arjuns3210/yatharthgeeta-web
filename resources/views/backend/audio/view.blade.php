@@ -55,6 +55,7 @@
                                                                                 'audio/mpeg', // MP3
                                                                                 'audio/ogg',  // Ogg
                                                                                 'audio/wav',  // WAV
+                                                                                'audio/x-wav',  // WAV
                                                                             ];
                                                                             @endphp
                                                                             @if (in_array($audioFile->mime_type ??'' , $allowedMimeTypes))

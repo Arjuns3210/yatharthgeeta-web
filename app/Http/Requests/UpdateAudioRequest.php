@@ -34,6 +34,7 @@ class UpdateAudioRequest extends FormRequest
             'language_id'  => 'required',
             'author_id'  => 'required',
             'cover_image'   => 'nullable|mimes:jpeg,jpg,png,gif',
+            'audio_file'   => 'nullable|mimes:mp3,wav',
         ];
 
         $audioId = $this->input('id');
