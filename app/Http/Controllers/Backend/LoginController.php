@@ -177,7 +177,7 @@ class LoginController extends Controller
         $password_reset_table = 'password_resets';
         $check_token = DB::table($password_reset_table)->where(['token' => $token])->first();
         if (!$check_token) {
-            return view('backend/auth/page-not-found');
+            return abort(404);
         }
         return view('backend/auth/reset-password', ['request' => $request]);
     }

@@ -9,6 +9,7 @@ namespace App\Http\Controllers\Backend;
 
 use Carbon\Carbon;
 use App\Models\Book;
+use App\Models\shlok;
 use App\Models\Audio;
 use App\Models\Quote;
 use App\Models\Video;
@@ -34,8 +35,17 @@ class DashboardController extends Controller
         // $data['shloks_total'] = Shlok::where('status', 1)->count();
         $data['mantras_total'] = Mantra::where('status', 1)->count();
         $data['greetings_total'] = Quote::where('status', 1)->count();
+        $data['shlok_total'] = Shlok::where('status', 1)->count();
 
-        $months = [];
+        if(session('data')['role_id'] != 1){
+            return view('backend/dashboard/staff_dashboard', $data);
+        }
+        return view('backend/dashboard/index', $data);
+    }
+
+    public function userDashboardChart()
+    {
+		$months = [];
         $currentMonth = Carbon::now();
         for ($i = 0; $i < 6; $i++) {
             $months[] = $currentMonth->copy()->subMonths($i)->startOfMonth()->format('Y-m');
@@ -56,12 +66,8 @@ class DashboardController extends Controller
                 'count' => isset($user_data[$month]) ? $user_data[$month] : 0,
             ];
         }
-        $data['user_data'] = array_reverse($result);
-        if(session('data')['role_id'] != 1){
-            return view('backend/dashboard/staff_dashboard', $data);
-        }
-        return view('backend/dashboard/index', $data);
-    }
+        return array_values(array_reverse($result));
+	}
 
     /**
      * Show the form for creating a new resource.

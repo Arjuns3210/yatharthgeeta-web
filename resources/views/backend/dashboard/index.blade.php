@@ -109,7 +109,7 @@
                                     <div class="card-body">
                                         <div class="media">
                                             <div class="media-body text-left">
-                                                <h3 class="mb-1 warning">3</h3>
+                                                <h3 class="mb-1 warning">{{ $shlok_total}}</h3>
                                                 <span>Total Shlokas</span><br><br>
                                             </div>
                                             <div class="media-right align-self-center">
@@ -157,66 +157,29 @@
 
                     </div>
                     <div class="row">
-                        <div class="col-12">
-                            <div id="graph" class="shadow rounded-lg"></div>
+                        <!-- Line Chart starts -->
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title text-center"><b>Yatharth Geeta's App Users</b></h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div id="line-chart2" class="d-flex justify-content-center"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                     <!-- Line Chart ends -->
                     </div>
                 </section>
             </div>
         </div>
     </div>
 </div>
-<script type="text/javascript">
-
+<script>
 $(document).ready(function () {
-    var user_data = <?php echo json_encode($user_data); ?>;
-    var user_count = [];
-    var user_month = [];
-    for (var i = 0; i < user_data.length; i++) {
-        user_count.push(user_data[i].count);
-        user_month.push(user_data[i].month);
-    }
-    Highcharts.chart('graph', {
-        chart: {
-            type: 'column',
-        },
-        title: {
-            text: "Yatharth Geeta's App Users"
-        },
-        xAxis: {
-            title: {
-                text: '<b>Users Registered in Last 6 Months</b>',
-                style: {
-                    fontSize: '15px',
-                }
-            },
-            categories: user_month
-        },
-        yAxis: {
-            title: {
-                text: '<b>Number of Users</b>',
-                style: {
-                    fontSize: '15px',
-                }
-            },
-            lineWidth: 1
-        },
-        plotOptions: {
-            column: {
-                pointWidth: 50,
-                color: '#E49C28'
-            }
-        },
-        legend: {
-            enabled: false
-        },
-        series: [{
-            name: 'Users',
-            data: user_count
-        }]
-    });
+    lineChartDashboard();
 });
-
 </script>
-
 @endsection

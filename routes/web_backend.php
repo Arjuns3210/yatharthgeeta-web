@@ -28,6 +28,7 @@ Route::group(['middleware' => ['customAuth']], function () {
 	// Dashboard
 	Route::get('dashboard', 'DashboardController@index');
 	Route::get('dashboard/test', 'DashboardController@index_phpinfo');
+	Route::post('admin_dashboard_chart', 'DashboardController@userDashboardChart');
 
 	//profile
 	Route::get('/profile', 'AdminController@profile');
