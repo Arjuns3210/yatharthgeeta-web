@@ -39,7 +39,7 @@ class AudioController extends Controller
         $data['audios_view'] = checkPermission('audios_view');
         $data['audios_status'] = checkPermission('audios_status');
         $data['audios_delete'] = checkPermission('audios_delete');
-        
+
         return view('backend/audio/index',["data"=>$data]);
     }
 
@@ -83,7 +83,7 @@ class AudioController extends Controller
                         }else{
                             return '';
                         }
-                      
+
                     })
                     ->editColumn('title'.\App::getLocale(), function ($event) {
                         $key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
@@ -163,8 +163,8 @@ class AudioController extends Controller
                 $query->where('locale', $localeLanguage);
             },
         ])->where('type',Audio::AUDIO)->where('status', 1)->get();
-        
-        
+
+
         $data['gurus'] = Artist::with([
             'translations' => function ($query) use ($localeLanguage) {
                 $query->where('locale', $localeLanguage);
@@ -175,10 +175,10 @@ class AudioController extends Controller
                 $query->where('locale', $localeLanguage);
             },
         ])->where('status', 1)->get();
-        
+
         return view('backend/audio/add', $data);
     }
-    
+
 
 
     /**
@@ -205,7 +205,7 @@ class AudioController extends Controller
                 $coverImageName = $coverImage->getClientOriginalName();
             }
             $hasEpisodes = $input['has_episodes'] ?? 0;
-            
+
             $audioData = [
                 'cover_image'          => $coverImageName,
                 'has_episodes'         => $hasEpisodes,
@@ -248,9 +248,9 @@ class AudioController extends Controller
             if (! empty($input['srt_file']) && $audio) {
                 storeMedia($audio, $input['srt_file'], AUDIO::AUDIO_SRT_FILE);
             }
-            
+
             DB::commit();
-            
+
             successMessage('Data Saved successfully', []);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -271,7 +271,7 @@ class AudioController extends Controller
         $data['audio'] = Audio::find($id);
         $data['audioFile'] = $data['audio']->getMedia(Audio::AUDIO_FILE)->first()?? '';
         $data['audioCoverImage'] = $data['audio']->getMedia(Audio::AUDIO_COVER_IMAGE)->first()?? '';
-        
+
         return view('backend/audio/view')->with($data);
     }
 
@@ -321,7 +321,7 @@ class AudioController extends Controller
                 $query->where('locale', $localeLanguage);
             },
         ])->where('status', 1)->get();
-        
+
         return view('backend/audio/edit',$data);
     }
 
@@ -444,7 +444,7 @@ class AudioController extends Controller
             $data['audioTitle'] = $data['audio']->translations()->first();
             $data['translated_block'] = AudioEpisode::TRANSLATED_BLOCK;
             $data['audioEpisodes'] = AudioEpisode::with('translations')->where('audio_id',$id)->get();
-           
+
             return view('backend/audio/add_episodes', $data);
         }
 
@@ -468,10 +468,10 @@ class AudioController extends Controller
             if ($audio->exists()) {
                 $audio->update($input);
                 DB::commit();
-                if ($input['status'] == 1) {
-                    successMessage('Published', $msg_data);
+                if ($request->status == 1) {
+                    successMessage(trans('message.enable'), $msg_data);
                 } else {
-                    successMessage('Unpublished', $msg_data);
+                    errorMessage(trans('message.disable'), $msg_data);
                 }
             }
 
@@ -507,11 +507,11 @@ class AudioController extends Controller
                     return true;
                 }
             }
-           
+
             return false;
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             Log::error("Something Went Wrong. Error: ".$e->getMessage());
         }
     }
