@@ -225,9 +225,13 @@ function submitForm(form_id, form_method, errorOverlay = '') {
     var can = 0;
     $('#' + form_id).find(".required").each(function(){
         var here = $(this);
-        if(here.val() == '') {
-            here.addClass('border-danger');
-            here.siblings('.select2-container').find('.selection').find('.select2-selection').addClass('border-danger');
+        if (here.val() === '') {
+            if (here.attr('type') === 'file') {
+                here.closest('.input-file').css('border', '1px solid red');
+            } else {
+                here.addClass('border-danger');
+                here.siblings('.select2-container').find('.selection .select2-selection').addClass('border-danger');
+            }
             can++;
         }
     });

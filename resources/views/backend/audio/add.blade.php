@@ -77,7 +77,7 @@
                                                         <p class="font-weight-bold">Cover Image <span class="text-danger">*</span></p>
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
                                                             <div class="input-file">
-                                                                <label class="label-input-file">Choose Files &nbsp;&nbsp;&nbsp;<i class="ft-upload font-medium-1"></i><input type="file" name="cover_image" class="cover-images" id="coverImages" accept=".jpg, .jpeg, .png">
+                                                                <label class="label-input-file">Choose Files &nbsp;&nbsp;&nbsp;<i class="ft-upload font-medium-1"></i><input type="file" name="cover_image" class="cover-images required" id="coverImages" accept=".jpg, .jpeg, .png">
                                                                 </label>
                                                             </div>
                                                         </div>
