@@ -170,10 +170,6 @@
                                                                     <a href="{{ $image->getFullUrl() }}"
                                                                        class="btn btn-primary mx-2 px-2" target="_blank"><i
                                                                                 class="fa ft-eye"></i></a>
-                                                                    <a href="javascript:void(0)"
-                                                                       class="btn btn-danger delete-single-image  px-2"
-                                                                       data-url="{{ $image->getFullUrl() }}" data-id="{{ $image->id }}"><i
-                                                                                class="fa ft-trash"></i></a>
                                                                 </div>
                                                             @endforeach
                                                         </div>
@@ -279,12 +275,6 @@
 </section>
 <script>
     $(".select2").select2();
-    $( document ).ready(function() {
-        $('.delete-single-image').click(function () {
-            let mediaId = $(this).attr('data-id');
-            deleteDocuments(mediaId, '.cover-image-div-');
-        });
-    });
     $(document).on('change', '.mapped-to', function () {
         var $mappedToSelect = $(this);
         var $mappedIdsSelect = $mappedToSelect.closest('.row').find('.mapped-ids');

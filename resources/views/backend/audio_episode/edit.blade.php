@@ -75,10 +75,6 @@
                                                                     <a href="{{ $data->getFullUrl() }}"
                                                                        class="btn btn-primary mx-2 px-2" target="_blank"><i
                                                                                 class="fa ft-eye"></i></a>
-                                                                    <a href="javascript:void(0)"
-                                                                       class="btn btn-danger delete-audio-file  px-2"
-                                                                       data-url="{{ $data->getFullUrl() }}" data-id="{{ $data->id }}"><i
-                                                                                class="fa ft-trash"></i></a>
                                                                 </div>
                                                             @endforeach
                                                         </div>
