@@ -45,7 +45,7 @@
                                                         <input class="form-control required integer-validation" type="number" id="sequence" name="sequence" ><br/>
                                                     </div>
                                                     <div class="col-sm-6 mb-3">
-                                                        <label>LANGUAGE<span class="text-danger">*</span></label>
+                                                        <label>Media LANGUAGE<span class="text-danger">*</span></label>
                                                         <select class="form-control required" type="text" id="language_id" name="language_id">
                                                         @foreach($language as $language)
                                                             <option value="{{$language->id}}">{{$language->name}}</option>

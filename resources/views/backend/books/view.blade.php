@@ -99,7 +99,7 @@
                                                         <td>{{ $books->artist['name'] }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Language</strong></td>
+                                                        <td><strong>Media Language</strong></td>
                                                         <td>{{ $books->language['name'] }}</td>
                                                     </tr>
                                                     <tr>
@@ -115,7 +115,7 @@
                                                         <td>
                                                             @if(!empty($media))
                                                                 <img src="{{ $media-> getFullUrl() ?? ''}}" width="200px" height="200px" alt="">
-                                                            @endif  
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -128,11 +128,13 @@
                                                         <table class="table table-striped table-bordered">
                                                             <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                                     <tr>
-                                                                        @if( formatName($translated_block_fields_key) == 'name')
+                                                                        @if(formatName($translated_block_fields_key) == 'name')
                                                                             <td><strong>Book Name</strong></td>
+                                                                        @elseif ( formatName($translated_block_fields_key) == 'description')
+                                                                            <td><strong>Long Description</strong></td>
                                                                         @else
                                                                         <td><strong>{{formatName(ucfirst(str_replace('_',' ',$translated_block_fields_key)))}}</strong></td>
-                                                                        @endif                                                                        
+                                                                        @endif
                                                                         <td><?php echo $books[$translated_block_fields_key.'_'.$translated_data_tabs] ?? '' ?></td>
                                                                     </tr>
                                                             <?php } ?>
