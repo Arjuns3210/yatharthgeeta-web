@@ -73,7 +73,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>LANGUAGE<span class="text-danger">*</span></label>
+                                                        <label>Media LANGUAGE<span class="text-danger">*</span></label>
                                                         <select class="form-control required" type="text" id="language_id" name="language_id">
                                                         @foreach($language as $language)
                                                             <option value="{{$language->id}}">{{$language->name}}</option>
@@ -158,7 +158,11 @@
                                                         <?php foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value) { ?>
                                                             <?php if($translated_block_fields_value == 'textarea') { ?>
                                                                 <div class="col-md-6 mb-3">
-                                                                    <label>{{ str_replace('_',' ',$translated_block_fields_key)}}</label>
+                                                                    @if( formatName($translated_block_fields_key) == 'description')
+                                                                        <label>Long Description<span class="text-danger">*</span></label>
+                                                                    @else
+                                                                        <label>{{formatName(str_replace('_',' ',$translated_block_fields_key))}}<span class="text-danger">*</span></label>
+                                                                    @endif
                                                                     <textarea class="translation_block form-control required" rows="5" type="text" id="{{$translated_block_fields_key}}_{{$translated_data_tabs}}" name="{{$translated_block_fields_key}}_{{$translated_data_tabs}}"></textarea>
                                                                 </div>
                                                             <?php } ?>

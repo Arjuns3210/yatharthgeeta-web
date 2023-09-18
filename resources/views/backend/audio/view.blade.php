@@ -91,7 +91,7 @@
                                                                     <table class="table table-striped table-bordered">
                                                                             <tr>
                                                                                 <td><strong>Audio Title</strong></td>
-                                                                                <td>{{ $data->audio_title ?? '' }}</td>
+                                                                                <td>{{ $data->title ?? '' }}</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td><strong>Description</strong></td>

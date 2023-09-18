@@ -30,6 +30,8 @@ class CreateEventRequest extends FormRequest
             'event_start_time' => 'required|date_format:H:i',
             'event_end_date' => 'required|date|after_or_equal:event_start_date',
             'event_end_time' => 'required|date_format:H:i|after_or_equal:event_start_time',
+            'artist_id' => 'required',
+            'location_id' => 'required'
         ];
     }
 

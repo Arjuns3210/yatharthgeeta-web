@@ -35,7 +35,12 @@ class VideoController extends Controller
         {
             if ($request->ajax()) {
                 try {
-                    $query = Video::orderBy('updated_at','desc');
+                    $query = Video::leftJoin('video_translations', function ($join) {
+                        $join->on("video_translations.video_id", '=', "videos.id");
+                        $join->where('video_translations.locale', \App::getLocale());
+                     })
+                     ->select('videos.*')
+                    ->orderBy('updated_at','desc');
                     return DataTables::of($query)
                         ->filter(function ($query) use ($request) {
                             if (isset($request['search']['search_title']) && !is_null($request['search']['search_title'])) {
@@ -43,9 +48,9 @@ class VideoController extends Controller
                                     $translationQuery->where('locale','en')->where('title', 'like', "%" . $request['search']['search_title'] . "%");
                                 });
                             }
-                            if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
-                                $query->where('status', 'like', "%" . $request['search']['search_status'] . "%");
-                            }
+                            // if (isset($request['search']['search_status']) && !is_null($request['search']['search_status'])) {
+                            //     $query->where('status', 'like', "%" . $request['search']['search_status'] . "%");
+                            // }
                             if (isset($request['search']['search_sequence']) && !is_null($request['search']['search_sequence'])) {
                                 $query->where('sequence', 'like', "%" . $request['search']['search_sequence'] . "%");
                             }
@@ -53,9 +58,9 @@ class VideoController extends Controller
                                 $query->where('status', $request['search']['search_status']);
                             }
                             $query->get()->toArray();
-                        })->editColumn('title_'.\App::getLocale(), function ($event) {
-                            $Key_index = array_search(\App::getLocale(), array_column($event->translations->toArray(), 'locale'));
-                            return $event['translations'][$Key_index]['title'];
+                        })->editColumn('title_'.\App::getLocale(), function ($video) {
+                            $Key_index = array_search(\App::getLocale(), array_column($video->translations->toArray(), 'locale'));
+                            return $video['translations'][$Key_index]['title'];
 
                         })->editColumn('sequence',function ($event) {
                             return $event['sequence'];
