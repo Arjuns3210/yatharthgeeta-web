@@ -39,6 +39,7 @@ $(document).ready(function () {
 
     $(document).on('change',  '.required,.numeric-validation,.integer-validation,.youtube-url-validation', function (event) {
         $(this).removeClass('border-danger');
+        $(this).closest('.input-file').removeAttr('style');
         $(this).siblings('.select2-container').find('.selection').find('.select2-selection').removeClass('border-danger');
     });
 
@@ -227,6 +228,7 @@ function submitForm(form_id, form_method, errorOverlay = '') {
         var here = $(this);
         if (here.val() === '' || here.val().length === 0) {
             if (here.attr('type') === 'file' && here.closest('.input-file').length !== 0 ) {
+                here.addClass('border-danger');
                 here.closest('.input-file').css('border', '1px solid red');
             } else {
                 here.addClass('border-danger');
