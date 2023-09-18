@@ -63,7 +63,7 @@
                                                 <div class="row div_book">
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Book<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2 " id="book_id" name="book_id[]" multiple>
+                                                        <select class="form-control select2 book-type-filed required" id="book_id" name="book_id[]" multiple>
                                                             @foreach($books as $book)
                                                                 <option value="{{$book->id}}">{{$book->translations[0]->name ?? ''}}</option>
                                                             @endforeach
@@ -73,7 +73,7 @@
                                                 <div class="row div_audio">
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Pravachan<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2 " id="audio_id" name="audio_id[]" multiple>
+                                                        <select class="form-control select2 audio-type-filed" id="audio_id" name="audio_id[]" multiple>
                                                             @foreach($audios as $audio)
                                                                 <option value="{{$audio->id}}">{{$audio->translations[0]->title ?? ''}}</option>
                                                             @endforeach
@@ -83,7 +83,7 @@
                                                 <div class="row div_quote">
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Quote<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2 " id="quote_id" name="quote_id[]" multiple>
+                                                        <select class="form-control select2 quote-type-filed" id="quote_id" name="quote_id[]" multiple>
                                                             @foreach($quotes as $quote)
                                                                 <option value="{{$quote->id}}">{{$quote->title ?? ''}}</option>
                                                             @endforeach
@@ -93,7 +93,7 @@
                                                 <div class="row div_mantra">
                                                     <div class="col-sm-6 mb-2">
                                                         <label>Mantra<span class="text-danger">*</span></label>
-                                                        <select class="form-control select2 " id="mantra_id" name="mantra_id[]" multiple>
+                                                        <select class="form-control select2 mantra-type-filed" id="mantra_id" name="mantra_id[]" multiple>
                                                             @foreach($mantras as $mantra)
                                                                 <option value="{{$mantra->id}}">{{$mantra->translations[0]->title ?? ''}}</option>
                                                             @endforeach
@@ -147,23 +147,29 @@
         $('#collection_type').change(function () {
             // Hide all divs initially
             $(' .div_book, .div_audio,.div_mantra,.div_quote').hide();
+            $('.book-type-filed, .audio-type-filed, .mantra-type-filed, .quote-type-filed').removeClass('required');
 
             // Show the relevant div based on the selected value
             switch ($('#collection_type').val()) {
                 case 'Book':
                     $('.div_book').show();
+                    $('.book-type-filed').addClass('required');
                     break;
                 case 'Audio':
                     $('.div_audio').show();
+                    $('.audio-type-filed').addClass('required');
                     break;
                 case 'Quote':
                     $('.div_quote').show();
+                    $('.quote-type-filed').addClass('required');
                     break;
                 case 'Mantra':
                     $('.div_mantra').show();
+                    $('.mantra-type-filed').addClass('required');
                     break;
                 default:
                     $('.div_book').show();
+                    $('.book-type-filed').addClass('required');
             }
         });
     });
