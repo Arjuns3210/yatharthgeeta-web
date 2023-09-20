@@ -37,42 +37,36 @@
                                                         <input class="form-control required integer-validation" type="number" id="sequence" name="sequence" value="{{$guru['sequence']}}"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>guru Status<span class="text-danger">*</span></label>
-                                                        <select class="form-control" id="status" name="status">
-                                                            <option value="1" <?php echo $guru['status'] == 1 ? 'selected' : '' ?>>Active</option>
-                                                            <option value="0" <?php echo $guru['status'] == 0 ? 'selected' : '' ?>>Inactive</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-6 offset-sm-3 mt-3">
-                                                    <div class="col-md-6 col-lg-12 col-sm-6 text-center file-input-div">
-                                                        <p class="font-weight-bold">IMAGE <span class="text-danger">*</span></p>
-                                                        <div class="shadow bg-white rounded d-inline-block mb-2">
-                                                            <div class="input-file">
-                                                                <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
-                                                                    <input class="form-control" accept=".jpg,.jpeg,.png" type="file" id="image" name="image" onchange="handleFileInputChange('cover_image')"><br/>
-                                                                </label>
+                                                        <div class="col-md-6 col-lg-12 col-sm-6 text-center file-input-div">
+                                                            <label>Image <span class="text-danger">*</span></label><br>
+                                                            <div class="shadow bg-white rounded d-inline-block mb-2">
+                                                                <div class="input-file">
+                                                                    <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
+                                                                        <input class="form-control" accept=".jpg,.jpeg,.png" type="file" id="image" name="image" onchange="handleFileInputChange('cover_image')"><br/>
+                                                                    </label>
+                                                                </div>
                                                             </div>
+                                                            <p id="files-area">
+                                                                <span id="coverImagesLists">
+                                                                    <span id="cover-images-names"></span>
+                                                                </span>
+                                                            </p>
                                                         </div>
-                                                        <p id="files-area">
-                                                            <span id="coverImagesLists">
-                                                                <span id="cover-images-names"></span>
-                                                            </span>
-                                                        </p>
+                                                        @if(!empty($media))
+                                                        <div class="d-flex mb-1  media-div-{{$media->id}}">
+                                                            <input type="text"
+                                                                    class="form-control input-sm bg-white document-border"
+                                                                    value="{{ $media->file_name ?? '' }}"
+                                                                    readonly style="color: black !important;">
+                                                            <a href="{{ $media->getFullUrl() }}"
+                                                                class="btn btn-primary mx-2 px-2" target="_blank"><i
+                                                                        class="fa ft-eye"></i></a>
+                                                        </div>
+                                                        @endif
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                     </div>
-                                                    @if(!empty($media))
-                                                    <div class="d-flex mb-1  media-div-{{$media->id}}">
-                                                        <input type="text"
-                                                                class="form-control input-sm bg-white document-border"
-                                                                value="{{ $media->file_name ?? '' }}"
-                                                                readonly style="color: black !important;">
-                                                        <a href="{{ $media->getFullUrl() }}"
-                                                            class="btn btn-primary mx-2 px-2" target="_blank"><i
-                                                                    class="fa ft-eye"></i></a>
-                                                    </div>
-                                                    @endif
-                                                    <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                 </div>
+                                                
                                             </div>
 
                                             <?php foreach (config('translatable.locales') as $translated_data_tabs) { ?>

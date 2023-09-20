@@ -60,6 +60,7 @@ Route::group(['middleware' => ['customAuth']], function () {
 	Route::get('guru/view/{id}', 'ArtistController@show');
 	Route::post('guru/save', 'ArtistController@store');
 	Route::post('guru/delete_img', 'ArtistController@deleteImage');
+	Route::post('guru/publish', 'ArtistController@updateStatus');
 
 	// Category
 	Route::get('books_category', 'BookCategoryController@index');
