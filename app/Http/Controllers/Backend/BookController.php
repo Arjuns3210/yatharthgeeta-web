@@ -9,6 +9,7 @@ use App\Models\Book;
 use App\Models\BookCategory;
 use App\Models\Language;
 use App\Models\Video;
+use App\Models\LanguageTranslation;
 use App\Utils\Utils;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddBookRequest;
@@ -141,8 +142,8 @@ class BookController extends Controller
         $data['book_category'] = BookCategory::all();
         $data['language'] = Language::all();
         $data['artist'] = Artist::all();
-        $data['audio'] = Audio::all();
-        $data['video'] = Video::all();
+        $data['audio'] = Audio::with('language')->get();
+        $data['video'] = Video::with('language')->get();
         return view('backend/books/add', $data);
     }
 
@@ -183,7 +184,7 @@ class BookController extends Controller
     public function view($id)
     {
         $data['books']= Book::with('artist', 'language', 'audio', 'video' )->find($id);
-        $data['book'] = Book::whereIn('id', explode(',', $data['books']->related_id))->get();        
+        $data['book'] = Book::whereIn('id', explode(',', $data['books']->related_id))->get();
         $data['media'] = $data['books']->getMedia(Book::COVER_IMAGE)->first()?? '';
         $data['pdf_file'] = $data['books']->getMedia(Book::PDF_FILE)->first()?? '';
         $data['epub_file'] = $data['books']->getMedia(Book::EPUB_FILE)->first()?? '';
@@ -233,11 +234,13 @@ class BookController extends Controller
             'translations' => function ($query) use ($localeLanguage) {
                     $query->where('locale', $localeLanguage);
                 },
+                'language',
             ])->get();
         $data['audio'] = Audio::with([
             'translations' => function ($query) use ($localeLanguage) {
                     $query->where('locale', $localeLanguage);
                 },
+                'language',
             ])->get();
         $data['language'] = Language::with([
             'translations' => function ($query) use ($localeLanguage) {
