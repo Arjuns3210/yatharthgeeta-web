@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class UpdateBookRequest extends FormRequest
+class UpdateArtistRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,28 +25,14 @@ class UpdateBookRequest extends FormRequest
      */
     public function rules()
     {
-        $coverImageMaxWidth = config('global.dimensions.books_width');
-        $coverImageMaxHeight = config('global.dimensions.books_height');
-        
-        return [
-            'id'           => 'required',
-            'pages'      => 'required|integer',
-            'sequence'     => 'required|integer',
-            'language_id'  => 'required',
-            'artist_id'       => 'required',
-            'cover_image'   => "nullable|mimes:jpeg,jpg,png,gif|dimensions:width={$coverImageMaxWidth},height={$coverImageMaxHeight}",
-        ];
-    }
+        $coverImageMaxWidth = config('global.dimensions.guruji_width');
+        $coverImageMaxHeight = config('global.dimensions.guruji_height');
 
-    /**
-     * Custom message for validation
-     *
-     * @return array
-     */
-    public function messages()
-    {
         return [
-            'pdf_file_name.required' => 'PDF file field is required',
+            'name' => 'required',
+            'title'   => 'required',
+            'image'   => "nullable|mimes:jpeg,jpg,png,gif|dimensions:width={$coverImageMaxWidth},height={$coverImageMaxHeight}",
+            'description'  => 'required',
         ];
     }
 

@@ -26,14 +26,17 @@ class UpdateAudioRequest extends FormRequest
      */
     public function rules()
     {
+        $coverImageMaxWidth = config('global.dimensions.audios_width');
+        $coverImageMaxHeight = config('global.dimensions.audios_height');
+
         $ruleData = [
             'id'           => 'required',
             'has_episodes' => 'required',
             'duration'     => 'required|integer',
             'sequence'     => 'required|integer',
             'language_id'  => 'required',
-            'author_id'  => 'required',
-            'cover_image'   => 'nullable|mimes:jpeg,jpg,png,gif',
+            'author_id'    => 'required',
+            'cover_image'  => "nullable|mimes:jpeg,jpg,png,gif|dimensions:width={$coverImageMaxWidth},height={$coverImageMaxHeight}",
             'audio_file'   => 'nullable|mimes:mp3',
         ];
 

@@ -25,10 +25,13 @@ class AddAudioRequest extends FormRequest
      */
     public function rules()
     {
+        $coverImageMaxWidth = config('global.dimensions.audios_width');
+        $coverImageMaxHeight = config('global.dimensions.audios_height');
+        
         return [
             'has_episodes' => 'required',
             'audio_file'   => 'required_if:has_episodes,==,0|mimes:mp3',
-            'cover_image'   => 'required|mimes:jpeg,jpg,png,gif',
+            'cover_image'  => "required|mimes:jpeg,jpg,png,gif|dimensions:width={$coverImageMaxWidth},height={$coverImageMaxHeight}",
             'duration'     => 'required|integer',
             'sequence'     => 'required|integer',
             'language_id'  => 'required',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateArtistRequest;
 use Yajra\DataTables\DataTables;
 use App\Models\Artist;
 use App\Models\ArtistTranslation;
@@ -209,7 +210,7 @@ class ArtistController extends Controller
      * @param  \App\Models\artist  $artist
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UpdateArtistRequest $request)
     {
         $data = Artist::find($_GET['id']);
         $input=$request->all();

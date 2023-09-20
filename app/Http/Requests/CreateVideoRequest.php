@@ -25,9 +25,12 @@ class CreateVideoRequest extends FormRequest
      */
     public function rules()
     {
+        $coverImageMaxWidth = config('global.dimensions.videos_width');
+        $coverImageMaxHeight = config('global.dimensions.videos_height');
+        
         return [
             'duration'       => 'required|integer',
-            'cover_image'=> 'required|mimes:jpeg,jpg,png',
+            'cover_image'  => "required|mimes:jpeg,jpg,png,gif|dimensions:width={$coverImageMaxWidth},height={$coverImageMaxHeight}",
             'sequence'   => 'required|integer'
         ];
     }
