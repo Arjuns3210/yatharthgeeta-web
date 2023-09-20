@@ -25,9 +25,13 @@ class CreateEventImageRequest extends FormRequest
      */
     public function rules()
     {
+        $coverImageMaxWidth = config('global.dimensions.home_banners_width');
+        $coverImageMaxHeight = config('global.dimensions.home_banners_height');
+      
         return [
-            'event_images'=>'required'
+            'event_images.*' => 'required|mimes:jpeg,jpg,png,gif|dimensions:width=' . $coverImageMaxWidth . ',height=' . $coverImageMaxHeight,
         ];
+
     }
 
     protected function failedValidation(Validator $validator)
