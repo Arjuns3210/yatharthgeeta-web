@@ -19,6 +19,7 @@ class Artist extends Model implements HasMedia
 
     public $fillable = [
         'image',
+        'status',
         'sequence',
         'visible_on_app'
     ];
