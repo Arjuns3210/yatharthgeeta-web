@@ -91,7 +91,7 @@
                                                             <label>Quotes<span class="text-danger">*</span></label>
                                                             <select class="form-control select2 required" id="quote_id" name="quote_id[]" multiple>
                                                                 @foreach($quotes as $quote)
-                                                                    <option value="{{$quote->id}}" {{(in_array($quote->id,$mappedIds))? 'selected':''}}>{{$quote->title ?? ''}} ( {{ $quote->language->name ?? '' }} )</option>
+                                                                    <option value="{{$quote->id}}" {{(in_array($quote->id,$mappedIds))? 'selected':''}}>{{$quote->title ?? ''}}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
