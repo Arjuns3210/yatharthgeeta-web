@@ -35,10 +35,6 @@
                                                         <td><strong>Sequence</strong></td>
                                                         <td>{{ $guru->sequence ?? ''}}</td>
                                                     </tr>
-                                                    <tr>
-                                                        <td><strong>Status</strong></td>
-                                                        <td><?php echo $guru['status'] == 1 ? 'Active' : 'Inactive' ?></td>
-                                                    </tr>
                                                     @if(isset($media))
                                                     <tr>
                                                         <td><strong>guru Image </strong></td>

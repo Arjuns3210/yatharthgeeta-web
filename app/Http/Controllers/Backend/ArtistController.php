@@ -7,6 +7,7 @@ use App\Models\Artist;
 use App\Models\ArtistTranslation;
 use App\Models\Location;
 use App\Utils\Utils;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddArtistRequest;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -70,6 +71,13 @@ class ArtistController extends Controller
                         if ($artist_edit) {
                             $actions .= ' <a href="guru/edit/' . $event['id'] . '" class="btn btn-success btn-sm src_data" title="Update"><i class="fa fa-edit"></i></a>';
                         }
+                        if ($artist_status) {
+                            if ($event->status == '1') {
+                                $actions .= ' <input type="checkbox" data-url="guru/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery" checked>';
+                            } else {
+                                $actions .= ' <input type="checkbox" data-url="guru/publish" id="switchery' . $event->id . '" data-id="' . $event->id . '" class="js-switch switchery">';
+                            }
+                        }
                         $actions .= '</span>';
                         return $actions;
                     })
@@ -88,6 +96,32 @@ class ArtistController extends Controller
         }
     }
 
+    public function updateStatus(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $msg_data = array();
+            $input = $request->all();
+            $input['updated_by'] = session('data')['id'];
+            $artist = Artist::where('id',$input['id'])->first();
+
+            if ($artist->exists()) {
+                $artist->update($input);
+                DB::commit();
+                if ($request->status == 1) {
+                    successMessage(trans('message.enable'), $msg_data);
+                } else {
+                    errorMessage(trans('message.disable'), $msg_data);
+                }
+            }
+            errorMessage('artist not found', []);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("Something Went Wrong. Error: " . $e->getMessage());
+            errorMessage(trans('auth.something_went_wrong'));
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
