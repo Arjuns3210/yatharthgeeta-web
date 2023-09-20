@@ -91,7 +91,7 @@
                                                                 class="btn btn-primary mx-2 px-2" target="_blank"><i
                                                                         class="fa ft-eye"></i></a>
                                                         </div>
-                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.videos_width')}}X{{config('global.dimensions.videos_height')}} pixel and .jpg, .png, or jpeg format image</p>
                                                     </div>
                                                 </div>
                                             </div>
