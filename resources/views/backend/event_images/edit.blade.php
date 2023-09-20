@@ -42,7 +42,7 @@
                                                     <div class="col-sm-6">
                                                         <label>Cover Image</label>
                                                         <input class="form-control" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('image')" value="{{$event_image['image']}}"><br/>
-                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.event_gallery_width')}}X{{config('global.dimensions.event_gallery_height')}} pixel and .jpg, .png, or jpeg format image</p>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Sequence<span class="text-danger">*</span></label>

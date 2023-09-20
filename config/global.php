@@ -21,6 +21,8 @@ return [
 		'events_height' => '500',
 		'event_gallery_width' => '1000',
 		'event_gallery_height' => '2000',
+		'location_width' => '1600',
+		'location_height' => '1000',
     ],
     'TRIGGER_FPWD_EMAIL' => true,
 ];

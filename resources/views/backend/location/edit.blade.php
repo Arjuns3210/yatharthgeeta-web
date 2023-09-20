@@ -95,7 +95,7 @@
 																		class="fa ft-eye"></i></a>
 														</div>
                                                         @endif
-														<p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.location_width')}}X{{config('global.dimensions.location_height')}} pixel and .jpg, .png, or jpeg format image</p>
                                                 </div>
                                                     <div class="col-sm-6">
                                                         <h6><strong>Working Days :</strong><span class="text-danger">*</span></h6>

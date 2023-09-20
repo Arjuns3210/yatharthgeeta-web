@@ -58,6 +58,7 @@
                                                                 </div>
                                                             @endforeach
                                                         </div>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.event_gallery_width')}}X{{config('global.dimensions.event_gallery_height')}} pixel and .jpg, .png, or jpeg format image</p>
                                                     </div>
                                                 </div>
                                             </div>
