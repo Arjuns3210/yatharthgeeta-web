@@ -119,16 +119,16 @@
                                                                                             style="width: 100% !important;">
                                                                                         @if($collectionDetail->mapped_to == \App\Models\HomeCollectionMapping::BOOK)
                                                                                             @foreach($books as $key => $book)
-                                                                                                <option value="{{$book->id}}" {{ in_array($book->id,$detailsMappedIds) ? 'selected' : '' }}>{{$book->translations[0]->name ?? ''}}</option>
+                                                                                                <option value="{{$book->id}}" {{ in_array($book->id,$detailsMappedIds) ? 'selected' : '' }}>{{$book->name ?? ''}} ( {{ $book->language->name ?? '' }} )</option>
                                                                                             @endforeach
                                                                                         @elseif($collectionDetail->mapped_to == \App\Models\HomeCollectionMapping::AUDIO)
                                                                                             @foreach($audios as $audio)
-                                                                                                <option value="{{$audio->id}}" {{(in_array($audio->id,$detailsMappedIds))? 'selected':''}}>{{$audio->translations[0]->title ?? ''}}</option>
+                                                                                                <option value="{{$audio->id}}" {{(in_array($audio->id,$detailsMappedIds))? 'selected':''}}>{{$audio->title ?? ''}} ( {{ $audio->language->name ?? '' }} )</option>
                                                                                             @endforeach
 
                                                                                         @elseif($collectionDetail->mapped_to == \App\Models\HomeCollectionMapping::VIDEO)
                                                                                             @foreach($videos as $video)
-                                                                                                <option value="{{$video->id}}" {{(in_array($video->id,$detailsMappedIds))? 'selected':''}}>{{$video->translations[0]->title ?? ''}}</option>
+                                                                                                <option value="{{$video->id}}" {{(in_array($video->id,$detailsMappedIds))? 'selected':''}}>{{$video->title ?? ''}} ( {{ $video->language->name ?? '' }} )</option>
                                                                                             @endforeach
                                                                                         @elseif($collectionDetail->mapped_to == \App\Models\HomeCollectionMapping::SHLOK)
                                                                                             @foreach($shloks as $sholk)
@@ -181,7 +181,7 @@
                                                             <label>Book<span class="text-danger">*</span></label>
                                                             <select class="form-control select2 required" id="book_id" name="book_id[]" multiple>
                                                                 @foreach($books as $book)
-                                                                    <option value="{{$book->id}}" {{(in_array($book->id,$mappedIds))? 'selected':''}}>{{$book->translations[0]->name ?? ''}}</option>
+                                                                    <option value="{{$book->id}}" {{(in_array($book->id,$mappedIds))? 'selected':''}}>{{$book->name ?? ''}} ( {{ $book->language->name ?? '' }} )</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -193,7 +193,7 @@
                                                             <label>Audio<span class="text-danger">*</span></label>
                                                             <select class="form-control select2 required" id="audio_id" name="audio_id[]" multiple>
                                                                 @foreach($audios as $audio)
-                                                                    <option value="{{$audio->id}}" {{(in_array($audio->id,$mappedIds))? 'selected':''}}>{{$audio->translations[0]->title ?? ''}}</option>
+                                                                    <option value="{{$audio->id}}" {{(in_array($audio->id,$mappedIds))? 'selected':''}}>{{$audio->title ?? ''}} ( {{ $audio->language->name ?? '' }} )</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -205,7 +205,7 @@
                                                             <label>Video<span class="text-danger">*</span></label>
                                                             <select class="form-control select2 required" id="video_id" name="video_id[]" multiple>
                                                                 @foreach($videos as $video)
-                                                                    <option value="{{$video->id}}" {{(in_array($video->id,$mappedIds))? 'selected':''}}>{{$video->translations[0]->title ?? ''}}</option>
+                                                                    <option value="{{$video->id}}" {{(in_array($video->id,$mappedIds))? 'selected':''}}>{{$video->title ?? ''}} ( {{ $video->language->name ?? '' }} )</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -289,10 +289,10 @@
                     // Populate options based on the AJAX response
                     $.each(data.books, function (key, value) {
                         if (value.translations[0] != undefined) {
-
+                            let text = value?.name + ' ( ' + value?.language?.name + ' ) ';
                             $mappedIdsSelect.append($('<option>', {
                                 value: value.id,
-                                text: value.translations[0].name ?? ''
+                                text: text ?? ''
                             }));
                         }
                     });
@@ -303,9 +303,10 @@
                 if (type == 'Audio' && data.audios != undefined) {
                     $.each(data.audios, function (key, value) {
                         if (value.translations[0] != undefined) {
+                            let text = value?.title + ' ( ' + value?.language?.name + ' ) ';
                             $mappedIdsSelect.append($('<option>', {
                                 value: value.id,
-                                text: value.translations[0].title ?? ''
+                                text: text ?? ''
                             }));
                         }
                     });
@@ -316,9 +317,10 @@
                 if (type == 'Video' && data.videos != undefined) {
                     $.each(data.videos, function (key, value) {
                         if (value.translations[0] != undefined){
+                            let text = value?.title + ' ( ' + value?.language?.name + ' ) ';
                             $mappedIdsSelect.append($('<option>', {
                                 value: value.id,
-                                text: value.translations[0].title ??''
+                                text: text ??''
                             }));
                         }
                     });
@@ -332,7 +334,7 @@
 
                             $mappedIdsSelect.append($('<option>', {
                                 value: value.id,
-                                text: value.translations[0].title ?? ''
+                                text: value.title ?? ''
                             }));
                         }
                     });
@@ -347,7 +349,7 @@
 
                             $mappedIdsSelect.append($('<option>', {
                                 value: value.id,
-                                text: value.translations[0].name ?? ''
+                                text: value.name ?? ''
                             }));
                         }
                     });

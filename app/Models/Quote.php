@@ -40,6 +40,5 @@ class Quote extends Model implements HasMedia
     ];
 
     const IMAGE= 'image';
-
-
+    
 }
