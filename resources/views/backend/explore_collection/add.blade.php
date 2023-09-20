@@ -65,7 +65,7 @@
                                                         <label>Book<span class="text-danger">*</span></label>
                                                         <select class="form-control select2 book-type-filed required" id="book_id" name="book_id[]" multiple>
                                                             @foreach($books as $book)
-                                                                <option value="{{$book->id}}">{{$book->translations[0]->name ?? ''}}</option>
+                                                                <option value="{{$book->id}}">{{$book->name ?? ''}} ( {{ $book->language->name ?? '' }} )</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -75,7 +75,7 @@
                                                         <label>Pravachan<span class="text-danger">*</span></label>
                                                         <select class="form-control select2 audio-type-filed" id="audio_id" name="audio_id[]" multiple>
                                                             @foreach($audios as $audio)
-                                                                <option value="{{$audio->id}}">{{$audio->translations[0]->title ?? ''}}</option>
+                                                                <option value="{{$audio->id}}">{{$audio->title ?? ''}} ( {{ $audio->language->name ?? '' }} )</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -85,7 +85,7 @@
                                                         <label>Quote<span class="text-danger">*</span></label>
                                                         <select class="form-control select2 quote-type-filed" id="quote_id" name="quote_id[]" multiple>
                                                             @foreach($quotes as $quote)
-                                                                <option value="{{$quote->id}}">{{$quote->title ?? ''}}</option>
+                                                                <option value="{{$quote->id}}">{{$quote->title ?? ''}} ( {{ $quote->language->name ?? '' }} )</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -95,7 +95,7 @@
                                                         <label>Mantra<span class="text-danger">*</span></label>
                                                         <select class="form-control select2 mantra-type-filed" id="mantra_id" name="mantra_id[]" multiple>
                                                             @foreach($mantras as $mantra)
-                                                                <option value="{{$mantra->id}}">{{$mantra->translations[0]->title ?? ''}}</option>
+                                                                <option value="{{$mantra->id}}">{{$mantra->title ?? ''}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>

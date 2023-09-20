@@ -100,7 +100,7 @@
                                                                     <div class="col-md-3 mt-1">
                                                                         <select class="select2  mapped-ids multiple-type-fields" id="mapped_ids" name="mapped_ids[0][]" multiple style="width: 100% !important;" >
                                                                             @foreach($books as $key => $book)
-                                                                                <option value="{{$book->id}}">{{$book->translations[0]->name ?? ''}}</option>
+                                                                                <option value="{{$book->id}}">{{$book->name ?? ''}} ( {{ $book->language->name ?? '' }} )</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
@@ -124,7 +124,7 @@
                                                         <label>Book<span class="text-danger">*</span></label>
                                                         <select class="form-control select2 book-type-filed" id="book_id" name="book_id[]" multiple>
                                                             @foreach($books as $book)
-                                                                <option value="{{$book->id}}">{{$book->translations[0]->name ?? ''}}</option>
+                                                                <option value="{{$book->id}}">{{$book->name ?? ''}} ( {{ $book->language->name ?? '' }} )</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -134,7 +134,7 @@
                                                         <label>Audio<span class="text-danger">*</span></label>
                                                         <select class="form-control select2 audio-type-filed" id="audio_id" name="audio_id[]" multiple>
                                                             @foreach($audios as $audio)
-                                                                <option value="{{$audio->id}}">{{$audio->translations[0]->title ?? ''}}</option>
+                                                                <option value="{{$audio->id}}">{{$audio->title ?? ''}} ( {{ $audio->language->name ?? '' }} )</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -144,7 +144,7 @@
                                                         <label>Video<span class="text-danger">*</span></label>
                                                         <select class="form-control select2 video-type-filed" id="video_id" name="video_id[]" multiple>
                                                             @foreach($videos as $video)
-                                                                <option value="{{$video->id}}">{{$video->translations[0]->title ?? ''}}</option>
+                                                                <option value="{{$video->id}}">{{$video->title ?? ''}} ( {{ $video->language->name ?? '' }} )</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -154,7 +154,7 @@
                                                         <label>Shlok<span class="text-danger">*</span></label>
                                                         <select class="form-control select2 shlok-type-filed" id="shlok_id" name="shlok_id[]" multiple>
                                                             @foreach($shloks as $sholk)
-                                                                <option value="{{$sholk->id}}">{{$sholk->translations[0]->title ?? ''}}</option>
+                                                                <option value="{{$sholk->id}}">{{$sholk->title ?? ''}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -164,7 +164,7 @@
                                                         <label>Guru<span class="text-danger">*</span></label>
                                                         <select class="form-control select2 artis-type-filed" id="artist_id" name="artist_id[]" multiple>
                                                             @foreach($artists as $artist)
-                                                                <option value="{{$artist->id}}">{{$artist->translations[0]->name ?? ''}}</option>
+                                                                <option value="{{$artist->id}}">{{$artist->name ?? ''}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -271,10 +271,10 @@
                     // Populate options based on the AJAX response
                     $.each(data.books, function (key, value) {
                         if (value.translations[0] != undefined) {
-
+                            let text = value?.name + ' ( ' + value?.language?.name + ' ) ';
                             $mappedIdsSelect.append($('<option>', {
                                 value: value.id,
-                                text: value.translations[0].name ?? ''
+                                text: text ?? ''
                             }));
                         }
                     });
@@ -285,9 +285,10 @@
                 if (type == 'Audio' && data.audios != undefined) {
                     $.each(data.audios, function (key, value) {
                         if (value.translations[0] != undefined) {
+                            let text = value?.title + ' ( ' + value?.language?.name + ' ) ';
                             $mappedIdsSelect.append($('<option>', {
                                 value: value.id,
-                                text: value.translations[0].title ?? ''
+                                text: text ?? ''
                             }));
                         }
                     });
@@ -298,9 +299,10 @@
                 if (type == 'Video' && data.videos != undefined) {
                     $.each(data.videos, function (key, value) {
                        if (value.translations[0] != undefined){
+                           let text = value?.title + ' ( ' + value?.language?.name + ' ) ';
                            $mappedIdsSelect.append($('<option>', {
                                value: value.id,
-                               text: value.translations[0].title ??''
+                               text: text ??''
                            }));   
                        }
                     });
@@ -314,7 +316,7 @@
 
                             $mappedIdsSelect.append($('<option>', {
                                 value: value.id,
-                                text: value.translations[0].title ?? ''
+                                text: value.title ?? ''
                             }));
                         }
                     });
@@ -329,7 +331,7 @@
 
                             $mappedIdsSelect.append($('<option>', {
                                 value: value.id,
-                                text: value.translations[0].name ?? ''
+                                text: value.name ?? ''
                             }));
                         }
                     });

@@ -556,14 +556,14 @@ class HomeCollectionController extends Controller
                 'translations' => function ($query) use ($localeLanguage) {
                     $query->where('locale', $localeLanguage);
                 },
-            ])->where('status', 1)->get();   
+            'language'])->where('status', 1)->get();   
         }
         if ($type == HomeCollectionMapping::AUDIO){
             $data['audios'] = Audio::with([
                 'translations' => function ($query) use ($localeLanguage) {
                     $query->where('locale', $localeLanguage);
                 },
-            ])->where('type',Audio::AUDIO)->where('status', 1)->get();
+                'language'])->where('type',Audio::AUDIO)->where('status', 1)->get();
         }
         if ($type == HomeCollectionMapping::VIDEO) {
 
@@ -571,7 +571,7 @@ class HomeCollectionController extends Controller
                 'translations' => function ($query) use ($localeLanguage) {
                     $query->where('locale', $localeLanguage);
                 },
-            ])->where('status', 1)->get();
+                'language'])->where('status', 1)->get();
         }
         if ($type == HomeCollectionMapping::SHLOK) {
             $data['shloks'] = Shlok::with([

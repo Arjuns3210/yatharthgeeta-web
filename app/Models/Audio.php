@@ -81,4 +81,8 @@ class Audio extends Model implements HasMedia
     {
         return $this->belongsTo(AudioCategory::class);
     }
+    public function language()
+    {
+        return $this->belongsTo(Language::class);
+    }
 }
