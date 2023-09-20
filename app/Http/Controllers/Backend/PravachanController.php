@@ -419,10 +419,11 @@ class PravachanController extends Controller
             if ($audio->exists()) {
                 $audio->update($input);
                 DB::commit();
-                if ($input['status'] == 1) {
-                    successMessage('Published', $msg_data);
+                
+                if ($request->status == 1) {
+                    successMessage(trans('message.enable'), $msg_data);
                 } else {
-                    successMessage('Unpublished', $msg_data);
+                    errorMessage(trans('message.disable'), $msg_data);
                 }
             }
 

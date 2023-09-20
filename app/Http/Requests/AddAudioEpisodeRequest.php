@@ -30,7 +30,20 @@ class AddAudioEpisodeRequest extends FormRequest
             'sequence'   => 'required|integer',
             'main_shlok'   => 'required',
             'explanation_shlok'   => 'required',
-            'audio_file' => 'required|mimes:mp3,wav',
+            'audio_file' => 'required|mimes:mp3',
+            'srt_file'     => 'nullable|mimetypes:text/plain,application/x-subrip',
+        ];
+    }
+
+    /**
+     * Custom message for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'srt_file.mimetypes' => 'The srt file must be a file of type: srt.',
         ];
     }
 

@@ -56,7 +56,7 @@
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
                                                             <div class="input-file">
                                                                 <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
-                                                                    <input type="file"  name="audio_file"  class="audio-file" id="audioFiles" accept=".mp3, .wav">
+                                                                    <input type="file"  name="audio_file"  class="audio-file" id="audioFiles" accept=".mp3">
                                                                 </label>
                                                             </div>
                                                         </div>

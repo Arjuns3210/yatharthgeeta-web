@@ -42,7 +42,7 @@
                                                     </div>
                                                     <div class="col-sm-6 mb-2">
                                                             <label>Sequence<span class="text-danger">*</span></label>
-                                                            <input class="form-control required integer-validation" type="text" id="sequence" name="sequence" ><br/>
+                                                            <input class="form-control required integer-validation" type="number" id="sequence" name="sequence" ><br/>
                                                         </div>
                                                     <div class="col-sm-6 mb-2"  >
                                                             <label>Display in columns<span class="text-danger">*</span></label>
@@ -95,7 +95,7 @@
                                                         <label>Mantra<span class="text-danger">*</span></label>
                                                         <select class="form-control select2 mantra-type-filed" id="mantra_id" name="mantra_id[]" multiple>
                                                             @foreach($mantras as $mantra)
-                                                                <option value="{{$mantra->id}}">{{$mantra->title ?? ''}}</option>
+                                                                <option value="{{$mantra->id}}">{{$mantra->name ?? ''}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>

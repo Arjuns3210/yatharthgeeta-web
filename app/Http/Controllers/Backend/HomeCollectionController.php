@@ -43,14 +43,22 @@ class HomeCollectionController extends Controller
 
     public function fetch(Request $request)
     {
+        $localeLanguage = \App::getLocale();
+        if (str_contains($localeLanguage, 'en')) {
+            $localeLanguage = 'en';
+        } else {
+            $localeLanguage = 'hi';
+        }
         if ($request->ajax()) {
             try {
                 $query = HomeCollection::with('language')
                     ->select('*')->orderBy('updated_at','desc');
                 return DataTables::of($query)
-                    ->filter(function ($query) use ($request) {
+                    ->filter(function ($query) use ($request , $localeLanguage) {
                         if (isset($request['search']['search_collection_title']) && !is_null($request['search']['search_collection_title'])) {
-                            $query->where('title', 'like', "%" . $request['search']['search_collection_title'] . "%");
+                            $query->whereHas('translations', function ($translationQuery) use ($request ,$localeLanguage) {
+                                $translationQuery->where('locale',$localeLanguage)->where('title', 'like', "%" . $request['search']['search_collection_title'] . "%");
+                            });
                         }
                         if (isset($request['search']['search_collection_type']) && !is_null($request['search']['search_collection_type'])) {
                             $query->where('type',$request['search']['search_collection_type']);
@@ -526,10 +534,10 @@ class HomeCollectionController extends Controller
             if ($homeCollection->exists()) {
                 $homeCollection->update($input);
                 DB::commit();
-                if ($input['status'] == 1) {
-                    successMessage('Published', $msg_data);
+                if ($request->status == 1) {
+                    successMessage(trans('message.enable'), $msg_data);
                 } else {
-                    successMessage('Unpublished', $msg_data);
+                    errorMessage(trans('message.disable'), $msg_data);
                 }
             }
 
