@@ -63,7 +63,7 @@
                                                                         class="fa ft-eye"></i></a>
                                                         </div>
                                                         @endif
-                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.guruji')}} pixel and .jpg, .png, or jpeg format image</p>
                                                     </div>
                                                 </div>
                                                 
