@@ -838,6 +838,9 @@ async function lineChartDashboard() {
             height: 350,
             width: "98%",
             type: "bar",
+            toolbar: {
+                show: false,
+            },
             zoom: {
                 enabled: false,
             },
