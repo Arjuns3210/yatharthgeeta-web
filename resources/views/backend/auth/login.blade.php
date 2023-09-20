@@ -10,17 +10,17 @@
                         <div class="col-12 d-flex align-items-center justify-content-center">
                             <div class="col-lg-5 col-md-6 col-12">
                                 <div class="text-center">
-                                    <img class="img-fluid" src="backend/img/logo.png" style="width: 120px;">
+                                    <img class="img-fluid" src="{{ asset('backend/img/logo.png ') }}" style="width: 120px;">
                                 </div>
                                 <div class="card overflow-hidden">
                                     <div class="card-content">
                                         <div class="card-body auth-img">
                                             <div class="row mt-3 mb-3 ml-4 mr-4">
-                                                <form class="col-12 px-4 py-3" action="webadmin/login" method="POST">
+                                                <form class="col-12 px-4 py-3" action="{{ url('webadmin/login') }}" method="POST">
                                                     @csrf
                                                     <h5 class="text-center mb-1">Welcome</h5>
                                                     <div class="text-center">
-                                                        <img class="img-fluid" src="backend/img/login_logo.png" style="width: 250px;">
+                                                        <img class="img-fluid" src="{{ asset('backend/img/login_logo.png ') }}" style="width: 250px;">
                                                     </div>
                                                     <br/>
                                                     <div class="mb-3">
