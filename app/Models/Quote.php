@@ -40,9 +40,5 @@ class Quote extends Model implements HasMedia
     ];
 
     const IMAGE= 'image';
-
-    public function language()
-    {
-        return $this->belongsTo(Language::class);
-    }
+    
 }
