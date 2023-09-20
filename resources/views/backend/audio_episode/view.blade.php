@@ -81,7 +81,7 @@
                                                                                       style="color: black !important;">
                                                                                <a href="{{$audioEpisodeSrtFile->getFullUrl() ?? ''}}"
                                                                                   class="btn btn-primary mx-2 px-2"
-                                                                                  target="_blank"><i class="fa ft-eye"></i></a>                                                          
+                                                                                  target="_blank"><i class="fa ft-download"></i></a>                                                          
                                                                            </div>
                                                                            @else
                                                                                -

@@ -27,7 +27,7 @@ class AddAudioRequest extends FormRequest
     {
         return [
             'has_episodes' => 'required',
-            'audio_file'   => 'required_if:has_episodes,==,0|mimes:mp3,wav',
+            'audio_file'   => 'required_if:has_episodes,==,0|mimes:mp3',
             'cover_image'   => 'required|mimes:jpeg,jpg,png,gif',
             'duration'     => 'required|integer',
             'sequence'     => 'required|integer',

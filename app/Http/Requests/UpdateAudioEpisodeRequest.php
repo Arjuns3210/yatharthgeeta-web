@@ -32,7 +32,8 @@ class UpdateAudioEpisodeRequest extends FormRequest
             'sequence'   => 'required|integer',
             'main_shlok'   => 'required',
             'explanation_shlok'   => 'required',
-            'audio_file'=>'nullable|mimes:mp3,wav'
+            'audio_file'=>'nullable|mimes:mp3',
+            'srt_file'     => 'nullable|mimetypes:text/plain,application/x-subrip',
         ];
 
         $audioEpisodeId = $this->input('id');
@@ -40,13 +41,25 @@ class UpdateAudioEpisodeRequest extends FormRequest
         if (! empty($audioEpisode)) {
             $audioFile = $audioEpisode->getMedia(AudioEpisode::EPISODE_AUDIO_FILE)->first();
             if (empty($audioFile)) {
-                $ruleData['audio_file'] = 'required|mimes:mp3,wav';
+                $ruleData['audio_file'] = 'required|mimes:mp3';
             }
         }
         
         return $ruleData;
     }
 
+    /**
+     * Custom message for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'srt_file.mimetypes' => 'The srt file must be a file of type: srt.',
+        ];
+    }
+    
     /**
      * Handle a failed validation attempt.
      *

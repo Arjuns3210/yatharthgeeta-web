@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateEventImageRequest;
 use App\Models\Event;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -42,10 +43,10 @@ class EventImageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  CreateEventImageRequest  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(CreateEventImageRequest $request)
     {
         try {
             $input = $request->all();

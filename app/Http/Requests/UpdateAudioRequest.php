@@ -34,7 +34,7 @@ class UpdateAudioRequest extends FormRequest
             'language_id'  => 'required',
             'author_id'  => 'required',
             'cover_image'   => 'nullable|mimes:jpeg,jpg,png,gif',
-            'audio_file'   => 'nullable|mimes:mp3,wav',
+            'audio_file'   => 'nullable|mimes:mp3',
         ];
 
         $audioId = $this->input('id');
@@ -47,7 +47,7 @@ class UpdateAudioRequest extends FormRequest
             }
             $audioFile = $audio->getMedia(Audio::AUDIO_FILE)->first();
             if ($hasEpisode == 0 && empty($audioFile)) {
-                $ruleData['audio_file'] = 'required|mimes:mp3,wav';
+                $ruleData['audio_file'] = 'required|mimes:mp3';
             }
         }
         

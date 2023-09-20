@@ -43,7 +43,7 @@ class UpdatePravachanRequest extends FormRequest
             }
             $audioFile = $pravachan->getMedia(Audio::AUDIO_FILE)->first();
             if (empty($audioFile)) {
-                $ruleData['audio_file'] = 'required|mimes:mp3,wav';
+                $ruleData['audio_file'] = 'required|mimes:mp3';
             }
         }
         

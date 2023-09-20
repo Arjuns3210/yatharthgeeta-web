@@ -33,7 +33,7 @@
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
                                                     <div class="col-sm-6 mb-2">
-                                                        <label>Has Episodes<span class="text-danger">*</span></label>
+                                                        <label>Has Multiple Audios<span class="text-danger">*</span></label>
                                                         <select class="form-control select2 required" id="has_episodes" name="has_episodes">
                                                             <option value="0">No</option>
                                                             <option value="1">Yes</option>
@@ -75,6 +75,7 @@
                                                     </div>
                                                     <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center">
                                                         <p class="font-weight-bold">Cover Image <span class="text-danger">*</span></p>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p>
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
                                                             <div class="input-file">
                                                                 <label class="label-input-file">Choose Files &nbsp;&nbsp;&nbsp;<i class="ft-upload font-medium-1"></i><input type="file" name="cover_image" class="cover-images required" id="coverImages" accept=".jpg, .jpeg, .png">
@@ -92,7 +93,7 @@
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
                                                             <div class="input-file">
                                                                 <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
-                                                                    <input type="file"  name="audio_file"  class="audio-file" id="audioFiles" accept=".mp3, .wav">
+                                                                    <input type="file"  name="audio_file"  class="audio-file" id="audioFiles" accept=".mp3">
                                                                 </label>
                                                             </div>
                                                         </div>
