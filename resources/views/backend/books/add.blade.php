@@ -44,7 +44,8 @@
                                                         <label>Available Video</label>
                                                         <select class="form-control" id="video_id" name="video_id">
                                                         @foreach($video as $video)
-                                                                <option value="{{$video->id}}">{{$video->title}}</option>
+                                                                <option value="{{$video->id}}">{{$video->title}}
+                                                                ({{$video->language->name}})</option>
                                                         @endforeach
                                                         </select>
                                                     </div>
@@ -52,7 +53,7 @@
                                                         <label>Available Audio</label>
                                                         <select class="form-control" id="audio_id" name="audio_id">
                                                         @foreach($audio as $audio)
-                                                                <option value="{{$audio->id}}">{{$audio->title}}</option>
+                                                                <option value="{{$audio->id}}">{{$audio->title}} ({{$audio->language->name}})</option>
                                                         @endforeach
                                                         </select>
                                                     </div>

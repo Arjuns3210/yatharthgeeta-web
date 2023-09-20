@@ -16,7 +16,7 @@ class Audio extends Model implements HasMedia
     use Translatable,InteractsWithMedia;
 
     public $table = 'audios';
-    
+
     public $fillable = [
         'type',
         'audio_category_id',
@@ -45,7 +45,7 @@ class Audio extends Model implements HasMedia
     const AUDIO_FILE = 'audio_file';
     const AUDIO_COVER_IMAGE = 'audio_cover_image';
     const AUDIO_SRT_FILE = 'audio_srt_file';
-    
+
     const AUDIO = 'audio';
     const PRAVACHAN = 'pravachan';
     /**
@@ -57,7 +57,7 @@ class Audio extends Model implements HasMedia
         'id' => 'integer',
         'status' => 'boolean'
     ];
-    
+
 
     public $translatedAttributes = ['title', 'description'];
 
@@ -70,10 +70,10 @@ class Audio extends Model implements HasMedia
     {
         return $this->hasMany(AudioTranslation::class);
     }
-    
+
     public function episodes()
     {
-     
+
         return $this->hasMany(AudioEpisode::class);
     }
 
