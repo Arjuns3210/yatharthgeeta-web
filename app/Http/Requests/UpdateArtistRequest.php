@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 
-class AddAudioRequest extends FormRequest
+class UpdateArtistRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,29 +25,14 @@ class AddAudioRequest extends FormRequest
      */
     public function rules()
     {
-        $coverImageMaxWidth = config('global.dimensions.audios_width');
-        $coverImageMaxHeight = config('global.dimensions.audios_height');
-        
-        return [
-            'has_episodes' => 'required',
-            'audio_file'   => 'required_if:has_episodes,==,0|mimes:mp3,wav',
-            'cover_image'  => "required|mimes:jpeg,jpg,png,gif|dimensions:width={$coverImageMaxWidth},height={$coverImageMaxHeight}",
-            'duration'     => 'required|integer',
-            'sequence'     => 'required|integer',
-            'language_id'  => 'required',
-            'author_id'  => 'required',
-        ];
-    }
+        $coverImageMaxWidth = config('global.dimensions.guruji_width');
+        $coverImageMaxHeight = config('global.dimensions.guruji_height');
 
-    /**
-     * Custom message for validation
-     *
-     * @return array
-     */
-    public function messages()
-    {
         return [
-            'audio_file.required_if' => 'Audio file field is required',
+            'name' => 'required',
+            'title'   => 'required',
+            'image'   => "nullable|mimes:jpeg,jpg,png,gif|dimensions:width={$coverImageMaxWidth},height={$coverImageMaxHeight}",
+            'description'  => 'required',
         ];
     }
 
