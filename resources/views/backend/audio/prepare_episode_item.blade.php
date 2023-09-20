@@ -11,7 +11,7 @@
     </div>
     <div class="col-sm-3">
         <label>Audio File (MP3)</label>
-        <input class="form-control " type="file"  accept=".mp3, .wav" name="episode_audio_file[]">
+        <input class="form-control " type="file"  accept=".mp3" name="episode_audio_file[]">
     </div>
     <div class="col-sm-1">
         <br>

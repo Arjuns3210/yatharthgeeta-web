@@ -24,7 +24,7 @@
                                                 <div class="row">
                                                     <div class="col-md-6 col-lg-6 col-sm-6  text-center">
                                                         <input type="hidden" name="event_id" value="{{$event->id}}">
-                                                        <p class="font-weight-bold">Event Image</p>
+                                                        <p class="font-weight-bold">Event Image <span class="text-danger">*</span></p>
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
                                                             <div class="input-file">
                                                                 <label class="label-input-file">
@@ -58,6 +58,7 @@
                                                                 </div>
                                                             @endforeach
                                                         </div>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.event_gallery_width')}}X{{config('global.dimensions.event_gallery_height')}} pixel and .jpg, .png, or jpeg format image</p>
                                                     </div>
                                                 </div>
                                             </div>

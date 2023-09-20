@@ -2,6 +2,6 @@
 
 return [
 
-    'enable' => 'Status Upadated Successfully',
-    'disable' => 'Status Upadated Successfully',
+    'enable' => 'Status Updated Successfully',
+    'disable' => 'Status Updated Successfully',
 ];

@@ -122,7 +122,7 @@
                                                                 </div>
                                                             </div>
                                                             @endif
-                                                            <p style="color:blue;">Note : Upload {{config('global.dimensions.pdf')}}</p>
+                                                            <p style="color:blue;">Note : Upload {{config('global.dimensions.books_width')}}X{{config('global.dimensions.books_height')}} pixel and .jpg, .png, or jpeg format image</p>
                                                         </div>
 
                                                     </div>

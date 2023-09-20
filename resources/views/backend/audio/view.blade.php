@@ -36,7 +36,7 @@
                                                             <div class="table-responsive">
                                                                 <table class="table table-striped table-bordered">
                                                                     <tr>
-                                                                        <td><strong>Has Episodes</strong></td>
+                                                                        <td><strong>Has Multiple Audios</strong></td>
                                                                         <td>{{ ($audio->has_episodes == 1) ? 'Yes' : 'No' }}</td>
                                                                     </tr>
                                                                     <tr>

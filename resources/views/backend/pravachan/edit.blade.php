@@ -61,6 +61,7 @@
                                                     </div>
                                                     <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center">
                                                         <p class="font-weight-bold">Cover Image <span class="text-danger">*</span></p>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.audios_width')}}X{{config('global.dimensions.audios_height')}} pixel and .jpg, .png, or jpeg format image</p>
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
                                                             <div class="input-file">
                                                                 <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i><input type="file" name="cover_image" class="cover-images" id="coverImages" accept=".jpg, .jpeg, .png">
@@ -87,11 +88,11 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 col-lg-6 col-sm-6  text-center file-input-div">
-                                                        <p class="font-weight-bold">Pravachan File (MP3) <span class="text-danger">*</span></p>
+                                                        <p class="font-weight-bold">Pravachan Audio File (MP3) <span class="text-danger">*</span></p>
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
                                                             <div class="input-file">
                                                                 <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
-                                                                    <input type="file"  name="audio_file"  class="audio-file" id="audioFiles" accept=".mp3, .wav">
+                                                                    <input type="file"  name="audio_file"  class="audio-file" id="audioFiles" accept=".mp3">
                                                                 </label>
                                                             </div>
                                                         </div>
