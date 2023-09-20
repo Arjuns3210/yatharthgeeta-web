@@ -9,7 +9,7 @@ namespace App\Http\Controllers\Backend;
 
 use Carbon\Carbon;
 use App\Models\Book;
-use App\Models\shlok;
+use App\Models\Shlok;
 use App\Models\Audio;
 use App\Models\Quote;
 use App\Models\Video;

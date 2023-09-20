@@ -76,11 +76,11 @@
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Available Audio</strong></td>
-                                                        <td>{{$books->audio->translations[0]->title ?? '-'}}</td>
+                                                        <td>{{$books->audio->translations[0]->title ?? '-'}} ({{$books->language->name}})</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Available Video</strong></td>
-                                                        <td>{{$books->video->translations[0]->title ?? '-'}}</td>
+                                                        <td>{{$books->video->translations[0]->title ?? '-'}} ({{$books->language->name}})</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>People Also Read</strong></td>

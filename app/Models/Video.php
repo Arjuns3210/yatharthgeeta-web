@@ -47,4 +47,8 @@ class Video extends Model implements HasMedia
     {
         return $this->hasMany(\App\Models\VideoTranslation::class);
     }
+    public function language()
+    {
+        return $this->belongsTo(Language::class);
+    }
 }

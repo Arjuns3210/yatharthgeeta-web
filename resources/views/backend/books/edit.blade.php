@@ -53,7 +53,7 @@
                                                         <label>Available Audio<span class="text-danger">*</span></label>
                                                         <select class="form-control required" type="text" id="audio_id" name="audio_id">
                                                             @foreach($audio as $audios)
-                                                                <option value="{{$audios->id}}" {{$audios->id ==$book['audio_id'] ? 'selected' : ''}}>{{$audios->title ?? ''}}</option>
+                                                                <option value="{{$audios->id}}" {{$audios->id ==$book['audio_id'] ? 'selected' : ''}}>{{$audios->title ?? ''}} ({{$audios->language->name}})</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -61,7 +61,7 @@
                                                         <label>Available Video<span class="text-danger">*</span></label>
                                                             <select class="form-control required" type="text" id="video_id" name="video_id">
                                                                 @foreach($video as $videos)
-                                                                    <option value="{{$videos->id}}" {{$videos->id ==$book['video_id'] ? 'selected' : '' }}>{{$videos->title ?? ''}}</option>
+                                                                    <option value="{{$videos->id}}" {{$videos->id ==$book['video_id'] ? 'selected' : '' }}>{{$videos->title ?? ''}} ({{$videos->language->name}})</option>
                                                                 @endforeach
                                                             </select>
                                                     </div>
