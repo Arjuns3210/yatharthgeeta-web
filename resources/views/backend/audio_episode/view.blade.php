@@ -44,6 +44,10 @@
                                                                         <td>{!!$audioEpisode->main_shlok ?? ''!!}</td>
                                                                     </tr>
                                                                     <tr>
+                                                                        <td><strong>To Be Visible In Shlok</strong></td>
+                                                                        <td>{!!$audioEpisode->is_shlok ?'Yes' : 'No'!!}</td>
+                                                                    </tr>
+                                                                    <tr>
                                                                         <td><strong>Explanation Shlok</strong></td>
                                                                         <td>{!! $audioEpisode->explanation_shlok ?? ''!!}</td>
                                                                     </tr>
