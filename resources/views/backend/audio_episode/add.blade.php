@@ -81,6 +81,12 @@
                                                             </span>
                                                         </p>
                                                     </div>
+                                                    <div class="col-sm-6 mb-4 mt-4">
+                                                        <div class="custom-switch">
+                                                            <input type="checkbox" class="custom-control-input" id="is_shlok" name="is_shlok">
+                                                            <label class="custom-control-label" for="is_shlok">Visible For Shlok</label>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                             </div>

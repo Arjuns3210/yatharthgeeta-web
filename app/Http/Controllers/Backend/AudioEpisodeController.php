@@ -165,6 +165,11 @@ class AudioEpisodeController extends Controller
         try {
             DB::beginTransaction();
             $input = $request->all();
+            if (! empty($input['is_shlok'])) {
+                $input['is_shlok'] = '1';
+            }else{
+                $input['is_shlok'] = '0';
+            }
             $translated_keys = array_keys(AudioEpisode::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
                 $input[$value] = (array) json_decode($input[$value]);
@@ -243,6 +248,11 @@ class AudioEpisodeController extends Controller
         try {
             DB::beginTransaction();
             $input = $request->all();
+            if (! empty($input['is_shlok'])) {
+                $input['is_shlok'] = '1';
+            }else{
+                $input['is_shlok'] = '0';
+            }
             $translated_keys = array_keys(AudioEpisode::TRANSLATED_BLOCK);
             foreach ($translated_keys as $value) {
                 $input[$value] = (array) json_decode($input[$value]);

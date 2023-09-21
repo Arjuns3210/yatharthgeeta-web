@@ -17,6 +17,7 @@ class AudioEpisode extends Model implements HasMedia
 
     public $fillable = [
         'audio_id',
+        'is_shlok',
         'duration',
         'sequence',
         'file_name',

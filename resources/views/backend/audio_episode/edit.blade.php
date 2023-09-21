@@ -111,6 +111,12 @@
                                                             @endforeach
                                                         </div>
                                                     </div>
+                                                    <div class="col-sm-6 mb-4 mt-4">
+                                                        <div class="custom-switch">
+                                                            <input type="checkbox" class="custom-control-input" id="is_shlok" name="is_shlok" {{($audioEpisode['is_shlok'] == 1) ? 'checked' : ''}}>
+                                                            <label class="custom-control-label" for="is_shlok">Visible For Shlok</label>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
 
