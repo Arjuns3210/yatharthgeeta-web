@@ -61,8 +61,8 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Views Count<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="view_count" name="view_count"><br/>
+                                                        <label>Views Count</label>
+                                                        <input class="form-control" type="number" id="view_count" name="view_count"><br/>
                                                     </div>
                                                 </div>
                                                 <div class="row">

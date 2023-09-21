@@ -153,6 +153,9 @@ class VideoController extends Controller
     public function store(CreateVideoRequest $request)
     {
         $input = $request->all();
+        if(empty($input['view_count'])){
+            $input['view_count'] = 0;
+        }
         $translated_keys = array_keys(Video::TRANSLATED_BLOCK);
         foreach ($translated_keys as $value) {
             $input[$value] = (array) json_decode($input[$value]);
@@ -242,6 +245,9 @@ class VideoController extends Controller
         $localeLanguage = \App::getLocale();
         $data = Video::find($_GET['id']);
         $input=$request->all();
+        if(empty($input['view_count'])){
+            $input['view_count'] = 0;
+        }
         if (!$data) {
             errorMessage('Video Not Found', []);
         }
