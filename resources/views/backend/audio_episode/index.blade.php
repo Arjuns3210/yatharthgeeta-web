@@ -12,13 +12,14 @@
                                     <div class="card-header">
                                         <div class="row">
                                             <div class="col-12 col-sm-7">
-                                                <h5 class="pt-2">Manage Audio Episode : {{$data['audio']->translations[0]->title ?? ''}} ({{ config('translatable.locales_name')[\App::getLocale()] }})</h5>
+                                                <h5 class="pt-2">Manage Audio Episode : {{$data['audio']->title ?? ''}} ( {{$data['audio']->language->name ?? ''}} )</h5>
                                             </div>
                                             <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                                 <button class="btn btn-sm btn-outline-danger px-3 py-1 mr-2" id="listing-filter-toggle"><i class="fa fa-filter"></i> Filter</button>
                                                 @if($data['audio_episode_add'])
                                                     <a href="{{'audio_episode/add/'.$data['audio']->id}}" class="btn btn-sm btn-outline-primary px-3 py-1 src_data"><i class="fa fa-plus"></i> Add Audio Episode</a>
                                                 @endif
+                                                <a href="audios" class="btn btn-sm btn-secondary px-3 py-1 ml-2"><i class="fa fa-arrow-left"></i> Back</a>
                                             </div>
                                         </div>
                                     </div>

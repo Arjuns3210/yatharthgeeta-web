@@ -42,7 +42,7 @@ class ExploreCollection extends Model implements HasMedia
 
     const EXPLORE_COLLECTION_TYPES = [
         self::BOOK     => 'Book',
-        self::AUDIO    => 'Pravachan',
+        self::AUDIO    => 'Satsang',
         self::QUOTES    => 'Quote',
         self::MANTRA    => 'Mantra',
     ];

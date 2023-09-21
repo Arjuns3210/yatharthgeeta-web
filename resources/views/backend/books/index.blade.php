@@ -53,6 +53,7 @@
                                                     <th id="name_{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Book Name ({{ config('translatable.locales_name')[\App::getLocale()] }})</th>
                                                     <th id="sequence" data-orderable="false" data-searchable="false">Sequence</th>
                                                     <th id="view_count" data-orderable="false" data-searchable="false">Views Count</th>
+                                                    <th id="language_name" data-orderable="false" data-searchable="false">Media Language</th>
                                                     @if($data['book_status'] || $data['book_edit'] || $data['book_view'] || $data['book_delete'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
                                                     @endif
