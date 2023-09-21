@@ -48,6 +48,7 @@
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
                                                     <th id="title{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Audio Title ({{ config('translatable.locales_name')[\App::getLocale()] }})</th>
                                                     <th id="duration" data-orderable="false" data-searchable="false">Duration (In Minute)</th>
+                                                    <th id="view_count" data-orderable="false" data-searchable="false">Views Count</th>
                                                     @if($data['audios_status'] || $data['audios_edit'] || $data['audios_view'] || $data['audios_delete'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>
                                                     @endif

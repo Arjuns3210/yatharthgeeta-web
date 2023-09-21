@@ -48,6 +48,10 @@
                                                                         <td>{{ $audio->sequence }}</td>
                                                                     </tr>
                                                                     <tr>
+                                                                        <td><strong>Views Count</strong></td>
+                                                                        <td>{{$audio->view_count ?? ''}}</td>
+                                                                    </tr>
+                                                                    <tr>
                                                                         <td><strong>Audio File</strong></td>
                                                                         <td>
                                                                             @php

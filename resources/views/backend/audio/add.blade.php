@@ -73,20 +73,9 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center">
-                                                        <p class="font-weight-bold">Cover Image <span class="text-danger">*</span></p>
-                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.audios_width')}}X{{config('global.dimensions.audios_height')}} pixel and .jpg, .png, or jpeg format image</p>
-                                                        <div class="shadow bg-white rounded d-inline-block mb-2">
-                                                            <div class="input-file">
-                                                                <label class="label-input-file">Choose Files &nbsp;&nbsp;&nbsp;<i class="ft-upload font-medium-1"></i><input type="file" name="cover_image" class="cover-images required" id="coverImages" accept=".jpg, .jpeg, .png">
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <p id="files-area">
-                                                            <span id="coverImagesLists">
-                                                                <span id="cover-images-names"></span>
-                                                            </span>
-                                                        </p>
+                                                    <div class="col-sm-6">
+                                                        <label>Views Count<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="view_count" name="view_count"><br/>
                                                     </div>
                                                     <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center file-input-div">
                                                         <p class="font-weight-bold">Audio File (MP3) <span class="text-danger">*</span></p>
@@ -100,6 +89,23 @@
                                                         <p id="files-area">
                                                             <span id="audioFilesLists">
                                                                 <span id="audio-files-names"></span>
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 col-lg-12 col-sm-6 border-right text-center">
+                                                        <p class="font-weight-bold">Cover Image <span class="text-danger">*</span></p>
+                                                        <p style="color:blue;">Note : Upload file size {{config('global.dimensions.audios_width')}}X{{config('global.dimensions.audios_height')}} pixel and .jpg, .png, or jpeg format image</p>
+                                                        <div class="shadow bg-white rounded d-inline-block mb-2">
+                                                            <div class="input-file">
+                                                                <label class="label-input-file">Choose Files &nbsp;&nbsp;&nbsp;<i class="ft-upload font-medium-1"></i><input type="file" name="cover_image" class="cover-images required" id="coverImages" accept=".jpg, .jpeg, .png">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <p id="files-area">
+                                                            <span id="coverImagesLists">
+                                                                <span id="cover-images-names"></span>
                                                             </span>
                                                         </p>
                                                     </div>

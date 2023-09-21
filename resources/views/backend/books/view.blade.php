@@ -103,6 +103,10 @@
                                                         <td>{{ $books->language['name'] }}</td>
                                                     </tr>
                                                     <tr>
+                                                        <td><strong>Views Count</strong></td>
+                                                        <td>{{$books->view_count ?? ''}}</td>
+                                                    </tr>
+                                                    <tr>
                                                         <td><strong>Sequence</strong></td>
                                                         <td>{{ $books->sequence ?? ''}}</td>
                                                     </tr>
