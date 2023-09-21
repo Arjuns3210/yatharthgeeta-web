@@ -25,13 +25,10 @@ class UpdateVideoRequest extends FormRequest
      */
     public function rules()
     {
-        $coverImageMaxWidth = config('global.dimensions.videos_width');
-        $coverImageMaxHeight = config('global.dimensions.videos_height');
-        
         return [
             'id'           => 'required',
             'sequence'     => 'required|integer',
-            'cover_image'  => "nullable|mimes:jpeg,jpg,png,gif|dimensions:width={$coverImageMaxWidth},height={$coverImageMaxHeight}",
+            'cover_image'  => "nullable|mimes:jpeg,jpg,png,gif",
         ];
     }
 

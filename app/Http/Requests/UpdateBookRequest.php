@@ -25,16 +25,13 @@ class UpdateBookRequest extends FormRequest
      */
     public function rules()
     {
-        $coverImageMaxWidth = config('global.dimensions.books_width');
-        $coverImageMaxHeight = config('global.dimensions.books_height');
-        
         return [
             'id'           => 'required',
             'pages'      => 'required|integer',
             'sequence'     => 'required|integer',
             'language_id'  => 'required',
             'artist_id'       => 'required',
-            'cover_image'   => "nullable|mimes:jpeg,jpg,png,gif|dimensions:width={$coverImageMaxWidth},height={$coverImageMaxHeight}",
+            'cover_image'   => "nullable|mimes:jpeg,jpg,png,gif",
         ];
     }
 

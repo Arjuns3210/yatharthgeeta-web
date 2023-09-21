@@ -25,13 +25,10 @@ class UpdateArtistRequest extends FormRequest
      */
     public function rules()
     {
-        $coverImageMaxWidth = config('global.dimensions.guruji_width');
-        $coverImageMaxHeight = config('global.dimensions.guruji_height');
-
         return [
             'name' => 'required',
             'title'   => 'required',
-            'image'   => "nullable|mimes:jpeg,jpg,png,gif|dimensions:width={$coverImageMaxWidth},height={$coverImageMaxHeight}",
+            'image'   => "nullable|mimes:jpeg,jpg,png,gif",
             'description'  => 'required',
         ];
     }

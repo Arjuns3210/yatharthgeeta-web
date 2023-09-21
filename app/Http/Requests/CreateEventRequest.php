@@ -25,9 +25,6 @@ class CreateEventRequest extends FormRequest
      */
     public function rules()
     {
-        $coverImageMaxWidth = config('global.dimensions.events_width');
-        $coverImageMaxHeight = config('global.dimensions.events_height');
-        
         return [
             'event_start_date' => 'required|date',
             'event_start_time' => 'required|date_format:H:i',
@@ -35,7 +32,7 @@ class CreateEventRequest extends FormRequest
             'event_end_time' => 'required|date_format:H:i|after_or_equal:event_start_time',
             'artist_id' => 'required',
             'location_id' => 'required',
-            'cover'  => "required|mimes:jpeg,jpg,png,gif|dimensions:width={$coverImageMaxWidth},height={$coverImageMaxHeight}",
+            'cover'  => "required|mimes:jpeg,jpg,png,gif",
         ];
     }
 
