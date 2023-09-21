@@ -72,7 +72,7 @@
                                                 </div>
                                                 <div class="row div_audio">
                                                     <div class="col-sm-6 mb-2">
-                                                        <label>Pravachan<span class="text-danger">*</span></label>
+                                                        <label>Satsang<span class="text-danger">*</span></label>
                                                         <select class="form-control select2 audio-type-filed" id="audio_id" name="audio_id[]" multiple>
                                                             @foreach($audios as $audio)
                                                                 <option value="{{$audio->id}}">{{$audio->title ?? ''}} ( {{ $audio->language->name ?? '' }} )</option>

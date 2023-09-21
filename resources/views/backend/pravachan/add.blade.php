@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-12 col-sm-7">
-                                    <h5 class="pt-2">Add Pravachan</h5>
+                                    <h5 class="pt-2">Add Satsang</h5>
                                 </div>
                                 <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                     <a href="{{URL::previous()}}" class="btn btn-sm btn-primary px-3 py-1"><i class="fa fa-arrow-left"></i> Back</a>
@@ -74,7 +74,7 @@
                                                         </p>
                                                     </div>
                                                     <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center file-input-div">
-                                                        <p class="font-weight-bold">Pravachan Audio File (MP3) <span class="text-danger">*</span></p>
+                                                        <p class="font-weight-bold">Satsang Audio File (MP3) <span class="text-danger">*</span></p>
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
                                                             <div class="input-file">
                                                                 <label class="label-input-file">Choose Files <i class="ft-upload font-medium-1"></i>
@@ -97,7 +97,7 @@
                                                         @foreach ($translated_block as $translated_block_fields_key => $translated_block_fields_value)
                                                             <div class="col-md-6 mb-3">
                                                                 @if ($translated_block_fields_value == 'input')
-                                                                    <label>{{($translated_block_fields_key == 'title' ? 'Pravachan ' :'')}}{{ $translated_block_fields_key }}<span class="text-danger">*</span></label>
+                                                                    <label>{{($translated_block_fields_key == 'title' ? 'Satsang ' :'')}}{{ $translated_block_fields_key }}<span class="text-danger">*</span></label>
                                                                     <input class="translation_block form-control required" type="text" id="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}" name="{{ $translated_block_fields_key }}_{{ $translated_data_tabs }}">
                                                                 @endif
                                                                 @if ($translated_block_fields_value == 'textarea')

@@ -65,6 +65,9 @@ class VideoController extends Controller
                         })->editColumn('sequence',function ($event) {
                             return $event['sequence'];
                         })
+                        ->editColumn('language_name', function ($event) {
+                            return $event->language->name ??'';
+                        })
                         ->editColumn('action', function ($event) {
                             $videos_view = checkPermission('videos_view');
                             $videos_add = checkPermission('videos_add');
@@ -92,7 +95,7 @@ class VideoController extends Controller
                             return $actions;
                         })
                         ->addIndexColumn()
-                        ->rawColumns(['title_'.\App::getLocale(),'sequence', 'action'])->setRowId('id')->make(true);
+                        ->rawColumns(['title_'.\App::getLocale(),'sequence','language_name', 'action'])->setRowId('id')->make(true);
                 } catch (\Exception $e) {
                     \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                     return response([
