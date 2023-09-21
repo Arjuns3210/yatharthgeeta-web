@@ -26,7 +26,7 @@ class AddViewCountColumnToBooksTable extends Migration
     public function down()
     {
         Schema::table('books', function (Blueprint $table) {
-            //
+            Schema::dropColumn('view_count');
         });
     }
 }
