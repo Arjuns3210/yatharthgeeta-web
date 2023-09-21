@@ -26,7 +26,7 @@ class AddIsShlokColumnInAudioEpisodesTable extends Migration
     public function down()
     {
         Schema::table('audio_episodes', function (Blueprint $table) {
-            //
+            $table->dropColumn('is_shlok');
         });
     }
 }
