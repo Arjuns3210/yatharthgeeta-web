@@ -75,8 +75,8 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Views Count<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="view_count" name="view_count" value="{{$audio['view_count']}}"><br/>
+                                                        <label>Views Count</label>
+                                                        <input class="form-control" type="text" id="view_count" name="view_count" value="{{$audio['view_count']}}"><br/>
                                                     </div>
                                                     <div class="col-md-6 col-lg-6 col-sm-6  text-center file-input-div">
                                                         <p class="font-weight-bold">Audio File (MP3) <span class="text-danger">*</span></p>
