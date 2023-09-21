@@ -26,7 +26,7 @@ class AddViewCountColumnToAudiosTable extends Migration
     public function down()
     {
         Schema::table('audios', function (Blueprint $table) {
-            Schema::dropColumn('view_count');
+            $table->dropColumn('view_count');
         });
     }
 }
