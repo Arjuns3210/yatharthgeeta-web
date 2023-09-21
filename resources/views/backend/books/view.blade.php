@@ -33,6 +33,10 @@
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-bordered">
                                                     <tr>
+                                                        <td><strong>Book Category</strong></td>
+                                                        <td>{{ $books['category']->name }}</td>
+                                                    </tr>
+                                                    <tr>
                                                         <td><strong>Number of Pages</strong></td>
                                                         <td>{{ $books['pages'] }}</td>
                                                     </tr>

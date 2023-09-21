@@ -186,7 +186,7 @@ class BookController extends Controller
      */
     public function view($id)
     {
-        $data['books']= Book::with('artist', 'language', 'audio', 'video' )->find($id);
+        $data['books']= Book::with('category', 'artist', 'language', 'audio', 'video' )->find($id);
         $data['book'] = Book::whereIn('id', explode(',', $data['books']->related_id))->get();
         $data['media'] = $data['books']->getMedia(Book::COVER_IMAGE)->first()?? '';
         $data['pdf_file'] = $data['books']->getMedia(Book::PDF_FILE)->first()?? '';
