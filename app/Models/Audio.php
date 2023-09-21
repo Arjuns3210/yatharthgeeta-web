@@ -32,6 +32,7 @@ class Audio extends Model implements HasMedia
         'narrator_id',
         'views',
         'status',
+        'view_count',
         'created_by',
         'updated_by',
     ];

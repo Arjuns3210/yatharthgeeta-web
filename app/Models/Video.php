@@ -26,7 +26,8 @@ class Video extends Model implements HasMedia
         'duration',
         'link',
         'status',
-        'sequence'
+        'sequence',
+        'view_count'
 
     ];
 

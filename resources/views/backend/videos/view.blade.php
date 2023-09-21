@@ -48,6 +48,10 @@
                                                         <td>{{ $artist['name'] }}</td>
                                                     </tr>
                                                     <tr>
+                                                        <td><strong>Views Count</strong></td>
+                                                        <td>{{$videos->view_count ?? ''}}</td>
+                                                    </tr>
+                                                    <tr>
                                                         <td><strong>Sequence</strong></td>
                                                         <td>{{ $videos['sequence']}}</td>
                                                     </tr>

@@ -60,13 +60,19 @@
                                                         @endforeach
                                                         </select>
                                                     </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Views Count<span class="text-danger">*</span></label>
+                                                        <input class="form-control required" type="text" id="view_count" name="view_count" value="{{$videos->view_count ?? ''}}"><br/>
+                                                    </div>
                                                     {{-- <div class="col-sm-6">
                                                         <label>Cover Image<span class="text-danger">*</span></label>
                                                         <input class="form-control required" type="file" accept=".jpg,.jpeg,.png" id="image" name="image" onchange="handleFileInputChange('cover_image')" value="{{$videos['cover_image']}}"><br/>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.image')}}</p><br>
                                                         <img src="{{$media->getFullUrl() ?? ''}}" width="100px" height="100px" alt="">
                                                     </div> --}}
-                                                    <div class="col-sm-6">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6 offset-sm-3 mt-3">
                                                         <div class="col-md-6 col-lg-12 col-sm-6 text-center file-input-div">
                                                             <p class="font-weight-bold">COVER IMAGE <span class="text-danger">*</span></p>
                                                             <div class="shadow bg-white rounded d-inline-block mb-2">
