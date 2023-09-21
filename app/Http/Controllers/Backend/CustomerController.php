@@ -50,14 +50,6 @@ class CustomerController extends Controller
                             return '<span class="text-danger text-center">' . $event->name . '</span>';
                         }
                     })
-                    ->editColumn('email', function ($event) {
-                        $isDeleted = isRecordDeleted($event->deleted_at);
-                        if (!$isDeleted) {
-                            return $event->email;
-                        } else {
-                            return '<span class="text-danger text-center">' . $event->email . '</span>';
-                        }
-                    })
                     ->editColumn('phone', function ($event) {
                         $isDeleted = isRecordDeleted($event->deleted_at);
                         if (!$isDeleted) {
