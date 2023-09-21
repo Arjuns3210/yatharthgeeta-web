@@ -76,7 +76,7 @@
                                                 @if($collection['type'] == \App\Models\ExploreCollection::AUDIO)
                                                     <div class="row div_audio">
                                                         <div class="col-sm-6 mb-2">
-                                                            <label>Pravachan<span class="text-danger">*</span></label>
+                                                            <label>Satsang<span class="text-danger">*</span></label>
                                                             <select class="form-control select2 required" id="audio_id" name="audio_id[]" multiple>
                                                                 @foreach($audios as $audio)
                                                                     <option value="{{$audio->id}}" {{(in_array($audio->id,$mappedIds))? 'selected':''}}>{{$audio->translations[0]->title ?? ''}} ( {{ $audio->language->name ?? '' }} )</option>

@@ -12,12 +12,12 @@
                                     <div class="card-header">
                                         <div class="row">
                                             <div class="col-12 col-sm-7">
-                                                <h5 class="pt-2">Manage Pravachan List</h5>
+                                                <h5 class="pt-2">Manage Satsang List</h5>
                                             </div>
                                             <div class="col-12 col-sm-5 d-flex justify-content-end align-items-center">
                                                 <button class="btn btn-sm btn-outline-danger px-3 py-1 mr-2" id="listing-filter-toggle"><i class="fa fa-filter"></i> Filter</button>
                                                 @if($data['pravachan_add'])
-                                                    <a href="pravachan/add" class="btn btn-sm btn-outline-primary px-3 py-1 src_data"><i class="fa fa-plus"></i> Add Pravachan</a>
+                                                    <a href="pravachan/add" class="btn btn-sm btn-outline-primary px-3 py-1 src_data"><i class="fa fa-plus"></i> Add Satsang</a>
                                                 @endif
                                             </div>
                                         </div>
@@ -25,7 +25,7 @@
                                     <div class="card-body">
                                         <div class="row mb-2" id="listing-filter-data" style="display: none;">
                                             <div class="col-md-4">
-                                                <label>Pravachan Name</label>
+                                                <label>Satsang Name</label>
                                                 <input class="form-control mb-3" type="text" id="search_title" name="search_title">
                                             </div>
                                             <div class="col-md-4">
@@ -46,7 +46,7 @@
                                                 <thead>
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
-                                                    <th id="title{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Pravachan Title ({{ config('translatable.locales_name')[\App::getLocale()] }})</th>
+                                                    <th id="title{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Satsang Title ({{ config('translatable.locales_name')[\App::getLocale()] }})</th>
                                                     <th id="duration" data-orderable="false" data-searchable="false">Duration (In Minute)</th>
                                                     @if($data['pravachan_status'] || $data['pravachan_edit'] || $data['pravachan_view'] || $data['pravachan_delete'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>

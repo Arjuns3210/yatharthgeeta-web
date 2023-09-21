@@ -59,7 +59,7 @@ class AudioController extends Controller
         }
         if ($request->ajax()) {
             try {
-                $query = Audio::with('translations','audioCategory.translations')->where('type',Audio::AUDIO)->orderBy('updated_at','desc');
+                $query = Audio::with('translations','audioCategory.translations','language.translations')->where('type',Audio::AUDIO)->orderBy('updated_at','desc');
 
                 return DataTables::of($query)
                     ->filter(function ($query) use ($request ,$localeLanguage) {
@@ -91,6 +91,16 @@ class AudioController extends Controller
                     })
                     ->editColumn('duration', function ($event) {
                         return $event->duration ??'';
+                    })
+                    ->editColumn('language_name', function ($event) {
+                        return $event->language->name ??'';
+                    })
+                    ->editColumn('episode_count', function ($event) {
+                        if ($event->has_episodes) {
+                            return $event->episodes()->count() ?? '-';
+                        }
+
+                        return '-';
                     })
                     ->editColumn('status', function ($event) {
                         return $event->status == 1 ?'Active' : 'Inactive';
@@ -129,7 +139,7 @@ class AudioController extends Controller
                         return $actions;
                     })
                     ->addIndexColumn()
-                    ->rawColumns(['title'.\App::getLocale(),'audio_category'.\App::getLocale(),'duration', 'status', 'action'])->setRowId('id')->make(true);
+                    ->rawColumns(['title'.\App::getLocale(),'audio_category'.\App::getLocale(),'duration','language_name','episode_count', 'status', 'action'])->setRowId('id')->make(true);
             } catch (\Exception $e) {
                 \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                 return response([
@@ -296,7 +306,7 @@ class AudioController extends Controller
         ])->where('type',Audio::AUDIO)->where('status', 1)
             ->where('id','!=',$id)
             ->get();
-        $audio = Audio::find($id);
+        $audio = Audio::with('language.translations')->find($id);
         $data['audio'] = $audio->toArray();
         foreach($data['audio']['translations'] as $trans) {
             $translated_keys = array_keys(Audio::TRANSLATED_BLOCK);

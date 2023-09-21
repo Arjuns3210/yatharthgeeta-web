@@ -64,6 +64,9 @@ class BookController extends Controller
                         })->editColumn('sequence',function ($event) {
                             return $event['sequence'];
                         })
+                        ->editColumn('language_name', function ($event) {
+                            return $event->language->name ??'';
+                        })
                         ->editColumn('action', function ($event) {
                             $book_view = checkPermission('book_view');
                             $book_add = checkPermission('book_add');
@@ -91,7 +94,7 @@ class BookController extends Controller
                             return $actions;
                         })
                         ->addIndexColumn()
-                        ->rawColumns(['name_'.\App::getLocale(),'sequence', 'action'])->setRowId('id')->make(true);
+                        ->rawColumns(['name_'.\App::getLocale(),'sequence', 'language_name','action'])->setRowId('id')->make(true);
                 } catch (\Exception $e) {
                     \Log::error("Something Went Wrong. Error: " . $e->getMessage());
                     return response([
