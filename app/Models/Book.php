@@ -30,7 +30,8 @@ class Book extends Model implements HasMedia
         'related_id',
         'link',
         'status',
-        'sequence'
+        'sequence',
+        'view_count'
 
     ];
 

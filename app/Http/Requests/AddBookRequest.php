@@ -27,7 +27,7 @@ class AddBookRequest extends FormRequest
     {
         $coverImageMaxWidth = config('global.dimensions.books_width');
         $coverImageMaxHeight = config('global.dimensions.books_height');
-        
+
         return [
             'name'       => 'required',
             'pdf_file_name'  => 'required|mimes:pdf',
