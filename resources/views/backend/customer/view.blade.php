@@ -23,12 +23,8 @@
                                             <div class="table-responsive">
                                             <table class="table table-bordered table-striped">
                                                 <tr>
-                                                    <td><strong>Admin Name</strong></td>
+                                                    <td><strong>Name</strong></td>
                                                     <td>{{$customer->name}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Email</strong></td>
-                                                    <td>{{$customer->email}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td><strong>Phone</strong></td>
@@ -43,12 +39,8 @@
                                                     <td><span><span> {{ $customer->gender == 'M' ? 'Male' : ($customer->gender == 'F' ? 'Female' : 'Others') }}</span></td>
                                                 </tr>
                                                 <tr>
-                                                    <td><strong>Staff Status</strong></td>
+                                                    <td><strong>Status</strong></td>
                                                     <td>{{displayStatus($customer->status)}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Added At</strong></td>
-                                                    <td>{{date('d-m-Y H:i A', strtotime($customer->updated_at)) }}</td>
                                                 </tr>
                                             </table>
                                             </div>

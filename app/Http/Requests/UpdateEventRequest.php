@@ -25,16 +25,13 @@ class UpdateEventRequest extends FormRequest
      */
     public function rules()
     {
-        $coverImageMaxWidth = config('global.dimensions.events_width');
-        $coverImageMaxHeight = config('global.dimensions.events_height');
-        
         return [
             'id'               => 'required',
             'event_start_date' => 'required|date',
             'event_start_time' => 'required',
             'event_end_date'   => 'required|date|after_or_equal:event_start_date',
             'event_end_time'   => 'required|after_or_equal:event_start_time',
-            'cover'  => "nullable|mimes:jpeg,jpg,png,gif|dimensions:width={$coverImageMaxWidth},height={$coverImageMaxHeight}",
+            'cover'  => "nullable|mimes:jpeg,jpg,png,gif",
         ];
     }
 
