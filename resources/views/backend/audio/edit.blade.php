@@ -42,7 +42,7 @@
                                                     </div>
                                                     <div class="col-md-6 mb-2">
                                                         <label>Duration (In Minute)<span style="color:#ff0000">*</span></label>
-                                                        <input class="form-control required numeric-validation" type="number" id="duration" name="duration" value="{{$audio['duration']}}">
+                                                        <input class="form-control required positive-numeric-validation" type="number" id="duration" name="duration" value="{{$audio['duration']}}">
                                                     </div>
                                                     <div class="col-md-6 mb-2">
                                                         <label>Sequence<span style="color:#ff0000">*</span></label>
@@ -76,7 +76,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Views Count<span class="text-danger">*</span></label>
-                                                        <input class="form-control required" type="text" id="view_count" name="view_count" value="{{$audio['view_count']}}"><br/>
+                                                        <input class="form-control required positive-integer-validation" type="number" id="view_count" name="view_count" value="{{$audio['view_count']}}"><br/>
                                                     </div>
                                                     <div class="col-md-6 col-lg-6 col-sm-6  text-center file-input-div">
                                                         <p class="font-weight-bold">Audio File (MP3) <span class="text-danger">*</span></p>
@@ -109,7 +109,7 @@
                                                 </div>
                                                 <hr>
                                                 <div class="row">
-                                                    <div class="col-md-6 col-lg-6 col-sm-6 offset-lg-3 border-right text-center">
+                                                    <div class="col-md-6 col-lg-6 col-sm-6 offset-lg-3 text-center">
                                                         <p class="font-weight-bold">Cover Image <span class="text-danger">*</span></p>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.audios_width')}}X{{config('global.dimensions.audios_height')}} pixel and .jpg, .png, or jpeg format image</p>
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">

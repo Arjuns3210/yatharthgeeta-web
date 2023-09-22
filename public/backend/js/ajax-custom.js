@@ -33,11 +33,11 @@ $(document).ready(function () {
     });
 
     // remove alert messages for empty input fields
-    $(document).on('keyup',  '.required,.numeric-validation,.integer-validation,.youtube-url-validation', function (event) {
+    $(document).on('keyup',  '.required,.numeric-validation,.integer-validation,.youtube-url-validation,.positive-integer-validation,.positive-numeric-validation', function (event) {
         $(this).removeClass('border-danger');
     });
 
-    $(document).on('change',  '.required,.numeric-validation,.integer-validation,.youtube-url-validation', function (event) {
+    $(document).on('change',  '.required,.numeric-validation,.integer-validation,.youtube-url-validation,.positive-integer-validation,.positive-numeric-validation', function (event) {
         $(this).removeClass('border-danger');
         $(this).closest('.input-file').removeAttr('style');
         $(this).siblings('.select2-container').find('.selection').find('.select2-selection').removeClass('border-danger');
@@ -252,10 +252,29 @@ function submitForm(form_id, form_method, errorOverlay = '') {
             can++;
         }
     });
+    $('#' + form_id).find(".positive-integer-validation").each(function() {
+        var here = $(this);
+        var value = here.val();
+        // Regular expression pattern for integers
+        var integerPattern = /^-?\d+$/;
+        // Check if the parsed value is an integer
+        if (isNaN(value) || !integerPattern.test(value) || value < 0) {
+            here.addClass('border-danger');
+            can++;
+        }
+    });
     $('#' + form_id).find(".numeric-validation").each(function() {
         var here = $(this);
         var value = here.val();
         if (isNaN(value)) {
+            here.addClass('border-danger');
+            can++;
+        }
+    });
+    $('#' + form_id).find(".positive-numeric-validation").each(function() {
+        var here = $(this);
+        var value = here.val();
+        if (isNaN(value) || value < 0) {
             here.addClass('border-danger');
             can++;
         }
