@@ -12,7 +12,7 @@ class CreateOtpsTable extends Migration
             $table->increments('id');
             $table->string('mobile_no', 10);
             $table->string('mobile_no_with_code', 20);
-            $table->integer('otp_code');
+            $table->string('otp_code',10);
             $table->datetime('expiry_time');
             $table->string('workflow');
             $table->integer('verify_count');
