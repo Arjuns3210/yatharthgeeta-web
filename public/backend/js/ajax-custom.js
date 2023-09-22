@@ -247,7 +247,7 @@ function submitForm(form_id, form_method, errorOverlay = '') {
         // Regular expression pattern for integers
         var integerPattern = /^-?\d+$/;
         // Check if the parsed value is an integer
-        if (isNaN(value) || !integerPattern.test(value)) {
+        if (value !='' && (isNaN(value) || !integerPattern.test(value))) {
             here.addClass('border-danger');
             can++;
         }
@@ -258,7 +258,7 @@ function submitForm(form_id, form_method, errorOverlay = '') {
         // Regular expression pattern for integers
         var integerPattern = /^-?\d+$/;
         // Check if the parsed value is an integer
-        if (isNaN(value) || !integerPattern.test(value) || value < 0) {
+        if (value !='' && (isNaN(value) || !integerPattern.test(value) || value < 0)) {
             here.addClass('border-danger');
             can++;
         }
@@ -266,7 +266,7 @@ function submitForm(form_id, form_method, errorOverlay = '') {
     $('#' + form_id).find(".numeric-validation").each(function() {
         var here = $(this);
         var value = here.val();
-        if (isNaN(value)) {
+        if (value !='' && isNaN(value)) {
             here.addClass('border-danger');
             can++;
         }
@@ -274,7 +274,7 @@ function submitForm(form_id, form_method, errorOverlay = '') {
     $('#' + form_id).find(".positive-numeric-validation").each(function() {
         var here = $(this);
         var value = here.val();
-        if (isNaN(value) || value < 0) {
+        if (value !='' && (isNaN(value) || value < 0)) {
             here.addClass('border-danger');
             can++;
         }
