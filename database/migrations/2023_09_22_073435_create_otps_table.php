@@ -16,6 +16,7 @@ class CreateOtpsTable extends Migration
             $table->datetime('expiry_time');
             $table->string('workflow');
             $table->integer('verify_count');
+            $table->enum('otp_verified', ['Y', 'N'])->default('N');
             $table->timestamps();
             $table->softDeletes();
         });

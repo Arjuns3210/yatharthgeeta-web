@@ -14,9 +14,9 @@ class CreateUserDevicesTable extends Migration
             $table->string('uuid')->nullable();
             $table->text('refresh_token')->nullable();
             $table->longText('remember_token')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
