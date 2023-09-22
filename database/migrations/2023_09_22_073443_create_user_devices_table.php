@@ -9,16 +9,14 @@ class CreateUserDevicesTable extends Migration
     {
         Schema::create('user_devices', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('user_id');
+            $table->integer('user_id')->unsigned();
             $table->text('fcm_id')->nullable();
             $table->string('uuid')->nullable();
             $table->text('refresh_token')->nullable();
             $table->longText('remember_token')->nullable();
             $table->softDeletes();
             $table->timestamps();
-
-            // Define foreign key constraint
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
