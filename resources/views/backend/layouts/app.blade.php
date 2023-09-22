@@ -194,7 +194,7 @@
                         @endif
 
                         <li class="has-sub nav-item">
-                            <a href="javascript:;" class="dropdown-parent"><i class="icon-user-following"></i><span data-i18n="" class="menu-title">General Settings</span></a>
+                            <a href="javascript:;" class="dropdown-parent"><i class="fa fa-wrench"></i><span data-i18n="" class="menu-title">General Settings</span></a>
                             <ul class="menu-content">
                                 <li class="{{ $lastParam ==  'general_settings' ? 'active' : '' }}">
                                     <a href="general_settings" class="menu-item"><i class="fa fa-cog" aria-hidden="true"></i>Settings</a>
@@ -214,7 +214,7 @@
                             <a href="general_settings"><i class="fa fa-cog" aria-hidden="true"></i><span data-i18n="" class="menu-title">General Settings</span></a>
                         </li> --}}
                         <li class="nav-item">
-                            <a href="customer"><i class="fa fa-user" aria-hidden="true"></i><span data-i18n="" class="menu-title">Customer</span></a>
+                            <a href="customer"><i class="fa fa-user" aria-hidden="true"></i><span data-i18n="" class="menu-title">App User</span></a>
                         </li>
                         @if(session('data')['role_id'] == 1  ||
                             in_array('home_collection', $permission_array)
