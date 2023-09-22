@@ -15,6 +15,7 @@ use App\Models\Quote;
 use App\Models\Video;
 use App\Models\Mantra;
 use App\Models\Location;
+use App\Models\AudioEpisode;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -29,12 +30,12 @@ class DashboardController extends Controller
     {
         $data['users_total'] = \DB::table('users')->where('status', 1)->count();
         $data['books_total'] = Book::where('status', 1)->count();
-        $data['audios_total'] = Audio::where('status', 1)->count();
+        $data['audios_total'] = Audio::where('status', 1)->where('type', '!=', 'pravachan')->count();
         $data['videos_total'] = Video::where('status', 1)->count();
         $data['locations_total'] = Location::where('status', '1')->count();
         $data['mantras_total'] = Mantra::where('status', 1)->count();
         $data['greetings_total'] = Quote::where('status', 1)->count();
-        $data['shlok_total'] = Shlok::where('status', 1)->count();
+        $data['shlok_total'] = AudioEpisode::where([['status', 1],['is_shlok',1]])->count();
 
         if(session('data')['role_id'] != 1){
             return view('backend/dashboard/staff_dashboard', $data);

@@ -159,6 +159,9 @@ class BookController extends Controller
     public function store(AddBookRequest $request)
     {
         $input = $request->all();
+        if(empty($input['view_count'])){
+            $input['view_count'] = 0;
+        }
         $input['related_id'] = implode(',',$input['related_id'] ?? []);
         $translated_keys = array_keys(Book::TRANSLATED_BLOCK);
         foreach ($translated_keys as $value) {
@@ -186,7 +189,7 @@ class BookController extends Controller
      */
     public function view($id)
     {
-        $data['books']= Book::with('artist', 'language', 'audio', 'video' )->find($id);
+        $data['books']= Book::with('category', 'artist', 'language', 'audio', 'video' )->find($id);
         $data['book'] = Book::whereIn('id', explode(',', $data['books']->related_id))->get();
         $data['media'] = $data['books']->getMedia(Book::COVER_IMAGE)->first()?? '';
         $data['pdf_file'] = $data['books']->getMedia(Book::PDF_FILE)->first()?? '';
@@ -275,6 +278,9 @@ class BookController extends Controller
     {
         $data = Book::find($_GET['id']);
         $input=$request->all();
+        if(empty($input['view_count'])){
+            $input['view_count'] = 0;
+        }
         if (!$data) {
             errorMessage('Book Not Found', []);
         }

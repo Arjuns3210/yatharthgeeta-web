@@ -61,8 +61,8 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Views Count<span class="text-danger">*</span></label>
-                                                        <input class="form-control required positive-integer-validation" type="number" id="view_count" name="view_count" value="{{$videos->view_count ?? ''}}"><br/>
+                                                        <label>Views Count</label>
+                                                        <input class="form-control positive-integer-validation" type="number" id="view_count" name="view_count" value="{{$videos->view_count ?? ''}}"><br/>
                                                     </div>
                                                     {{-- <div class="col-sm-6">
                                                         <label>Cover Image<span class="text-danger">*</span></label>

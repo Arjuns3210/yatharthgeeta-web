@@ -33,10 +33,6 @@
                                             <div id="data_details" class="tab-pane fade in active show">
                                                 <div class="row">
                                                     <div class="col-sm-6">
-                                                        <label>Sequence<span class="text-danger">*</span></label>
-                                                        <input class="form-control required  integer-validation" type="number" id="sequence" name="sequence" value="{{$book->sequence}}" ><br/>
-                                                    </div>
-                                                    <!-- <div class="col-sm-6">
                                                         <label>Book Category</label>
                                                         <select class="form-control mb-3" type="text" id="book_category_id" name="book_category_id">
                                                             @foreach($book_category as $book_cat)
@@ -44,7 +40,11 @@
                                                                     {{$book_cat->id ==$book['book_category_id'] ? 'selected' : ''}}>{{$book_cat->name ?? ''}}</option>
                                                             @endforeach
                                                         </select>
-                                                    </div> -->
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label>Sequence<span class="text-danger">*</span></label>
+                                                        <input class="form-control required  integer-validation" type="number" id="sequence" name="sequence" value="{{$book->sequence}}" ><br/>
+                                                    </div>
                                                     <div class="col-sm-6">
                                                         <label>Number of Pages<span class="text-danger">*</span></label>
                                                         <input class="form-control integer-validation" type="number" id="pages" name="pages" value="{{$book->pages}}" ><br/>
@@ -92,8 +92,8 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Views Count<span class="text-danger">*</span></label>
-                                                        <input class="form-control required positive-integer-validation" type="number" id="view_count" name="view_count" value="{{$book->view_count ?? ''}}"><br/>
+                                                        <label>Views Count</label>
+                                                        <input class="form-control positive-integer-validation" type="number" id="view_count" name="view_count" value="{{$book->view_count ?? ''}}"><br/>
                                                     </div>
                                                 </div>
                                                 <hr>
