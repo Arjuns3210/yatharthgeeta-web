@@ -51,8 +51,8 @@
                                                 <tr>
                                                     <th class="sorting_disabled" id="id" data-orderable="false" data-searchable="false">Id</th>
                                                     <th id="title_{{\App::getLocale()}}" data-orderable="false" data-searchable="false">Video Name ({{ config('translatable.locales_name')[\App::getLocale()] }})</th>
-                                                    <th id="sequence" data-orderable="false" data-searchable="false">Sequence</th>
                                                     <th id="language_name" data-orderable="false" data-searchable="false">Media Language</th>
+                                                    <th id="sequence" data-orderable="false" data-searchable="false">Sequence</th>
                                                     <th id="view_count" data-orderable="false" data-searchable="false">Views Count</th>
                                                     @if($data['videos_status'] || $data['videos_edit'] || $data['videos_view'] || $data['videos_delete'])
                                                         <th id="action" data-orderable="false" data-searchable="false" width="130px">Action</th>

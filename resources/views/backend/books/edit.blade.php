@@ -92,7 +92,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <label>Views Count<span class="text-danger">*</span></label>
+                                                        <label>Views Count</label>
                                                         <input class="form-control" type="number" id="view_count" name="view_count" value="{{$book->view_count ?? ''}}"><br/>
                                                     </div>
                                                 </div>
