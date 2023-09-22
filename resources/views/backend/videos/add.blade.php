@@ -34,7 +34,7 @@
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <label>Duration (In Minutes)<span class="text-danger">*</span></label>
-                                                        <input class="form-control numeric-validation" type="number" id="duration" name="duration"><br/>
+                                                        <input class="form-control positive-numeric-validation" type="number" id="duration" name="duration"><br/>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>YouTube Video Link<span class="text-danger">*</span></label>
@@ -62,7 +62,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Views Count</label>
-                                                        <input class="form-control" type="number" id="view_count" name="view_count"><br/>
+                                                        <input class="form-control positive-integer-validation" type="number" id="view_count" name="view_count"><br/>
                                                     </div>
                                                 </div>
                                                 <div class="row">

@@ -41,7 +41,7 @@
                                                     </div>
                                                     <div class="col-md-6 mb-2">
                                                         <label>Duration (In Minute)<span style="color:#ff0000">*</span></label>
-                                                        <input class="form-control required numeric-validation" type="number" id="duration" name="duration">
+                                                        <input class="form-control required positive-numeric-validation" type="number" id="duration" name="duration">
                                                     </div>
                                                     <div class="col-md-6 mb-2">
                                                         <label>Sequence<span style="color:#ff0000">*</span></label>
@@ -75,7 +75,7 @@
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label>Views Count</label>
-                                                        <input class="form-control" type="number" id="view_count" name="view_count"><br/>
+                                                        <input class="form-control positive-integer-validation" type="number" id="view_count" name="view_count"><br/>
                                                     </div>
                                                     <div class="col-md-6 col-lg-6 col-sm-6 border-right text-center file-input-div">
                                                         <p class="font-weight-bold">Audio File (MP3) <span class="text-danger">*</span></p>
@@ -94,7 +94,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-6 col-lg-12 col-sm-6 border-right text-center">
+                                                    <div class="col-md-6 col-lg-12 col-sm-6 text-center">
                                                         <p class="font-weight-bold">Cover Image <span class="text-danger">*</span></p>
                                                         <p style="color:blue;">Note : Upload file size {{config('global.dimensions.audios_width')}}X{{config('global.dimensions.audios_height')}} pixel and .jpg, .png, or jpeg format image</p>
                                                         <div class="shadow bg-white rounded d-inline-block mb-2">
